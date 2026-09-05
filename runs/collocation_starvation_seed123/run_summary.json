@@ -1,0 +1,48 @@
+{
+  "run_name": "collocation_starvation_seed123",
+  "seed": 123,
+  "final_step": 1999,
+  "total_steps": 5000,
+  "final_loss": 2.9271348466863856e-05,
+  "final_loss_pde": 6.2815629462420475e-06,
+  "final_loss_bc": 2.2989785065874457e-05,
+  "final_relative_l2": 0.014711915515363216,
+  "validation_relative_l2": 0.014711915515363216,
+  "validation_linf": 0.006687849760055542,
+  "validation_mse": 2.8829897928517312e-05,
+  "converged": false,
+  "pde_config": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 1.0,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model_config": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      64,
+      64,
+      64
+    ],
+    "activation": "tanh"
+  },
+  "training_config": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 5000,
+    "interior_points": 16,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0
+  }
+}

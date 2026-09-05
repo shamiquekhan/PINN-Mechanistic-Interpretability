@@ -1,0 +1,48 @@
+{
+  "run_name": "boundary_starvation_seed7",
+  "seed": 7,
+  "final_step": 1999,
+  "total_steps": 5000,
+  "final_loss": 0.0007517950143665075,
+  "final_loss_pde": 5.5819741646701004e-06,
+  "final_loss_bc": 0.019359758123755455,
+  "final_relative_l2": 0.27895691990852356,
+  "validation_relative_l2": 0.27895691990852356,
+  "validation_linf": 0.1925290822982788,
+  "validation_mse": 0.010365230962634087,
+  "converged": false,
+  "pde_config": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 1.0,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model_config": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      64,
+      64,
+      64
+    ],
+    "activation": "tanh"
+  },
+  "training_config": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 5000,
+    "interior_points": 256,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 100.0,
+    "lambda_bc": 0.01
+  }
+}

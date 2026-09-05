@@ -1,0 +1,51 @@
+{
+  "run": {
+    "name": "collocation_starvation_seed123",
+    "output_dir": "runs",
+    "seed": 123,
+    "deterministic": true,
+    "device": "cpu",
+    "dtype": "float32"
+  },
+  "pde": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 1.0,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      64,
+      64,
+      64
+    ],
+    "activation": "tanh"
+  },
+  "training": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 5000,
+    "interior_points": 16,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0
+  },
+  "logging": {
+    "save_activations": false,
+    "activation_layers": [
+      1
+    ],
+    "save_pointwise_residuals": true
+  }
+}

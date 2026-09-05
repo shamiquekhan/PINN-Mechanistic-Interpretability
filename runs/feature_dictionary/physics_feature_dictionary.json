@@ -1,0 +1,4610 @@
+[
+  {
+    "feature_id": 88,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.675)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8555,
+    "correlations": {
+      "data_std": -0.674818890436796
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 119,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.558)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8541666666666666,
+    "correlations": {
+      "data_std": -0.5583098905366666
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 193,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.825)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.853,
+    "correlations": {
+      "data_std": -0.8247144575611884
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 186,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.804)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8503333333333334,
+    "correlations": {
+      "data_std": -0.8035209680216023
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 151,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.845)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.85,
+    "correlations": {
+      "data_std": -0.844895634937667
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 207,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.808)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8493333333333334,
+    "correlations": {
+      "data_std": -0.8078039134071494
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 22,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.372)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.845,
+    "correlations": {
+      "data_std": -0.37244493217744384
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 68,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.525)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.845,
+    "correlations": {
+      "data_std": -0.5246053997539921
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 107,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.917)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8431666666666666,
+    "correlations": {
+      "data_std": -0.9166234640127447
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 244,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.860)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8423333333333334,
+    "correlations": {
+      "data_std": -0.8595252686565877
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 216,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.808)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8421666666666666,
+    "correlations": {
+      "data_std": -0.8078462111349122
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 2,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.914)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.9137731255407001
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 20,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.873)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8728151919237783
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 26,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.915)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.9145330785805273
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 41,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.908)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.9083282205710622
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 46,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.785)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.7849420117674921
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 58,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.759)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.7592366875966579
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 59,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.870)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8702000592765834
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 65,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.793)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.7929308320146431
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 72,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.742)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.7421858248176896
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 81,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.671)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.670875146068825
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 87,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.770)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.770471635076412
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 93,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.879)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8787368548689729
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 94,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.804)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8036364204941818
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 97,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.844)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8444316650814253
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 100,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.679)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.6785522211459014
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 102,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.869)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8694678518059593
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 175,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.848)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8477307898469146
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 180,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.837)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8367402196297453
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 188,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.880)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8802760127399284
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 196,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.863)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8628665618878373
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 198,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.897)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.896980718274987
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 209,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.883)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8829261591226826
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 228,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.854)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8542181019144249
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 238,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.850)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.8499074097951791
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 239,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.862)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.862222172957252
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 254,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.584)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8416666666666667,
+    "correlations": {
+      "data_std": -0.5843749706492405
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 24,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.805)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8415,
+    "correlations": {
+      "data_std": -0.8045352384849296
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 8,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.610)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8411666666666666,
+    "correlations": {
+      "data_std": -0.6101945824632006
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 247,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.900)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.841,
+    "correlations": {
+      "data_std": -0.9001688291690192
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 147,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.746)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8405,
+    "correlations": {
+      "data_std": -0.7462956078878169
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 203,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.759)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8403333333333334,
+    "correlations": {
+      "data_std": -0.7586293124584209
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 42,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.766)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.84,
+    "correlations": {
+      "data_std": -0.7661592322704481
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 54,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.772)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.84,
+    "correlations": {
+      "data_std": -0.7720611371189445
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 99,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.811)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8398333333333333,
+    "correlations": {
+      "data_std": -0.811473809099071
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 18,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.788)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8391666666666666,
+    "correlations": {
+      "data_std": -0.7882080962425917
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 61,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.728)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8391666666666666,
+    "correlations": {
+      "data_std": -0.7280182445012574
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 156,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.415)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.839,
+    "correlations": {
+      "data_std": -0.41487707190607837
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 108,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.611)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8388333333333333,
+    "correlations": {
+      "data_std": -0.6108877814193452
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 141,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.345)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8388333333333333,
+    "correlations": {
+      "data_std": -0.34527274259517265
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 192,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.794)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.838,
+    "correlations": {
+      "data_std": -0.7944059757323354
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 13,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.477)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8371666666666666,
+    "correlations": {
+      "data_std": -0.47748652732814256
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 178,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.607)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.834,
+    "correlations": {
+      "data_std": -0.6073074769560285
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 66,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.608)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8335,
+    "correlations": {
+      "data_std": -0.6082322138202085
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 14,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.438)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8226666666666667,
+    "correlations": {
+      "data_std": -0.4377425055504246
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 43,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.451)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8221666666666667,
+    "correlations": {
+      "data_std": -0.45068057293836244
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 103,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.517)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.807,
+    "correlations": {
+      "data_std": -0.5170604234952173
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 105,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.020)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.8045,
+    "correlations": {
+      "data_std": -0.019662790111984164
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 164,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.312)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7993333333333333,
+    "correlations": {
+      "data_std": 0.3117179392918627
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 12,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.430)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7948333333333333,
+    "correlations": {
+      "data_std": -0.4303617732096955
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 234,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.498)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.794,
+    "correlations": {
+      "data_std": -0.4978503634437695
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 89,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.549)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7936666666666666,
+    "correlations": {
+      "data_std": -0.5485321151164767
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 146,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.436)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7906666666666666,
+    "correlations": {
+      "data_std": -0.4355858408595517
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 69,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.551)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7866666666666666,
+    "correlations": {
+      "data_std": -0.5505059307443633
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 204,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.441)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7836666666666666,
+    "correlations": {
+      "data_std": -0.4411465869166592
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 129,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.486)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7835,
+    "correlations": {
+      "data_std": -0.48577332687932334
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 115,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.134)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7831666666666667,
+    "correlations": {
+      "data_std": -0.1339127922286896
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 104,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.242)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7816666666666666,
+    "correlations": {
+      "data_std": -0.24188789544955014
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 75,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.367)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.781,
+    "correlations": {
+      "data_std": -0.36719096420075736
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 250,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.539)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7673333333333333,
+    "correlations": {
+      "data_std": -0.5387903254203268
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 179,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.469)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7665,
+    "correlations": {
+      "data_std": -0.4687846052968154
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 77,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.349)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7523333333333333,
+    "correlations": {
+      "data_std": -0.3490734154908192
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 45,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.424)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7406666666666667,
+    "correlations": {
+      "data_std": -0.4243155893563264
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 252,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.449)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7381666666666666,
+    "correlations": {
+      "data_std": -0.4494421154918031
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 128,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.403)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7178333333333333,
+    "correlations": {
+      "data_std": -0.4033623547419259
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 101,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.349)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7176666666666667,
+    "correlations": {
+      "data_std": -0.34870119071821815
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 190,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.438)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7145,
+    "correlations": {
+      "data_std": -0.4384255500030346
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 170,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.576)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7113333333333334,
+    "correlations": {
+      "data_std": 0.5763810497967193
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 133,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.331)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7068333333333333,
+    "correlations": {
+      "data_std": -0.3305396919192792
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 223,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.395)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7035,
+    "correlations": {
+      "data_std": -0.3950268843636364
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 38,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.279)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7005,
+    "correlations": {
+      "data_std": -0.2789353275942847
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 225,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.367)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.7,
+    "correlations": {
+      "data_std": -0.3671956245721716
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 56,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.335)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6955,
+    "correlations": {
+      "data_std": -0.33490329222445614
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 142,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.464)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.693,
+    "correlations": {
+      "data_std": -0.4638594846490565
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 163,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.442)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6888333333333333,
+    "correlations": {
+      "data_std": -0.4417237222530057
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 233,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.395)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6771666666666667,
+    "correlations": {
+      "data_std": -0.3954160499588125
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 255,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.343)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6725,
+    "correlations": {
+      "data_std": -0.34301304299031316
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 131,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.321)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6713333333333333,
+    "correlations": {
+      "data_std": -0.3206990718331223
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 140,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.390)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.67,
+    "correlations": {
+      "data_std": -0.39034988103571727
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 19,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.393)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6698333333333333,
+    "correlations": {
+      "data_std": -0.39305547681316794
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 60,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.380)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6653333333333333,
+    "correlations": {
+      "data_std": -0.3803213333572382
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 232,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.314)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6616666666666666,
+    "correlations": {
+      "data_std": -0.313817911673241
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 34,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.360)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6516666666666666,
+    "correlations": {
+      "data_std": -0.36011251707385245
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 185,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.340)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6491666666666667,
+    "correlations": {
+      "data_std": -0.3395171306753235
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 117,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.007)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6423333333333333,
+    "correlations": {
+      "data_std": 0.0071820648953332435
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 51,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.011)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6418333333333334,
+    "correlations": {
+      "data_std": 0.011274116612695468
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 52,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.082)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6386666666666667,
+    "correlations": {
+      "data_std": -0.08219614739199306
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 143,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.422)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6288333333333334,
+    "correlations": {
+      "data_std": -0.4222897025425089
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 39,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.370)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6183333333333333,
+    "correlations": {
+      "data_std": -0.3696853084150789
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 212,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.266)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6165,
+    "correlations": {
+      "data_std": 0.26595642292599736
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 82,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.319)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6053333333333333,
+    "correlations": {
+      "data_std": -0.31934128038183857
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 47,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.276)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6045,
+    "correlations": {
+      "data_std": -0.2755707425370268
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 236,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.303)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.6035,
+    "correlations": {
+      "data_std": -0.3033242965816974
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 176,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.260)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5976666666666667,
+    "correlations": {
+      "data_std": -0.26032438350438103
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 154,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.324)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5861666666666666,
+    "correlations": {
+      "data_std": -0.3239894427851026
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 199,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.357)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.584,
+    "correlations": {
+      "data_std": -0.3573757894939032
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 226,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.253)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5738333333333333,
+    "correlations": {
+      "data_std": -0.2527249229746825
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 172,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.276)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5703333333333334,
+    "correlations": {
+      "data_std": -0.27589033846147293
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 132,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.261)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5653333333333334,
+    "correlations": {
+      "data_std": -0.2607302107748843
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 63,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.307)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5621666666666667,
+    "correlations": {
+      "data_std": -0.30683232594703347
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 220,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.138)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5616666666666666,
+    "correlations": {
+      "data_std": -0.13817064396245413
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 64,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.284)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5465,
+    "correlations": {
+      "data_std": -0.2841917485645458
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 165,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.299)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5441666666666667,
+    "correlations": {
+      "data_std": -0.2989767786325656
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 205,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.332)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5426666666666666,
+    "correlations": {
+      "data_std": -0.3324250170386794
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 37,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.285)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.542,
+    "correlations": {
+      "data_std": 0.28526795760874596
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 168,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.191)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5385,
+    "correlations": {
+      "data_std": 0.19142657243296507
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 123,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.351)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.5371666666666667,
+    "correlations": {
+      "data_std": -0.35053975735300774
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 166,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.289)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.503,
+    "correlations": {
+      "data_std": -0.28863574842098694
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 241,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.284)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.49083333333333334,
+    "correlations": {
+      "data_std": -0.28374882721882017
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 213,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.218)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.42783333333333334,
+    "correlations": {
+      "data_std": -0.21792495383280266
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 127,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.281)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.41633333333333333,
+    "correlations": {
+      "data_std": -0.2813733993772706
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 158,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.783)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.41433333333333333,
+    "correlations": {
+      "data_std": 0.782956789770289
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 80,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.464)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.37216666666666665,
+    "correlations": {
+      "data_std": 0.4638486578741253
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 112,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.121)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.31716666666666665,
+    "correlations": {
+      "data_std": 0.12148108102082393
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 201,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.560)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.31316666666666665,
+    "correlations": {
+      "data_std": 0.5601511196877167
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 224,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.956)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.29783333333333334,
+    "correlations": {
+      "data_std": 0.9557450627614452
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 194,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.948)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.29383333333333334,
+    "correlations": {
+      "data_std": 0.9477439322681518
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 118,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.834)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.28833333333333333,
+    "correlations": {
+      "data_std": 0.8341352584828575
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 76,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.168)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.2861666666666667,
+    "correlations": {
+      "data_std": -0.16768394649629353
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 177,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.700)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.2821666666666667,
+    "correlations": {
+      "data_std": 0.700057653966428
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 217,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.980)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.2813333333333333,
+    "correlations": {
+      "data_std": 0.979965301838524
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 155,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.408)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.2735,
+    "correlations": {
+      "data_std": 0.4082460862492402
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 11,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.351)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.2665,
+    "correlations": {
+      "data_std": 0.350662804040759
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 86,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.134)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.2653333333333333,
+    "correlations": {
+      "data_std": 0.1344021893791615
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 116,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.718)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.24716666666666667,
+    "correlations": {
+      "data_std": 0.7180601652619457
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 55,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.893)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.24283333333333335,
+    "correlations": {
+      "data_std": 0.8933885336406575
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 120,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.891)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.24216666666666667,
+    "correlations": {
+      "data_std": 0.8913658244285642
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 211,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.961)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.24166666666666667,
+    "correlations": {
+      "data_std": 0.9605063840268676
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 157,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.978)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.234,
+    "correlations": {
+      "data_std": 0.9779407371352863
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 149,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.786)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.233,
+    "correlations": {
+      "data_std": 0.7863647041828419
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 153,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.991)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.233,
+    "correlations": {
+      "data_std": 0.991228560439273
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 23,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.906)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.23183333333333334,
+    "correlations": {
+      "data_std": 0.9063806207633798
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 91,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.877)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.22966666666666666,
+    "correlations": {
+      "data_std": 0.877253056898027
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 49,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.671)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.22683333333333333,
+    "correlations": {
+      "data_std": 0.6707943193684435
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 202,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.975)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.22016666666666668,
+    "correlations": {
+      "data_std": 0.9745592025263585
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 92,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.946)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.21583333333333332,
+    "correlations": {
+      "data_std": 0.9460341805141768
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 197,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.743)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.21416666666666667,
+    "correlations": {
+      "data_std": 0.7427201881692862
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 145,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.685)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.20783333333333334,
+    "correlations": {
+      "data_std": 0.6848809416716327
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 152,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.808)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.207,
+    "correlations": {
+      "data_std": 0.8076941948925854
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 109,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.903)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.20683333333333334,
+    "correlations": {
+      "data_std": 0.9032687635033968
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 230,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.717)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.20683333333333334,
+    "correlations": {
+      "data_std": 0.7171319738448535
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 35,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.977)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.19933333333333333,
+    "correlations": {
+      "data_std": 0.9765256217451571
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 27,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.938)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.18866666666666668,
+    "correlations": {
+      "data_std": 0.9380114445420035
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 150,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.447)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.18583333333333332,
+    "correlations": {
+      "data_std": 0.44740063125178337
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 53,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.786)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.183,
+    "correlations": {
+      "data_std": 0.7861525205063441
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 85,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.956)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.18083333333333335,
+    "correlations": {
+      "data_std": 0.9558854749548608
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 124,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.939)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.175,
+    "correlations": {
+      "data_std": 0.9389917560544063
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 90,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.887)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.17183333333333334,
+    "correlations": {
+      "data_std": 0.8874297342791735
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 44,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.981)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.17033333333333334,
+    "correlations": {
+      "data_std": 0.9813735424343951
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 29,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.992)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.17,
+    "correlations": {
+      "data_std": 0.9922958481779764
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 125,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.933)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16983333333333334,
+    "correlations": {
+      "data_std": 0.9328417147015479
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 206,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.756)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16783333333333333,
+    "correlations": {
+      "data_std": 0.7564603389485434
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 17,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.752)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16766666666666666,
+    "correlations": {
+      "data_std": 0.7520498967175488
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 71,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.074)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16733333333333333,
+    "correlations": {
+      "data_std": 0.07374539805005699
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 50,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.938)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16716666666666666,
+    "correlations": {
+      "data_std": 0.9377763571735441
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 189,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.994)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16283333333333333,
+    "correlations": {
+      "data_std": 0.9943814200770267
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 110,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.876)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16166666666666665,
+    "correlations": {
+      "data_std": 0.8759682592439548
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 139,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.955)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16166666666666665,
+    "correlations": {
+      "data_std": 0.9551116469399556
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 231,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.976)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1615,
+    "correlations": {
+      "data_std": 0.9758073110662709
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 214,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.984)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16133333333333333,
+    "correlations": {
+      "data_std": 0.9844404851304186
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 9,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.161,
+    "correlations": {
+      "data_std": 0.9970856847095075
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 79,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.896)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.161,
+    "correlations": {
+      "data_std": 0.8964699768084257
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 84,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.923)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.161,
+    "correlations": {
+      "data_std": 0.9227558506669016
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 169,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.949)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.161,
+    "correlations": {
+      "data_std": 0.9494595172069916
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 251,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.836)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.161,
+    "correlations": {
+      "data_std": 0.8358901286643636
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 218,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16066666666666668,
+    "correlations": {
+      "data_std": 0.9972439834170282
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 73,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.991)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1605,
+    "correlations": {
+      "data_std": 0.9906450379447295
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 245,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.975)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1605,
+    "correlations": {
+      "data_std": 0.9749565894023791
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 74,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.679)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16033333333333333,
+    "correlations": {
+      "data_std": 0.6789660882302239
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 162,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.992)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16033333333333333,
+    "correlations": {
+      "data_std": 0.9923168175669629
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 122,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.984)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16016666666666668,
+    "correlations": {
+      "data_std": 0.9835850049108608
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 242,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.980)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.16016666666666668,
+    "correlations": {
+      "data_std": 0.9802124740059971
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 173,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.662)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15966666666666668,
+    "correlations": {
+      "data_std": 0.6619647620826108
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 200,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.946)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1595,
+    "correlations": {
+      "data_std": 0.9459146821858292
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 31,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.960)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15933333333333333,
+    "correlations": {
+      "data_std": 0.9600884569583265
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 111,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.920)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15933333333333333,
+    "correlations": {
+      "data_std": 0.9202961224829547
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 30,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.625)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15916666666666668,
+    "correlations": {
+      "data_std": 0.6250959320252716
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 57,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.989)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15916666666666668,
+    "correlations": {
+      "data_std": 0.9889504461699116
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 148,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.998)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15916666666666668,
+    "correlations": {
+      "data_std": 0.9976365917694664
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 191,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.998)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15916666666666668,
+    "correlations": {
+      "data_std": 0.9981317333508491
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 7,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.958)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15883333333333333,
+    "correlations": {
+      "data_std": 0.95760576256946
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 25,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.964)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15883333333333333,
+    "correlations": {
+      "data_std": 0.9638975913249118
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 32,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.630)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15883333333333333,
+    "correlations": {
+      "data_std": 0.6295826739281413
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 106,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.806)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15883333333333333,
+    "correlations": {
+      "data_std": 0.8060700309979465
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 67,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.994)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15866666666666668,
+    "correlations": {
+      "data_std": 0.9938428849218461
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 184,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.993)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1585,
+    "correlations": {
+      "data_std": 0.9930149193217322
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 0,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.939)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9387366516136769
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 1,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.997310369201384
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 3,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.992)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9924470490173091
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 6,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.992)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9922400097302647
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 10,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9965318069019148
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 16,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.998)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9978531159024387
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 21,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9972037805770869
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 28,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.986)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9856499025413847
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 33,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.996)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9961829222518358
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 48,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.953)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9533987746067206
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 62,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9974183429213108
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 113,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.996)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9957558222796506
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 126,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.854)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.8540245421195173
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 135,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.998)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.997535881419507
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 136,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.988)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9883174424679522
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 137,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.996)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9955792900757675
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 144,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.999)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9987678795042998
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 167,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.947)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9470049977977366
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 182,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9965359154076159
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 187,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.987)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9866774667620203
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 227,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.916)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9155054780430916
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 235,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.995)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9952429719735144
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 240,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.995)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9948594830016079
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 243,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.997)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9973219836851243
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 248,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.996)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.996124627349422
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 249,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.999)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15833333333333333,
+    "correlations": {
+      "data_std": 0.9987894057855228
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 130,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.993)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15816666666666668,
+    "correlations": {
+      "data_std": 0.9934775609853823
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 36,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.989)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.158,
+    "correlations": {
+      "data_std": 0.9893486755259898
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 138,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.990)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15783333333333333,
+    "correlations": {
+      "data_std": 0.9904672660235979
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 161,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.984)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15783333333333333,
+    "correlations": {
+      "data_std": 0.9841742812437418
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 221,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.642)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1575,
+    "correlations": {
+      "data_std": 0.642221900635585
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 83,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.991)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15733333333333333,
+    "correlations": {
+      "data_std": 0.9912169783332435
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 210,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.990)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15716666666666668,
+    "correlations": {
+      "data_std": 0.9897782013568437
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 219,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.990)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.157,
+    "correlations": {
+      "data_std": 0.9900765009086369
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 183,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.991)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1565,
+    "correlations": {
+      "data_std": 0.990856104775102
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 181,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.985)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15583333333333332,
+    "correlations": {
+      "data_std": 0.9847585166989073
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 222,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.892)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15583333333333332,
+    "correlations": {
+      "data_std": 0.892066395104138
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 134,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.986)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15533333333333332,
+    "correlations": {
+      "data_std": 0.985675413183813
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 78,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.962)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15333333333333332,
+    "correlations": {
+      "data_std": 0.9618816088244662
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 171,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.985)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15333333333333332,
+    "correlations": {
+      "data_std": 0.9851728701538838
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 114,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.492)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15266666666666667,
+    "correlations": {
+      "data_std": 0.4916498527645311
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 208,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.986)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15233333333333332,
+    "correlations": {
+      "data_std": 0.9857244851345349
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 237,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.834)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15233333333333332,
+    "correlations": {
+      "data_std": 0.833719602014949
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 15,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.982)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15016666666666667,
+    "correlations": {
+      "data_std": 0.9821978984679791
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 40,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.979)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15,
+    "correlations": {
+      "data_std": 0.979366501971338
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 215,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.978)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.15,
+    "correlations": {
+      "data_std": 0.9784273809660027
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 229,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.527)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.14966666666666667,
+    "correlations": {
+      "data_std": 0.5270797747500079
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 98,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.976)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.14866666666666667,
+    "correlations": {
+      "data_std": 0.9761001035882803
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 246,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.980)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.148,
+    "correlations": {
+      "data_std": 0.9795540709567893
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 159,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.528)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.14716666666666667,
+    "correlations": {
+      "data_std": 0.5277445288056561
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 174,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.499)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.14666666666666667,
+    "correlations": {
+      "data_std": 0.49947446535793966
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 121,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.964)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.13883333333333334,
+    "correlations": {
+      "data_std": 0.9644865837192501
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 96,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.963)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1385,
+    "correlations": {
+      "data_std": 0.9630505946648352
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 195,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.959)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.13516666666666666,
+    "correlations": {
+      "data_std": 0.9589568228447558
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 4,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.950)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.13166666666666665,
+    "correlations": {
+      "data_std": 0.9497375963235933
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 160,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.939)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.13033333333333333,
+    "correlations": {
+      "data_std": 0.9385288341757115
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 70,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.949)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.1295,
+    "correlations": {
+      "data_std": 0.9493062361454413
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 253,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=-0.099)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.12116666666666667,
+    "correlations": {
+      "data_std": -0.09941628220751486
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 5,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.912)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.117,
+    "correlations": {
+      "data_std": 0.9118883468538254
+    },
+    "stable_across_seeds": false
+  },
+  {
+    "feature_id": 95,
+    "layer": "layers.1",
+    "sae_version": "v1.0",
+    "candidate_interpretation": "correlates with data_std (r=0.270)",
+    "supporting_spatial_evidence": "",
+    "supporting_temporal_evidence": "",
+    "candidate_failure_mode": "unknown",
+    "predicted_intervention_direction": "unknown",
+    "confounds_tested": [],
+    "causal_test_result": "not_tested",
+    "confidence_tier": "candidate",
+    "activation_frequency": 0.104,
+    "correlations": {
+      "data_std": 0.26950924171673063
+    },
+    "stable_across_seeds": false
+  }
+]

@@ -1,0 +1,180 @@
+# Complete Framework Documentation & User Guide
+
+This document provides a comprehensive API guide and step-by-step user manual for running experiments, training SAEs, building feature dictionaries, running causal interventions, and activating early-warning monitors with closed-loop adaptive control.
+
+---
+
+## 1. Running PINN Training Experiments
+
+Training a PINN model uses the `experiments.train` entry point with a validated YAML configuration file:
+
+```bash
+python -m experiments.train \
+  --config configs/poisson_baseline.yaml \
+  --steps 5000 \
+  --log-gradients \
+  --log-activations \
+  --act-save-raw \
+  --log-diagnostics
+```
+
+### Command-Line Arguments
+- `--config`: Path to YAML experiment configuration file (required).
+- `--steps`: Total optimization steps (overrides config if specified).
+- `--log-gradients`: Enables tracking of per-loss component gradient norms and cosine similarity.
+- `--log-activations`: Registers forward hooks to sample and log intermediate layer activations.
+- `--act-save-raw`: Saves raw activation vectors to `activations.jsonl` for SAE training.
+- `--log-diagnostics`: Computes spatial residual profiles and error statistics.
+
+---
+
+## 2. Qualification Gate Suite
+
+The qualification gate evaluates baseline success and failure modes across multiple random seeds:
+
+```bash
+python -m experiments.qualification
+```
+
+This runs a seed matrix ($[7, 42, 123]$) across:
+1. `success_baseline`
+2. `boundary_starvation`
+3. `gradient_conflict`
+4. `spectral_suppression`
+5. `collocation_starvation`
+
+Output results and relative $L_2$ error statistics are written to `runs/qualification/qualification_results.json`.
+
+---
+
+## 3. Sparse Autoencoder (SAE) Training & Sweeps
+
+Train Sparse Autoencoders on logged activation datasets using `sae.train`:
+
+```python
+from sae.train import sweep_sae
+from pathlib import Path
+import torch
+
+run_dirs = [Path("runs/poisson_baseline"), Path("runs/advection_1d_baseline")]
+device = torch.device("cuda")
+
+sae_models = sweep_sae(
+    run_dirs=run_dirs,
+    layer_name="layers.1",
+    expansion_values=[2, 4],
+    sparsity_values=[1e-3, 1e-2],
+    steps=500,
+    batch_size=128,
+    learning_rate=1e-3,
+    device=device,
+    out_dir=Path("runs/sae_models")
+)
+```
+
+---
+
+## 4. Building the Physics-Feature Dictionary
+
+Construct the Physics-Feature Dictionary from trained SAE weights and logged trajectories:
+
+```python
+from sae.features import (
+    compute_feature_stats,
+    associate_features_with_metrics,
+    match_features_across_saes,
+    build_feature_dictionary,
+    save_feature_dictionary
+)
+from sae.model import SparseAutoencoder
+from sae.dataset import ActivationDataset
+from analysis.feature_dictionary import render_feature_dictionary_markdown
+from pathlib import Path
+import torch
+
+device = torch.device("cuda")
+sae = SparseAutoencoder.load("runs/sae_models/exp2_sp1e-03/sae.pt", device)
+ds = ActivationDataset([Path("runs/poisson_baseline")], "layers.1", normalise=True)
+
+stats = compute_feature_stats(sae, ds.data, device)
+metric_arrays = {"data_std": ds.data.cpu().numpy().std(axis=1)}
+corrs = associate_features_with_metrics(sae, ds.data, metric_arrays, device)
+
+dictionary = build_feature_dictionary(
+    feature_stats=stats,
+    correlations=corrs,
+    families=[],
+    layer_name="layers.1",
+    sae_version="v1.0"
+)
+
+save_feature_dictionary(dictionary, Path("runs/feature_dictionary/physics_feature_dictionary.json"))
+render_feature_dictionary_markdown(dictionary, Path("runs/feature_dictionary/physics_feature_dictionary.md"))
+```
+
+---
+
+## 5. Causal Interventions & Counterfactual Evaluation
+
+Run inference-time causal interventions (`ablate`, `amplify`, `unrelated_control`, `random_direction`):
+
+```python
+from interventions.causal import run_inference_interventions
+from sae.model import SparseAutoencoder
+from pinn.model import MLP
+from pinn.pdes import Poisson1D
+import torch
+
+device = torch.device("cuda")
+pde = Poisson1D()
+model = MLP(1, 1, [64, 64, 64], "tanh").to(device)
+sae = SparseAutoencoder.load("runs/sae_models/exp2_sp1e-03/sae.pt", device)
+
+scores = run_inference_interventions(
+    model=model,
+    sae=sae,
+    pde=pde,
+    device=device,
+    dtype=torch.float32,
+    candidate_features=[0, 1, 2, 3],
+    target_loss="pde",
+    layer_index=1
+)
+print("Causal scores:", scores)
+```
+
+---
+
+## 6. Closed-Loop Adaptive PINN Controller
+
+Attach the controller to a PINN training loop:
+
+```python
+from controller.state_machine import PINNController, ControllerConfig
+from monitoring.models import ThresholdMonitor
+
+ctrl_cfg = ControllerConfig(alarm_threshold=0.5, confirmation_steps=2, cooldown_steps=100)
+controller = PINNController(ctrl_cfg, out_dir=Path("runs/controller_demo"))
+monitor = ThresholdMonitor(plateau_window=10, degradation_factor=2.0)
+
+# Inside PINN training loop:
+score = monitor.update(total_loss_val, rel_l2_val)
+lambda_pde, lambda_bc, event = controller.step(
+    step=step,
+    monitor_score=score,
+    rel_l2=rel_l2_val,
+    lambda_pde=lambda_pde,
+    lambda_bc=lambda_bc,
+    failure_class="boundary_starvation"
+)
+```
+
+---
+
+## 7. Master Research Campaign Execution
+
+To run all 7 stages sequentially in a single automated pipeline:
+
+```bash
+python -m experiments.run_pipeline
+```

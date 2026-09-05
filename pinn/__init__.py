@@ -1,0 +1,76 @@
+from .config import ExperimentConfig, load_config, RunConfig, PDEConfig, ModelConfig, TrainingConfig, LoggingConfig
+from .model import MLP, FourierEmbedding
+from .pdes import BasePDE, Poisson1D, Advection1D, ReactionDiffusion1D, make_pde
+from .trainer import PINNTrainer
+from .reproducibility import set_seed
+from .gradients import (
+    compute_per_loss_gradients,
+    compute_gradient_norms,
+    compute_gradient_cosine_similarities,
+    compute_gradient_conflict_score,
+    log_gradient_stats,
+    GradientLogger,
+)
+from .activations import (
+    ActivationHook,
+    ActivationRecorder,
+    ActivationLogger,
+    ProbePointConfig,
+    get_layer_names,
+    create_probe_points,
+    record_activations_at_probes,
+    compute_activation_statistics,
+)
+from .diagnostics import (
+    DiagnosticsLogger,
+    SpatialBinConfig,
+    compute_fourier_spectrum,
+    compute_error_spectrum,
+    compute_spatial_residual_bins,
+    compute_spatial_error_bins,
+    compute_collocation_coverage,
+    compute_boundary_distance_profile,
+    compute_activation_fourier_spectrum,
+)
+
+__all__ = [
+    'ExperimentConfig',
+    'load_config',
+    'RunConfig',
+    'PDEConfig',
+    'ModelConfig',
+    'TrainingConfig',
+    'LoggingConfig',
+    'MLP',
+    'FourierEmbedding',
+    'BasePDE',
+    'Poisson1D',
+    'Advection1D',
+    'ReactionDiffusion1D',
+    'make_pde',
+    'PINNTrainer',
+    'set_seed',
+    'compute_per_loss_gradients',
+    'compute_gradient_norms',
+    'compute_gradient_cosine_similarities',
+    'compute_gradient_conflict_score',
+    'log_gradient_stats',
+    'GradientLogger',
+    'ActivationHook',
+    'ActivationRecorder',
+    'ActivationLogger',
+    'ProbePointConfig',
+    'get_layer_names',
+    'create_probe_points',
+    'record_activations_at_probes',
+    'compute_activation_statistics',
+    'DiagnosticsLogger',
+    'SpatialBinConfig',
+    'compute_fourier_spectrum',
+    'compute_error_spectrum',
+    'compute_spatial_residual_bins',
+    'compute_spatial_error_bins',
+    'compute_collocation_coverage',
+    'compute_boundary_distance_profile',
+    'compute_activation_fourier_spectrum',
+]

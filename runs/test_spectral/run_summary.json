@@ -1,0 +1,50 @@
+{
+  "run_name": "test_spectral",
+  "seed": 7,
+  "final_step": 1999,
+  "total_steps": 2000,
+  "final_loss": 27.277671813964844,
+  "final_loss_pde": 7.544463157653809,
+  "final_loss_bc": 19.73320770263672,
+  "final_relative_l2": 0.2969697117805481,
+  "validation_relative_l2": 0.2969697117805481,
+  "validation_linf": 5.988336563110352,
+  "validation_mse": 29.36764144897461,
+  "converged": false,
+  "pde_config": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 50.0,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model_config": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "activation": "tanh"
+  },
+  "training_config": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 2000,
+    "interior_points": 256,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0
+  }
+}

@@ -1,0 +1,943 @@
+[
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed123",
+    "run_name": "boundary_starvation_seed123",
+    "seed": 123,
+    "operational_label": "boundary_starvation",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.40842971205711365,
+    "summary": {
+      "run_name": "boundary_starvation_seed123",
+      "seed": 123,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 0.001107250340282917,
+      "final_loss_pde": 8.13383303466253e-06,
+      "final_loss_bc": 0.029386697337031364,
+      "final_relative_l2": 0.40842971205711365,
+      "validation_relative_l2": 0.40842971205711365,
+      "validation_linf": 0.23866522312164307,
+      "validation_mse": 0.022219758480787277,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 100.0,
+        "lambda_bc": 0.01
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed42",
+    "run_name": "boundary_starvation_seed42",
+    "seed": 42,
+    "operational_label": "boundary_starvation",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.2297086864709854,
+    "summary": {
+      "run_name": "boundary_starvation_seed42",
+      "seed": 42,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 0.0003045498742721975,
+      "final_loss_pde": 2.338581452931976e-06,
+      "final_loss_bc": 0.00706917280331254,
+      "final_relative_l2": 0.2297086864709854,
+      "validation_relative_l2": 0.2297086864709854,
+      "validation_linf": 0.0888814926147461,
+      "validation_mse": 0.007028448861092329,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 100.0,
+        "lambda_bc": 0.01
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed7",
+    "run_name": "boundary_starvation_seed7",
+    "seed": 7,
+    "operational_label": "boundary_starvation",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.27895691990852356,
+    "summary": {
+      "run_name": "boundary_starvation_seed7",
+      "seed": 7,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 0.0007517950143665075,
+      "final_loss_pde": 5.5819741646701004e-06,
+      "final_loss_bc": 0.019359758123755455,
+      "final_relative_l2": 0.27895691990852356,
+      "validation_relative_l2": 0.27895691990852356,
+      "validation_linf": 0.1925290822982788,
+      "validation_mse": 0.010365230962634087,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 100.0,
+        "lambda_bc": 0.01
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed123",
+    "run_name": "collocation_starvation_seed123",
+    "seed": 123,
+    "operational_label": "unlabeled",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.014711915515363216,
+    "summary": {
+      "run_name": "collocation_starvation_seed123",
+      "seed": 123,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 2.9271348466863856e-05,
+      "final_loss_pde": 6.2815629462420475e-06,
+      "final_loss_bc": 2.2989785065874457e-05,
+      "final_relative_l2": 0.014711915515363216,
+      "validation_relative_l2": 0.014711915515363216,
+      "validation_linf": 0.006687849760055542,
+      "validation_mse": 2.8829897928517312e-05,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 16,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed42",
+    "run_name": "collocation_starvation_seed42",
+    "seed": 42,
+    "operational_label": "unlabeled",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.012528653256595135,
+    "summary": {
+      "run_name": "collocation_starvation_seed42",
+      "seed": 42,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 3.002513767569326e-05,
+      "final_loss_pde": 4.933680429530796e-06,
+      "final_loss_bc": 2.509145633666776e-05,
+      "final_relative_l2": 0.012528653256595135,
+      "validation_relative_l2": 0.012528653256595135,
+      "validation_linf": 0.005173761397600174,
+      "validation_mse": 2.090804628096521e-05,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 16,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed7",
+    "run_name": "collocation_starvation_seed7",
+    "seed": 7,
+    "operational_label": "unlabeled",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.04247501119971275,
+    "summary": {
+      "run_name": "collocation_starvation_seed7",
+      "seed": 7,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 0.00015414654626511037,
+      "final_loss_pde": 7.739961802144535e-06,
+      "final_loss_bc": 0.00014640658628195524,
+      "final_relative_l2": 0.04247501119971275,
+      "validation_relative_l2": 0.04247501119971275,
+      "validation_linf": 0.01624026894569397,
+      "validation_mse": 0.0002403099206276238,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 16,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed123",
+    "run_name": "gradient_conflict_seed123",
+    "seed": 123,
+    "operational_label": "spectral_suppression",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 1.0001258850097656,
+    "summary": {
+      "run_name": "gradient_conflict_seed123",
+      "seed": 123,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 1.0,
+      "final_loss_pde": 1.0,
+      "final_loss_bc": 1.8802959189656576e-09,
+      "final_relative_l2": 1.0001258850097656,
+      "validation_relative_l2": 1.0001258850097656,
+      "validation_linf": 0.5000503063201904,
+      "validation_mse": 0.1332336664199829,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.1,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed42",
+    "run_name": "gradient_conflict_seed42",
+    "seed": 42,
+    "operational_label": "spectral_suppression",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.9579030871391296,
+    "summary": {
+      "run_name": "gradient_conflict_seed42",
+      "seed": 42,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 1.0000319480895996,
+      "final_loss_pde": 1.0,
+      "final_loss_bc": 3.192669464624487e-05,
+      "final_relative_l2": 0.9579030871391296,
+      "validation_relative_l2": 0.9579030871391296,
+      "validation_linf": 0.4830860197544098,
+      "validation_mse": 0.12222156673669815,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.1,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed7",
+    "run_name": "gradient_conflict_seed7",
+    "seed": 7,
+    "operational_label": "spectral_suppression",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.41083061695098877,
+    "summary": {
+      "run_name": "gradient_conflict_seed7",
+      "seed": 7,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 1.4833989143371582,
+      "final_loss_pde": 1.0,
+      "final_loss_bc": 0.483398973941803,
+      "final_relative_l2": 0.41083061695098877,
+      "validation_relative_l2": 0.41083061695098877,
+      "validation_linf": 0.34606248140335083,
+      "validation_mse": 0.022481761872768402,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.1,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/poisson_baseline",
+    "run_name": "poisson_baseline",
+    "seed": 7,
+    "operational_label": "unlabeled",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.020269203931093216,
+    "summary": {
+      "run_name": "poisson_baseline",
+      "seed": 7,
+      "final_step": 49,
+      "total_steps": 10000,
+      "final_loss": 0.40598151087760925,
+      "final_loss_pde": 0.3903234302997589,
+      "final_loss_bc": 0.015658076852560043,
+      "final_relative_l2": 0.14172738790512085,
+      "validation_relative_l2": 0.020269203931093216,
+      "validation_linf": 0.007530719041824341,
+      "validation_mse": 5.4724030633224174e-05,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "forcing": 0.0,
+        "diffusion": 0.01,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh",
+        "init": "xavier",
+        "fourier_embed": false,
+        "fourier_n_freq": 32,
+        "fourier_scale": 1.0
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 10000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0,
+        "resample_every": 0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed42",
+    "run_name": "spectral_suppression_seed42",
+    "seed": 42,
+    "operational_label": "spectral_suppression",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.6084326505661011,
+    "summary": {
+      "run_name": "spectral_suppression_seed42",
+      "seed": 42,
+      "failure_label": "unlabeled",
+      "final_step": 999,
+      "total_steps": 5000,
+      "final_loss": 1190.8167724609375,
+      "final_loss_pde": 986.7105102539062,
+      "final_loss_bc": 204.10623168945312,
+      "final_relative_l2": 0.6084326505661011,
+      "validation_relative_l2": 0.6084326505661011,
+      "validation_linf": 15.817387580871582,
+      "validation_mse": 123.27351379394531,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 50.0,
+        "forcing": 0.0,
+        "diffusion": 0.01,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "activation": "tanh",
+        "init": "xavier",
+        "fourier_embed": false,
+        "fourier_n_freq": 32,
+        "fourier_scale": 1.0
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0,
+        "resample_every": 0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed7",
+    "run_name": "spectral_suppression_seed7",
+    "seed": 7,
+    "operational_label": "spectral_suppression",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.26528653502464294,
+    "summary": {
+      "run_name": "spectral_suppression_seed7",
+      "seed": 7,
+      "failure_label": "unlabeled",
+      "final_step": 999,
+      "total_steps": 5000,
+      "final_loss": 67.02715301513672,
+      "final_loss_pde": 62.38822937011719,
+      "final_loss_bc": 4.6389241218566895,
+      "final_relative_l2": 0.26528653502464294,
+      "validation_relative_l2": 0.26528653502464294,
+      "validation_linf": 6.274045944213867,
+      "validation_mse": 23.435544967651367,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 50.0,
+        "forcing": 0.0,
+        "diffusion": 0.01,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "activation": "tanh",
+        "init": "xavier",
+        "fourier_embed": false,
+        "fourier_n_freq": 32,
+        "fourier_scale": 1.0
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0,
+        "resample_every": 0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed123",
+    "run_name": "success_seed123",
+    "seed": 123,
+    "operational_label": "success",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.002110210945829749,
+    "summary": {
+      "run_name": "success_seed123",
+      "seed": 123,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 2.9504749363695737e-06,
+      "final_loss_pde": 2.313243385287933e-06,
+      "final_loss_bc": 6.372315510816406e-07,
+      "final_relative_l2": 0.002110210945829749,
+      "validation_relative_l2": 0.002110210945829749,
+      "validation_linf": 0.0009146034717559814,
+      "validation_mse": 5.931390205660136e-07,
+      "converged": true,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed42",
+    "run_name": "success_seed42",
+    "seed": 42,
+    "operational_label": "success",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.00027366061112843454,
+    "summary": {
+      "run_name": "success_seed42",
+      "seed": 42,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 3.5461087009025505e-06,
+      "final_loss_pde": 3.3104329304478597e-06,
+      "final_loss_bc": 2.3567574203298136e-07,
+      "final_relative_l2": 0.00027366061112843454,
+      "validation_relative_l2": 0.00027366061112843454,
+      "validation_linf": 0.00016957521438598633,
+      "validation_mse": 9.975374304360685e-09,
+      "converged": true,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed7",
+    "run_name": "success_seed7",
+    "seed": 7,
+    "operational_label": "unlabeled",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.020269203931093216,
+    "summary": {
+      "run_name": "success_seed7",
+      "seed": 7,
+      "final_step": 1999,
+      "total_steps": 5000,
+      "final_loss": 5.018176307203248e-05,
+      "final_loss_pde": 3.867530722345691e-06,
+      "final_loss_bc": 4.631423144019209e-05,
+      "final_relative_l2": 0.020269203931093216,
+      "validation_relative_l2": 0.020269203931093216,
+      "validation_linf": 0.007530719041824341,
+      "validation_mse": 5.4724030633224174e-05,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 1.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 5000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  },
+  {
+    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/test_spectral",
+    "run_name": "test_spectral",
+    "seed": 7,
+    "operational_label": "spectral_suppression",
+    "declared_label": "unlabeled",
+    "mean_grad_cosine": 0.0,
+    "final_rel_l2": 0.2969697117805481,
+    "summary": {
+      "run_name": "test_spectral",
+      "seed": 7,
+      "final_step": 1999,
+      "total_steps": 2000,
+      "final_loss": 27.277671813964844,
+      "final_loss_pde": 7.544463157653809,
+      "final_loss_bc": 19.73320770263672,
+      "final_relative_l2": 0.2969697117805481,
+      "validation_relative_l2": 0.2969697117805481,
+      "validation_linf": 5.988336563110352,
+      "validation_mse": 29.36764144897461,
+      "converged": false,
+      "pde_config": {
+        "name": "poisson_1d",
+        "domain": [
+          -1.0,
+          1.0
+        ],
+        "source": 50.0,
+        "boundary_values": [
+          0.0,
+          0.0
+        ],
+        "validation_points": 1001
+      },
+      "model_config": {
+        "input_dim": 1,
+        "output_dim": 1,
+        "hidden_layers": [
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "activation": "tanh"
+      },
+      "training_config": {
+        "optimizer": "adam",
+        "learning_rate": 0.001,
+        "steps": 2000,
+        "interior_points": 256,
+        "boundary_points": 2,
+        "log_every": 100,
+        "checkpoint_every": 1000,
+        "lambda_pde": 1.0,
+        "lambda_bc": 1.0
+      }
+    }
+  }
+]

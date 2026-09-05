@@ -1,0 +1,40 @@
+logging:
+  activation_layers:
+  - 1
+  save_activations: false
+  save_pointwise_residuals: true
+model:
+  activation: tanh
+  hidden_layers:
+  - 64
+  - 64
+  - 64
+  input_dim: 1
+  output_dim: 1
+pde:
+  boundary_values:
+  - 0.0
+  - 0.0
+  domain:
+  - -1.0
+  - 1.0
+  name: poisson_1d
+  source: 1.0
+  validation_points: 1001
+run:
+  deterministic: true
+  device: cpu
+  dtype: float32
+  name: gradient_conflict_seed123
+  output_dir: runs
+  seed: 123
+training:
+  boundary_points: 2
+  checkpoint_every: 1000
+  interior_points: 256
+  lambda_bc: 1.0
+  lambda_pde: 1.0
+  learning_rate: 0.1
+  log_every: 100
+  optimizer: adam
+  steps: 5000

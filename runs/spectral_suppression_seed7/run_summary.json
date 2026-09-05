@@ -1,0 +1,58 @@
+{
+  "run_name": "spectral_suppression_seed7",
+  "seed": 7,
+  "failure_label": "unlabeled",
+  "final_step": 999,
+  "total_steps": 5000,
+  "final_loss": 67.02715301513672,
+  "final_loss_pde": 62.38822937011719,
+  "final_loss_bc": 4.6389241218566895,
+  "final_relative_l2": 0.26528653502464294,
+  "validation_relative_l2": 0.26528653502464294,
+  "validation_linf": 6.274045944213867,
+  "validation_mse": 23.435544967651367,
+  "converged": false,
+  "pde_config": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 50.0,
+    "forcing": 0.0,
+    "diffusion": 0.01,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model_config": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "activation": "tanh",
+    "init": "xavier",
+    "fourier_embed": false,
+    "fourier_n_freq": 32,
+    "fourier_scale": 1.0
+  },
+  "training_config": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 5000,
+    "interior_points": 256,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0,
+    "resample_every": 0
+  }
+}
