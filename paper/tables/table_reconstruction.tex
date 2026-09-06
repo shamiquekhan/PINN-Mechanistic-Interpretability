@@ -1,0 +1,12 @@
+\begin{tabular}{lcc}
+\toprule
+Model & Test reconstruction MSE & Dead features \\
+\midrule
+TopK SAE (replica 1) & 3.35e-03 & 51\% \\
+TopK SAE (replica 2) & 3.93e-03 & 70\% \\
+TopK SAE (replica 3) & 3.43e-03 & 66\% \\
+k-matched PCA ($k=8$) & 2.66e-04 & --- \\
+PCA (full, 64) & 1.39e-10 & --- \\
+Random-encoder SAE & 4.21e-01 & --- \\
+\bottomrule
+\end{tabular}

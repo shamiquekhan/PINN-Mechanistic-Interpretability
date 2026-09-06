@@ -1,0 +1,123 @@
+\documentclass{article}
+% ---------------------------------------------------------------------------
+% "When Superposition Fails: The Limits of Sparse Autoencoders in
+%  Scientific Machine Learning" — LaTeX skeleton.
+%
+% Build:  pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+%
+% NUMBERS: all headline numbers in the tables are regenerated from the
+% runs/ JSON artifacts by scripts/generate_tables.py (paper/tables/*.tex).
+% Do not hand-edit table values; regenerate instead.
+% Figures: copy figures/generated/*.png into paper/figures/ before building.
+% ---------------------------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\title{When Superposition Fails:\\ The Limits of Sparse Autoencoders in Scientific Machine Learning}
+\author{Shamique Khan}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Physics-informed neural networks (PINNs) fail in reproducible,
+configuration-determined ways, and mechanistic-interpretability tools --- above
+all sparse autoencoders (SAEs) --- have been proposed to diagnose those
+failures. We built the complete pipeline the methodology prescribes: a 10-seed
+failure atlas, TopK SAEs with mandatory PCA/random/probe controls, a
+planted-feature positive control, a multiple-comparison-corrected causal
+battery, leakage-audited early-warning monitors, and a rollback-capable
+closed-loop controller. The result is a hardened negative: SAE-derived features
+carry no causal information beyond matched controls, and the failure is
+\emph{basis-independent} --- PCA components fail the identical battery, and no
+candidate alignment satisfies the interchange criterion of causal abstraction.
+The explanation is representational geometry: local tangent rank exactly equals
+input dimension in all eight PDE families, while covariance participation
+ratios stay far below layer width, so sparse dictionary learning solves a
+problem that does not exist. Finally, we locate the regime boundary from the
+other side: a Fourier neural operator trained on function-space regression has
+participation ratio $6.8$ of $64$, and there the same TopK SAE \emph{beats}
+$k$-matched PCA by $4.7\times$ --- the superposition signature absent from
+every PINN layer. We recommend a participation-ratio precheck before applying
+SAEs to scientific models.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+See \texttt{docs/paper\_draft.md} for the full working draft. Key points:
+PINN opacity and failure modes \cite{krishnapriyan2021characterizing,
+wang2020understanding}; the superposition hypothesis and SAE methodology
+\cite{elbage2022toy,bricken2023towards,gao2025scaling}; recent SAE-skepticism
+\cite{deepmind2025negative,leask2025sparse,korznikov2026saes}; our question:
+\emph{does superposition exist in the model class we apply SAEs to?}
+
+\section{Background}
+\label{sec:background}
+PINN pathologies and adaptive-weight remedies
+\cite{wang2021learning,chen2018gradnorm,anagnostopoulos2024residual}; causal
+abstraction \cite{geiger2021causal,geiger2022inducing}; operator learning
+\cite{li2021fourier,lu2021learning}.
+
+\section{Theory: What Bounds Activation Rank?}
+\label{sec:theory}
+The provable statement is the local tangent-rank bound ($\le d$); covariance
+rank is \emph{not} bounded by input dimension (moment-curve counterexample).
+Full development in \texttt{docs/theory\_activation\_rank.md}. Empirical
+saturation:
+
+\input{tables/table_geometry}
+
+\section{The PINN-MI Pipeline}
+\label{sec:method}
+Preregistered protocols; three mandatory controls; MC corrections; positive
+control gates. \texttt{docs/preregistration.md}.
+
+\section{Empirical Results}
+\label{sec:results}
+
+\subsection{Failure atlas}
+\input{tables/table_failure_atlas}
+
+\subsection{SAE failure with mandatory baselines}
+\input{tables/table_reconstruction}
+
+\subsection{The basis-independent causal null}
+\input{tables/table_causal_batteries}
+
+\subsection{The regime boundary}
+\input{tables/table_regime_boundary}
+
+\subsection{Monitors, controller, and SOTA baselines}
+\input{tables/table_monitor_controller_sota}
+
+% Figures: copy figures/generated/ to paper/figures/ and include e.g.
+% \begin{figure}[t]\centering
+%   \includegraphics[width=0.9\linewidth]{figures/figure_02_activation_geometry.png}
+%   \caption{The activation manifold.}\label{fig:geometry}
+% \end{figure}
+
+\section{What To Do Instead}
+\label{sec:alternative}
+Participation-ratio precheck ($\rho = \mathrm{PR}/W$); linear diagnostics for
+description; gradient/residual signals for prediction and control; SAE
+methodology appropriate when $\rho \gtrsim 0.1$.
+
+\section{Discussion and Limitations}
+\label{sec:discussion}
+Scoped negative; FNO result is reconstruction-level; power analysis (MDE
+$85.7\%$ at 80\% power); controller not optimization SOTA (NTK-adaptive wins
+on its target failure).
+
+\section{Conclusion}
+Check superposition before you sparse-code.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

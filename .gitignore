@@ -43,3 +43,6 @@ ENV/
 
 # Temporary log dumps
 *.log
+
+# Generated figure output (regenerate with scripts/generate_figures.sh)
+figures/generated/

@@ -1,0 +1,25 @@
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff==0.8.4
+      # Non-blocking report for now: the codebase predates the lint config.
+      # Warnings are surfaced so they can be driven to zero over time.
+      - name: Ruff check (report)
+        run: ruff check analysis controller experiments interventions monitoring operators pinn pinn_logging sae tests --select E9,F --exit-zero
+      - name: Ruff format check (diff summary)
+        run: ruff format --check analysis controller experiments interventions monitoring operators pinn pinn_logging sae tests --diff | tail -20 || true

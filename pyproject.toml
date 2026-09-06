@@ -1,7 +1,21 @@
 [project]
 name = "pinn-mechanistic"
-version = "0.1.0"
+version = "3.0.0"
+description = "Mechanistic interpretability for physics-informed neural networks: sparse autoencoders, causal interventions, causal abstraction, early-warning monitors, and closed-loop control"
+readme = "README.md"
+license = { text = "CC-BY-4.0" }
 requires-python = ">=3.10"
+authors = [
+	{ name = "Shamique Khan" },
+]
+keywords = [
+	"physics-informed neural networks",
+	"mechanistic interpretability",
+	"sparse autoencoders",
+	"superposition",
+	"causal abstraction",
+	"scientific machine learning",
+]
 dependencies = [
 	"torch>=2.2",
 	"numpy>=1.26",
@@ -12,14 +26,19 @@ dependencies = [
 	"scipy>=1.10",
 ]
 
+[project.urls]
+Repository = "https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = [
 	"analysis*",
 	"controller*",
 	"experiments*",
+	"figures*",
 	"interventions*",
 	"monitoring*",
+	"operators*",
 	"pinn*",
 	"pinn_logging*",
 	"sae*",

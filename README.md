@@ -2,8 +2,9 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Tests: 139/139 Passed](https://img.shields.io/badge/Tests-139%2F139%20Passed-brightgreen.svg)](tests/)
+[![CI](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml/badge.svg)](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
 
@@ -109,6 +110,15 @@ pytest tests/ -v
 python -m experiments.run_pipeline              # all 13 stages
 python -m experiments.run_pipeline --stages 5   # any subset, e.g. the causal battery
 ```
+
+Reproducibility wrappers (see [docs/reproducibility.md](docs/reproducibility.md)):
+
+```bash
+bash scripts/run_smoke_test.sh           # CPU sanity: tests + short train + geometry (< 5 min)
+bash scripts/reproduce_main_results.sh   # stages 2–13 from committed artifacts + headline verification
+bash scripts/generate_figures.sh         # all publication figures from runs/ JSONs
+bash scripts/generate_tables.sh          # LaTeX tables into paper/tables/
+```
 This automatically executes:
 1. Training PINNs across all baseline & failure configurations.
 2. Indexing the Failure Atlas (`runs/failure_atlas/failure_atlas_index.json`).
@@ -184,14 +194,54 @@ This automatically executes:
 │   ├── preregistration.md    # Preregistered v3 hypotheses & outcomes
 │   ├── paper_draft.md        # NeurIPS-target draft skeleton with measured numbers
 │   └── data_card.md          # Benchmark data card
+├── figures/                  # Publication figure scripts (read runs/ JSONs only)
+│   ├── _common.py            #   shared artifact-loading + style helpers
+│   ├── figure_01..08_*.py    #   one script per paper figure
+│   └── generated/            #   PNG output (git-ignored)
+├── scripts/                  # User-facing reproducibility commands
+│   ├── setup_env.sh          #   pinned venv setup (requirements.lock)
+│   ├── run_smoke_test.sh     #   CPU smoke: tests + 60-step train + geometry
+│   ├── run_full_pipeline.sh  #   full 13-stage campaign (~6 GPU-hours)
+│   ├── reproduce_main_results.sh  # stages 2–13 + headline verification
+│   ├── generate_figures.sh   #   all publication figures
+│   └── generate_tables.{sh,py}  # LaTeX tables from artifacts
+├── paper/                    # Submission artifact (LaTeX)
+│   ├── main.tex, references.bib, README.md
+│   ├── tables/               #   GENERATED — do not hand-edit
+│   ├── figures/, supplementary/
+├── data/
+│   ├── README.md, manifest.json, checksums.sha256   # artifact provenance + SHA256
+├── .github/workflows/        # CI: tests.yml (CPU 3.10/3.12 + smoke), lint.yml
 ├── Dockerfile                # Pinned reproducible environment
+├── LICENSE                   # CC BY 4.0
+├── CITATION.cff              # Machine-readable citation metadata
+├── CHANGELOG.md              # Research + code evolution (v1 → v3)
+├── ROADMAP.md                # Completed / Planned / Future
+├── CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
 ├── DOCUMENTATION.md          # Comprehensive API & pipeline documentation
-└── requirements.txt          # Python dependencies
+├── requirements.txt          # Minimum Python dependencies
+└── requirements.lock         # Fully pinned reference environment
 ```
+
+### Key documentation
+
+| Document | Purpose |
+|---|---|
+| [RESULTS.md](RESULTS.md) | The evidence: every claim with numbers, CIs, and limitations |
+| [docs/preregistration.md](docs/preregistration.md) | Stage 8–13 hypotheses + decision rules, written before running |
+| [docs/experiment_matrix.md](docs/experiment_matrix.md) | Claim → hypothesis → command → artifact → figure map |
+| [docs/reproducibility.md](docs/reproducibility.md) | Environment, seeds, nondeterminism, expected outputs |
+| [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md) | Fresh-environment verification protocol |
+| [docs/theory_activation_rank.md](docs/theory_activation_rank.md) | Provable tangent-rank bound + corrected covariance discussion |
+| [docs/failure_taxonomy.md](docs/failure_taxonomy.md) | Operational failure-mode definitions |
+| [docs/glossary.md](docs/glossary.md) | Terminology used throughout |
+| [docs/data_card.md](docs/data_card.md) | Benchmark provenance, intended use, limitations |
+| [docs/paper_draft.md](docs/paper_draft.md) | Working manuscript draft |
+| [runs/README.md](runs/README.md) | Artifact layout: raw vs derived vs authoritative |
 
 ---
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)** — see the [LICENSE](LICENSE) file for details. Citation metadata: [CITATION.cff](CITATION.cff).

@@ -1,0 +1,88 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # CPU-only smoke scope: the full suite runs on CPU here (verified
+      # locally: 139 tests, ~12 s). CUDA-specific experiments are NOT run
+      # in CI — see docs/reproducibility.md for the full-campaign protocol.
+      - name: Run unit tests (CPU)
+        env:
+          CUDA_VISIBLE_DEVICES: ""
+        run: python -m pytest tests/ -q --durations=10
+
+      - name: Byte-compile all packages
+        run: python -m compileall -q analysis controller experiments interventions monitoring operators pinn pinn_logging sae tests
+
+  # Minimal end-to-end sanity: 200-step boundary-starvation training with
+  # logging, then the effective-rank analysis on the produced logs.
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Short training run + geometry analysis
+        env:
+          CUDA_VISIBLE_DEVICES: ""
+        run: |
+          mkdir -p runs/ci_smoke
+          python - <<'EOF'
+          import json, sys, yaml
+          from pathlib import Path
+          cfg = yaml.safe_load(open("configs/failure_boundary_starvation.yaml"))
+          cfg["run"].update({"name": "ci_smoke", "output_dir": "runs/ci_smoke", "device": "cpu", "seed": 7})
+          cfg["training"].update({"steps": 60, "checkpoint_every": 50, "log_every": 10})
+          cfg["logging"].update({"save_activations": True, "log_gradients": False, "log_diagnostics": False})
+          Path("runs/ci_smoke/ci_smoke.yaml").parent.mkdir(parents=True, exist_ok=True)
+          Path("runs/ci_smoke/ci_smoke.yaml").write_text(yaml.safe_dump(cfg))
+          EOF
+          python -m experiments.train --config runs/ci_smoke/ci_smoke.yaml --steps 60 --log-activations --act-save-raw
+          python - <<'EOF'
+          from pathlib import Path
+          from analysis.effective_rank import analyze_run_activations
+          stats = analyze_run_activations(Path("runs/ci_smoke/ci_smoke"), "layers.1")
+          assert stats and stats.get("n_samples", 0) > 0, "smoke run produced no activation stats"
+          assert "participation_ratio" in stats
+          print("CI smoke OK:", stats)
+          EOF
+      - name: Clean smoke artifacts
+        if: always()
+        run: rm -rf runs/ci_smoke

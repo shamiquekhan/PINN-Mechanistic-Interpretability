@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this framework, benchmark, or results in your research, please cite it as below."
+title: "PINN Mechanistic Interpretability: Sparse Autoencoders, Causal Interventions, and Closed-Loop Control for Physics-Informed Neural Networks"
+type: software
+authors:
+  - family-names: Khan
+    given-names: Shamique
+repository-code: "https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability"
+url: "https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability"
+abstract: >
+  A research framework for analyzing, monitoring, and intervening on
+  optimization failure modes in physics-informed neural networks (PINNs)
+  using sparse autoencoders (SAEs), causal counterfactual interventions,
+  causal-abstraction interchange tests, early-warning monitoring, and
+  closed-loop adaptive control. Includes an 8-family PDE suite, a TopK SAE
+  module with mandatory PCA/random/probe baselines, a
+  multiple-comparison-corrected causal battery, a planted-feature positive
+  control, a dependency-free Fourier Neural Operator (FNO) positive control
+  that measures the low-rank/superposition regime boundary, SOTA
+  optimization baselines, and a fully preregistered 13-stage reproducible
+  pipeline. Headline finding: SAE-derived features provide no causal
+  information beyond matched controls in this benchmark — a result that is
+  basis-independent (PCA components fail the identical battery) — explained
+  by activation geometry (participation ratio ~1.3 of 64 dimensions; local
+  tangent rank exactly equals input dimension), with the regime boundary
+  measured on both sides via the FNO positive control.
+keywords:
+  - physics-informed neural networks
+  - mechanistic interpretability
+  - sparse autoencoders
+  - superposition
+  - causal abstraction
+  - scientific machine learning
+  - negative results
+  - reproducibility
+license: CC-BY-4.0
+commit: "816bd2e"
+date-released: "2026-09-07"
+version: "3.0.0"

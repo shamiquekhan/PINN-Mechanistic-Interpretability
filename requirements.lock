@@ -1,0 +1,17 @@
+# Fully pinned environment for exact reproduction of the v3 campaign.
+# Reference environment: Python 3.13.9, CUDA 12.4, Linux x86_64
+# (see docs/reproducibility.md). Install with:
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.lock
+#
+# NOTE: torch==2.6.0+cu124 installs from the PyTorch index for CUDA 12.4:
+#   pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+# For CPU-only reproduction use: torch==2.6.0 (default PyPI wheel).
+torch==2.6.0+cu124
+numpy==2.3.5
+pydantic==2.13.4
+pyyaml==6.0.3
+matplotlib==3.10.6
+scikit-learn==1.7.2
+pytest==8.4.2
+scipy==1.16.3
