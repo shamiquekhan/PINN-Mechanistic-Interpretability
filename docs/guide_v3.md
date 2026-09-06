@@ -106,6 +106,8 @@ python -m experiments.width_scaling --device cuda --steps 1000
 
 It writes per-width activation logs and `width_scaling_report.json` under `runs/width_scaling/`. The report compares covariance PR with local tangent rank while holding the 1D Poisson task fixed.
 
+The completed six-width pilot (16 through 512, 1,000 steps, seed 0) found PR `1.74–2.00` and local tangent rank `1` at every width. This supports the scoped hypothesis that width alone does not create superposition for this fixed 1D task; it is not a universal theorem and should be followed by higher-dimensional or operator-learning experiments.
+
 **Limitations (mandatory, scoped):** no ruling out SAEs on wide PINNs / ensembles / operator learners (FNOs, DeepONets) where effective rank plausibly exceeds width; monitor results are specific to this held-out failure mixture and window protocol; gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly.
 
 ---

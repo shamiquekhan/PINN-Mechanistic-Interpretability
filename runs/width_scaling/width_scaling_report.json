@@ -1,0 +1,82 @@
+{
+  "input_dim": 1,
+  "widths": [
+    16,
+    32,
+    64,
+    128,
+    256,
+    512
+  ],
+  "seed": 0,
+  "steps": 1000,
+  "results": [
+    {
+      "n_samples": 500,
+      "dim": 16,
+      "participation_ratio": 1.9996530397965344,
+      "stable_rank": 1.3494422642567978,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6,
+      "width": 16,
+      "local_tangent_rank": 1
+    },
+    {
+      "n_samples": 500,
+      "dim": 32,
+      "participation_ratio": 1.8947569093254308,
+      "stable_rank": 1.2776353513008292,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6,
+      "width": 32,
+      "local_tangent_rank": 1
+    },
+    {
+      "n_samples": 500,
+      "dim": 64,
+      "participation_ratio": 1.8229576024363034,
+      "stable_rank": 1.2166191359710024,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 4,
+      "width": 64,
+      "local_tangent_rank": 1
+    },
+    {
+      "n_samples": 500,
+      "dim": 128,
+      "participation_ratio": 1.7395891131599877,
+      "stable_rank": 1.1753006188337736,
+      "n_components_95pct": 2,
+      "n_components_99pct": 2,
+      "n_components_999pct": 3,
+      "width": 128,
+      "local_tangent_rank": 1
+    },
+    {
+      "n_samples": 500,
+      "dim": 256,
+      "participation_ratio": 1.9649871013043587,
+      "stable_rank": 1.431823716870556,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 4,
+      "width": 256,
+      "local_tangent_rank": 1
+    },
+    {
+      "n_samples": 500,
+      "dim": 512,
+      "participation_ratio": 1.794686826759103,
+      "stable_rank": 1.1189801698430089,
+      "n_components_95pct": 3,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7,
+      "width": 512,
+      "local_tangent_rank": 1
+    }
+  ],
+  "interpretation": "Compare PR and local tangent rank empirically; input dimension does not impose a covariance-rank bound on curved activation manifolds."
+}

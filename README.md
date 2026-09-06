@@ -25,6 +25,8 @@ The current benchmark is a scoped negative mechanistic result, not a claim that 
 
 The conventional and SAE-augmented monitors are evaluable on the final held-out split (AUROC 0.872 and 0.878; run-level 95% CIs [0.795, 0.953] and [0.806, 0.958]). Their intervals overlap, so the benchmark does not establish an SAE advantage. The controller rescue result is reported separately as an engineering result. Gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly. See [RESULTS.md](RESULTS.md) for the complete evidence and limitations.
 
+A width-scaling follow-up over widths 16–512 on the fixed 1D Poisson task found PR `1.74–2.00` and local tangent rank `1` at every width. This is evidence about this task family, not a universal rank bound; higher-dimensional and operator-learning settings remain future boundary experiments.
+
 ---
 
 ## Framework Architecture

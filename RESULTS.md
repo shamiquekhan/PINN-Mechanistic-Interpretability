@@ -113,6 +113,21 @@ This single measurement explains every negative SAE result simultaneously:
 
 **Implication for the field:** interpretability tools validated on LLM residual streams (where superposition is abundant) may not transfer to small scientific networks trained on narrow, low-dimensional objectives. We state this as a **scoped negative result**: nothing here rules out SAEs on wide PINN ensembles, higher-dimensional PDE parameterizations, or operator-learning models (FNOs, DeepONets) where the effective rank of representations is plausibly much higher. Testing that boundary is the natural follow-up.
 
+### 5.1 Width-scaling follow-up
+
+To test whether raw width alone creates superposition, the fixed 1D Poisson task was trained for 1,000 steps at widths 16, 32, 64, 128, 256, and 512. The local tangent rank was 1 at every width, while covariance PR stayed between 1.74 and 2.00:
+
+| Width | PR | Stable rank | Local tangent rank | PCA components (95% / 99%) |
+| :---: | ---: | ---: | ---: | ---: |
+| 16 | 2.000 | 1.349 | 1 | 2 / 3 |
+| 32 | 1.895 | 1.278 | 1 | 2 / 3 |
+| 64 | 1.823 | 1.217 | 1 | 2 / 3 |
+| 128 | 1.740 | 1.175 | 1 | 2 / 2 |
+| 256 | 1.965 | 1.432 | 1 | 2 / 3 |
+| 512 | 1.795 | 1.119 | 1 | 3 / 4 |
+
+This supports the narrower claim that increasing width without increasing task or input complexity did not produce observed superposition in this benchmark. It is a single-seed follow-up and does not establish a universal width law. Artifact: `runs/width_scaling/width_scaling_report.json`.
+
 ---
 
 ## 6. Early-Warning Monitors (run-level splits, leakage-audited, with CIs)
