@@ -170,7 +170,10 @@ class Poisson2D(BasePDE):
         grad_u = torch.autograd.grad(u, x, torch.ones_like(u), create_graph=True)[0]
         u_xx = torch.autograd.grad(grad_u[:, 0:1], x, torch.ones_like(grad_u[:, 0:1]), create_graph=True)[0][:, 0:1]
         u_yy = torch.autograd.grad(grad_u[:, 1:2], x, torch.ones_like(grad_u[:, 1:2]), create_graph=True)[0][:, 1:2]
-        return u_xx + u_yy + 2.0 * math.pi ** 2 * u
+        x_norm = (x[:, 0:1] - self.left) / (self.right - self.left)
+        y_norm = (x[:, 1:2] - self.bottom) / (self.top - self.bottom)
+        forcing = 2.0 * math.pi ** 2 * self.source * torch.sin(math.pi * x_norm) * torch.sin(math.pi * y_norm)
+        return u_xx + u_yy + forcing
 
     def boundary_residual(self, model: torch.nn.Module) -> torch.Tensor:
         device = next(model.parameters()).device

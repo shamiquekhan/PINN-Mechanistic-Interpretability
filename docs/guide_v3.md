@@ -108,7 +108,7 @@ It writes per-width activation logs and `width_scaling_report.json` under `runs/
 
 The completed six-width pilot (16 through 512, 1,000 steps, seed 0) found PR `1.74–2.00` and local tangent rank `1` at every width. This supports the scoped hypothesis that width alone does not create superposition for this fixed 1D task; it is not a universal theorem and should be followed by higher-dimensional or operator-learning experiments.
 
-A manufactured 2D Poisson prototype is now available at `configs/poisson_2d_boundary.yaml`. It exercises the same validated training and activation-logging path with two-dimensional coordinates and a rectangular boundary. This is an integration prototype and dimensional-boundary starting point, not yet a completed 2D qualification matrix or causal battery.
+A manufactured 2D Poisson prototype is now available at `configs/poisson_2d_boundary.yaml`. A five-seed pilot is complete: PR `2.89–3.17` (mean `3.03`) and local tangent rank `2` at every seed, versus PR `1.74–2.00` and tangent rank `1` in the 1D width study. This is dimensional-boundary evidence, not yet a 2D SAE or causal battery.
 
 **Limitations (mandatory, scoped):** no ruling out SAEs on wide PINNs / ensembles / operator learners (FNOs, DeepONets) where effective rank plausibly exceeds width; monitor results are specific to this held-out failure mixture and window protocol; gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly.
 

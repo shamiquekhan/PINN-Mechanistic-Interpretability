@@ -1,0 +1,84 @@
+{
+  "dimension": 2,
+  "pde": "poisson_2d",
+  "seeds": [
+    7,
+    42,
+    123,
+    2024,
+    2025
+  ],
+  "steps": 1000,
+  "results": [
+    {
+      "n_samples": 8000,
+      "dim": 32,
+      "participation_ratio": 3.1586382241988695,
+      "stable_rank": 2.0179440934505966,
+      "n_components_95pct": 4,
+      "n_components_99pct": 6,
+      "n_components_999pct": 10,
+      "seed": 7,
+      "final_relative_l2": 0.22175715863704681,
+      "local_tangent_rank": 2
+    },
+    {
+      "n_samples": 8000,
+      "dim": 32,
+      "participation_ratio": 2.892407169073472,
+      "stable_rank": 1.5426943614271806,
+      "n_components_95pct": 3,
+      "n_components_99pct": 6,
+      "n_components_999pct": 9,
+      "seed": 42,
+      "final_relative_l2": 0.20632411539554596,
+      "local_tangent_rank": 2
+    },
+    {
+      "n_samples": 8000,
+      "dim": 32,
+      "participation_ratio": 3.172056135756821,
+      "stable_rank": 1.9139257925674866,
+      "n_components_95pct": 4,
+      "n_components_99pct": 6,
+      "n_components_999pct": 10,
+      "seed": 123,
+      "final_relative_l2": 0.2127697765827179,
+      "local_tangent_rank": 2
+    },
+    {
+      "n_samples": 8000,
+      "dim": 32,
+      "participation_ratio": 2.9036139788305184,
+      "stable_rank": 1.6284940454357724,
+      "n_components_95pct": 3,
+      "n_components_99pct": 6,
+      "n_components_999pct": 9,
+      "seed": 2024,
+      "final_relative_l2": 0.2122308611869812,
+      "local_tangent_rank": 2
+    },
+    {
+      "n_samples": 8000,
+      "dim": 32,
+      "participation_ratio": 3.0428175418895616,
+      "stable_rank": 1.8856339621978149,
+      "n_components_95pct": 3,
+      "n_components_99pct": 5,
+      "n_components_999pct": 9,
+      "seed": 2025,
+      "final_relative_l2": 0.20256778597831726,
+      "local_tangent_rank": 2
+    }
+  ],
+  "summary": {
+    "mean_participation_ratio": 3.0339066099498484,
+    "min_participation_ratio": 2.892407169073472,
+    "max_participation_ratio": 3.172056135756821,
+    "all_tangent_ranks": [
+      2
+    ],
+    "mean_final_relative_l2": 0.21112993955612183
+  },
+  "interpretation": "This is a dimensional-boundary pilot. Compare 2D PR with the 1D width study; do not infer a covariance-rank theorem from input dimension."
+}

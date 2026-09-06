@@ -128,6 +128,17 @@ To test whether raw width alone creates superposition, the fixed 1D Poisson task
 
 This supports the narrower claim that increasing width without increasing task or input complexity did not produce observed superposition in this benchmark. It is a single-seed follow-up and does not establish a universal width law. Artifact: `runs/width_scaling/width_scaling_report.json`.
 
+### 5.2 Two-dimensional boundary pilot
+
+The manufactured 2D Poisson prototype was run for five seeds with the same 32-wide, three-hidden-layer architecture and 1,000 training steps. The corrected forcing term was required to prevent the trivial zero solution. Across seeds, local tangent rank was 2 and participation ratio was 2.89–3.17 (mean 3.03), compared with 1.74–2.00 in the 1D width study:
+
+| Dimension | Seeds | Mean PR | PR range | Tangent ranks | Mean final rel $L_2$ |
+| :---: | ---: | ---: | ---: | :---: | ---: |
+| 1D width study | 6 | — | 1.74–2.00 | 1 | — |
+| 2D Poisson | 5 | 3.03 | 2.89–3.17 | 2 | 0.211 |
+
+This is evidence that increasing domain dimension raises the observed covariance effective rank while preserving the expected local tangent-dimension distinction. It is a boundary-mapping pilot, not evidence that SAEs are causally useful in 2D; no 2D SAE or intervention battery has been run. Artifact: `runs/dimensional_boundary_2d/dimensional_boundary_report.json`.
+
 ---
 
 ## 6. Early-Warning Monitors (run-level splits, leakage-audited, with CIs)
@@ -192,7 +203,7 @@ This validates the *controller engineering* (bounded actions, genuine rollback, 
 ## Reproduction
 
 ```bash
-python -m pytest tests/                                   # 97 tests, all passing
+python -m pytest tests/                                   # 98 tests, all passing
 python -m experiments.positive_control                    # planted-feature pipeline sanity
 python -m analysis.effective_rank                         # participation-ratio analysis
 python -m experiments.run_pipeline --stages 2            # failure atlas + 10-seed stats

@@ -197,6 +197,13 @@ class TestEffectiveRank:
         projected = pca_projection(data, n_components=3)
         assert projected.shape == (10, 3)
 
+    def test_multidimensional_tangent_rank(self):
+        grid = np.linspace(-1.0, 1.0, 10)
+        x, y = np.meshgrid(grid, grid, indexing="ij")
+        coords = np.stack([x.ravel(), y.ravel()], axis=1)
+        values = np.stack([coords[:, 0], coords[:, 1], coords[:, 0] * coords[:, 1]], axis=1)
+        assert local_tangent_rank(values, coordinates=coords) == 2
+
     def test_participation_ratio_1d_curve(self):
         """A 1D curve embedded in 64 dims must have PR near 1 (PINN case)."""
         t = np.linspace(0, 6 * np.pi, 2000)

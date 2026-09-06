@@ -75,14 +75,21 @@ def local_tangent_rank(
         elif coords.ndim == 2 and coords.shape[0] == values.shape[0]:
             # Centered local neighborhoods provide a coordinate-to-activation
             # least-squares Jacobian without requiring a symbolic model.
-            jacobians = []
+            local_ranks = []
             for index in range(len(values)):
                 distances = np.linalg.norm(coords - coords[index], axis=1)
                 neighbors = np.argsort(distances)[1 : min(len(values), 2 * coords.shape[1] + 2)]
                 delta_coords = coords[neighbors] - coords[index]
                 delta_values = values[neighbors] - values[index]
-                jacobians.append(np.linalg.lstsq(delta_coords, delta_values, rcond=None)[0])
-            singular_values = np.linalg.svd(np.concatenate(jacobians), compute_uv=False)
+                jacobian = np.linalg.lstsq(delta_coords, delta_values, rcond=None)[0]
+                singular_values = np.linalg.svd(jacobian, compute_uv=False)
+                if singular_values.size == 0 or singular_values[0] <= 0:
+                    local_ranks.append(0)
+                else:
+                    local_ranks.append(int(np.sum(
+                        singular_values > singular_values[0] * tolerance
+                    )))
+            return max(local_ranks, default=0)
         else:
             raise ValueError("coordinates must have shape (n_samples,) or (n_samples, input_dim)")
 

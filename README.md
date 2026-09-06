@@ -26,7 +26,7 @@ The current benchmark is a scoped negative mechanistic result, not a claim that 
 
 The conventional and SAE-augmented monitors are evaluable on the final held-out split (AUROC 0.872 and 0.878; run-level 95% CIs [0.795, 0.953] and [0.806, 0.958]). Their intervals overlap, so the benchmark does not establish an SAE advantage. The controller rescue result is reported separately as an engineering result. Gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly. See [RESULTS.md](RESULTS.md) for the complete evidence and limitations.
 
-A width-scaling follow-up over widths 16–512 on the fixed 1D Poisson task found PR `1.74–2.00` and local tangent rank `1` at every width. This is evidence about this task family, not a universal rank bound; higher-dimensional and operator-learning settings remain future boundary experiments.
+A width-scaling follow-up over widths 16–512 on the fixed 1D Poisson task found PR `1.74–2.00` and local tangent rank `1` at every width. The first five-seed 2D Poisson pilot raised PR to `2.89–3.17` with tangent rank `2`. These are scoped geometry measurements, not universal rank bounds or causal SAE results.
 
 ---
 
@@ -95,7 +95,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 97 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 98 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -158,7 +158,7 @@ This automatically executes:
 │   ├── qualification.py      # Seed matrix qualification gate runner
 │   ├── width_scaling.py      # PR/tangent-rank width follow-up
 │   └── run_pipeline.py       # Master end-to-end research campaign execution script
-├── tests/                    # Comprehensive Unit Test Suite (97 tests)
+├── tests/                    # Comprehensive Unit Test Suite (98 tests)
 │   └── unit/
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
 ├── DOCUMENTATION.md          # Comprehensive API & pipeline documentation
