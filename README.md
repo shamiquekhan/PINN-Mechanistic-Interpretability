@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests: 92/92 Passed](https://img.shields.io/badge/Tests-92%2F92%20Passed-brightgreen.svg)](tests/)
+[![Tests: 94/94 Passed](https://img.shields.io/badge/Tests-94%2F94%20Passed-brightgreen.svg)](tests/)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, early-warning monitors, and closed-loop adaptive control.
 
@@ -92,7 +92,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 92 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 94 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -137,6 +137,7 @@ This automatically executes:
 │   ├── state_machine.py      # Deterministic state machine controller
 │   └── actions.py            # 4 corrective action handlers (BC reweight, GradNorm, Resample, Fourier)
 ├── analysis/                 # Diagnostic & Reporting Tools
+│   ├── activation_manifold.py # Tangent-rank and PCA manifold diagnostics
 │   ├── failure_atlas.py      # Quantitative Failure Atlas aggregator & indexer
 │   ├── feature_dictionary.py # Physics-Feature Dictionary markdown reporter
 │   └── evaluate.py           # Evaluation script for completed runs
@@ -151,8 +152,9 @@ This automatically executes:
 ├── experiments/              # Execution Scripts
 │   ├── train.py              # Single experiment trainer
 │   ├── qualification.py      # Seed matrix qualification gate runner
+│   ├── width_scaling.py      # PR/tangent-rank width follow-up
 │   └── run_pipeline.py       # Master end-to-end research campaign execution script
-├── tests/                    # Comprehensive Unit Test Suite (92 tests)
+├── tests/                    # Comprehensive Unit Test Suite (94 tests)
 │   └── unit/
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
 ├── DOCUMENTATION.md          # Comprehensive API & pipeline documentation

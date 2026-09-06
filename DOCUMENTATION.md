@@ -201,4 +201,4 @@ python -m compileall -q analysis controller experiments interventions monitoring
 python -m pytest -q
 ```
 
-The current baseline is 92 passing tests. On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.
+The current baseline is 94 passing tests. On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.

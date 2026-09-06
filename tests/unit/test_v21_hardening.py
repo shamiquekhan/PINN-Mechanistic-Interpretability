@@ -22,6 +22,12 @@ from experiments.positive_control import (
 from analysis.effective_rank import (
     participation_ratio, stable_rank, pca_components_for_energy,
 )
+from analysis.activation_manifold import (
+    affine_covariance_rank_bound,
+    local_tangent_rank,
+    local_tangent_rank_bound,
+    pca_projection,
+)
 from sae.model import SparseAutoencoder
 from interventions.engine import SAEInterventionHook
 from pinn.model import MLP
@@ -179,6 +185,18 @@ class TestPositiveControl:
 # ---------------------------------------------------------------------------
 
 class TestEffectiveRank:
+    def test_tangent_rank_and_covariance_rank_are_distinct(self):
+        t = np.linspace(-1, 1, 200)
+        curve = np.stack([t, t ** 2, t ** 3], axis=1)
+        assert local_tangent_rank_bound(1) == 1
+        assert local_tangent_rank(curve, coordinates=t) == 1
+        assert affine_covariance_rank_bound(len(curve), curve.shape[1]) == 3
+
+    def test_activation_manifold_pca_projection(self):
+        data = np.arange(20, dtype=np.float64).reshape(10, 2)
+        projected = pca_projection(data, n_components=3)
+        assert projected.shape == (10, 3)
+
     def test_participation_ratio_1d_curve(self):
         """A 1D curve embedded in 64 dims must have PR near 1 (PINN case)."""
         t = np.linspace(0, 6 * np.pi, 2000)

@@ -96,6 +96,16 @@ SAEs presuppose superposition: more features than neurons. Measure whether the t
 
 **Discussion's real contribution:** the participation-ratio precondition test as a cheap, general *go/no-go diagnostic* for whether sparse-autoencoder interpretability is even applicable to a given scientific network — before investing in dictionary learning. Test PR/dim first; if it's ≪ 1, the SAE program is solving a nonexistent problem and linear tools are the ceiling.
 
+**Theoretical caution:** low-dimensional input implies a low-dimensional local tangent space, not a universal covariance-rank bound. Curved one-dimensional activation manifolds can have covariance rank greater than two. Treat PR, stable rank, PCA energy, and local tangent rank as empirical measurements; do not present `PR ≤ d + 1` as a theorem without additional assumptions.
+
+The first width-scaling follow-up is available at `experiments/width_scaling.py`:
+
+```bash
+python -m experiments.width_scaling --device cuda --steps 1000
+```
+
+It writes per-width activation logs and `width_scaling_report.json` under `runs/width_scaling/`. The report compares covariance PR with local tangent rank while holding the 1D Poisson task fixed.
+
 **Limitations (mandatory, scoped):** no ruling out SAEs on wide PINNs / ensembles / operator learners (FNOs, DeepONets) where effective rank plausibly exceeds width; monitor results are specific to this held-out failure mixture and window protocol; gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly.
 
 ---
