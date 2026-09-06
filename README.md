@@ -13,6 +13,7 @@ A GPU-accelerated research framework for analyzing, monitoring, and intervening 
 
 - **GPU-Native Core Architecture (`pinn/`)**: Reusable `PINNTrainer`, named layer activations, parameter count utilities, Xavier/Kaiming initializations, and Random Fourier Feature Embeddings ($x \mapsto [\sin(Bx), \cos(Bx)]$).
 - **Unified PDE Specification Engine (`pinn/pdes.py`)**: Unified interface supporting **Poisson 1D**, **Advection 1D**, and **Reaction-Diffusion 1D** equations with exact solutions, validation grids, and boundary residual computations.
+- **Dimensional boundary prototype**: A manufactured **2D Poisson** benchmark is available through the same config/factory/training path for the next effective-rank experiment.
 - **Sparse Autoencoder Feature Discovery (`sae/`)**: TopK and legacy ReLU+L1 SAEs with activation normalization, decoder unit-norm enforcement, dead-feature tracking, run-level splits, PCA/random baselines, and cross-seed feature matching.
 - **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine supporting targeted, unrelated, norm-matched random, and supervised probe controls with quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics.
 - **Early-Warning Failure Monitoring (`monitoring/`)**: Past-only sliding window trajectory feature extractors with strict `leakage_audit` verification, threshold degradation alarms, and logistic early-warning classifiers.
@@ -94,7 +95,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 94 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 97 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -145,6 +146,7 @@ This automatically executes:
 │   └── evaluate.py           # Evaluation script for completed runs
 ├── configs/                  # Experiment Config Files (YAML)
 │   ├── poisson_baseline.yaml
+│   ├── poisson_2d_boundary.yaml
 │   ├── advection_1d_baseline.yaml
 │   ├── reaction_diffusion_1d_baseline.yaml
 │   ├── failure_boundary_starvation.yaml
@@ -156,7 +158,7 @@ This automatically executes:
 │   ├── qualification.py      # Seed matrix qualification gate runner
 │   ├── width_scaling.py      # PR/tangent-rank width follow-up
 │   └── run_pipeline.py       # Master end-to-end research campaign execution script
-├── tests/                    # Comprehensive Unit Test Suite (94 tests)
+├── tests/                    # Comprehensive Unit Test Suite (97 tests)
 │   └── unit/
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
 ├── DOCUMENTATION.md          # Comprehensive API & pipeline documentation

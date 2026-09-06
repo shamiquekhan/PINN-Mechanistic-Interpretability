@@ -26,6 +26,18 @@ python -m experiments.train \
 - `--act-save-raw`: Saves raw activation vectors to `activations.jsonl` for SAE training.
 - `--log-diagnostics`: Computes spatial residual profiles and error statistics.
 
+The first dimensional-boundary prototype is a manufactured 2D Poisson problem:
+
+```bash
+python -m experiments.train \
+    --config configs/poisson_2d_boundary.yaml \
+    --steps 1000 \
+    --log-activations \
+    --act-save-raw
+```
+
+It uses `input_dim: 2`, rectangular `domain_y`, two-dimensional interior samples, perimeter boundary points, and a fixed 20x20 probe grid. The 2D diagnostics path is intentionally limited to training, validation, and activation geometry; the existing 1D spatial diagnostics remain unchanged.
+
 ---
 
 ## 2. Qualification Gate Suite
@@ -201,4 +213,4 @@ python -m compileall -q analysis controller experiments interventions monitoring
 python -m pytest -q
 ```
 
-The current baseline is 94 passing tests. On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.
+The current baseline is 97 passing tests. On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.

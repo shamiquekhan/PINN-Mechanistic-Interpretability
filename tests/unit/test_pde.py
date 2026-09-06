@@ -1,7 +1,7 @@
 """Tests for PDE implementations: residual correctness, boundary evaluation, AD vs FD."""
 import pytest
 import torch
-from pinn.pdes import Poisson1D, Advection1D, ReactionDiffusion1D, make_pde
+from pinn.pdes import Poisson1D, Poisson2D, Advection1D, ReactionDiffusion1D, make_pde
 from pinn.model import MLP
 
 
@@ -101,6 +101,26 @@ class TestAdvection1D:
     def test_validation_grid(self):
         xv = self.pde.validation_grid(100, DEVICE, DTYPE)
         assert xv.shape == (100, 1)
+
+
+class TestPoisson2D:
+    def setup_method(self):
+        self.pde = Poisson2D(source=1.5)
+
+    def test_exact_satisfies_boundary(self):
+        points = self.pde.boundary_points(DEVICE, DTYPE)
+        assert torch.max(torch.abs(self.pde.exact(points))) < 1e-12
+
+    def test_exact_satisfies_residual(self):
+        model = _make_model_from_pde(self.pde)
+        x = self.pde.sample_interior(32, DEVICE, DTYPE)
+        residual = self.pde.residual(lambda z: self.pde.exact(z), x)
+        assert residual.abs().max().item() < 1e-8
+
+    def test_shapes_and_sampling(self):
+        assert self.pde.sample_interior(16, DEVICE, DTYPE).shape == (16, 2)
+        assert self.pde.validation_grid(25, DEVICE, DTYPE).shape[1] == 2
+        assert self.pde.boundary_points(DEVICE, DTYPE).shape[1] == 2
 
 
 # ---------------------------------------------------------------------------

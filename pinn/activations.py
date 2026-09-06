@@ -91,6 +91,11 @@ def create_probe_points(config: 'ExperimentConfig') -> ProbePointConfig:
     if pde.name == 'poisson_1d':
         n_probe = 50
         x_probe = torch.linspace(pde.domain[0], pde.domain[1], n_probe).reshape(-1, 1).tolist()
+    elif pde.name == 'poisson_2d':
+        axis = torch.linspace(pde.domain[0], pde.domain[1], 20)
+        y_axis = torch.linspace(pde.domain_y[0], pde.domain_y[1], 20)
+        grid_x, grid_y = torch.meshgrid(axis, y_axis, indexing='ij')
+        x_probe = torch.stack([grid_x.flatten(), grid_y.flatten()], dim=1).tolist()
     else:
         x_probe = torch.linspace(pde.domain[0], pde.domain[1], 50).reshape(-1, 1).tolist()
     

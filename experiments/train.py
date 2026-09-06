@@ -2,8 +2,8 @@ import argparse, json
 from pathlib import Path
 import torch
 from pinn.config import load_config
+from pinn.pdes import make_pde
 from pinn.reproducibility import set_seed
-from pinn.pdes import Poisson1D
 from pinn.model import MLP
 from pinn.gradients import compute_per_loss_gradients, log_gradient_stats
 from pinn.activations import ActivationLogger, create_probe_points
@@ -30,7 +30,7 @@ def main():
     device = torch.device(cfg.run.device)
     dtype = getattr(torch, cfg.run.dtype)
 
-    pde = Poisson1D(*cfg.pde.domain, cfg.pde.source, *cfg.pde.boundary_values)
+    pde = make_pde(cfg.pde)
     model = MLP(cfg.model.input_dim, cfg.model.output_dim, cfg.model.hidden_layers, cfg.model.activation).to(device=device, dtype=dtype)
     opt = torch.optim.Adam(model.parameters(), lr=cfg.training.learning_rate)
 
@@ -57,25 +57,23 @@ def main():
         save_raw=args.act_save_raw
     ) if args.log_activations else None
     
-    bin_config = SpatialBinConfig(
-        n_bins=10,
-        domain_left=pde.left,
-        domain_right=pde.right
-    )
-    diag_logger = DiagnosticsLogger(model, pde, bin_config, log_every=args.diag_log_every) if args.log_diagnostics else None
+    diag_logger = None
+    if args.log_diagnostics:
+        if cfg.pde.name != 'poisson_1d':
+            raise ValueError('diagnostics logging currently supports only 1D PDEs')
+        bin_config = SpatialBinConfig(n_bins=10, domain_left=pde.left, domain_right=pde.right)
+        diag_logger = DiagnosticsLogger(model, pde, bin_config, log_every=args.diag_log_every)
     
     if act_logger:
         act_logger.setup(device, dtype)
 
     for step in range(start, steps):
-        x = torch.rand(cfg.training.interior_points, 1, device=device, dtype=dtype) * (pde.right - pde.left) + pde.left
+        x = pde.sample_interior(cfg.training.interior_points, device, dtype,
+                    spatial_bias=cfg.training.spatial_bias)
         r = pde.residual(model, x)
         lp = (r ** 2).mean()
 
-        xb = pde.boundary_points(device, dtype)
-        ub = model(xb)
-        target = torch.tensor([[pde.left_bc], [pde.right_bc]], device=device, dtype=dtype)
-        lb = ((ub - target) ** 2).mean()
+        lb = pde.boundary_residual(model).mean()
 
         loss = cfg.training.lambda_pde * lp + cfg.training.lambda_bc * lb
         opt.zero_grad()

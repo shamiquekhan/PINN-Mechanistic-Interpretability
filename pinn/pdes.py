@@ -12,6 +12,7 @@ from __future__ import annotations
 import abc
 from dataclasses import dataclass, field, asdict
 from typing import Dict, Optional, Tuple
+import math
 import torch
 
 
@@ -134,6 +135,77 @@ class Poisson1D(BasePDE):
 
     def to_dict(self) -> Dict:
         return {**super().to_dict(), "source": self.source, "left_bc": self.left_bc, "right_bc": self.right_bc}
+
+
+@dataclass
+class Poisson2D(BasePDE):
+    """Manufactured 2D Poisson benchmark on a rectangular domain.
+
+    The exact solution is ``source * sin(pi*x) * sin(pi*y)`` after mapping
+    both coordinates to [0, 1]. The residual is the corresponding homogeneous
+    Helmholtz form, which gives a smooth zero-Dirichlet 2D boundary problem.
+    """
+    left: float = 0.0
+    right: float = 1.0
+    bottom: float = 0.0
+    top: float = 1.0
+    source: float = 1.0
+
+    @property
+    def name(self) -> str:
+        return "poisson_2d"
+
+    @property
+    def domain(self) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+        return ((self.left, self.right), (self.bottom, self.top))
+
+    def exact(self, x: torch.Tensor) -> torch.Tensor:
+        x_norm = (x[:, 0:1] - self.left) / (self.right - self.left)
+        y_norm = (x[:, 1:2] - self.bottom) / (self.top - self.bottom)
+        return self.source * torch.sin(math.pi * x_norm) * torch.sin(math.pi * y_norm)
+
+    def residual(self, model: torch.nn.Module, x: torch.Tensor) -> torch.Tensor:
+        x = x.requires_grad_(True)
+        u = model(x)
+        grad_u = torch.autograd.grad(u, x, torch.ones_like(u), create_graph=True)[0]
+        u_xx = torch.autograd.grad(grad_u[:, 0:1], x, torch.ones_like(grad_u[:, 0:1]), create_graph=True)[0][:, 0:1]
+        u_yy = torch.autograd.grad(grad_u[:, 1:2], x, torch.ones_like(grad_u[:, 1:2]), create_graph=True)[0][:, 1:2]
+        return u_xx + u_yy + 2.0 * math.pi ** 2 * u
+
+    def boundary_residual(self, model: torch.nn.Module) -> torch.Tensor:
+        device = next(model.parameters()).device
+        dtype = next(model.parameters()).dtype
+        points = self.boundary_points(device, dtype)
+        return model(points) ** 2
+
+    def boundary_points(self, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
+        edge = torch.linspace(self.left, self.right, 20, device=device, dtype=dtype)
+        side = torch.linspace(self.bottom, self.top, 20, device=device, dtype=dtype)
+        return torch.cat([
+            torch.stack([edge, torch.full_like(edge, self.bottom)], dim=1),
+            torch.stack([edge, torch.full_like(edge, self.top)], dim=1),
+            torch.stack([torch.full_like(side, self.left), side], dim=1),
+            torch.stack([torch.full_like(side, self.right), side], dim=1),
+        ], dim=0)
+
+    def sample_interior(self, n: int, device: torch.device, dtype: torch.dtype, seed: Optional[int] = None, spatial_bias: Optional[float] = None) -> torch.Tensor:
+        generator = torch.Generator(device=device)
+        if seed is not None:
+            generator.manual_seed(seed)
+        x = torch.rand(n, 2, device=device, dtype=dtype, generator=generator)
+        x[:, 0] = x[:, 0] * (self.right - self.left) + self.left
+        x[:, 1] = x[:, 1] * (self.top - self.bottom) + self.bottom
+        return x
+
+    def validation_grid(self, n: int, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
+        side = max(2, int(math.ceil(math.sqrt(n))))
+        x = torch.linspace(self.left, self.right, side, device=device, dtype=dtype)
+        y = torch.linspace(self.bottom, self.top, side, device=device, dtype=dtype)
+        grid_x, grid_y = torch.meshgrid(x, y, indexing="ij")
+        return torch.stack([grid_x.flatten(), grid_y.flatten()], dim=1)
+
+    def to_dict(self) -> Dict:
+        return {**super().to_dict(), "domain_y": [self.bottom, self.top], "source": self.source}
 
 
 # ---------------------------------------------------------------------------
@@ -303,6 +375,14 @@ def make_pde(cfg) -> BasePDE:
             source=cfg.source,
             left_bc=cfg.boundary_values[0],
             right_bc=cfg.boundary_values[1],
+        )
+    elif name == "poisson_2d":
+        if cfg.domain_y is None:
+            raise ValueError("poisson_2d requires domain_y=[bottom, top]")
+        return Poisson2D(
+            left=cfg.domain[0], right=cfg.domain[1],
+            bottom=cfg.domain_y[0], top=cfg.domain_y[1],
+            source=cfg.source,
         )
     elif name == "advection_1d":
         return Advection1D(
