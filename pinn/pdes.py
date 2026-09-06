@@ -56,13 +56,28 @@ class BasePDE(abc.ABC):
         device: torch.device,
         dtype: torch.dtype,
         seed: Optional[int] = None,
+        spatial_bias: Optional[float] = None,
     ) -> torch.Tensor:
-        """Uniform random interior sample.  Override for adaptive strategies."""
+        """Uniform or biased random interior sample.
+        spatial_bias in [0,1]: probability mass concentrated near boundaries.
+        """
         lo, hi = self.domain
         gen = torch.Generator(device=device)
         if seed is not None:
             gen.manual_seed(seed)
-        return torch.rand(n, 1, device=device, dtype=dtype, generator=gen) * (hi - lo) + lo
+        if spatial_bias is None or spatial_bias == 0.0:
+            return torch.rand(n, 1, device=device, dtype=dtype, generator=gen) * (hi - lo) + lo
+        # Use only generator-aware tensor operations so seeded sampling stays
+        # reproducible on both CPU and CUDA.
+        boundary_mask = torch.rand(
+            n, 1, device=device, dtype=dtype, generator=gen
+        ) < spatial_bias
+        side = torch.rand(n, 1, device=device, dtype=dtype, generator=gen) < 0.5
+        distance = torch.rand(n, 1, device=device, dtype=dtype, generator=gen).square()
+        boundary_samples = torch.where(side, distance, 1.0 - distance)
+        uniform_samples = torch.rand(n, 1, device=device, dtype=dtype, generator=gen)
+        samples = torch.where(boundary_mask, boundary_samples, uniform_samples)
+        return samples * (hi - lo) + lo
 
     def to_dict(self) -> Dict:
         """Serialise PDE parameters for run manifests."""

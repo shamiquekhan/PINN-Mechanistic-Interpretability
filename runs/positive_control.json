@@ -1,0 +1,35 @@
+{
+  "pipeline_pass": true,
+  "matched_feature": 144,
+  "decoder_cosine_to_planted": 0.9902507066726685,
+  "targeted_delta": 0.02625507116317749,
+  "ctrl_unrelated_delta": 0.005983829498291016,
+  "ctrl_random_delta": 0.0006687641143798828,
+  "ctrl_random_delta_trials": [
+    0.0002917051315307617,
+    -0.00044846534729003906,
+    0.0006687641143798828,
+    0.0008156895637512207,
+    0.0016183853149414062
+  ],
+  "ctrl_probe_delta": 0.014398634433746338,
+  "delta_bc_non_target": 0.0030347704887390137,
+  "causal_score": {
+    "causal_strength": 0.011856436729431152,
+    "specificity": 8.651390524158396,
+    "target_effect": 0.02625507116317749,
+    "max_control_effect": 0.014398634433746338,
+    "control_unrelated_effect": 0.005983829498291016,
+    "control_random_effect": 0.0006687641143798828,
+    "control_probe_effect": 0.014398634433746338
+  },
+  "config": {
+    "n_dim": 64,
+    "n_features": 128,
+    "sparsity": 0.1,
+    "sae_steps": 2000,
+    "topk": 8,
+    "expansion": 4,
+    "seed": 0
+  }
+}

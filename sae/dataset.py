@@ -108,15 +108,24 @@ def make_run_splits(
     -------
     train_dirs, val_dirs, test_dirs
     """
+    if not 0.0 < train_frac < 1.0 or not 0.0 < val_frac < 1.0:
+        raise ValueError("train_frac and val_frac must be between 0 and 1")
+    if train_frac + val_frac >= 1.0:
+        raise ValueError("train_frac + val_frac must leave data for the test split")
+
     rng = np.random.default_rng(seed)
     dirs = list(all_run_dirs)
+    if len(dirs) < 3:
+        raise ValueError("at least three run directories are required for disjoint splits")
     rng.shuffle(dirs)
     n = len(dirs)
-    n_train = max(1, int(n * train_frac))
-    n_val   = max(1, int(n * val_frac))
+    n_train = max(1, min(n - 2, int(n * train_frac)))
+    n_val = max(1, min(n - n_train - 1, int(n * val_frac)))
     train_dirs = dirs[:n_train]
     val_dirs   = dirs[n_train:n_train + n_val]
     test_dirs  = dirs[n_train + n_val:]
+    if not test_dirs:
+        raise ValueError("split proportions produced an empty test split")
     return train_dirs, val_dirs, test_dirs
 
 
@@ -141,8 +150,17 @@ def build_dataloaders(
     train_ds = ActivationDataset(train_dirs, layer_name, normalise=True)
     fit_stats = train_ds.get_fit_stats()
 
-    val_ds  = ActivationDataset(val_dirs,  layer_name, normalise=True, fit_stats=fit_stats) if val_dirs else train_ds
-    test_ds = ActivationDataset(test_dirs, layer_name, normalise=True, fit_stats=fit_stats) if test_dirs else train_ds
+    if not val_dirs or not test_dirs:
+        raise ValueError(
+            "val_dirs and test_dirs must both be non-empty; refusing to reuse "
+            "training data for evaluation"
+        )
+    val_ds = ActivationDataset(
+        val_dirs, layer_name, normalise=True, fit_stats=fit_stats
+    )
+    test_ds = ActivationDataset(
+        test_dirs, layer_name, normalise=True, fit_stats=fit_stats
+    )
 
     kw = dict(batch_size=min(batch_size, len(train_ds)), num_workers=num_workers, pin_memory=(device is not None and device.type == "cuda"))
     return (

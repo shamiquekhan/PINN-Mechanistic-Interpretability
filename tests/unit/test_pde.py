@@ -65,6 +65,11 @@ class TestPoisson1D:
         assert (x >= self.pde.left).all()
         assert (x <= self.pde.right).all()
 
+    def test_biased_sampling_honors_seed(self):
+        first = self.pde.sample_interior(128, DEVICE, DTYPE, seed=17, spatial_bias=0.8)
+        second = self.pde.sample_interior(128, DEVICE, DTYPE, seed=17, spatial_bias=0.8)
+        assert torch.equal(first, second)
+
     def test_to_dict_serialisable(self):
         d = self.pde.to_dict()
         assert d["name"] == "poisson_1d"

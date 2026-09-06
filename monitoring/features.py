@@ -118,18 +118,52 @@ def leakage_audit(
 # Multi-run dataset builder
 # ---------------------------------------------------------------------------
 
+def derive_failure_step(
+    metrics: List[Dict],
+    fail_threshold: float = 0.05,
+    confirm_records: int = 3,
+) -> Optional[int]:
+    """Derive the operational failure step from the trajectory itself.
+
+    A run fails at step s if relative_l2 first exceeds `fail_threshold` at s
+    and stays above it for `confirm_records` consecutive records (avoiding
+    labeling from one noisy spike).  Returns None for successful runs.
+    """
+    rel = [float(m.get("relative_l2", float("nan"))) for m in metrics]
+    steps = [int(m["step"]) for m in metrics]
+
+    above = 0
+    for i, r in enumerate(rel):
+        if r > fail_threshold:
+            above += 1
+            if above >= confirm_records:
+                # First step of the confirmed crossing window.
+                j = i - confirm_records + 1
+                return steps[max(j, 0)]
+        else:
+            above = 0
+    return None
+
+
 def build_monitor_dataset(
     run_dirs: List[Path],
-    failure_steps: Dict[str, int],   # run_name -> failure step (or -1 if success)
+    failure_steps: Optional[Dict[str, int]] = None,   # run_name -> failure step (or -1 if success)
     history_window: int = 200,
     failure_horizon: int = 500,
+    derive_labels: bool = True,
+    fail_threshold: float = 0.05,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Aggregate trajectory features across multiple runs.
 
     Parameters
     ----------
     run_dirs:      List of run directories.
-    failure_steps: Mapping from run directory stem to failure step (-1 = no failure).
+    failure_steps: Optional explicit mapping run_name -> failure step
+                   (-1 = no failure).  Ignored when derive_labels=True.
+    derive_labels: If True (default), derive each run's failure step from its
+                   own rel_l2 trajectory via `derive_failure_step` instead of
+                   trusting a hardcoded step number.
+    fail_threshold: rel_l2 threshold used for derived labels.
 
     Returns
     -------
@@ -147,14 +181,19 @@ def build_monitor_dataset(
 
         metrics = load_jsonl(metrics_path)
         run_name = run_dir.stem
-        fail_step = failure_steps.get(run_name, -1)
+
+        if derive_labels:
+            fail_step = derive_failure_step(metrics, fail_threshold=fail_threshold)
+        else:
+            fs = (failure_steps or {}).get(run_name, -1)
+            fail_step = fs if fs >= 0 else None
 
         X, y, _ = build_trajectory_features(
             metrics,
             history_window=history_window,
             failure_horizon=failure_horizon,
             failure_label="any",
-            failure_step=fail_step if fail_step >= 0 else None,
+            failure_step=fail_step,
         )
         if X.shape[0] > 0:
             all_X.append(X)

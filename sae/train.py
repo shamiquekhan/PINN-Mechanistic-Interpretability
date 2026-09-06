@@ -26,9 +26,7 @@ def pca_reconstruction_error(
 ) -> float:
     """Compute mean squared reconstruction error of a truncated PCA on `data`."""
     X = data - data.mean(dim=0, keepdim=True)
-    # Use torch SVD (GPU-friendly)
     U, S, Vh = torch.linalg.svd(X, full_matrices=False)
-    # Truncate to n_components
     k = min(n_components, S.shape[0])
     X_recon = U[:, :k] @ torch.diag(S[:k]) @ Vh[:k, :]
     return float(((X - X_recon) ** 2).mean())
@@ -49,15 +47,7 @@ def train_sae(
     dead_feature_window: int = 200,
     log_every: int = 100,
 ) -> Dict:
-    """Train SAE and return metrics dict.
-
-    Parameters
-    ----------
-    sae:          Initialised SparseAutoencoder (moved to device externally).
-    train_loader: DataLoader yielding activation batches.
-    val_loader:   DataLoader for held-out validation.
-    steps:        Total gradient steps to run.
-    """
+    """Train SAE and return metrics dict."""
     sae.to(device)
     sae.train()
     opt = optim.Adam(sae.parameters(), lr=learning_rate)
@@ -67,7 +57,6 @@ def train_sae(
     history: List[Dict] = []
 
     while step < steps:
-        # ---- Get batch ----
         try:
             batch = next(train_iter)
         except StopIteration:
@@ -83,16 +72,13 @@ def train_sae(
         if sae.decoder_normalize:
             sae._normalise_decoder()
 
-        # Track feature use
         with torch.no_grad():
             z, _ = sae(batch)
             sae.update_feature_use(z)
 
-        # Reset dead-feature counter periodically
         if step > 0 and step % dead_feature_window == 0:
             sae.reset_feature_use()
 
-        # ---- Logging ----
         if step % log_every == 0 or step == steps - 1:
             val_recon = _eval_recon(sae, val_loader, device)
             rec = {
@@ -105,7 +91,7 @@ def train_sae(
             if out_dir is not None:
                 append_jsonl(Path(out_dir) / "sae_training.jsonl", rec)
             print(f"  SAE step {step:5d} | recon={info['recon_loss']:.4e} | "
-                  f"sparsity={info['sparsity_loss']:.4e} | "
+                  f"mode={sae.activation_mode} | "
                   f"dead={sae.dead_feature_fraction():.2%}")
 
         step += 1
@@ -140,29 +126,24 @@ def sweep_sae(
     steps: int,
     device: torch.device,
     out_dir: Path,
+    activation_mode: str = "topk",
+    topk_values: Optional[List[int]] = None,
     batch_size: int = 256,
     learning_rate: float = 1e-3,
     seed: int = 0,
 ) -> List[Dict]:
-    """Grid sweep over (expansion, sparsity) — all runs on GPU.
-
-    Returns
-    -------
-    List of result dicts, each containing config + final metrics.
-    """
+    """Grid sweep over (expansion, topk/sparsity) — all runs on GPU."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     train_dirs, val_dirs, test_dirs = make_run_splits(run_dirs, seed=seed)
 
-    # Fit normalisation once on train set
     try:
         train_ds = ActivationDataset(train_dirs, layer_name, normalise=True)
     except ValueError as e:
         print(f"Warning: {e}")
         return []
 
-    fit_stats = train_ds.get_fit_stats()
     input_dim = train_ds.data.shape[1]
 
     # PCA baseline
@@ -170,14 +151,24 @@ def sweep_sae(
     pca_err = pca_reconstruction_error(train_ds.data.to(device), pca_n_comp)
     print(f"PCA baseline ({pca_n_comp} components): MSE = {pca_err:.4e}")
 
+    if activation_mode == "topk":
+        knobs = topk_values if topk_values is not None else [4, 8]
+    else:
+        knobs = sparsity_values
+
     results: List[Dict] = []
 
     for expansion in expansion_values:
-        for sparsity in sparsity_values:
-            tag = f"exp{expansion}_sp{sparsity:.0e}"
+        for knob in knobs:
+            if activation_mode == "topk":
+                tag = f"exp{expansion}_topk{knob}"
+                kwargs = {"activation_mode": "topk", "topk": knob, "sparsity_coeff": 0.0}
+            else:
+                tag = f"exp{expansion}_sp{knob:.0e}"
+                kwargs = {"activation_mode": "relul1", "sparsity_coeff": knob, "topk": 8}
+
             print(f"\n=== SAE sweep: {tag} ===")
 
-            # DataLoaders (re-use fit stats)
             train_loader, val_loader, test_loader, _ = build_dataloaders(
                 train_dirs, val_dirs, test_dirs, layer_name,
                 batch_size=batch_size, device=device,
@@ -186,8 +177,8 @@ def sweep_sae(
             sae = SparseAutoencoder(
                 input_dim=input_dim,
                 latent_expansion=expansion,
-                sparsity_coeff=sparsity,
                 decoder_normalize=True,
+                **kwargs,
             ).to(device)
 
             run_out = out_dir / tag
@@ -201,24 +192,24 @@ def sweep_sae(
                 out_dir=run_out,
             )
 
-            # Test set evaluation
             test_recon = _eval_recon(sae, test_loader, device)
             sae.save(run_out / "sae.pt")
 
             entry = {
-                "expansion":     expansion,
-                "sparsity_coeff": sparsity,
-                "tag":           tag,
+                "expansion": expansion,
+                "activation_mode": sae.activation_mode,
+                "topk": sae.topk,
+                "sparsity_coeff": sae.sparsity_coeff,
+                "tag": tag,
                 "pca_baseline_mse": pca_err,
-                "test_recon":    test_recon,
-                "dead_frac":     sae.dead_feature_fraction(),
+                "test_recon": test_recon,
+                "dead_frac": sae.dead_feature_fraction(),
                 **result.get("final", {}),
             }
             results.append(entry)
             print(f"  Test recon: {test_recon:.4e} | PCA: {pca_err:.4e} | "
                   f"Dead: {sae.dead_feature_fraction():.2%}")
 
-    # Save sweep summary
     with open(out_dir / "sweep_results.json", "w") as f:
         json.dump(results, f, indent=2)
 

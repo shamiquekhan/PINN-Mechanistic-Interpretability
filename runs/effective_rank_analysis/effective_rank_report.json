@@ -1,0 +1,68 @@
+{
+  "per_run": {
+    "advection_baseline": {
+      "n_samples": 4000,
+      "dim": 64,
+      "participation_ratio": 1.204419678410688,
+      "stable_rank": 1.007430227832598,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 5
+    },
+    "failure_boundary_starvation": {
+      "n_samples": 4000,
+      "dim": 64,
+      "participation_ratio": 1.4222882491318065,
+      "stable_rank": 1.0256764646690706,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "failure_collocation_starvation": {
+      "n_samples": 4000,
+      "dim": 64,
+      "participation_ratio": 1.52612938530256,
+      "stable_rank": 1.0725359445219282,
+      "n_components_95pct": 2,
+      "n_components_99pct": 2,
+      "n_components_999pct": 5
+    },
+    "failure_gradient_conflict": {
+      "n_samples": 4000,
+      "dim": 64,
+      "participation_ratio": 1.0286549897279187,
+      "stable_rank": 1.0001283830333696,
+      "n_components_95pct": 1,
+      "n_components_99pct": 2,
+      "n_components_999pct": 4
+    },
+    "poisson_baseline": {
+      "n_samples": 4000,
+      "dim": 64,
+      "participation_ratio": 1.4565495220700528,
+      "stable_rank": 1.05333287040123,
+      "n_components_95pct": 2,
+      "n_components_99pct": 2,
+      "n_components_999pct": 4
+    },
+    "reaction_diffusion_baseline": {
+      "n_samples": 4000,
+      "dim": 64,
+      "participation_ratio": 1.3852739653076942,
+      "stable_rank": 1.0253933659011747,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 5
+    }
+  },
+  "summary": {
+    "n_runs": 6,
+    "mean_participation_ratio": 1.33721929832512,
+    "min_participation_ratio": 1.0286549897279187,
+    "max_participation_ratio": 1.52612938530256,
+    "mean_components_95pct": 1.8333333333333333,
+    "dim": 64,
+    "superposition_ratio_mean_to_dim": 0.02089405153633
+  },
+  "verdict": "LOW-RANK / NOT IN SUPERPOSITION \u2014 the activation manifold has far fewer effective dimensions than neurons; PCA is the appropriate tool and the SAE null result is mechanically explained"
+}

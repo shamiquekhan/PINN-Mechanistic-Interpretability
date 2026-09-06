@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
-Run seed matrix for qualification gate (Week 8).
-Tests multiple seeds and failure-inducing configurations on GPU.
+Run 10-seed matrix for qualification gate and benchmark reporting.
+Evaluates per-seed distributions, means, standard deviations, and 95% CIs on GPU.
 """
 import sys
 import subprocess
@@ -11,6 +11,28 @@ from pathlib import Path
 import yaml
 import os
 import copy
+
+
+def compute_bootstrap_ci(data: list, n_boot: int = 1000, ci: float = 0.95) -> dict:
+    """Compute mean, std, and bootstrap percentile confidence interval."""
+    arr = np.array(data, dtype=np.float64)
+    if len(arr) == 0:
+        return {"mean": 0.0, "std": 0.0, "ci_lower": 0.0, "ci_upper": 0.0}
+    if len(arr) == 1:
+        return {"mean": float(arr[0]), "std": 0.0, "ci_lower": float(arr[0]), "ci_upper": float(arr[0])}
+
+    rng = np.random.default_rng(42)
+    boot_means = [np.mean(rng.choice(arr, size=len(arr), replace=True)) for _ in range(n_boot)]
+    alpha = (1.0 - ci) / 2.0
+    lower = float(np.percentile(boot_means, 100 * alpha))
+    upper = float(np.percentile(boot_means, 100 * (1.0 - alpha)))
+
+    return {
+        "mean": float(np.mean(arr)),
+        "std": float(np.std(arr)),
+        "ci_lower": lower,
+        "ci_upper": upper,
+    }
 
 
 def run_experiment(config_path: str, seed: int, steps: int, output_dir: str, extra_args: list = None):
@@ -90,31 +112,30 @@ def create_failure_configs():
 
     configs = {}
 
-    # 1. Success regime (baseline)
     configs['success'] = copy.deepcopy(base_config)
     configs['success']['run']['name'] = 'success_baseline'
 
-    # 2. Boundary starvation - high PDE weight, low BC weight
     configs['boundary_starvation'] = copy.deepcopy(base_config)
     configs['boundary_starvation']['run']['name'] = 'boundary_starvation'
     configs['boundary_starvation']['training']['lambda_pde'] = 100.0
     configs['boundary_starvation']['training']['lambda_bc'] = 0.01
 
-    # 3. Gradient conflict - very high learning rate
     configs['gradient_conflict'] = copy.deepcopy(base_config)
     configs['gradient_conflict']['run']['name'] = 'gradient_conflict'
+    configs['gradient_conflict']['run']['failure_label'] = 'gradient_conflict'
     configs['gradient_conflict']['training']['learning_rate'] = 0.1
 
-    # 4. Spectral suppression - deep narrow network with high frequency target
     configs['spectral_suppression'] = copy.deepcopy(base_config)
     configs['spectral_suppression']['run']['name'] = 'spectral_suppression'
+    configs['spectral_suppression']['run']['failure_label'] = 'spectral_suppression'
     configs['spectral_suppression']['model']['hidden_layers'] = [16, 16, 16, 16, 16]
     configs['spectral_suppression']['pde']['source'] = 50.0
 
-    # 5. Collocation starvation - very few interior points
     configs['collocation_starvation'] = copy.deepcopy(base_config)
     configs['collocation_starvation']['run']['name'] = 'collocation_starvation'
-    configs['collocation_starvation']['training']['interior_points'] = 8
+    configs['collocation_starvation']['run']['failure_label'] = 'collocation_starvation'
+    configs['collocation_starvation']['training']['interior_points'] = 4
+    configs['collocation_starvation']['training']['spatial_bias'] = 0.8
 
     return configs
 
@@ -124,14 +145,15 @@ def main():
     output_base.mkdir(parents=True, exist_ok=True)
 
     configs = create_failure_configs()
-    seeds = [7, 42]
+    seeds = [7, 42, 123, 2024, 2025, 2026, 999, 888, 777, 555]
     steps = 1000
 
     results = {}
 
     for config_name, config in configs.items():
-        print(f"\n=== Testing {config_name} ===")
-        results[config_name] = {}
+        print(f"\n=== Testing {config_name} across {len(seeds)} seeds ===")
+        results[config_name] = {"seed_runs": {}, "summary_stats": {}}
+        l2_errors = []
 
         for seed in seeds:
             config['run']['seed'] = seed
@@ -144,7 +166,11 @@ def main():
 
             print(f"  Running seed {seed}...")
             success, stdout, stderr = run_experiment(
-                str(config_path), seed, steps, str(output_base)
+                str(config_path), seed, steps, str(output_base),
+                extra_args=[
+                    '--log-activations', '--act-save-raw',
+                    '--log-gradients', '--log-diagnostics',
+                ]
             )
 
             if success:
@@ -159,33 +185,31 @@ def main():
                 )
 
                 summary = evaluate_run(run_dir)
-                results[config_name][f'seed_{seed}'] = summary
+                results[config_name]["seed_runs"][f'seed_{seed}'] = summary
                 l2 = summary.get('validation_relative_l2')
-                l2_str = f"{l2:.6f}" if l2 is not None and not np.isnan(l2) else "N/A"
+                if l2 is not None and not np.isnan(l2):
+                    l2_errors.append(l2)
+                    l2_str = f"{l2:.6f}"
+                else:
+                    l2_str = "N/A"
                 print(f"    L2 error: {l2_str}, Converged: {summary.get('converged', 'N/A')}")
             else:
                 print(f"    FAILED: {stderr[:200]}")
-                results[config_name][f'seed_{seed}'] = {'error': stderr}
+                results[config_name]["seed_runs"][f'seed_{seed}'] = {'error': stderr}
+
+        results[config_name]["summary_stats"] = compute_bootstrap_ci(l2_errors)
 
     with open(output_base / 'qualification_results.json', 'w') as f:
         json.dump(results, f, indent=2)
 
-    print("\n=== QUALIFICATION GATE SUMMARY ===")
-    print(f"{'Config':<25} {'Seed':<10} {'Rel L2':<12} {'Converged':<10}")
-    print("-" * 60)
+    print("\n=== QUALIFICATION GATE 10-SEED SUMMARY ===")
+    print(f"{'Config':<25} {'Mean L2':<12} {'Std':<10} {'95% CI Lower':<12} {'95% CI Upper':<12}")
+    print("-" * 75)
 
-    for config_name, seed_results in results.items():
-        for seed_key, summary in seed_results.items():
-            if 'error' not in summary:
-                l2 = summary.get('validation_relative_l2', 0)
-                l2_val = l2 if l2 is not None else 0
-                print(f"{config_name:<25} {seed_key:<10} "
-                      f"{l2_val:<12.6f} "
-                      f"{str(summary.get('converged', False)):<10}")
-            else:
-                print(f"{config_name:<25} {seed_key:<10} {'ERROR':<12} {'FAIL':<10}")
-
-    return results
+    for config_name, res in results.items():
+        stats = res.get("summary_stats", {})
+        print(f"{config_name:<25} {stats.get('mean', 0.0):<12.6f} {stats.get('std', 0.0):<10.6f} "
+              f"{stats.get('ci_lower', 0.0):<12.6f} {stats.get('ci_upper', 0.0):<12.6f}")
 
 
 if __name__ == '__main__':

@@ -94,15 +94,20 @@ class PINNTrainer:
         steps = steps or tcfg.steps
         records: List[Dict] = []
 
+        x = self.pde.sample_interior(
+            tcfg.interior_points,
+            device,
+            dtype,
+            spatial_bias=getattr(tcfg, "spatial_bias", None),
+        )
+
         for step in range(start, steps):
             t0 = time.perf_counter()
 
             # ---- Resample collocation if configured ----
             if tcfg.resample_every > 0 and step % tcfg.resample_every == 0:
-                x = self.pde.sample_interior(tcfg.interior_points, device, dtype)
-            else:
-                if step == start or (tcfg.resample_every == 0):
-                    x = self.pde.sample_interior(tcfg.interior_points, device, dtype)
+                x = self.pde.sample_interior(tcfg.interior_points, device, dtype,
+                                             spatial_bias=getattr(tcfg, 'spatial_bias', None))
 
             # ---- PDE residual loss ----
             r = self.pde.residual(self.model, x)

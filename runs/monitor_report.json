@@ -1,0 +1,41 @@
+{
+  "loss_only_threshold": {
+    "auroc": 0.4680280735235034,
+    "auprc": 0.23274027093124697,
+    "recall_at_fpr0.1": 0.006578947368421052,
+    "n_examples": 676,
+    "n_positive": 152,
+    "prevalence": 0.22485207100591717,
+    "auroc_ci": {
+      "ci_lower": 0.4057972346775576,
+      "ci_upper": 0.5110769736639299,
+      "n_boot_valid": 1997
+    }
+  },
+  "conventional_logistic": {
+    "auroc": 0.8718360787464845,
+    "auprc": 0.7481898331642904,
+    "recall_at_fpr0.1": 0.5328947368421053,
+    "n_examples": 676,
+    "n_positive": 152,
+    "prevalence": 0.22485207100591717,
+    "auroc_ci": {
+      "ci_lower": 0.7945613597969302,
+      "ci_upper": 0.9525946573265723,
+      "n_boot_valid": 1997
+    }
+  },
+  "sae_plus_conventional": {
+    "auroc": 0.878076034552029,
+    "auprc": 0.7553309224180329,
+    "recall_at_fpr0.1": 0.5526315789473685,
+    "n_examples": 676,
+    "n_positive": 152,
+    "prevalence": 0.22485207100591717,
+    "auroc_ci": {
+      "ci_lower": 0.805575063116476,
+      "ci_upper": 0.9580768671545582,
+      "n_boot_valid": 1997
+    }
+  }
+}

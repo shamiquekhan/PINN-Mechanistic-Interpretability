@@ -1,6 +1,6 @@
 # Complete Framework Documentation & User Guide
 
-This document provides a comprehensive API guide and step-by-step user manual for running experiments, training SAEs, building feature dictionaries, running causal interventions, and activating early-warning monitors with closed-loop adaptive control.
+This document provides a reproducible API guide and step-by-step user manual for running experiments, training TopK SAEs, building feature dictionaries, running controlled interventions, evaluating monitors, and activating closed-loop adaptive control. The current evidence and limitations are summarized in [RESULTS.md](RESULTS.md).
 
 ---
 
@@ -36,20 +36,20 @@ The qualification gate evaluates baseline success and failure modes across multi
 python -m experiments.qualification
 ```
 
-This runs a seed matrix ($[7, 42, 123]$) across:
+This runs a 10-seed matrix ($[7, 42, 123, 2024, 2025, 2026, 999, 888, 777, 555]$) across:
 1. `success_baseline`
 2. `boundary_starvation`
 3. `gradient_conflict`
 4. `spectral_suppression`
 5. `collocation_starvation`
 
-Output results and relative $L_2$ error statistics are written to `runs/qualification/qualification_results.json`.
+The run uses activation, gradient, and diagnostic logging so the failure atlas can verify operational labels. Output results and relative $L_2$ error statistics are written to `runs/qualification/qualification_results.json`. Boundary-starvation and spectral-suppression reproduce cleanly; gradient-conflict and collocation-starvation are retained as stress tests but excluded from final failure-class claims.
 
 ---
 
 ## 3. Sparse Autoencoder (SAE) Training & Sweeps
 
-Train Sparse Autoencoders on logged activation datasets using `sae.train`:
+Train TopK Sparse Autoencoders on logged activation datasets using `sae.train`:
 
 ```python
 from sae.train import sweep_sae
@@ -68,9 +68,11 @@ sae_models = sweep_sae(
     batch_size=128,
     learning_rate=1e-3,
     device=device,
-    out_dir=Path("runs/sae_models")
+    out_dir=Path("runs/sae_models_v2")
 )
 ```
+
+For the locked benchmark pipeline, use `python -m experiments.run_pipeline --stages 3`; it trains TopK replicas and records PCA and frozen-random baselines. Run `python -m analysis.effective_rank --runs runs` before interpreting SAE results to measure the activation participation ratio.
 
 ---
 
@@ -116,7 +118,7 @@ render_feature_dictionary_markdown(dictionary, Path("runs/feature_dictionary/phy
 
 ## 5. Causal Interventions & Counterfactual Evaluation
 
-Run inference-time causal interventions (`ablate`, `amplify`, `unrelated_control`, `random_direction`):
+Run inference-time causal interventions (`ablate`, `amplify`, `unrelated_control`, `random_direction`, and supervised `probe_direction` controls):
 
 ```python
 from interventions.causal import run_inference_interventions
@@ -178,3 +180,25 @@ To run all 7 stages sequentially in a single automated pipeline:
 ```bash
 python -m experiments.run_pipeline
 ```
+
+Individual stages are also available for reproducible reruns:
+
+```bash
+python -m experiments.run_pipeline --stages 2  # failure atlas and seed statistics
+python -m experiments.run_pipeline --stages 3  # SAE, PCA, and random baselines
+python -m experiments.run_pipeline --stages 4  # feature dictionary
+python -m experiments.run_pipeline --stages 5  # causal battery and positive control
+python -m experiments.run_pipeline --stages 6  # monitor AUROC/AUPRC and CIs
+python -m experiments.run_pipeline --stages 7  # controller and source ablation
+```
+
+## 8. Verification
+
+Run the project checks with the same interpreter used for installation:
+
+```bash
+python -m compileall -q analysis controller experiments interventions monitoring pinn pinn_logging sae tests
+python -m pytest -q
+```
+
+The current baseline is 92 passing tests. On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.

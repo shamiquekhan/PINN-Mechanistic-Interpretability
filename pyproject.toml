@@ -2,12 +2,32 @@
 name = "pinn-mechanistic"
 version = "0.1.0"
 requires-python = ">=3.10"
-dependencies = ["torch>=2.2", "numpy>=1.26", "pyyaml>=6.0", "pydantic>=2.6", "matplotlib>=3.8", "pytest>=8.0"]
+dependencies = [
+	"torch>=2.2",
+	"numpy>=1.26",
+	"pyyaml>=6.0",
+	"pydantic>=2.6",
+	"matplotlib>=3.8",
+	"scikit-learn>=1.4",
+	"scipy>=1.10",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["pinn*", "pinn_logging*", "experiments*", "analysis*"]
+include = [
+	"analysis*",
+	"controller*",
+	"experiments*",
+	"interventions*",
+	"monitoring*",
+	"pinn*",
+	"pinn_logging*",
+	"sae*",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = [
+	"slow: long-running integration or end-to-end test",
+]

@@ -15,17 +15,19 @@ from pinn_logging.io import load_jsonl
 def classify_run_failure(summary: Dict, metrics: List[Dict], grad_logs: List[Dict]) -> Dict[str, float | str]:
     """Assign operational failure label based on quantitative criteria:
 
-    - success              : rel_l2 < 0.01
-    - boundary_starvation  : loss_bc > 10 * loss_pde and rel_l2 > 0.05
-    - gradient_conflict   : mean_gradient_cosine < -0.2 persistent over last 50% steps
-    - spectral_suppression: rel_l2 > 0.1 despite loss < 1e-3
-    - collocation_starvation: rel_l2 > 0.1 and loss_pde < 1e-4
+    Priority order (first match wins):
+    1. success              : rel_l2 < 0.01
+    2. gradient_conflict   : mean_gradient_cosine < -0.2 persistent over last 50% steps
+    3. boundary_starvation  : loss_bc > 10 * loss_pde and rel_l2 > 0.05
+    4. collocation_starvation: rel_l2 > 0.1 and loss_pde < 1e-4
+    5. spectral_suppression: rel_l2 > 0.1 despite loss < 1e-3
     """
     rel_l2 = summary.get("validation_relative_l2", float("nan"))
+    final_loss = summary.get("final_loss", 0.0) or 0.0
     final_pde = summary.get("final_loss_pde", 0.0) or 0.0
     final_bc = summary.get("final_loss_bc", 0.0) or 0.0
 
-    # Gradient conflict score from grad logs
+    # Gradient conflict score from grad logs (mean over last 50% of steps)
     cosines = []
     for g in grad_logs:
         c = g.get("gradient_cosines", {}).get("pde_vs_bc")
@@ -37,12 +39,19 @@ def classify_run_failure(summary: Dict, metrics: List[Dict], grad_logs: List[Dic
     label = "unlabeled"
     if not np.isnan(rel_l2) and rel_l2 < 0.01:
         label = "success"
-    elif final_bc > 10.0 * (final_pde + 1e-8) and rel_l2 > 0.05:
-        label = "boundary_starvation"
+    # Gradient conflict checked FIRST among failures - most specific condition
     elif mean_cos < -0.2 and rel_l2 > 0.05:
         label = "gradient_conflict"
+    # Boundary starvation - specific imbalance condition
+    elif final_bc > 10.0 * (final_pde + 1e-8) and rel_l2 > 0.05:
+        label = "boundary_starvation"
+    # Collocation starvation - high rel_l2 with very low PDE loss (under-sampled interior)
     elif final_pde < 1e-4 and rel_l2 > 0.1:
         label = "collocation_starvation"
+    # Spectral suppression - high rel_l2 despite low total loss
+    elif final_loss < 1e-3 and rel_l2 > 0.1:
+        label = "spectral_suppression"
+    # Catch-all for remaining high-error runs
     elif rel_l2 > 0.1:
         label = "spectral_suppression"
 

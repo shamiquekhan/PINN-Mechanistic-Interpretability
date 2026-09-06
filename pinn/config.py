@@ -74,6 +74,7 @@ class TrainingConfig(BaseModel):
     lambda_pde: float = Field(ge=0)
     lambda_bc: float = Field(ge=0)
     resample_every: int = 0     # 0 = no resampling; >0 = resample every N steps
+    spatial_bias: float = Field(default=0.0, ge=0.0, le=1.0)
 
 
 # ---------------------------------------------------------------------------
@@ -120,8 +121,8 @@ class InterventionConfig(BaseModel):
 # ---------------------------------------------------------------------------
 
 class MonitorConfig(BaseModel):
-    failure_horizon: int = 500    # predict failure within this many steps
-    history_window: int = 200     # past steps used as features
+    failure_horizon: int = Field(default=500, gt=0)
+    history_window: int = Field(default=200, gt=0)
     model_type: Literal["threshold", "logistic"] = "logistic"
     alarm_recall_target: float = 0.8   # tune threshold to this recall on val set
 

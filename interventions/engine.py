@@ -41,6 +41,7 @@ class SAEInterventionHook:
         alpha: float = 1.5,
         reference_value: Optional[float] = None,
         random_seed: int = 0,
+        probe_direction: Optional[torch.Tensor] = None,
     ):
         self._validate_mode(mode)
         self.sae = sae
@@ -49,12 +50,20 @@ class SAEInterventionHook:
         self.alpha = alpha
         self.reference_value = reference_value
         self.random_seed = random_seed
+        if mode == "probe_direction":
+            if probe_direction is None:
+                raise ValueError("probe_direction mode requires a probe_direction tensor")
+            d = probe_direction.detach().to(next(sae.parameters()).device)
+            self.probe_direction = d / d.norm().clamp(min=1e-8)
+        else:
+            self.probe_direction = None
         self._hook = None
 
     def _validate_mode(self, mode: str):
         valid = {
             "natural", "ablate", "amplify", "replace",
             "unrelated_control", "random_direction", "reconstruction_only",
+            "probe_direction",
         }
         if mode not in valid:
             raise ValueError(f"Unknown mode '{mode}'. Choose from {valid}")
@@ -93,14 +102,28 @@ class SAEInterventionHook:
             return z
 
         if mode == "random_direction":
-            z = z.clone()
+            # Random-direction control with PER-ROW magnitude matching to the
+            # target feature's activity (the original version used the
+            # whole-batch norm, over-amplifying by ~sqrt(batch)).  The
+            # target feature is NOT ablated here — the control tests whether
+            # perturbing a random latent direction reproduces the target
+            # effect, per the v2 plan's control semantics.
             rng = torch.Generator(device=z.device)
             rng.manual_seed(self.random_seed)
-            target_norm = z[:, k].norm()
+            per_row_mag = z[:, k].abs() if k is not None else \
+                z.abs().mean(dim=1)
             rand_dir = torch.randn(z.shape[1], device=z.device, dtype=z.dtype, generator=rng)
-            rand_dir = rand_dir / rand_dir.norm().clamp(min=1e-8) * target_norm
-            z = z + rand_dir.unsqueeze(0)
-            return z
+            rand_dir = rand_dir / rand_dir.norm().clamp(min=1e-8)
+            out = z.clone() + rand_dir.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            return out
+
+        if mode == "probe_direction":
+            # Supervised linear-probe direction, per-row magnitude matched to
+            # the target feature's activity (same scaling as random control).
+            per_row_mag = z[:, k].abs() if k is not None else \
+                z.abs().mean(dim=1)
+            out = z.clone() + self.probe_direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            return out
 
         return z
 
@@ -108,15 +131,21 @@ class SAEInterventionHook:
         if self.mode == "natural":
             return output
 
-        # Use detached weights so autograd flows back to x, but frozen SAE weights don't accumulate grads
+        # Use detached weights so autograd flows back to x, but frozen SAE
+        # weights don't accumulate grads.
         w_e = self.sae.W_e.weight.detach()
         b_e = self.sae.W_e.bias.detach()
         b_a = self.sae.b_a.detach()
         w_d = self.sae.W_d.weight.detach()
         b_d = self.sae.W_d.bias.detach()
 
-        # Encode: z = ReLU(W_e(a - b_a) + b_e)
+        # Encode exactly as the SAE was trained (ReLU, then TopK if topk mode).
+        # The previous implementation skipped the TopK step, so intervened
+        # latents did not match the SAE's true latent space.
         z = F.relu(F.linear(output - b_a, w_e, b_e))
+        if self.sae.activation_mode == "topk":
+            from sae.model import apply_topk
+            z = apply_topk(z, k=self.sae.topk)
         z_mod = self._intervene(z)
         # Decode: a_hat = W_d z + b_d
         reconstructed = F.linear(z_mod, w_d, b_d)
@@ -156,15 +185,26 @@ def measure_intervention_effect(
     alpha: float = 1.5,
     reference_value: Optional[float] = None,
     layer_index: int = 1,
+    baseline_mode: str = "natural",
+    random_seed: int = 0,
 ) -> Dict:
-    """Freeze model weights and measure how an intervention changes each loss."""
+    """Freeze model weights and measure how an intervention changes each loss.
+
+    baseline_mode:
+      "natural"              — raw activations, SAE bypassed (original v2 protocol).
+      "reconstruction_only" — SAE inserted, no intervention.  This isolates the
+                               intervention effect from SAE-insertion error and is
+                               the correct baseline for the planted positive control
+                               (and for any insertion-sensitive PINN).
+    random_seed: seed for the random_direction / unrelated_control draws.
+    """
     model.eval()
     sae.eval()
 
     x = pde.sample_interior(n_interior, device, dtype)
 
-    # ---- Baseline (natural) ----
-    hook_base = SAEInterventionHook(sae, mode="natural")
+    # ---- Baseline ----
+    hook_base = SAEInterventionHook(sae, mode=baseline_mode)
     hook_base.register(model, layer_index)
     with torch.enable_grad():
         r_base = pde.residual(model, x)
@@ -177,6 +217,7 @@ def measure_intervention_effect(
     hook_int = SAEInterventionHook(
         sae, mode=mode, feature_idx=feature_idx,
         alpha=alpha, reference_value=reference_value,
+        random_seed=random_seed,
     )
     hook_int.register(model, layer_index)
     with torch.enable_grad():
@@ -191,6 +232,78 @@ def measure_intervention_effect(
     return {
         "feature_idx":   feature_idx,
         "mode":          mode,
+        "layer_index":   layer_index,
+        "delta_pde":     lp_int - lp_base,
+        "delta_bc":      lb_int - lb_base,
+        "baseline_pde":  lp_base,
+        "baseline_bc":   lb_base,
+        "intervened_pde": lp_int,
+        "intervened_bc": lb_int,
+    }
+
+
+def measure_probe_direction_effect(
+    model: MLP,
+    sae: SparseAutoencoder,
+    pde,
+    device: torch.device,
+    dtype: torch.dtype,
+    feature_idx: int,
+    probe_direction: Optional[torch.Tensor],
+    n_interior: int = 256,
+    alpha: float = 1.5,
+    layer_index: int = 1,
+    baseline_mode: str = "natural",
+) -> Dict:
+    """Measure loss shift when perturbing along a supervised linear-probe direction.
+
+    This is the AXBench-style 'simple baseline' control: if the probe direction
+    shifts the target loss as much as a discovered SAE feature, the feature
+    adds no value over plain linear supervision.
+    """
+    if probe_direction is None:
+        # Fall back to a random direction with the same protocol (flagged
+        # by the caller via probe_control_valid=False).
+        return measure_intervention_effect(
+            model, sae, pde, device, dtype,
+            feature_idx=feature_idx, mode="random_direction",
+            n_interior=n_interior, alpha=alpha, layer_index=layer_index,
+            baseline_mode=baseline_mode,
+        )
+
+    model.eval()
+    sae.eval()
+
+    x = pde.sample_interior(n_interior, device, dtype)
+
+    # ---- Baseline ----
+    hook_base = SAEInterventionHook(sae, mode=baseline_mode)
+    hook_base.register(model, layer_index)
+    with torch.enable_grad():
+        r_base = pde.residual(model, x)
+        lp_base = float((r_base ** 2).mean())
+        bc_res_base = pde.boundary_residual(model)
+        lb_base = float(bc_res_base.mean())
+    hook_base.remove()
+
+    # ---- Probe-direction intervention ----
+    hook_int = SAEInterventionHook(
+        sae, mode="probe_direction", feature_idx=feature_idx,
+        alpha=alpha, probe_direction=probe_direction,
+    )
+    hook_int.register(model, layer_index)
+    with torch.enable_grad():
+        r_int = pde.residual(model, x)
+        lp_int = float((r_int ** 2).mean())
+        bc_res_int = pde.boundary_residual(model)
+        lb_int = float(bc_res_int.mean())
+    hook_int.remove()
+
+    model.train()
+
+    return {
+        "feature_idx":   feature_idx,
+        "mode":          "probe_direction",
         "layer_index":   layer_index,
         "delta_pde":     lp_int - lp_base,
         "delta_bc":      lb_int - lb_base,

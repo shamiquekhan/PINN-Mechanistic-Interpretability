@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests: 60/60 Passed](https://img.shields.io/badge/Tests-60%2F60%20Passed-brightgreen.svg)](tests/)
+[![Tests: 92/92 Passed](https://img.shields.io/badge/Tests-92%2F92%20Passed-brightgreen.svg)](tests/)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, early-warning monitors, and closed-loop adaptive control.
 
@@ -13,11 +13,17 @@ A GPU-accelerated research framework for analyzing, monitoring, and intervening 
 
 - **GPU-Native Core Architecture (`pinn/`)**: Reusable `PINNTrainer`, named layer activations, parameter count utilities, Xavier/Kaiming initializations, and Random Fourier Feature Embeddings ($x \mapsto [\sin(Bx), \cos(Bx)]$).
 - **Unified PDE Specification Engine (`pinn/pdes.py`)**: Unified interface supporting **Poisson 1D**, **Advection 1D**, and **Reaction-Diffusion 1D** equations with exact solutions, validation grids, and boundary residual computations.
-- **Sparse Autoencoder Feature Discovery (`sae/`)**: Overcomplete ReLU SAE with $L_1$ sparsity regularization, $L_2$ activation normalization, decoder unit-norm enforcement, dead-feature tracking, and cross-seed Hungarian cosine feature matching.
-- **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine supporting 7 causal modes (`natural`, `ablate`, `amplify`, `replace`, `unrelated_control`, `random_direction`, `reconstruction_only`) with quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics.
+- **Sparse Autoencoder Feature Discovery (`sae/`)**: TopK and legacy ReLU+L1 SAEs with activation normalization, decoder unit-norm enforcement, dead-feature tracking, run-level splits, PCA/random baselines, and cross-seed feature matching.
+- **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine supporting targeted, unrelated, norm-matched random, and supervised probe controls with quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics.
 - **Early-Warning Failure Monitoring (`monitoring/`)**: Past-only sliding window trajectory feature extractors with strict `leakage_audit` verification, threshold degradation alarms, and logistic early-warning classifiers.
 - **Closed-Loop Adaptive PINN Controller (`controller/`)**: Deterministic state-machine controller ($\text{IDLE} \rightarrow \text{WARNING} \rightarrow \text{CONFIRMED} \rightarrow \text{ACTING} \rightarrow \text{COOLDOWN} \rightarrow \text{IDLE}$) executing 4 bounded corrective action handlers ($\lambda_{\text{bc}}$ reweighting, GradNorm loss balancing, high-residual resampling, and Fourier feature injection).
-- **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing experimental failure modes (`boundary_starvation`, `gradient_conflict`, `spectral_suppression`, `collocation_starvation`) and extracting 256 annotated physics latent features.
+- **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing experimental failure modes, extracting annotated physics latent features, and measuring effective rank / participation ratio before SAE training.
+
+## Current Evidence
+
+The current benchmark is a scoped negative mechanistic result, not a claim that SAEs never work on scientific networks. Hidden activations in this 1D PINN suite have participation ratio about 1.34 of 64 dimensions, so k-matched PCA outperforms the SAE and no candidate feature survives corrected causal testing. A planted-feature positive control passes, showing that the intervention pipeline can recover a causal feature when one exists.
+
+The conventional and SAE-augmented monitors are evaluable on the final held-out split (AUROC 0.872 and 0.878; run-level 95% CIs [0.795, 0.953] and [0.806, 0.958]). Their intervals overlap, so the benchmark does not establish an SAE advantage. The controller rescue result is reported separately as an engineering result. Gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly. See [RESULTS.md](RESULTS.md) for the complete evidence and limitations.
 
 ---
 
@@ -86,7 +92,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(All 60 unit tests should pass in under 4 seconds on CUDA GPU)*
+*(The suite currently contains 92 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -96,7 +102,7 @@ python -m experiments.run_pipeline
 This automatically executes:
 1. Training PINNs across all baseline & failure configurations.
 2. Indexing the Failure Atlas (`runs/failure_atlas/failure_atlas_index.json`).
-3. Running Sparse Autoencoder hyperparameter sweeps (`runs/sae_models/`).
+3. Training TopK Sparse Autoencoders with PCA, random, and seed-replica baselines (`runs/sae_models_v2/`).
 4. Building the Physics-Feature Dictionary (`runs/feature_dictionary/physics_feature_dictionary.md`).
 5. Computing Causal Intervention & Specificity scores (`runs/causal_intervention_results.json`).
 6. Training & evaluating Early-Warning Monitors.
@@ -146,7 +152,7 @@ This automatically executes:
 │   ├── train.py              # Single experiment trainer
 │   ├── qualification.py      # Seed matrix qualification gate runner
 │   └── run_pipeline.py       # Master end-to-end research campaign execution script
-├── tests/                    # Comprehensive Unit Test Suite (60 tests)
+├── tests/                    # Comprehensive Unit Test Suite (92 tests)
 │   └── unit/
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
 ├── DOCUMENTATION.md          # Comprehensive API & pipeline documentation
