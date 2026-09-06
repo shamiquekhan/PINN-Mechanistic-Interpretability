@@ -47,7 +47,8 @@
     "checkpoint_every": 500,
     "lambda_pde": 100.0,
     "lambda_bc": 0.01,
-    "resample_every": 0
+    "resample_every": 0,
+    "spatial_bias": 0.0
   },
   "logging": {
     "save_activations": true,

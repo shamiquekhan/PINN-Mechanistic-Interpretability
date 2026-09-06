@@ -1,0 +1,72 @@
+{
+  "run": {
+    "name": "poisson_2d_seed2024",
+    "output_dir": "runs/dimensional_boundary_2d",
+    "seed": 2024,
+    "deterministic": true,
+    "device": "cuda",
+    "dtype": "float32",
+    "failure_label": "unlabeled"
+  },
+  "pde": {
+    "name": "poisson_2d",
+    "domain": [
+      0.0,
+      1.0
+    ],
+    "domain_y": [
+      0.0,
+      1.0
+    ],
+    "source": 1.0,
+    "forcing": 0.0,
+    "diffusion": 0.01,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 100
+  },
+  "model": {
+    "input_dim": 2,
+    "output_dim": 1,
+    "hidden_layers": [
+      32,
+      32,
+      32
+    ],
+    "activation": "tanh",
+    "init": "xavier",
+    "fourier_embed": false,
+    "fourier_n_freq": 32,
+    "fourier_scale": 1.0
+  },
+  "training": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 1000,
+    "interior_points": 64,
+    "boundary_points": 80,
+    "log_every": 5,
+    "checkpoint_every": 10,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0,
+    "resample_every": 0,
+    "spatial_bias": 0.0
+  },
+  "logging": {
+    "save_activations": true,
+    "activation_layers": [
+      1
+    ],
+    "save_pointwise_residuals": true,
+    "log_gradients": false,
+    "grad_log_every": 100,
+    "log_diagnostics": false,
+    "diag_log_every": 100
+  },
+  "sae": null,
+  "intervention": null,
+  "monitor": null,
+  "controller": null
+}

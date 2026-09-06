@@ -96,13 +96,24 @@ def create_probe_points(config: 'ExperimentConfig') -> ProbePointConfig:
         y_axis = torch.linspace(pde.domain_y[0], pde.domain_y[1], 20)
         grid_x, grid_y = torch.meshgrid(axis, y_axis, indexing='ij')
         x_probe = torch.stack([grid_x.flatten(), grid_y.flatten()], dim=1).tolist()
+    elif pde.name in ('advection_diffusion_2d', 'reaction_diffusion_2d'):
+        axis = torch.linspace(pde.domain[0], pde.domain[1], 20)
+        y_axis = torch.linspace(pde.domain_y[0], pde.domain_y[1], 20)
+        grid_x, grid_y = torch.meshgrid(axis, y_axis, indexing='ij')
+        x_probe = torch.stack([grid_x.flatten(), grid_y.flatten()], dim=1).tolist()
+    elif pde.name in ('burgers_1d', 'allen_cahn_1d'):
+        # Time-space probe grid: 10 times x 20 spatial points.
+        t_axis = torch.linspace(pde.time_domain[0], pde.time_domain[1], 10)
+        x_axis = torch.linspace(pde.domain[0], pde.domain[1], 20)
+        grid_t, grid_x = torch.meshgrid(t_axis, x_axis, indexing='ij')
+        x_probe = torch.stack([grid_t.flatten(), grid_x.flatten()], dim=1).tolist()
     else:
         x_probe = torch.linspace(pde.domain[0], pde.domain[1], 50).reshape(-1, 1).tolist()
-    
+
     hidden_layers = config.model.hidden_layers
     n_layers = len(hidden_layers)
     layer_indices = [0, n_layers // 2, n_layers - 1] if n_layers > 1 else [0]
-    
+
     return ProbePointConfig(coordinates=x_probe, layer_indices=layer_indices)
 
 

@@ -27,11 +27,40 @@ from interventions.causal import (
     compute_causal_score, train_failure_probe, run_training_intervention,
 )
 from monitoring.features import derive_failure_step
+from interventions.causal_abstraction import CausalModel, interchange_intervention
 from pinn.model import MLP
 from pinn.pdes import Poisson1D
 
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+class TestCausalAbstraction:
+    def test_interchange_intervention_records_source_and_donor(self):
+        torch.manual_seed(0)
+        model = MLP(1, 1, [8, 8]).to(DEVICE)
+        source = torch.tensor([[-1.0], [0.0], [1.0]], device=DEVICE)
+        donor = torch.tensor([[1.0], [0.0], [-1.0]], device=DEVICE)
+        causal_model = CausalModel(
+            ["region"], {"region": ()}, {"region": "source"}
+        )
+        result = interchange_intervention(
+            model,
+            source,
+            donor,
+            layer_index=0,
+            alignment_map=lambda state: state.mean(dim=0),
+            causal_model=causal_model,
+        )
+        assert result["source_state"].shape == result["donor_state"].shape
+        assert result["swapped_output"].shape == result["source_output"].shape
+        assert result["causal_variables"] == ("region",)
+
+    def test_causal_model_intervention_validates_variable(self):
+        model = CausalModel(["x"])
+        assert model.intervene("x", 1)["x"] == 1
+        with pytest.raises(KeyError):
+            model.intervene("missing", 1)
 
 
 # ---------------------------------------------------------------------------

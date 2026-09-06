@@ -32,17 +32,19 @@ run:
   deterministic: true
   device: cuda
   dtype: float32
+  failure_label: collocation_starvation
   name: collocation_starvation_seed42
   output_dir: runs
   seed: 42
 training:
   boundary_points: 2
   checkpoint_every: 1000
-  interior_points: 8
+  interior_points: 4
   lambda_bc: 1.0
   lambda_pde: 1.0
   learning_rate: 0.001
   log_every: 100
   optimizer: adam
   resample_every: 0
+  spatial_bias: 0.8
   steps: 5000

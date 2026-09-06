@@ -1,0 +1,139 @@
+{
+  "trained": [
+    {
+      "replica": 0,
+      "expansion": 4,
+      "topk": 8,
+      "activation_mode": "topk",
+      "test_recon_mse": 0.0033456437159329654,
+      "dead_feature_frac": 0.51171875,
+      "history": [
+        {
+          "step": 600,
+          "recon_loss": 0.0035261197481304407,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.0035261197481304407,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06431318074464798,
+          "val_recon": 0.006015324186533689,
+          "dead_feature_frac": 1.0
+        },
+        {
+          "step": 700,
+          "recon_loss": 0.003250062232837081,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.003250062232837081,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06898213177919388,
+          "val_recon": 0.005405117742717266,
+          "dead_feature_frac": 0.58984375
+        },
+        {
+          "step": 799,
+          "recon_loss": 0.0027960902079939842,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.0027960902079939842,
+          "mean_l0": 8.0,
+          "mean_l1": 0.0719180703163147,
+          "val_recon": 0.005113337527960539,
+          "dead_feature_frac": 0.51171875
+        }
+      ]
+    },
+    {
+      "replica": 1,
+      "expansion": 4,
+      "topk": 8,
+      "activation_mode": "topk",
+      "test_recon_mse": 0.0039301480576395985,
+      "dead_feature_frac": 0.69921875,
+      "history": [
+        {
+          "step": 600,
+          "recon_loss": 0.003785802284255624,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.003785802284255624,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06866109371185303,
+          "val_recon": 0.0059270764850080015,
+          "dead_feature_frac": 1.0
+        },
+        {
+          "step": 700,
+          "recon_loss": 0.0021139816381037235,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.0021139816381037235,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06856341660022736,
+          "val_recon": 0.005703827802091837,
+          "dead_feature_frac": 0.7421875
+        },
+        {
+          "step": 799,
+          "recon_loss": 0.002616678364574909,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.002616678364574909,
+          "mean_l0": 8.0,
+          "mean_l1": 0.07035094499588013,
+          "val_recon": 0.005325710814446211,
+          "dead_feature_frac": 0.69921875
+        }
+      ]
+    },
+    {
+      "replica": 2,
+      "expansion": 4,
+      "topk": 8,
+      "activation_mode": "topk",
+      "test_recon_mse": 0.0034276636224240065,
+      "dead_feature_frac": 0.66015625,
+      "history": [
+        {
+          "step": 600,
+          "recon_loss": 0.002536171115934849,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.002536171115934849,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06407739222049713,
+          "val_recon": 0.0044681250229477885,
+          "dead_feature_frac": 1.0
+        },
+        {
+          "step": 700,
+          "recon_loss": 0.0028183343820273876,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.0028183343820273876,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06840776652097702,
+          "val_recon": 0.0045440345294773575,
+          "dead_feature_frac": 0.765625
+        },
+        {
+          "step": 799,
+          "recon_loss": 0.002414606511592865,
+          "sparsity_loss": 0.0,
+          "total_loss": 0.002414606511592865,
+          "mean_l0": 8.0,
+          "mean_l1": 0.06598876416683197,
+          "val_recon": 0.004549721457064152,
+          "dead_feature_frac": 0.66015625
+        }
+      ]
+    }
+  ],
+  "baselines": {
+    "pca_full_n_components": 64,
+    "pca_full_train_mse": 1.3926049202694912e-10,
+    "pca_k_matched_components": 8,
+    "pca_k_matched_train_mse": 0.00026619795244187117,
+    "random_sae_test_mse": 0.4210480175018311
+  },
+  "sae_beats_random": true,
+  "sae_beats_pca_k_matched": false,
+  "test_dirs": [
+    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/failure_boundary_starvation"
+  ],
+  "val_dirs": [
+    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/advection_baseline"
+  ]
+}

@@ -103,13 +103,27 @@ def main():
             xv = pde.validation_grid(cfg.pde.validation_points, device, dtype)
             pred = model(xv)
             exact = pde.exact(xv)
-            err = torch.linalg.vector_norm(pred - exact) / torch.linalg.vector_norm(exact)
+            # Time-dependent PDEs return reference values only on their
+            # support (the t=T slice); restrict the error metric to that
+            # support so the denominator is not dominated by zeros.
+            if exact is not None:
+                support = (exact.abs() > 1e-12).any(
+                    dim=tuple(range(1, exact.ndim)))
+                if support.any() and not support.all():
+                    pred_eval, exact_eval = pred[support], exact[support]
+                else:
+                    pred_eval, exact_eval = pred, exact
+                err = torch.linalg.vector_norm(pred_eval - exact_eval) / \
+                    torch.linalg.vector_norm(exact_eval).clamp(min=1e-12)
+                rel_l2 = float(err)
+            else:
+                rel_l2 = float('nan')
             rec = {
                 'step': step,
                 'loss': float(loss),
                 'loss_pde': float(lp),
                 'loss_bc': float(lb),
-                'relative_l2': float(err)
+                'relative_l2': rel_l2
             }
             append_jsonl(out / 'metrics.jsonl', rec)
             print(rec)

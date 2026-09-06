@@ -34,6 +34,7 @@ run:
   deterministic: true
   device: cuda
   dtype: float32
+  failure_label: spectral_suppression
   name: spectral_suppression_seed7
   output_dir: runs
   seed: 7

@@ -1,0 +1,46 @@
+run:
+  name: advection_diffusion_2d_baseline
+  output_dir: runs
+  seed: 7
+  deterministic: true
+  device: cuda
+  dtype: float32
+  failure_label: unlabeled
+
+pde:
+  name: advection_diffusion_2d
+  domain: [0.0, 1.0]
+  domain_y: [0.0, 1.0]
+  source: 1.0            # speed_x
+  forcing: 0.5           # speed_y
+  diffusion: 0.05
+  boundary_values: [0.0, 0.0]
+  validation_points: 400
+
+model:
+  input_dim: 2
+  output_dim: 1
+  hidden_layers: [32, 32, 32]
+  activation: tanh
+  init: xavier
+
+training:
+  optimizer: adam
+  learning_rate: 0.001
+  steps: 1000
+  interior_points: 256
+  boundary_points: 80
+  log_every: 50
+  checkpoint_every: 500
+  lambda_pde: 1.0
+  lambda_bc: 1.0
+  resample_every: 0
+
+logging:
+  save_activations: true
+  activation_layers: [1]
+  save_pointwise_residuals: true
+  log_gradients: false
+  grad_log_every: 100
+  log_diagnostics: false
+  diag_log_every: 100

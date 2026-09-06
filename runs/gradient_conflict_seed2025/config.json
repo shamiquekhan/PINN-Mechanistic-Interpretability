@@ -1,0 +1,68 @@
+{
+  "run": {
+    "name": "gradient_conflict_seed2025",
+    "output_dir": "runs",
+    "seed": 2025,
+    "deterministic": true,
+    "device": "cuda",
+    "dtype": "float32",
+    "failure_label": "gradient_conflict"
+  },
+  "pde": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 1.0,
+    "forcing": 0.0,
+    "diffusion": 0.01,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      64,
+      64,
+      64
+    ],
+    "activation": "tanh",
+    "init": "xavier",
+    "fourier_embed": false,
+    "fourier_n_freq": 32,
+    "fourier_scale": 1.0
+  },
+  "training": {
+    "optimizer": "adam",
+    "learning_rate": 0.1,
+    "steps": 5000,
+    "interior_points": 256,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0,
+    "resample_every": 0,
+    "spatial_bias": 0.0
+  },
+  "logging": {
+    "save_activations": true,
+    "activation_layers": [
+      1
+    ],
+    "save_pointwise_residuals": true,
+    "log_gradients": true,
+    "grad_log_every": 100,
+    "log_diagnostics": true,
+    "diag_log_every": 100
+  },
+  "sae": null,
+  "intervention": null,
+  "monitor": null,
+  "controller": null
+}

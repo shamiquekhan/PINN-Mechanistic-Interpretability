@@ -28,6 +28,11 @@ from analysis.activation_manifold import (
     local_tangent_rank_bound,
     pca_projection,
 )
+from analysis.pca_interpretability import (
+    compare_pca_vs_sae_causal_specificity,
+    fit_pca,
+    pca_component_intervention,
+)
 from sae.model import SparseAutoencoder
 from interventions.engine import SAEInterventionHook
 from pinn.model import MLP
@@ -203,6 +208,17 @@ class TestEffectiveRank:
         coords = np.stack([x.ravel(), y.ravel()], axis=1)
         values = np.stack([coords[:, 0], coords[:, 1], coords[:, 0] * coords[:, 1]], axis=1)
         assert local_tangent_rank(values, coordinates=coords) == 2
+
+    def test_pca_component_intervention_and_comparison(self):
+        data = torch.tensor([[1.0, 0.0], [0.0, 1.0], [-1.0, 0.0], [0.0, -1.0]])
+        basis = fit_pca(data, n_components=2)
+        intervened = pca_component_intervention(data, basis, component_idx=0, alpha=0.0)
+        assert intervened.shape == data.shape
+        comparison = compare_pca_vs_sae_causal_specificity(
+            [{"causal_strength": 0.2, "specificity": 2.0}],
+            [{"causal_strength": 0.1, "specificity": 1.0}],
+        )
+        assert comparison["pca_minus_sae_strength"] == pytest.approx(0.1)
 
     def test_participation_ratio_1d_curve(self):
         """A 1D curve embedded in 64 dims must have PR near 1 (PINN case)."""

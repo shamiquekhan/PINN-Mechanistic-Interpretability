@@ -1,0 +1,57 @@
+{
+  "run_name": "gradient_conflict_seed2024",
+  "seed": 2024,
+  "failure_label": "gradient_conflict",
+  "final_step": 999,
+  "total_steps": 5000,
+  "final_loss": 0.4322287142276764,
+  "final_loss_pde": 0.29315412044525146,
+  "final_loss_bc": 0.13907459378242493,
+  "final_relative_l2": 0.5556158423423767,
+  "validation_relative_l2": 0.5556158423423767,
+  "validation_linf": 0.39781177043914795,
+  "validation_mse": 0.04112007096409798,
+  "converged": false,
+  "pde_config": {
+    "name": "poisson_1d",
+    "domain": [
+      -1.0,
+      1.0
+    ],
+    "source": 1.0,
+    "forcing": 0.0,
+    "diffusion": 0.01,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 1001
+  },
+  "model_config": {
+    "input_dim": 1,
+    "output_dim": 1,
+    "hidden_layers": [
+      64,
+      64,
+      64
+    ],
+    "activation": "tanh",
+    "init": "xavier",
+    "fourier_embed": false,
+    "fourier_n_freq": 32,
+    "fourier_scale": 1.0
+  },
+  "training_config": {
+    "optimizer": "adam",
+    "learning_rate": 0.1,
+    "steps": 5000,
+    "interior_points": 256,
+    "boundary_points": 2,
+    "log_every": 100,
+    "checkpoint_every": 1000,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0,
+    "resample_every": 0,
+    "spatial_bias": 0.0
+  }
+}

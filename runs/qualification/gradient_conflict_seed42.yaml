@@ -32,6 +32,7 @@ run:
   deterministic: true
   device: cuda
   dtype: float32
+  failure_label: gradient_conflict
   name: gradient_conflict_seed42
   output_dir: runs
   seed: 42

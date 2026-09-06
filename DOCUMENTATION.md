@@ -187,7 +187,7 @@ lambda_pde, lambda_bc, event = controller.step(
 
 ## 7. Master Research Campaign Execution
 
-To run all 7 stages sequentially in a single automated pipeline:
+To run all 13 stages sequentially in a single automated pipeline:
 
 ```bash
 python -m experiments.run_pipeline
@@ -196,12 +196,18 @@ python -m experiments.run_pipeline
 Individual stages are also available for reproducible reruns:
 
 ```bash
-python -m experiments.run_pipeline --stages 2  # failure atlas and seed statistics
-python -m experiments.run_pipeline --stages 3  # SAE, PCA, and random baselines
-python -m experiments.run_pipeline --stages 4  # feature dictionary
-python -m experiments.run_pipeline --stages 5  # causal battery and positive control
-python -m experiments.run_pipeline --stages 6  # monitor AUROC/AUPRC and CIs
-python -m experiments.run_pipeline --stages 7  # controller and source ablation
+python -m experiments.run_pipeline --stages 2   # failure atlas and seed statistics
+python -m experiments.run_pipeline --stages 3   # SAE, PCA, and random baselines
+python -m experiments.run_pipeline --stages 4   # feature dictionary
+python -m experiments.run_pipeline --stages 5   # causal battery and positive control
+python -m experiments.run_pipeline --stages 6   # monitor AUROC/AUPRC and CIs
+python -m experiments.run_pipeline --stages 7   # controller and source ablation
+python -m experiments.run_pipeline --stages 8   # PCA causal battery (head-to-head vs SAE)
+python -m experiments.run_pipeline --stages 9   # causal abstraction (partial interchange)
+python -m experiments.run_pipeline --stages 10  # 2D suite + time-dependent geometry
+python -m experiments.run_pipeline --stages 11  # FNO operator regime boundary
+python -m experiments.run_pipeline --stages 12  # SOTA baselines vs controller
+python -m experiments.run_pipeline --stages 13  # statistical hardening
 ```
 
 ## 8. Verification

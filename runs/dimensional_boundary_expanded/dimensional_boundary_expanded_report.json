@@ -1,0 +1,248 @@
+{
+  "families": {
+    "advection_diffusion_2d": {
+      "description": "2D input (steady advection-diffusion)",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "steps": 1000,
+      "results": [
+        {
+          "n_samples": 16000,
+          "dim": 32,
+          "participation_ratio": 2.527956908142602,
+          "stable_rank": 1.5104473611931242,
+          "n_components_95pct": 3,
+          "n_components_99pct": 6,
+          "n_components_999pct": 10,
+          "seed": 7,
+          "final_relative_l2": 0.029244596138596535,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 16000,
+          "dim": 32,
+          "participation_ratio": 2.3919897256109834,
+          "stable_rank": 1.3514099086995743,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 9,
+          "seed": 42,
+          "final_relative_l2": 0.021364139392971992,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 16000,
+          "dim": 32,
+          "participation_ratio": 2.5035136383625605,
+          "stable_rank": 1.765330790992311,
+          "n_components_95pct": 3,
+          "n_components_99pct": 6,
+          "n_components_999pct": 9,
+          "seed": 123,
+          "final_relative_l2": 0.02448027767241001,
+          "local_tangent_rank": 2
+        }
+      ],
+      "summary": {
+        "mean_participation_ratio": 2.474486757372049,
+        "pr_range": [
+          2.3919897256109834,
+          2.527956908142602
+        ],
+        "tangent_ranks": [
+          2
+        ],
+        "mean_final_relative_l2": 0.025029671067992847
+      }
+    },
+    "reaction_diffusion_2d": {
+      "description": "2D input (steady reaction-diffusion)",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "steps": 1000,
+      "results": [
+        {
+          "n_samples": 16000,
+          "dim": 32,
+          "participation_ratio": 2.074004270945522,
+          "stable_rank": 1.219365921546778,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 9,
+          "seed": 7,
+          "final_relative_l2": 1.9188895225524902,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 16000,
+          "dim": 32,
+          "participation_ratio": 2.133921468742197,
+          "stable_rank": 1.2513316415807898,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 9,
+          "seed": 42,
+          "final_relative_l2": 1.938745141029358,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 16000,
+          "dim": 32,
+          "participation_ratio": 2.6655959057813443,
+          "stable_rank": 1.6387699699426286,
+          "n_components_95pct": 3,
+          "n_components_99pct": 6,
+          "n_components_999pct": 10,
+          "seed": 123,
+          "final_relative_l2": 1.925853967666626,
+          "local_tangent_rank": 2
+        }
+      ],
+      "summary": {
+        "mean_participation_ratio": 2.291173881823021,
+        "pr_range": [
+          2.074004270945522,
+          2.6655959057813443
+        ],
+        "tangent_ranks": [
+          2
+        ],
+        "mean_final_relative_l2": 1.9278295437494914
+      }
+    },
+    "burgers_1d": {
+      "description": "time-space input (viscous Burgers)",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "steps": 3000,
+      "results": [
+        {
+          "n_samples": 14000,
+          "dim": 64,
+          "participation_ratio": 1.4198900336537328,
+          "stable_rank": 1.0179700120889874,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 9,
+          "seed": 7,
+          "final_relative_l2": 6.142735958099365,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 14000,
+          "dim": 64,
+          "participation_ratio": 1.5753531367766789,
+          "stable_rank": 1.0349137095545549,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 10,
+          "seed": 42,
+          "final_relative_l2": 6.091797351837158,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 14000,
+          "dim": 64,
+          "participation_ratio": 1.9005673177504323,
+          "stable_rank": 1.158055637474872,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 10,
+          "seed": 123,
+          "final_relative_l2": 6.056960582733154,
+          "local_tangent_rank": 2
+        }
+      ],
+      "summary": {
+        "mean_participation_ratio": 1.6319368293936147,
+        "pr_range": [
+          1.4198900336537328,
+          1.9005673177504323
+        ],
+        "tangent_ranks": [
+          2
+        ],
+        "mean_final_relative_l2": 6.097164630889893
+      }
+    },
+    "allen_cahn_1d": {
+      "description": "time-space input (Allen-Cahn)",
+      "seeds": [
+        7,
+        42,
+        123
+      ],
+      "steps": 3000,
+      "results": [
+        {
+          "n_samples": 14000,
+          "dim": 64,
+          "participation_ratio": 1.4171625955164295,
+          "stable_rank": 1.024983431364533,
+          "n_components_95pct": 2,
+          "n_components_99pct": 5,
+          "n_components_999pct": 9,
+          "seed": 7,
+          "final_relative_l2": 6.120919704437256,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 14000,
+          "dim": 64,
+          "participation_ratio": 1.5273153589392376,
+          "stable_rank": 1.0240840827221476,
+          "n_components_95pct": 3,
+          "n_components_99pct": 7,
+          "n_components_999pct": 12,
+          "seed": 42,
+          "final_relative_l2": 6.047629356384277,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 14000,
+          "dim": 64,
+          "participation_ratio": 1.581534440741203,
+          "stable_rank": 1.0481100964497134,
+          "n_components_95pct": 3,
+          "n_components_99pct": 5,
+          "n_components_999pct": 10,
+          "seed": 123,
+          "final_relative_l2": 5.892690181732178,
+          "local_tangent_rank": 2
+        }
+      ],
+      "summary": {
+        "mean_participation_ratio": 1.508670798398957,
+        "pr_range": [
+          1.4171625955164295,
+          1.581534440741203
+        ],
+        "tangent_ranks": [
+          2
+        ],
+        "mean_final_relative_l2": 6.020413080851237
+      }
+    }
+  },
+  "reference": {
+    "poisson_1d": {
+      "pr_mean": 1.87,
+      "tangent_rank": 1,
+      "note": "width study W=16..512 (runs/width_scaling)"
+    },
+    "poisson_2d": {
+      "pr_mean": 3.03,
+      "tangent_rank": 2,
+      "note": "5-seed pilot (runs/dimensional_boundary_2d)"
+    }
+  }
+}

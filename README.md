@@ -3,30 +3,36 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests: 94/94 Passed](https://img.shields.io/badge/Tests-94%2F94%20Passed-brightgreen.svg)](tests/)
+[![Tests: 139/139 Passed](https://img.shields.io/badge/Tests-139%2F139%20Passed-brightgreen.svg)](tests/)
 
-A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, early-warning monitors, and closed-loop adaptive control.
+A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
 
 ---
 
 ## Key Features
 
 - **GPU-Native Core Architecture (`pinn/`)**: Reusable `PINNTrainer`, named layer activations, parameter count utilities, Xavier/Kaiming initializations, and Random Fourier Feature Embeddings ($x \mapsto [\sin(Bx), \cos(Bx)]$).
-- **Unified PDE Specification Engine (`pinn/pdes.py`)**: Unified interface supporting **Poisson 1D**, **Advection 1D**, and **Reaction-Diffusion 1D** equations with exact solutions, validation grids, and boundary residual computations.
-- **Dimensional boundary prototype**: A manufactured **2D Poisson** benchmark is available through the same config/factory/training path for the next effective-rank experiment.
+- **Unified PDE Specification Engine (`pinn/pdes.py`)**: **Poisson 1D**, **Advection 1D**, **Reaction-Diffusion 1D**, **Poisson 2D**, **Advection-Diffusion 2D**, **Reaction-Diffusion 2D**, **viscous Burgers (t,x)**, and **Allen-Cahn (t,x)** — with manufactured solutions, stable integrating-factor reference solvers, enforced initial conditions, and boundary residual computations.
+- **Neural Operator Module (`operators/`)**: Dependency-free **FNO1d** (spectral convolutions, named block states) and a parametric **Green's-function regression** dataset — the high-rank positive control for the regime-boundary experiment.
 - **Sparse Autoencoder Feature Discovery (`sae/`)**: TopK and legacy ReLU+L1 SAEs with activation normalization, decoder unit-norm enforcement, dead-feature tracking, run-level splits, PCA/random baselines, and cross-seed feature matching.
-- **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine supporting targeted, unrelated, norm-matched random, and supervised probe controls with quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics.
+- **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine with targeted, unrelated, norm-matched random, and supervised probe controls; quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics; **PCA causal battery** (`pca_battery.py`) mirroring the SAE protocol component-for-component; and **partial interchange interventions** (`interchange.py`) implementing the causal-abstraction criterion of Geiger et al. 2021/2022.
 - **Early-Warning Failure Monitoring (`monitoring/`)**: Past-only sliding window trajectory feature extractors with strict `leakage_audit` verification, threshold degradation alarms, and logistic early-warning classifiers.
-- **Closed-Loop Adaptive PINN Controller (`controller/`)**: Deterministic state-machine controller ($\text{IDLE} \rightarrow \text{WARNING} \rightarrow \text{CONFIRMED} \rightarrow \text{ACTING} \rightarrow \text{COOLDOWN} \rightarrow \text{IDLE}$) executing 4 bounded corrective action handlers ($\lambda_{\text{bc}}$ reweighting, GradNorm loss balancing, high-residual resampling, and Fourier feature injection).
-- **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing experimental failure modes, extracting annotated physics latent features, and measuring effective rank / participation ratio before SAE training.
+- **Closed-Loop Adaptive PINN Controller (`controller/`)**: Deterministic state-machine controller ($\text{IDLE} \rightarrow \text{WARNING} \rightarrow \text{CONFIRMED} \rightarrow \text{ACTING} \rightarrow \text{COOLDOWN} \rightarrow \text{IDLE}$) executing 4 bounded corrective action handlers, with rollback and a measured monitor-source ablation.
+- **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing, annotated physics latent features, effective rank / participation ratio / local tangent rank analysis, statistical hardening (power analysis, Bayesian posteriors, threshold sensitivity), and activation-manifold visualizations.
+- **SOTA Optimization Baselines (`experiments/sota_baselines.py`)**: GradNorm, NTK-adaptive weighting, and RBA residual attention for comparison against the controller.
 
-## Current Evidence
+## Current Evidence (v3)
 
-The current benchmark is a scoped negative mechanistic result, not a claim that SAEs never work on scientific networks. Hidden activations in this 1D PINN suite have participation ratio about 1.34 of 64 dimensions, so k-matched PCA outperforms the SAE and no candidate feature survives corrected causal testing. A planted-feature positive control passes, showing that the intervention pipeline can recover a causal feature when one exists.
+The current benchmark is a **basis-independent hardened negative mechanistic result, with the regime boundary measured on both sides**:
 
-The conventional and SAE-augmented monitors are evaluable on the final held-out split (AUROC 0.872 and 0.878; run-level 95% CIs [0.795, 0.953] and [0.806, 0.958]). Their intervals overlap, so the benchmark does not establish an SAE advantage. The controller rescue result is reported separately as an engineering result. Gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly. See [RESULTS.md](RESULTS.md) for the complete evidence and limitations.
+1. **SAE causal null (stages 5):** $E_T$ CI includes zero; 0/8 features survive Bonferroni or BH-FDR; planted-feature positive control passes (pipeline validated).
+2. **PCA causal null (stage 8, new):** the identical battery on PCA components — 0/8 survive, same all-positive representational signature. No feature basis, linear or sparse, is causally specific here.
+3. **Causal abstraction null (stage 9, new):** neither PCA nor SAE alignments beat a random basis in partial interchange interventions for region identity.
+4. **Geometry (stages 3/10):** local tangent rank exactly equals input dimension across all eight PDE families and widths 16–512 (the provable bound, saturated); covariance participation ratio stays 1.3–3.2 — PINN activations are not in superposition (see `docs/theory_activation_rank.md` for the corrected theory: covariance rank is *not* bounded by input dimension; the tangent-rank bound is).
+5. **Regime boundary (stage 11, new):** an FNO on function-space regression has PR 6.8 of 64 (5× the PINNs) and there the same TopK SAE **beats k-matched PCA 4.7×** — the superposition regime exists and SAE methodology is appropriate in it. Reconstruction-level claim; operator causal battery is future work.
+6. **Engineering (stages 6/7/12):** conventional monitor AUROC 0.872 [0.795, 0.953]; SAE-augmented 0.878 (P(SAE better) = 0.54 — no advantage); controller rescues boundary starvation 18× over no-action with SAE features measured as inert cargo; NTK-adaptive weighting (0.0064) beats the controller on this failure while GradNorm/RBA actively harm — the controller is positioned as failure-agnostic machinery, not optimization SOTA.
 
-A width-scaling follow-up over widths 16–512 on the fixed 1D Poisson task found PR `1.74–2.00` and local tangent rank `1` at every width. The first five-seed 2D Poisson pilot raised PR to `2.89–3.17` with tangent rank `2`. These are scoped geometry measurements, not universal rank bounds or causal SAE results.
+See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations.
 
 ---
 
@@ -95,21 +101,28 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 98 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 139 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
 ```bash
-python -m experiments.run_pipeline
+python -m experiments.run_pipeline              # all 13 stages
+python -m experiments.run_pipeline --stages 5   # any subset, e.g. the causal battery
 ```
 This automatically executes:
 1. Training PINNs across all baseline & failure configurations.
 2. Indexing the Failure Atlas (`runs/failure_atlas/failure_atlas_index.json`).
 3. Training TopK Sparse Autoencoders with PCA, random, and seed-replica baselines (`runs/sae_models_v2/`).
 4. Building the Physics-Feature Dictionary (`runs/feature_dictionary/physics_feature_dictionary.md`).
-5. Computing Causal Intervention & Specificity scores (`runs/causal_intervention_results.json`).
+5. Computing Causal Intervention & Specificity scores + planted-feature positive control.
 6. Training & evaluating Early-Warning Monitors.
-7. Demonstrating Closed-Loop Controller rescue on boundary-starvation failure trajectories.
+7. Demonstrating Closed-Loop Controller rescue + monitor-source ablation.
+8. **PCA causal battery** — head-to-head vs SAE (`runs/pca_causal_results.json`).
+9. **Causal-abstraction partial interchanges** — PCA/SAE/random alignments (`runs/causal_abstraction_results.json`).
+10. **Dimensional boundary** — 2D + time-dependent PDE geometry (`runs/dimensional_boundary_expanded/`).
+11. **Operator regime boundary** — FNO on Green's-function regression (`runs/operator_boundary/`).
+12. **SOTA baselines** — GradNorm / NTK-adaptive / RBA vs controller (`runs/sota_baselines/`).
+13. **Statistical hardening** — power, Bayesian posterior, threshold sensitivity (`runs/statistical_hardening/`).
 
 ---
 
@@ -119,20 +132,25 @@ This automatically executes:
 .
 ├── pinn/                     # GPU-Native PINN Core
 │   ├── model.py              # MLP, FourierEmbedding, named layers
-│   ├── pdes.py               # Poisson, Advection, Reaction-Diffusion interfaces
+│   ├── pdes.py               # Poisson 1D/2D, Advection, RD 1D, AD-2D, RD-2D, Burgers, Allen-Cahn
 │   ├── trainer.py            # Reusable PINNTrainer with hooks & per-loss gradients
 │   ├── config.py             # Validated Pydantic v2 configuration schemas
 │   ├── activations.py        # ActivationLogger & probe point recorder
 │   ├── diagnostics.py        # Residual & spectral diagnostic utilities
 │   └── gradients.py          # Gradient norm & cosine similarity trackers
+├── operators/                # Neural Operator Module (v3)
+│   └── fno.py                # FNO1d (spectral conv) + Green's-function dataset
 ├── sae/                      # Sparse Autoencoder Module
 │   ├── model.py              # Overcomplete SparseAutoencoder with L1 & dead-feature tracking
 │   ├── dataset.py            # Run-partitioned ActivationDataset
 │   ├── train.py              # Training loop, PCA baseline, & hyperparameter sweep
 │   └── features.py           # Feature statistics, metric association, & Hungarian matching
 ├── interventions/            # Causal Intervention Engine
-│   ├── engine.py             # SAEInterventionHook implementing 7 causal modes
-│   └── causal.py             # Counterfactual experiment runner & causal scoring (E_T, S_spec)
+│   ├── engine.py             # SAEInterventionHook implementing 8 causal modes
+│   ├── causal.py             # Counterfactual runner, causal scoring (E_T, S_spec), MC corrections
+│   ├── pca_battery.py        # PCA-component causal battery (mirrors SAE protocol)
+│   ├── interchange.py        # Partial interchange interventions (causal abstraction)
+│   └── causal_abstraction.py # CausalModel container + alignment primitives
 ├── monitoring/               # Early-Warning Failure Monitoring
 │   ├── features.py           # Past-only sliding window trajectory features & leakage audit
 │   └── models.py             # ThresholdMonitor & LogisticMonitor early warning classifiers
@@ -141,25 +159,32 @@ This automatically executes:
 │   └── actions.py            # 4 corrective action handlers (BC reweight, GradNorm, Resample, Fourier)
 ├── analysis/                 # Diagnostic & Reporting Tools
 │   ├── activation_manifold.py # Tangent-rank and PCA manifold diagnostics
+│   ├── effective_rank.py     # Participation-ratio / stable-rank analysis
+│   ├── pca_interpretability.py # PCA basis + component interventions
+│   ├── statistical_hardening.py # Power analysis, Bayesian posterior, threshold sensitivity
 │   ├── failure_atlas.py      # Quantitative Failure Atlas aggregator & indexer
 │   ├── feature_dictionary.py # Physics-Feature Dictionary markdown reporter
 │   └── evaluate.py           # Evaluation script for completed runs
 ├── configs/                  # Experiment Config Files (YAML)
-│   ├── poisson_baseline.yaml
-│   ├── poisson_2d_boundary.yaml
-│   ├── advection_1d_baseline.yaml
-│   ├── reaction_diffusion_1d_baseline.yaml
-│   ├── failure_boundary_starvation.yaml
-│   ├── failure_gradient_conflict.yaml
-│   ├── failure_spectral_suppression.yaml
-│   └── failure_collocation_starvation.yaml
 ├── experiments/              # Execution Scripts
 │   ├── train.py              # Single experiment trainer
 │   ├── qualification.py      # Seed matrix qualification gate runner
 │   ├── width_scaling.py      # PR/tangent-rank width follow-up
-│   └── run_pipeline.py       # Master end-to-end research campaign execution script
-├── tests/                    # Comprehensive Unit Test Suite (98 tests)
+│   ├── dimensional_boundary_expanded.py # 2D suite + time-dependent geometry (v3)
+│   ├── operator_boundary.py  # FNO regime-boundary experiment (v3)
+│   ├── sota_baselines.py     # GradNorm / NTK-adaptive / RBA baselines (v3)
+│   ├── pca_causal.py         # PCA causal battery driver (v3)
+│   ├── causal_abstraction.py # Interchange battery driver (v3)
+│   ├── positive_control.py   # Planted-feature pipeline sanity
+│   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–13)
+├── tests/                    # Comprehensive Unit Test Suite (139 tests)
 │   └── unit/
+├── docs/
+│   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion
+│   ├── preregistration.md    # Preregistered v3 hypotheses & outcomes
+│   ├── paper_draft.md        # NeurIPS-target draft skeleton with measured numbers
+│   └── data_card.md          # Benchmark data card
+├── Dockerfile                # Pinned reproducible environment
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
 ├── DOCUMENTATION.md          # Comprehensive API & pipeline documentation
 └── requirements.txt          # Python dependencies

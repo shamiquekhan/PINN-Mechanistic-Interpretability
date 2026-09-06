@@ -1,0 +1,49 @@
+logging:
+  activation_layers:
+  - 1
+  diag_log_every: 100
+  grad_log_every: 100
+  log_diagnostics: true
+  log_gradients: true
+  save_activations: true
+  save_pointwise_residuals: true
+model:
+  activation: tanh
+  hidden_layers:
+  - 64
+  - 64
+  - 64
+  init: xavier
+  input_dim: 1
+  output_dim: 1
+pde:
+  boundary_values:
+  - 0.0
+  - 0.0
+  diffusion: 0.01
+  domain:
+  - -1.0
+  - 1.0
+  forcing: 0.0
+  name: poisson_1d
+  source: 1.0
+  validation_points: 1001
+run:
+  deterministic: true
+  device: cuda
+  dtype: float32
+  failure_label: gradient_conflict
+  name: gradient_conflict_seed2024
+  output_dir: runs
+  seed: 2024
+training:
+  boundary_points: 2
+  checkpoint_every: 1000
+  interior_points: 256
+  lambda_bc: 1.0
+  lambda_pde: 1.0
+  learning_rate: 0.1
+  log_every: 100
+  optimizer: adam
+  resample_every: 0
+  steps: 5000

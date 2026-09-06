@@ -1,0 +1,35 @@
+{
+  "dimension": 2,
+  "n_runs": 5,
+  "train_runs": [
+    "poisson_2d_seed2025",
+    "poisson_2d_seed7",
+    "poisson_2d_seed42"
+  ],
+  "test_runs": [
+    "poisson_2d_seed2024"
+  ],
+  "pca_components": 4,
+  "pca_test_reconstruction_mse": 1.4557180404663086,
+  "sae_test_reconstruction_mse": 2.068746118545532,
+  "sae_summary": {
+    "latent_dim": 128,
+    "input_dim": 32,
+    "activation_mode": "topk",
+    "topk": 4,
+    "sparsity_coeff": 0.001,
+    "dead_feature_fraction": 0.25,
+    "steps_tracked": 99
+  },
+  "sae_training_final": {
+    "step": 499,
+    "recon_loss": 0.04102177172899246,
+    "sparsity_loss": 0.0,
+    "total_loss": 0.04102177172899246,
+    "mean_l0": 4.0,
+    "mean_l1": 0.06362029165029526,
+    "val_recon": 1.4794416942596436,
+    "dead_feature_frac": 0.25
+  },
+  "interpretation": "Reconstruction comparison only; causal value requires a preregistered 2D intervention battery."
+}

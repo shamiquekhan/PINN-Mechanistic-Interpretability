@@ -1,6 +1,6 @@
 """
 End-to-End Experimental Execution Pipeline for PINN Mechanistic Interpretability
-(v2 — literature-grounded revision, Sep 2026).
+(v3 — regime-boundary campaign, Sep 2026).
 
 Stages:
   1. Train PINNs across configs (baselines + failure modes) with full logging.
@@ -16,6 +16,18 @@ Stages:
      run-level train/test split, AUROC/AUPRC/lead-time with CIs.
   7. Closed-loop controller rescue with rollback + honest reporting
      vs. no-action and static-reweight baselines.
+  8. PCA causal battery — the same 3-control protocol on PCA components,
+     head-to-head vs the SAE battery (Phase 10).
+  9. Causal abstraction — region-level partial interchange interventions,
+     PCA/SAE/random alignment bases (Phase 11).
+ 10. Dimensional boundary expansion — 2D advection/reaction-diffusion and
+     time-dependent Burgers/Allen-Cahn geometry (Phase 9A/9B).
+ 11. Operator regime boundary — FNO on Green's-function regression; the
+     high-rank positive control (Phase 9C).
+ 12. SOTA optimization baselines (GradNorm, NTK-adaptive, RBA) vs the
+     controller (Phase 14).
+ 13. Statistical hardening — power analysis, Bayesian AUROC posterior,
+     threshold sensitivity (Phase 13).
 """
 from __future__ import annotations
 import json
@@ -1208,6 +1220,25 @@ def main(stages: str = "all"):
             print("Stage 5 skipped: no SAE checkpoints (run stage 3 first).")
     if want("6"): run_stage_6_monitoring()
     if want("7"): run_stage_7_controller_demonstration()
+    if want("8"):
+        from experiments.pca_causal import run_pca_causal_experiment
+        run_pca_causal_experiment()
+    if want("9"):
+        from experiments.causal_abstraction import run_causal_abstraction_experiment
+        run_causal_abstraction_experiment()
+    if want("10"):
+        from experiments.dimensional_boundary_expanded import (
+            run_dimensional_boundary_expanded)
+        run_dimensional_boundary_expanded()
+    if want("11"):
+        from experiments.operator_boundary import run_operator_boundary
+        run_operator_boundary()
+    if want("12"):
+        from experiments.sota_baselines import run_sota_baselines
+        run_sota_baselines()
+    if want("13"):
+        from analysis.statistical_hardening import run_statistical_hardening
+        run_statistical_hardening()
     print("\n=== PIPELINE COMPLETE ===")
 
 
@@ -1215,6 +1246,6 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--stages", default="all",
-                    help="all or comma list / single stage number 1-7")
+                    help="all or comma list / single stage number 1-13")
     args = ap.parse_args()
     main(args.stages)

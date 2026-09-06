@@ -1,0 +1,76 @@
+{
+  "run": {
+    "name": "advection_diffusion_2d_baseline_seed123",
+    "output_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/dimensional_boundary_expanded/advection_diffusion_2d",
+    "seed": 123,
+    "deterministic": true,
+    "device": "cuda",
+    "dtype": "float32",
+    "failure_label": "unlabeled"
+  },
+  "pde": {
+    "name": "advection_diffusion_2d",
+    "domain": [
+      0.0,
+      1.0
+    ],
+    "domain_y": [
+      0.0,
+      1.0
+    ],
+    "time_domain": [
+      0.0,
+      1.0
+    ],
+    "source": 1.0,
+    "forcing": 0.5,
+    "diffusion": 0.05,
+    "boundary_values": [
+      0.0,
+      0.0
+    ],
+    "validation_points": 400
+  },
+  "model": {
+    "input_dim": 2,
+    "output_dim": 1,
+    "hidden_layers": [
+      32,
+      32,
+      32
+    ],
+    "activation": "tanh",
+    "init": "xavier",
+    "fourier_embed": false,
+    "fourier_n_freq": 32,
+    "fourier_scale": 1.0
+  },
+  "training": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "steps": 1000,
+    "interior_points": 256,
+    "boundary_points": 80,
+    "log_every": 50,
+    "checkpoint_every": 500,
+    "lambda_pde": 1.0,
+    "lambda_bc": 1.0,
+    "resample_every": 0,
+    "spatial_bias": 0.0
+  },
+  "logging": {
+    "save_activations": true,
+    "activation_layers": [
+      1
+    ],
+    "save_pointwise_residuals": true,
+    "log_gradients": false,
+    "grad_log_every": 100,
+    "log_diagnostics": false,
+    "diag_log_every": 100
+  },
+  "sae": null,
+  "intervention": null,
+  "monitor": null,
+  "controller": null
+}

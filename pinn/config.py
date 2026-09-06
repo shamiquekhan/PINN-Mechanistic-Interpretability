@@ -35,9 +35,14 @@ class RunConfig(BaseModel):
 # ---------------------------------------------------------------------------
 
 class PDEConfig(BaseModel):
-    name: Literal["poisson_1d", "poisson_2d", "advection_1d", "reaction_diffusion_1d"]
+    name: Literal[
+        "poisson_1d", "poisson_2d", "advection_1d", "reaction_diffusion_1d",
+        "advection_diffusion_2d", "reaction_diffusion_2d",
+        "burgers_1d", "allen_cahn_1d",
+    ]
     domain: list[float] = Field(min_length=2, max_length=2)
     domain_y: Optional[list[float]] = Field(default=None, min_length=2, max_length=2)
+    time_domain: list[float] = Field(default=[0.0, 1.0], min_length=2, max_length=2)
     source: float = 1.0         # primary scalar PDE param (source / speed / reaction)
     forcing: float = 0.0        # secondary forcing for advection / reaction-diffusion
     diffusion: float = 0.01     # ε for reaction-diffusion (ignored for other PDEs)

@@ -6,7 +6,7 @@
     "deterministic": true,
     "device": "cuda",
     "dtype": "float32",
-    "failure_label": "unlabeled"
+    "failure_label": "spectral_suppression"
   },
   "pde": {
     "name": "poisson_1d",
@@ -49,7 +49,8 @@
     "checkpoint_every": 1000,
     "lambda_pde": 1.0,
     "lambda_bc": 1.0,
-    "resample_every": 0
+    "resample_every": 0,
+    "spatial_bias": 0.0
   },
   "logging": {
     "save_activations": true,

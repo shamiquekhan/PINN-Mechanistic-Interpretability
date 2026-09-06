@@ -1,0 +1,11 @@
+{"step": 0, "gradient_stats": {"gradient_norms": {"pde": 0.5357707539294647, "bc": 1.8375680032796127}, "gradient_cosines": {"pde_vs_bc": -0.06040613353252411}, "gradient_conflict_score": 0.06040613353252411}}
+{"step": 100, "gradient_stats": {"gradient_norms": {"pde": 0.15670955168185033, "bc": 0.1269706526392852}, "gradient_cosines": {"pde_vs_bc": -0.44597530364990234}, "gradient_conflict_score": 0.44597530364990234}}
+{"step": 200, "gradient_stats": {"gradient_norms": {"pde": 0.006574809071432042, "bc": 0.002679558714395211}, "gradient_cosines": {"pde_vs_bc": -0.020327996462583542}, "gradient_conflict_score": 0.020327996462583542}}
+{"step": 300, "gradient_stats": {"gradient_norms": {"pde": 0.006804176512148272, "bc": 0.008304810699261752}, "gradient_cosines": {"pde_vs_bc": -0.18058857321739197}, "gradient_conflict_score": 0.18058857321739197}}
+{"step": 400, "gradient_stats": {"gradient_norms": {"pde": 0.008434448357481231, "bc": 0.0032228869313195995}, "gradient_cosines": {"pde_vs_bc": 0.04719816893339157}, "gradient_conflict_score": 0.0}}
+{"step": 500, "gradient_stats": {"gradient_norms": {"pde": 0.006605895505710031, "bc": 0.00289678964512482}, "gradient_cosines": {"pde_vs_bc": -0.022425223141908646}, "gradient_conflict_score": 0.022425223141908646}}
+{"step": 600, "gradient_stats": {"gradient_norms": {"pde": 0.005289505829220269, "bc": 0.0028056191901053595}, "gradient_cosines": {"pde_vs_bc": 0.02264842763543129}, "gradient_conflict_score": 0.0}}
+{"step": 700, "gradient_stats": {"gradient_norms": {"pde": 0.0030645070085791866, "bc": 0.0017662591454371045}, "gradient_cosines": {"pde_vs_bc": -0.0696181207895279}, "gradient_conflict_score": 0.0696181207895279}}
+{"step": 800, "gradient_stats": {"gradient_norms": {"pde": 0.006421266097563221, "bc": 0.003374539682381162}, "gradient_cosines": {"pde_vs_bc": 0.012246942147612572}, "gradient_conflict_score": 0.0}}
+{"step": 900, "gradient_stats": {"gradient_norms": {"pde": 0.008069964015524563, "bc": 0.013387149994171815}, "gradient_cosines": {"pde_vs_bc": 0.11699402332305908}, "gradient_conflict_score": 0.0}}
+{"step": 999, "gradient_stats": {"gradient_norms": {"pde": 0.005544114605867073, "bc": 0.09299218567074118}, "gradient_cosines": {"pde_vs_bc": 0.06480097025632858}, "gradient_conflict_score": 0.0}}
