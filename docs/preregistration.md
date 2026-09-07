@@ -180,8 +180,50 @@ fails, the stage is re-run only after a code fix that is itself committed
 and documented (the gate failing means the *battery* is broken, not that
 the hypothesis was tested).
 
-**Outcome (recorded after running):** *pending — see RESULTS.md §5A.7
-after stage 14 completes.*
+**Outcome (recorded after running):** The preregistered conjunctive rule
+fires **H14b** — condition (iii) failed (all 64 target deltas positive),
+so H14a is not confirmed. Conditions (i) and (ii) were met, however, and
+the nuance is recorded rather than hidden:
+
+- **Machinery gate:** PASS (targeted 0.0229 vs random control 0.0125;
+  decoder cosine 0.413 at gate scale).
+- **Condition (i) MET:** 6/8 candidates survive Bonferroni (each at 8/8
+  batch consistency, p = 0.0039); 6/8 survive BH-FDR. This is the exact
+  criterion the PINN batteries failed (0/8 there).
+- **Condition (ii) MET:** E_T bootstrap CI = [7.1e-6, +1.6e-5] — excludes
+  zero on the positive side (PINN batteries: CI spans zero).
+- **Condition (iii) NOT MET:** sign diagnostic 64/64 positive.
+- **Comparative context:** target beats all three controls in 48/64
+  evaluations (75%), median target/control ratio 1.2× — versus 12/88
+  (14%) at ratio 1.00× for the SAE-on-PINN battery and 28/88 (32%) at
+  0.98× for the PCA-on-PINN battery. The operator features show
+  *substantially more* control-beating specificity than any PINN basis.
+- **Weaknesses recorded:** absolute E_T magnitudes are tiny (~1e-5 on a
+  near-zero baseline regression loss); the specificity ratio against the
+  spectral non-target readout is 0.002 and is cross-unit (MSE vs Fourier
+  magnitude), so it is not directly interpretable; and the partial
+  interchange does NOT beat a random basis (SAE −1.257 vs random −1.226).
+
+**Post-hoc design observation (flagged as such, not used to overturn the
+preregistered verdict):** condition (iii) was motivated by the PINN
+batteries, where all-positive deltas accompanied E_T ≈ 0 (generic decode
+damage). For an ablation battery on a reconstruction readout, all-positive
+target deltas are the *expected* signature whether or not the feature is
+causal — information removal always increases the loss — so (iii) is not
+diagnostic in this setting; the discriminative statistic is target vs
+matched controls, which is what E_T and the sign tests measure. A future
+preregistration should replace (iii) with a direction-reversal condition
+(e.g., amplify-vs-ablate asymmetry) or drop it.
+
+**Recorded conclusion:** By the preregistered rule: **H14b** — the
+strictly-conjunctive boundary claim is not confirmed. By the same
+statistical standard the PINN nulls used (MC-corrected survivors + E_T
+CI), the operator features ARE causally specific (6/8 survive where PINNs
+had 0/8) — a weaker, hedged form of the regime-boundary claim that we
+report as a *suggestive asymmetry*: reconstruction advantage in the
+high-rank regime is accompanied by weak-but-consistent causal specificity
+that the low-rank regime entirely lacks. Full numbers:
+`runs/operator_causal/operator_causal_report.json`; RESULTS.md §5A.7.
 
 ---
 

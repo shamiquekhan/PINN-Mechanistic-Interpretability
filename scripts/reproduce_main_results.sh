@@ -8,7 +8,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 echo "==> Reproducing aggregate stages 2-13 (reads committed runs/)"
-for stage in 2 3 4 5 6 7 8 9 10 11 12 13; do
+for stage in 2 3 4 5 6 7 8 9 10 11 12 13 14; do
   echo "---- stage $stage ----"
   python -m experiments.run_pipeline --stages "$stage"
 done
@@ -39,6 +39,10 @@ checks = [
      lambda d: abs(d["verdict"]["controller_final"] - 0.0166) < 0.005),
     ("NTK-adaptive ~ 0.0064", "runs/sota_baselines/sota_baseline_report.json",
      lambda d: abs(d["baselines"]["NTK-adaptive"]["final_rel_l2"] - 0.0064) < 0.003),
+    ("stage-14 machinery gate passes", "runs/operator_causal/operator_causal_report.json",
+     lambda d: d["positive_control"]["pipeline_pass"] is True),
+    ("stage-14 MC survivors > PINN (>=4)", "runs/operator_causal/operator_causal_report.json",
+     lambda d: d["battery_summary"]["multiple_comparisons"]["bonferroni_n_survivors"] >= 4),
 ]
 
 failed = 0

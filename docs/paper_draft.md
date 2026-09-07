@@ -56,7 +56,11 @@ participation-ratio precheck before applying SAEs to scientific models.
      exactly; covariance PR ≪ width; no superposition to un-mix.
   4. A measured **regime boundary**: FNO function-space representations are
      high-rank and SAEs beat PCA there — the first controlled
-     both-sides demonstration in scientific ML.
+     both-sides demonstration in scientific ML — with a preregistered
+     causal battery on the operator side showing 6/8 MC-corrected
+     survivors where every PINN basis had 0/8 (reported as suggestive,
+     with the preregistration decision rule firing H14b on a documented
+     non-diagnostic condition).
   5. An engineering alternative that works: conventional-signal monitoring
      + closed-loop controller (rescues 18× vs no-action), with a
      monitor-source ablation proving SAE features are inert cargo.
@@ -131,10 +135,23 @@ Region-level partial interchange, H_boundary: PCA movement +7.49 vs random
 +7.52; SAE +7.43; no run-level consistency for either candidate. Neither
 linear nor sparse alignments causally abstract the PINN.
 
-### 5.6 The regime boundary (Figure 4 — the second key figure)
+### 5.6 The regime boundary (Figure 6 — the second key figure)
 PINN (ρ=0.02–0.03, PCA wins 12×) → 2D PINNs (ρ≈0.07–0.10, PCA wins) →
 FNO (ρ=0.106, **SAE wins 4.7×**) → LLMs (literature). The SAE tool
 transfers exactly when the representation is genuinely high-rank.
+
+### 5.6b The operator causal battery (Stage 14; preregistered H14a/H14b)
+The preregistered conjunctive rule fires H14b (the mixed-sign condition,
+non-diagnostic for ablation batteries, failed 64/64-positive) — but by the
+MC-correction standard that established the PINN nulls, the FNO features
+pass: **6/8 Bonferroni + BH-FDR survivors at 8/8 batch consistency, E_T CI
+[+7.1e-6, +1.6e-5] excluding zero** — where every PINN basis had 0/8 with
+CIs spanning zero. Beats-all-controls: 75% (FNO) vs 14% (SAE/PINN) and 32%
+(PCA/PINN). We report this as a *suggestive causal asymmetry* across the
+regime boundary, not a confirmed causal boundary: effect sizes are tiny
+(~1e-5 on a near-zero baseline), the interchange does not beat a random
+basis, and the sign condition is recorded as a preregistration design
+lesson (future batteries should use amplify-vs-ablate asymmetry instead).
 
 ### 5.7 Monitors and controller (the engineering results)
 AUROC 0.872 [0.795, 0.953] conventional vs 0.878 [0.806, 0.958] SAE —

@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 139/139 Passed](https://img.shields.io/badge/Tests-139%2F139%20Passed-brightgreen.svg)](tests/)
+[![Tests: 146/146 Passed](https://img.shields.io/badge/Tests-146%2F146%20Passed-brightgreen.svg)](tests/)
 [![CI](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml/badge.svg)](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
@@ -22,18 +22,18 @@ A GPU-accelerated research framework for analyzing, monitoring, and intervening 
 - **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing, annotated physics latent features, effective rank / participation ratio / local tangent rank analysis, statistical hardening (power analysis, Bayesian posteriors, threshold sensitivity), and activation-manifold visualizations.
 - **SOTA Optimization Baselines (`experiments/sota_baselines.py`)**: GradNorm, NTK-adaptive weighting, and RBA residual attention for comparison against the controller.
 
-## Current Evidence (v3)
+## Current Evidence (v3.1)
 
-The current benchmark is a **basis-independent hardened negative mechanistic result, with the regime boundary measured on both sides**:
+The current benchmark is a **basis-independent hardened negative mechanistic result, with the regime boundary measured on both sides**. All numbers below are read from the artifacts of the [fresh full-campaign rerun](docs/fresh_campaign_record.md) (regenerate with `scripts/reproduce_main_results.sh`; machine-checked by `scripts/check_results_grounded.py` in CI):
 
-1. **SAE causal null (stages 5):** $E_T$ CI includes zero; 0/8 features survive Bonferroni or BH-FDR; planted-feature positive control passes (pipeline validated).
-2. **PCA causal null (stage 8, new):** the identical battery on PCA components — 0/8 survive, same all-positive representational signature. No feature basis, linear or sparse, is causally specific here.
-3. **Causal abstraction null (stage 9, new):** neither PCA nor SAE alignments beat a random basis in partial interchange interventions for region identity.
-4. **Geometry (stages 3/10):** local tangent rank exactly equals input dimension across all eight PDE families and widths 16–512 (the provable bound, saturated); covariance participation ratio stays 1.3–3.2 — PINN activations are not in superposition (see `docs/theory_activation_rank.md` for the corrected theory: covariance rank is *not* bounded by input dimension; the tangent-rank bound is).
-5. **Regime boundary (stage 11, new):** an FNO on function-space regression has PR 6.8 of 64 (5× the PINNs) and there the same TopK SAE **beats k-matched PCA 4.7×** — the superposition regime exists and SAE methodology is appropriate in it. Reconstruction-level claim; operator causal battery is future work.
-6. **Engineering (stages 6/7/12):** conventional monitor AUROC 0.872 [0.795, 0.953]; SAE-augmented 0.878 (P(SAE better) = 0.54 — no advantage); controller rescues boundary starvation 18× over no-action with SAE features measured as inert cargo; NTK-adaptive weighting (0.0064) beats the controller on this failure while GradNorm/RBA actively harm — the controller is positioned as failure-agnostic machinery, not optimization SOTA.
+1. **SAE causal null (stage 5):** $E_T$ = +0.0020, 95% CI [−0.0034, +0.0084] — includes zero; 0/8 features survive Bonferroni or BH-FDR; planted-feature positive control passes (cosine 0.989, pipeline validated).
+2. **PCA causal null (stage 8):** the identical battery on PCA components — $E_T$ = −0.0203 [−0.0331, −0.0085], 0/8 survive, same all-positive representational signature. No feature basis, linear or sparse, is causally specific here.
+3. **Causal abstraction null (stage 9):** neither PCA nor SAE alignments beat a random basis in partial interchange interventions for region identity.
+4. **Geometry (stages 3/10):** local tangent rank exactly equals input dimension across all eight PDE families and widths 16–512 (the provable bound, saturated); covariance participation ratio stays 1.14–2.51 (mean 1.78 of 64) — PINN activations are not in superposition (see `docs/theory_activation_rank.md` for the corrected theory: covariance rank is *not* bounded by input dimension; the tangent-rank bound is).
+5. **Regime boundary (stage 11):** an FNO on function-space regression has PR 6.8 of 64 and there the same TopK SAE **beats k-matched PCA 4.7×** — the superposition regime exists. **Stage 14 (operator causal battery)** completes the causal side of this claim; hypotheses H14a/H14b were preregistered and committed before the run (see `docs/preregistration.md` and [RESULTS.md §5A.7](RESULTS.md)).
+6. **Engineering (stages 6/7/12):** conventional monitor AUROC 0.859 [0.780, 0.952]; SAE-augmented 0.864 (P(SAE better) = 0.53 — no advantage); controller rescues boundary starvation 18× over no-action (final 0.0166 vs 0.2953) with SAE features measured as inert cargo; NTK-adaptive weighting (0.0064) beats the controller on this failure while GradNorm/RBA actively harm — the controller is positioned as failure-agnostic machinery, not optimization SOTA.
 
-See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations.
+See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations. For what is *verified end-to-end right now* versus in-flight, see [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 ---
 
@@ -75,15 +75,17 @@ See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses
 
 ## Experimental Qualification Summary
 
-All core modules have been validated across a matrix of baseline and failure-inducing configurations on CUDA GPU:
+All core modules have been validated across a matrix of baseline and failure-inducing configurations on CUDA GPU (fresh-campaign values from `runs/<config>/metrics.jsonl`; 10-seed statistics with CIs in `runs/failure_atlas/seed_matrix_stats.json`):
 
 | Configuration | PDE Family | Key Parameters | Rel $L_2$ Error | Status / Outcome |
 | :--- | :--- | :--- | :--- | :--- |
-| **`success_baseline`** | Poisson 1D | Standard weights, Xavier init | **$2.74 \times 10^{-4}$** | **Converged** Clean solution |
-| **`boundary_starvation`** | Poisson 1D | $\lambda_{\text{pde}}=100, \lambda_{\text{bc}}=0.01$ | **0.278957** | **Failed** BC error dominates |
-| **`gradient_conflict`** | Poisson 1D | High LR ($\eta = 0.1$) | **0.410831** | **Failed** Severe gradient oscillation |
-| **`spectral_suppression`** | Poisson 1D | Narrow net, source $= 50$ | **0.265287** | **Failed** High-frequency aliasing |
-| **`collocation_starvation`**| Poisson 1D | $N_i = 8$ interior points | **0.042475** | **Stalled** Insufficient sampling |
+| **`poisson_baseline`** | Poisson 1D | Standard weights, Xavier init | **0.00069** | **Converged** Clean solution |
+| **`advection_baseline`** | Advection 1D | Standard weights | **0.0011** | **Converged** |
+| **`reaction_diffusion_baseline`** | Reaction-Diffusion 1D | $\mu{=}1, f{=}1, \varepsilon{=}0.01$ | **0.0015** | **Converged** (stiff BL) |
+| **`failure_boundary_starvation`** | Poisson 1D | $\lambda_{\text{pde}}=100, \lambda_{\text{bc}}=0.01$ | **0.70** (seed matrix: 2.31 ± 1.59) | **Failed** BC error dominates |
+| **`failure_gradient_conflict`** | Poisson 1D | High LR ($\eta = 0.1$) | **1.0** (labels not seed-reproducible → excluded from class claims) | **Failed** Severe gradient oscillation |
+| **`failure_spectral_suppression`** | Poisson 1D | Narrow net, source $= 50$ | **0.108** (seed matrix: 0.395 ± 0.114) | **Failed** High-frequency aliasing |
+| **`failure_collocation_starvation`**| Poisson 1D | $N_i = 8$ interior points | **0.036** | **Stalled** Insufficient sampling |
 
 ---
 
@@ -102,12 +104,12 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 139 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 146 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
 ```bash
-python -m experiments.run_pipeline              # all 13 stages
+python -m experiments.run_pipeline              # all 14 stages
 python -m experiments.run_pipeline --stages 5   # any subset, e.g. the causal battery
 ```
 
@@ -133,6 +135,7 @@ This automatically executes:
 11. **Operator regime boundary** — FNO on Green's-function regression (`runs/operator_boundary/`).
 12. **SOTA baselines** — GradNorm / NTK-adaptive / RBA vs controller (`runs/sota_baselines/`).
 13. **Statistical hardening** — power, Bayesian posterior, threshold sensitivity (`runs/statistical_hardening/`).
+14. **Operator causal battery** — the 3-control causal protocol + interchange on FNO block states, completing the regime-boundary claim (`runs/operator_causal/`).
 
 ---
 
@@ -187,7 +190,7 @@ This automatically executes:
 │   ├── causal_abstraction.py # Interchange battery driver (v3)
 │   ├── positive_control.py   # Planted-feature pipeline sanity
 │   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–13)
-├── tests/                    # Comprehensive Unit Test Suite (139 tests)
+├── tests/                    # Comprehensive Unit Test Suite (146 tests)
 │   └── unit/
 ├── docs/
 │   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion

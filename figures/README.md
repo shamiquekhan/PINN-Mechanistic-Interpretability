@@ -28,6 +28,7 @@ slightly across matplotlib versions (documented in
 | `figure_06_regime_boundary.py` | Fig. 6 | The regime boundary: PR/W vs SAE-vs-PCA reconstruction ratio across PINN families and the FNO | `operator_boundary_report.json` + PINN references |
 | `figure_07_monitor.py` | Fig. 7 | Monitor AUROCs with run-level bootstrap CIs | `monitor_report.json` |
 | `figure_08_controller_sota.py` | Fig. 8 | Controller rescue trajectories + SOTA baseline comparison | `controller_demo/controller_comparison.json`, `sota_baselines/sota_baseline_report.json` |
+| `figure_09_operator_causal.py` | Fig. 9 | Operator causal battery: MC p-values + beats-all rates across the three batteries | `causal_intervention_results.json`, `pca_causal_results.json`, `operator_causal/operator_causal_report.json` |
 
 Each script is standalone (imports only numpy/matplotlib/torch where needed)
 and exits non-zero on missing/corrupt artifacts.

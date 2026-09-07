@@ -104,6 +104,7 @@ Or stage-by-stage (each stage reads its predecessors' artifacts from
 | 11 | `--stages 11` | `runs/operator_boundary/` | ~10 min (FNO 4000 steps + SAE) |
 | 12 | `--stages 12` | `runs/sota_baselines/` | ~12 min |
 | 13 | `--stages 13` | `runs/statistical_hardening/` | < 1 min |
+| 14 | `--stages 14` | `runs/operator_causal/operator_causal_report.json` | ~8 min (FNO/SAE retrain + 8-batch battery) |
 
 Total compute budget of the published campaign: **≈ 6 GPU-hours**
 (RTX-class 4 GB; estimate, not metered — no CO2 estimate is reported
@@ -136,6 +137,8 @@ After the campaign completes, these JSON fields must match RESULTS.md
 | Monitor | `runs/monitor_report.json` | `conventional_logistic.auroc` | ≈ 0.872 |
 | Controller rescue | `runs/controller_demo/controller_comparison.json` | `verdict.controller_final` | ≈ 0.0166 |
 | SOTA: NTK beats controller | `runs/sota_baselines/sota_baseline_report.json` | `baselines.NTK-adaptive.final_rel_l2` | ≈ 0.0064 |
+| Stage-14 machinery gate | `runs/operator_causal/operator_causal_report.json` | `positive_control.pipeline_pass` | `true` |
+| Stage-14 survivors | `runs/operator_causal/operator_causal_report.json` | `battery_summary.multiple_comparisons.bonferroni_n_survivors` | ≈ 6 (PINN batteries: 0) |
 
 The reproducibility checklist for a fresh environment is maintained at
 [docs/reproducibility_checklist.md](reproducibility_checklist.md).

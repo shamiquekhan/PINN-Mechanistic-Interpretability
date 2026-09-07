@@ -4,6 +4,54 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.2.0] — 2026-09-07 — "Operator Causal Battery (Stage 14)"
+
+Preregistered (H14a/H14b committed at `f6eedf9` BEFORE the run), then
+executed and recorded exactly as the decision rules fired.
+
+### Added
+
+- `interventions/operator_battery.py`: OperatorSAEHook (ablate/amplify/
+  unrelated/random/probe on (batch, L, width) FNO block states),
+  regression-loss target readout + Fourier-magnitude non-target readout,
+  ridge probe on the output's dominant Fourier-mode magnitude, MC-corrected
+  battery summary (reuses the PINN scoring machinery), and a
+  planted-feature machinery gate with a one-sided relu readout.
+- `experiments/operator_causal.py`: stage-14 driver (deterministic
+  stage-11 FNO/SAE retrain, machinery gate, 8-batch replicated battery,
+  partial-interchange vs random basis); wired as pipeline stage 14.
+- `operators/fno.py`: block states routed through `self.acts[i]` so
+  forward hooks fire (MLP-compatible convention).
+- 7 unit tests (146 total). `PROJECT_STATUS.md` (verified/in-flight/
+  not-started ledger with receipts). `scripts/check_results_grounded.py`
+  + `.github/workflows/results_check.yml`: CI now FAILS if results docs
+  cite numbers ungrounded in committed artifacts.
+
+### Research outcome (recorded as preregistered, nuance documented)
+
+- Machinery gate: PASS (targeted 0.0229 vs random control 0.0125).
+- Preregistered conjunctive rule fires **H14b**: the mixed-sign condition
+  (iii) failed (all 64 target deltas positive). Conditions (i) 6/8
+  Bonferroni + BH-FDR survivors at 8/8 batch consistency, and (ii) E_T CI
+  [+7.1e-6, +1.6e-5] excluding zero on the positive side, were MET.
+- Comparative context: FNO features beat all 3 controls in 75% of
+  evaluations (median target/control 1.2×) vs 14% (1.00×) for SAE-on-PINN
+  and 32% (0.98×) for PCA-on-PINN.
+- Recorded conclusion: by the MC-correction standard that established the
+  PINN nulls, operator features ARE causally specific (6/8 vs 0/8
+  everywhere on PINNs) — reported as a *suggestive causal asymmetry*
+  across the regime boundary, NOT a confirmed causal boundary (weak
+  effect sizes; non-diagnostic sign condition documented as a design
+  lesson for future preregistrations). Full record:
+  docs/preregistration.md §H7; RESULTS.md §5A.7.
+
+### Changed
+
+- README.md fully re-grounded: stale v3.0-era numbers replaced with the
+  fresh v3.1 artifacts (AUROC 0.859/0.864; PR mean 1.78 range 1.14–2.51;
+  146 tests), stage-14 status recorded honestly, qualification table
+  re-read from `runs/<config>/metrics.jsonl`.
+
 ## [3.1.0] — 2026-09-07 — "Fresh Full-Campaign Record"
 
 Complete pipeline rerun (stages 1–13 from scratch), recorded in

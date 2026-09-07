@@ -124,13 +124,117 @@ reflected in its "unlabeled" exclusion from failure-class claims.
 
 ---
 
-## Interpretive discipline
+## H7 — Operator causal battery (Stage 14; registered BEFORE running)
+
+**Background.** Stage 11 (H4a) established the reconstruction-level regime
+boundary: FNO block states have PR 6.8/64 (ρ = 0.106) and the same TopK
+SAE that loses to k-matched PCA by 12× on PINNs *wins* by 4.7× there. The
+remaining question — the difference between "SAEs are appropriate in the
+high-rank regime" and "SAEs merely reconstruct better there" — is causal.
+
+**Setup (fixed before running).**
+* Operator: FNO1d (W=64, 4 spectral layers, 12 modes) on the stage-11
+  nonlinear Green's-function regression task, retrained with the same
+  seeds; TopK SAE (expansion 4×, k=8) trained on the last block states
+  (per-(sample, position) rows).
+* Target readout: function-space regression loss MSE(model(a), u) on
+  fixed held-out function batches. Non-target readout: mean output
+  Fourier-magnitude statistic (spectral shape).
+* Candidates: top-8 SAE latents by total activation.
+* Controls (identical semantics to stages 5/8): unrelated latent
+  ablation; median-of-5 norm-matched random directions; supervised ridge
+  probe in latent space predicting the output's dominant Fourier-mode
+  magnitude.
+* Replication: 8 independent held-out function batches; per-feature exact
+  one-sided paired sign tests; Bonferroni + BH-FDR across the 8
+  candidates (the operator analogue of the PINN batteries' run-level
+  replication).
+* Machinery gate: planted-feature positive control through the exact
+  operator hook + battery (one-sided relu readout; must show targeted
+  ablation beating all three controls) — if it fails, no verdict is read.
+* Interchange: partial interchange of the SAE-aligned subspace between
+  donor/source functions (stage-9 criterion), against a random
+  orthonormal basis.
+
+**Hypotheses and decision rules.**
+
+- **H14a (regime boundary, causal).** SAE features are causally specific
+  in the high-rank regime. *Decision rule:* H14a is confirmed iff
+  (i) at least one candidate survives Bonferroni across the 8-batch sign
+  tests, (ii) the E_T bootstrap CI excludes zero on the positive side,
+  and (iii) the sign diagnostic is mixed (genuine direction-specific
+  ablation effects rather than the all-positive representational
+  signature). Interpretation: the regime boundary is causal on both
+  sides — SAE causal validity tracks measured representation rank.
+
+- **H14b (broader null).** SAE features are not causally specific even in
+  the high-rank regime (0/8 survive; or CI spans zero; or all-positive
+  sign diagnostic). Interpretation: reconstruction advantage does not
+  imply causal validity — the null extends beyond low-rank PINNs, and
+  "check superposition" is necessary but not sufficient for SAE causal
+  claims.
+
+Either outcome is reported as measured; no post-hoc switching of
+thresholds, candidates, batches, or probe targets. If the machinery gate
+fails, the stage is re-run only after a code fix that is itself committed
+and documented (the gate failing means the *battery* is broken, not that
+the hypothesis was tested).
+
+**Outcome (recorded after running):** The preregistered conjunctive rule
+fires **H14b** — condition (iii) failed (all 64 target deltas positive),
+so H14a is not confirmed. Conditions (i) and (ii) were met, however, and
+the nuance is recorded rather than hidden:
+
+- **Machinery gate:** PASS (targeted 0.0229 vs random control 0.0125;
+  decoder cosine 0.413 at gate scale).
+- **Condition (i) MET:** 6/8 candidates survive Bonferroni (each at 8/8
+  batch consistency, p = 0.0039); 6/8 survive BH-FDR. This is the exact
+  criterion the PINN batteries failed (0/8 there).
+- **Condition (ii) MET:** E_T bootstrap CI = [7.1e-6, +1.6e-5] — excludes
+  zero on the positive side (PINN batteries: CI spans zero).
+- **Condition (iii) NOT MET:** sign diagnostic 64/64 positive.
+- **Comparative context:** target beats all three controls in 48/64
+  evaluations (75%), median target/control ratio 1.2× — versus 12/88
+  (14%) at ratio 1.00× for the SAE-on-PINN battery and 28/88 (32%) at
+  0.98× for the PCA-on-PINN battery. The operator features show
+  *substantially more* control-beating specificity than any PINN basis.
+- **Weaknesses recorded:** absolute E_T magnitudes are tiny (~1e-5 on a
+  near-zero baseline regression loss); the specificity ratio against the
+  spectral non-target readout is 0.002 and is cross-unit (MSE vs Fourier
+  magnitude), so it is not directly interpretable; and the partial
+  interchange does NOT beat a random basis (SAE −1.257 vs random −1.226).
+
+**Post-hoc design observation (flagged as such, not used to overturn the
+preregistered verdict):** condition (iii) was motivated by the PINN
+batteries, where all-positive deltas accompanied E_T ≈ 0 (generic decode
+damage). For an ablation battery on a reconstruction readout, all-positive
+target deltas are the *expected* signature whether or not the feature is
+causal — information removal always increases the loss — so (iii) is not
+diagnostic in this setting; the discriminative statistic is target vs
+matched controls, which is what E_T and the sign tests measure. A future
+preregistration should replace (iii) with a direction-reversal condition
+(e.g., amplify-vs-ablate asymmetry) or drop it.
+
+**Recorded conclusion:** By the preregistered rule: **H14b** — the
+strictly-conjunctive boundary claim is not confirmed. By the same
+statistical standard the PINN nulls used (MC-corrected survivors + E_T
+CI), the operator features ARE causally specific (6/8 survive where PINNs
+had 0/8) — a weaker, hedged form of the regime-boundary claim that we
+report as a *suggestive asymmetry*: reconstruction advantage in the
+high-rank regime is accompanied by weak-but-consistent causal specificity
+that the low-rank regime entirely lacks. Full numbers:
+`runs/operator_causal/operator_causal_report.json`; RESULTS.md §5A.7.
+
+---
+
+
 
 - Stages 8–9 outcomes (H8a, H9a) *generalize* the negative result; they do
   not weaken it and were reported exactly as measured, including the
   4/88→31/88 raw beats-all counts that fail MC correction.
-- Stage 11's positive control (H4a) is the paper's regime boundary; the SAE
-  advantage claim is reconstruction-level only (no causal battery was run
-  on the FNO — future work, stated explicitly).
+- Stage 11's positive control (H4a) is the paper's regime boundary; its
+  SAE-advantage claim was reconstruction-level only when first registered —
+  stage 14 (H7) was registered and run to complete the causal side; see
+  RESULTS.md §5A.7 for the outcome.
 - All artifacts referenced above are the JSON files in `runs/` produced by
   the stage scripts; none were edited by hand.

@@ -61,6 +61,12 @@ Legend: *Art.* = artifact under `runs/`; *Fig.* = script in `figures/`;
 | G2 | Controller rescues boundary starvation; SAE monitor is inert cargo | controller / no-action / oracle / SAE-mon / rand-mon | `run_pipeline --stages 7` | `controller_demo/controller_comparison.json` | 0.0166 vs 0.2953 vs 0.0119; SAE≡random bit-identical | Fig. 8 / T9 |
 | G3 | Specialized reweighting beats generic controller (H5) | GradNorm / NTK-adaptive / RBA / controller refs | `run_pipeline --stages 12` | `sota_baselines/sota_baseline_report.json` | NTK 0.0064 < ctrl 0.0166 < oracle 0.0119; GN/RBA ≈ 2.0–2.2 (harm) | Fig. 9 / T10 |
 
+## Phase I — Operator causal battery (stage 14; preregistered H14a/H14b)
+
+| ID | Hypothesis | Model | Protocol | Command | Art. | Output | Fig./Tab. |
+|---|---|---|---|---|---|---|---|
+| I1 | SAE features causally specific in the high-rank regime (H14a conjunctive; fired H14b on sign condition) | FNO1d W=64 (stage-11 retrain) | 3 controls, 8 held-out batches, Bonferroni + BH-FDR, machinery gate, interchange | `run_pipeline --stages 14` | `operator_causal/operator_causal_report.json` | 6/8 survive, E_T CI [+7.1e-6, +1.6e-5]; beats-all 75% vs PINN 14–32% | T12 |
+
 ## Phase H — Statistical hardening (stage 13)
 
 | ID | Analysis | Command | Art. | Output | Tab. |

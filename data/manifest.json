@@ -1,10 +1,10 @@
 {
-  "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts (v3)",
-  "version": "3.1.0",
+  "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts",
+  "version": "3.2.0",
   "date": "2026-09-07",
   "license": "CC-BY-4.0",
-  "generator": "experiments/run_pipeline.py stages 1-13, fresh full-campaign rerun (post 437cced)",
-  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. This revision covers the FRESH full-campaign rerun (all stages retrained from scratch, including the advection/reaction-diffusion baselines that a stage-1 logging bug had silently dropped, and the non-degenerate reaction-diffusion forcing fix).",
+  "generator": "experiments/run_pipeline.py stages 1-14 (fresh campaign + stage-14 operator causal battery)",
+  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v3.2.0 adds the operator causal battery artifact (stage 14).",
   "files": [
     {
       "path": "runs/causal_intervention_results.json",
@@ -40,6 +40,11 @@
       "path": "runs/operator_boundary/operator_boundary_report.json",
       "bytes": 1410,
       "sha256": "5454bc215de5fb8015972d54d7e888e7ef4e44ed8788bafd248aef14ea1ffc0e"
+    },
+    {
+      "path": "runs/operator_causal/operator_causal_report.json",
+      "bytes": 132205,
+      "sha256": "0995014e117f463558e5419bea57578e78ab60fcead1546cce73e0173d0b0723"
     },
     {
       "path": "runs/sota_baselines/sota_baseline_report.json",
@@ -87,5 +92,5 @@
       "sha256": "139c4b6ee1460f2d9b099e2fb0e1cdc9ec553d55e3da6057141cd018a8abdae7"
     }
   ],
-  "note": "Raw data provenance: all datasets are GENERATED in-repo by the stage scripts. No external or third-party data is used."
+  "note": "All datasets are GENERATED in-repo by the stage scripts; no external data."
 }

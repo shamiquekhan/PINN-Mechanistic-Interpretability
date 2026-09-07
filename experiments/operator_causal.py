@@ -200,7 +200,10 @@ def run_operator_causal_experiment(seed: int = 0, n_batches: int = 8,
     sae_mean = sae.b_a.detach().flatten().to(DEVICE)
     g = torch.Generator().manual_seed(3)
     raw = torch.randn(width, len(candidates), generator=g)
-    q, _ = torch.linalg.qr(raw.T.to(DEVICE))
+    # Orthonormal k rows in width-space: qr of the (width, k) matrix gives
+    # Q (width, k); its transpose is the desired (k, width) basis.
+    # (qr of raw.T would return a (k, k) Q — wrong orientation.)
+    q, _ = torch.linalg.qr(raw.to(DEVICE))
     rand_basis = q.T[:len(candidates)].to(DEVICE)
     data_mean = states_flat.reshape(-1, width).mean(dim=0).to(DEVICE)
 
@@ -219,11 +222,13 @@ def run_operator_causal_experiment(seed: int = 0, n_batches: int = 8,
                 d_mean = inter_d[-1].mean(dim=1, keepdim=True)  # (1,1,width)
             lp_s = _reg_only(model, a_s, u_eval[i:i + 1])
             lp_d = _reg_only(model, a_d, u_eval[j:j + 1])
-            cd = ((d_mean - mean) @ basis.T)[:, :len(candidates)]
+            # Keep the (1, 1, k) shape so it broadcasts along the position
+            # axis against the (1, L, k) source coefficients.
+            cd = ((d_mean - mean) @ basis.T)[..., :len(candidates)]
             def hook(_m, _i, output):
-                cs = (output - mean) @ basis.T
-                cs = torch.cat([cd.expand(cs.shape[0], -1),
-                                cs[:, len(candidates):]], dim=1)
+                cs = (output - mean) @ basis.T          # (1, L, k)
+                cs = torch.cat([cd.expand(-1, cs.shape[1], -1),
+                                cs[..., len(candidates):]], dim=-1)
                 return (cs @ basis + mean)
             h = model.acts[-1].register_forward_hook(hook)
             try:

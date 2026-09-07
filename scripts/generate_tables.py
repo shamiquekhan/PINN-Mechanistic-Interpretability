@@ -201,7 +201,34 @@ def table_monitor_controller_sota() -> str:
         "\n\\bottomrule\n\\end{tabular}\n")
 
 
+def table_operator_causal() -> str:
+    sae = load("causal_intervention_results.json")
+    pca = load("pca_causal_results.json")
+    op = load("operator_causal/operator_causal_report.json")
+
+    def row(name, d, evals):
+        mc = d["multiple_comparisons"]
+        wins = sum(1 for r in evals
+                   if abs(r["causal_score"]["target_effect"]) >
+                   max(abs(r["causal_score"]["control_unrelated_effect"]),
+                       abs(r["causal_score"]["control_random_effect"]),
+                       abs(r["causal_score"]["control_probe_effect"])))
+        return (f"{name} & {mc['bonferroni_n_survivors']}/{mc['n_features_tested']} & "
+                f"{wins}/{len(evals)} \\\\")
+
+    body = "\n".join([
+        row("TopK SAE on PINN hidden acts", sae, sae["evaluations"]),
+        row("PCA components on PINN hidden acts", pca, pca["evaluations"]),
+        row("TopK SAE on FNO block states", op["battery_summary"], op["evaluations"]),
+    ])
+    return (
+        "\\begin{tabular}{lcc}\n\\toprule\n"
+        "Battery & Bonferroni survivors & Target beats all controls \\\\\n\\midrule\n"
+        + body + "\n\\bottomrule\n\\end{tabular}\n")
+
+
 TABLES = {
+    "table_operator_causal.tex": table_operator_causal,
     "table_failure_atlas.tex": table_failure_atlas,
     "table_reconstruction.tex": table_reconstruction,
     "table_causal_batteries.tex": table_causal_batteries,

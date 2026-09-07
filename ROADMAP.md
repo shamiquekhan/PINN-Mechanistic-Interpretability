@@ -38,12 +38,18 @@ for an established result.
 
 ## Planned (next)
 
-- [ ] **Operator causal battery** (the v3 FNO result is reconstruction-level
-  only): run the full 3-control intervention protocol + causal-abstraction
-  interchanges on FNO block states, with a planted-feature positive control
-  in the operator setting. This is the highest-value open experiment: it
-  would establish whether the regime boundary transfers from
-  reconstruction quality to *causal* validity.
+- [ ] **Stage-14 follow-up (preregister next):** replace the mixed-sign
+  condition with a direction-reversal criterion (amplify-vs-ablate asymmetry)
+  and re-run the operator battery; if the asymmetry confirms, upgrade the
+  boundary claim from suggestive to confirmed.
+
+- [x] **Operator causal battery (stage 14, v3.2):** preregistered (H14a/H14b
+  at f6eedf9), executed, recorded. Preregistered conjunctive rule fires
+  H14b (sign condition non-diagnostic), but by the MC-correction standard
+  used for the PINN nulls the operator features pass (6/8 Bonferroni
+  survivors, E_T CI positive) — recorded as a SUGGESTIVE causal asymmetry,
+  not a confirmed causal boundary. See docs/preregistration.md §H7 and
+  RESULTS.md §5A.7.
 - [ ] **Wider function-space task suite:** Darcy-flow-style operators,
   DeepONet comparison, wider FNOs (W = 128–512) to map the ρ threshold
   more finely.
