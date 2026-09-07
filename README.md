@@ -117,7 +117,7 @@ Reproducibility wrappers (see [docs/reproducibility.md](docs/reproducibility.md)
 
 ```bash
 bash scripts/run_smoke_test.sh           # CPU sanity: tests + short train + geometry (< 5 min)
-bash scripts/reproduce_main_results.sh   # stages 2–13 from committed artifacts + headline verification
+bash scripts/reproduce_main_results.sh   # stages 2–15 from committed artifacts + headline verification
 bash scripts/generate_figures.sh         # all publication figures from runs/ JSONs
 bash scripts/generate_tables.sh          # LaTeX tables into paper/tables/
 ```
@@ -205,8 +205,8 @@ This automatically executes:
 ├── scripts/                  # User-facing reproducibility commands
 │   ├── setup_env.sh          #   pinned venv setup (requirements.lock)
 │   ├── run_smoke_test.sh     #   CPU smoke: tests + 60-step train + geometry
-│   ├── run_full_pipeline.sh  #   full 14-stage campaign (~6 GPU-hours)
-│   ├── reproduce_main_results.sh  # stages 2–13 + headline verification
+│   ├── run_full_pipeline.sh  #   full 15-stage campaign (~6 GPU-hours)
+│   ├── reproduce_main_results.sh  # stages 2–15 + headline verification
 │   ├── generate_figures.sh   #   all publication figures
 │   └── generate_tables.{sh,py}  # LaTeX tables from artifacts
 ├── paper/                    # Submission artifact (LaTeX)

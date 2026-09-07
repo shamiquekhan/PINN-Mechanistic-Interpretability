@@ -79,10 +79,10 @@ pip install -r requirements.txt
 
 ## 4. Exact reproduction commands
 
-Unit tests first, then the full 14-stage campaign:
+Unit tests first, then the full 15-stage campaign:
 
 ```bash
-python -m pytest tests/ -q                 # 146 tests, ~15 s CPU
+python -m pytest tests/ -q                 # 155 tests, ~15 s CPU
 python -m experiments.run_pipeline          # all 15 stages
 ```
 
@@ -113,7 +113,7 @@ Helper wrappers (deterministic ordering + artifact verification):
 
 ```bash
 scripts/run_smoke_test.sh              # fast CPU sanity (< 5 min)
-scripts/reproduce_main_results.sh      # stages 2–13 (uses existing stage-1 runs)
+scripts/reproduce_main_results.sh      # stages 2–15 (uses existing stage-1 runs)
 scripts/generate_figures.sh            # all publication figures from runs/
 scripts/generate_tables.sh             # all publication tables from runs/
 ```

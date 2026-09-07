@@ -127,7 +127,7 @@ A manufactured 2D Poisson prototype is now available at `configs/poisson_2d_boun
 | Monitor suite + run-level CIs | `runs/monitor_report.json` | `--stages 6` |
 | Controller rescue + monitor-source ablation | `runs/controller_demo/controller_comparison.json` | `--stages 7` |
 | PCA causal battery / causal abstraction / operator boundary / operator causal / SOTA / hardening | `runs/pca_causal_results.json`, `runs/causal_abstraction_results.json`, `runs/operator_boundary/`, `runs/operator_causal/`, `runs/sota_baselines/`, `runs/statistical_hardening/` | `run_pipeline --stages 8,9,11,12,13,14` |
-| Full test suite (146 tests) | — | `pytest tests/` |
+| Full test suite (155 tests) | — | `pytest tests/` |
 
 ---
 

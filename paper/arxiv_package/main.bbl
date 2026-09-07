@@ -1,0 +1,178 @@
+\begin{thebibliography}{27}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Raissi et~al.(2019)Raissi, Perdikaris, and
+  Karniadakis]{raissi2019physics}
+Maziar Raissi, Paris Perdikaris, and George~Em Karniadakis.
+\newblock Physics-informed neural networks: A deep learning framework for
+  solving forward and inverse problems involving nonlinear partial differential
+  equations.
+\newblock \emph{Journal of Computational Physics}, 378:\penalty0 686--707,
+  2019.
+
+\bibitem[Wang et~al.(2021)Wang, Teng, and Perdikaris]{wang2020understanding}
+Sifan Wang, Yujun Teng, and Paris Perdikaris.
+\newblock Understanding and mitigating gradient flow pathologies in
+  physics-informed neural networks.
+\newblock In \emph{SIAM Journal on Scientific Computing}, volume~43, pages
+  A3055--A3081, 2021.
+
+\bibitem[Krishnapriyan et~al.(2021)Krishnapriyan, Gholami, Zewi, Mahoney, and
+  Willcox]{krishnapriyan2021characterizing}
+Aditi Krishnapriyan, Amir Gholami, Anima Zewi, Michael~W Mahoney, and Karen
+  Willcox.
+\newblock Characterizing possible failure modes in physics-informed neural
+  networks.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~34, 2021.
+
+\bibitem[Elhage et~al.(2022)Elhage, Hume, Olsson, Nanda, et~al.]{elbage2022toy}
+Nelson Elhage, Tristan Hume, Catherine Olsson, Neel Nanda, et~al.
+\newblock Toy models of superposition.
+\newblock In \emph{Anthropic Technical Report}, 2022.
+
+\bibitem[Cunningham et~al.(2023)Cunningham, Ewart, Riggs,
+  et~al.]{cunningham2023sparse}
+Hoagy Cunningham, Aidan Ewart, Logan Riggs, et~al.
+\newblock Sparse autoencoders find highly interpretable features in language
+  models.
+\newblock In \emph{NeurIPS Interpretability Workshop}, 2023.
+
+\bibitem[Bricken et~al.(2023)Bricken, Templeton, Batson,
+  et~al.]{bricken2023towards}
+Trenton Bricken, Adam Templeton, Joshua Batson, et~al.
+\newblock Towards monosemanticity: Decomposing language models with dictionary
+  learning.
+\newblock \emph{Anthropic Technical Report}, 2023.
+
+\bibitem[Gao et~al.(2025)Gao, du~Tour, Rager, et~al.]{gao2025scaling}
+Leo Gao, Tom du~Tour, Ben Rager, et~al.
+\newblock Scaling and evaluating sparse autoencoders.
+\newblock In \emph{International Conference on Learning Representations}, 2025.
+
+\bibitem[Marks et~al.(2025)Marks, Tegmark, et~al.]{marks2025sparse}
+Samuel Marks, Max Tegmark, et~al.
+\newblock Sparse feature circuits: Discovering and editing interpretable causal
+  graphs in language models.
+\newblock \emph{arXiv preprint}, 2025.
+
+\bibitem[Geiger et~al.(2022)Geiger, Wu, Potts, Icard, and
+  Goodman]{geiger2022inducing}
+Atticus Geiger, Zhengxuan Wu, Christopher Potts, Thomas Icard, and Noah
+  Goodman.
+\newblock Inducing causal structure for interpretable neural networks.
+\newblock In \emph{International Conference on Machine Learning}, 2022.
+
+\bibitem[Qi and Earls(2026)]{qi2026mechanistic}
+Milo Qi and Chris Earls.
+\newblock Mechanistic interpretability of neural quantum states via sparse
+  autoencoders.
+\newblock In \emph{arXiv preprint}, 2026.
+
+\bibitem[Li et~al.(2021)Li, Kovachki, Azizzadenesheli, et~al.]{li2021fourier}
+Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, et~al.
+\newblock Fourier neural operator for parametric partial differential
+  equations.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[{DeepMind Mechanistic Interpretability
+  Team}(2025)]{deepmind2025negative}
+{DeepMind Mechanistic Interpretability Team}.
+\newblock Negative results for sparse autoencoders on downstream tasks.
+\newblock \emph{DeepMind Technical Report}, 2025.
+
+\bibitem[Leask et~al.(2025)]{leask2025sparse}
+William Leask et~al.
+\newblock Sparse autoencoders do not find canonical units of analysis.
+\newblock \emph{arXiv preprint}, 2025.
+
+\bibitem[Paulo and Belrose(2025)]{paulo2025sae}
+Gabriel Paulo and Nina Belrose.
+\newblock Sparse autoencoders match or outperform supervised models for concept
+  erasure.
+\newblock \emph{arXiv preprint}, 2025.
+
+\bibitem[Korznikov et~al.(2026)]{korznikov2026saes}
+Alexander Korznikov et~al.
+\newblock Sparse autoencoders discard information relevant to target concepts.
+\newblock \emph{arXiv preprint}, 2026.
+
+\bibitem[Xu et~al.(2020)Xu, Zhang, Luo, Xiao, and Zheng]{xu2019frequency}
+Zhi-Qin~John Xu, Yaoyu Zhang, Tao Luo, Yao Xiao, and ZhengMa Zheng.
+\newblock Frequency principle: Fourier analysis sheds light on deep neural
+  networks.
+\newblock \emph{Communications in Computational Physics}, 28\penalty0
+  (5):\penalty0 1746--1767, 2020.
+
+\bibitem[Rahaman et~al.(2019)Rahaman, Barber, G{\"o}kmen, Arpit, Trischler, and
+  Bengio]{rahaman2019spectral}
+Nasim Rahaman, Aristide Barber, Ceyhun G{\"o}kmen, Devansh Arpit, Andreas
+  Trischler, and Yoshua Bengio.
+\newblock On the spectral bias of neural networks.
+\newblock In \emph{International Conference on Machine Learning}, 2019.
+
+\bibitem[Chen et~al.(2018)Chen, Badrinarayanan, Lee, and
+  Rabinovich]{chen2018gradnorm}
+Zhao Chen, Vijay Badrinarayanan, Chen-Yu Lee, and Andrew Rabinovich.
+\newblock Gradnorm: Gradient normalization for adaptive loss balancing in deep
+  multitask networks.
+\newblock In \emph{International Conference on Machine Learning}, 2018.
+
+\bibitem[Wang et~al.(2022)Wang, Yu, and Perdikaris]{wang2021learning}
+Sifan Wang, Xinling Yu, and Paris Perdikaris.
+\newblock When and why {PINNs} fail to train: A neural tangent kernel
+  perspective.
+\newblock \emph{Journal of Computational Physics}, 449:\penalty0 110768, 2022.
+
+\bibitem[McClenny and Braga-Neto(2023)]{mccclenny2023self}
+Levi~D. McClenny and Ulisses~M. Braga-Neto.
+\newblock Self-adaptive physics-informed neural networks using a soft attention
+  mechanism.
+\newblock \emph{Journal of Computational Physics}, 474:\penalty0 111753, 2023.
+
+\bibitem[Wang et~al.(2024)Wang, Sankaran, and Perdikaris]{wang2024respecting}
+Sifan Wang, Hanwen Sankaran, and George Perdikaris.
+\newblock Respecting causality for training physics-informed neural networks.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  421:\penalty0 116813, 2024.
+
+\bibitem[Anagnostopoulos et~al.(2024)]{anagnostopoulos2024residual}
+Sokratis Anagnostopoulos et~al.
+\newblock Residual-based attention for physics-informed neural networks.
+\newblock \emph{arXiv preprint}, 2024.
+
+\bibitem[Kim et~al.(2022)Kim, Choi, Widemann, and Zohdi]{kim2022fast}
+Youngkyu Kim, Yoonsang Choi, Dirk Widemann, and Tarek Zohdi.
+\newblock A fast and accurate physics-informed neural network reduced order
+  model with shallow masked autoencoder.
+\newblock \emph{Journal of Computational Physics}, 451:\penalty0 110841, 2022.
+
+\bibitem[Chen et~al.(2023)]{chen2023toy}
+Yizhou Chen et~al.
+\newblock A toy model of superposition phase transitions.
+\newblock \emph{arXiv preprint}, 2023.
+\newblock PLACEHOLDER — the Bayesian/dynamical phase-transition analysis of
+  the Elhage toy model; verify the actual authors, title, and identifier
+  against the literature before submitting.
+
+\bibitem[Wu et~al.(2025)]{wu2025axbench}
+Zhengxuan Wu et~al.
+\newblock {AXBench}: Steering language models with sparse autoencoders.
+\newblock In \emph{arXiv preprint}, 2025.
+
+\bibitem[Geiger et~al.(2021)Geiger, Potts, Icard, et~al.]{geiger2021causal}
+Atticus Geiger, Christopher Potts, Thomas Icard, et~al.
+\newblock Neural abstractions.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Lu et~al.(2021)Lu, Jin, Pang, et~al.]{lu2021learning}
+Lu~Lu, Pengzhan Jin, Guofei Pang, et~al.
+\newblock Learning nonlinear operators via {DeepONet} based on the universal
+  approximation theorem of operators.
+\newblock \emph{Nature Machine Intelligence}, 3:\penalty0 218--229, 2021.
+
+\end{thebibliography}

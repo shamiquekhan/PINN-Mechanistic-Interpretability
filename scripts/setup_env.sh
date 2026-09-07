@@ -45,4 +45,4 @@ pip install -e .
 
 echo "==> Environment ready."
 echo "    Activate with: source $VENV/bin/activate"
-echo "    Verify:        python -m pytest tests/ -q   (139 tests)"
+echo "    Verify:        python -m pytest tests/ -q   (155 tests)"

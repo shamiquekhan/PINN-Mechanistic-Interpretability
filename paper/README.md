@@ -1,6 +1,6 @@
 # `paper/` — Submission Artifact
 
-Full LaTeX manuscript for the NeurIPS/ICML-target paper (v3.2.0: complete
+Full LaTeX manuscript for the NeurIPS/ICML-target paper (v3.3.0: complete
 prose, 9 figures, 7 artifact-generated tables, 12-page compiled PDF).
 The narrative outline lives in [`docs/paper_draft.md`](../docs/paper_draft.md);
 this directory is the compiled-submission artifact.

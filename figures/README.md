@@ -30,5 +30,9 @@ slightly across matplotlib versions (documented in
 | `figure_08_controller_sota.py` | Fig. 8 | Controller rescue trajectories + SOTA baseline comparison | `controller_demo/controller_comparison.json`, `sota_baselines/sota_baseline_report.json` |
 | `figure_09_operator_causal.py` | Fig. 9 | Operator causal battery: MC p-values + beats-all rates across the three batteries | `causal_intervention_results.json`, `pca_causal_results.json`, `operator_causal/operator_causal_report.json` |
 
+*Stage 15 (NTK bridge) has no figure by design: the recorded null is a
+2-of-11-runs table (RESULTS.md §5A.8 / artifact `runs/ntk_bridge/
+ntk_bridge_report.json`), not a distribution worth plotting.*
+
 Each script is standalone (imports only numpy/matplotlib/torch where needed)
 and exits non-zero on missing/corrupt artifacts.

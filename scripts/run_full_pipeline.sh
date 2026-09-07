@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Full 13-stage research campaign. Heavy: ~6 GPU-hours on a 4 GB GPU
+# Full 15-stage research campaign. Heavy: ~6 GPU-hours on a 4 GB GPU
 # (stage 1 retrains every configuration from scratch).
 #
 # For reproducing the published analyses from the committed runs/ artifacts

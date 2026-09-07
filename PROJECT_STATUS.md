@@ -81,7 +81,7 @@ Each item: what ran → where the output lives.
 ```bash
 git clone https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability
 cd PINN-Mechanistic-Interpretability
-python -m pytest tests/ -q                              # 146 tests
+python -m pytest tests/ -q                              # 155 tests
 python scripts/check_results_grounded.py                # doc/artifact grounding
 sha256sum -c data/checksums.sha256                      # artifact integrity
 python -m experiments.run_pipeline --stages 5           # re-run any stage

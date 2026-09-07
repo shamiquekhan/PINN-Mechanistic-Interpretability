@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reproduce the main published results (stages 2-13) from the committed
+# Reproduce the main published results (stages 2-15) from the committed
 # runs/ artifacts — no retraining. Verifies headline numbers against the
 # expectations documented in docs/reproducibility.md §5.
 set -euo pipefail
@@ -7,8 +7,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-echo "==> Reproducing aggregate stages 2-13 (reads committed runs/)"
-for stage in 2 3 4 5 6 7 8 9 10 11 12 13 14; do
+echo "==> Reproducing aggregate stages 2-15 (reads committed runs/)"
+for stage in 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
   echo "---- stage $stage ----"
   python -m experiments.run_pipeline --stages "$stage"
 done
@@ -43,6 +43,11 @@ checks = [
      lambda d: d["positive_control"]["pipeline_pass"] is True),
     ("stage-14 MC survivors > PINN (>=4)", "runs/operator_causal/operator_causal_report.json",
      lambda d: d["battery_summary"]["multiple_comparisons"]["bonferroni_n_survivors"] >= 4),
+    ("stage-15 machinery gate passes", "runs/ntk_bridge/ntk_bridge_report.json",
+     lambda d: d["machinery_gate"]["gate_pass"] is True),
+    ("stage-15 verdict is H15b (0/8 survive)", "runs/ntk_bridge/ntk_bridge_report.json",
+     lambda d: d["decision_rule"]["recorded"] == "H15b"
+     and all(not s.get("bonferroni_survivor", False) for s in d["per_feature_summary"])),
 ]
 
 failed = 0

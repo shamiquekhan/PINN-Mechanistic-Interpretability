@@ -324,7 +324,7 @@ This validates the *controller engineering* (bounded actions, genuine rollback, 
 ## Reproduction
 
 ```bash
-python -m pytest tests/                                   # 146 tests, all passing
+python -m pytest tests/                                   # 155 tests, all passing
 python -m experiments.run_pipeline --stages 2            # failure atlas + 10-seed stats
 python -m experiments.run_pipeline --stages 3            # TopK SAEs + PCA/random baselines
 python -m experiments.run_pipeline --stages 4            # multi-view dictionary + random control
