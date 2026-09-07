@@ -121,12 +121,12 @@ stability; association-with-physics exists (r up to 0.75) but is geometry
 along the curve, with `data_std` the strongest correlate (confound).
 
 ### 5.4 The causal null — now basis-independent (Figure 3, the hardened core)
-- SAE battery: E_T = −0.0002 [−0.0051, +0.0060]; 0/8 survive Bonferroni AND
-  BH-FDR; all 88 target deltas positive; probe beats feature in 10.2%.
-- **PCA battery (new):** E_T = −0.0186 [−0.0301, −0.0092]; 0/8; all 88
-  positive; probe beats in 34%. Same protocol, same checkpoints, same
+- SAE battery: E_T = +0.0020 [−0.0034, +0.0084]; 0/8 survive Bonferroni AND
+  BH-FDR; all 88 target deltas positive; probe beats feature in 8.0%.
+- **PCA battery:** E_T = −0.0203 [−0.0331, −0.0085]; 0/8; all 88
+  positive; probe beats in 45%. Same protocol, same checkpoints, same
   scoring code.
-- Positive control passes (planted feature, cosine 0.99, 15× controls).
+- Positive control passes (planted feature, cosine 0.989, 68× the random control).
 - Power analysis: MDE 85.7% sign-agreement at 80% power — the null is not
   underpowered-by-accident; observed agreement ~50%.
 
@@ -154,8 +154,8 @@ basis, and the sign condition is recorded as a preregistration design
 lesson (future batteries should use amplify-vs-ablate asymmetry instead).
 
 ### 5.7 Monitors and controller (the engineering results)
-AUROC 0.872 [0.795, 0.953] conventional vs 0.878 [0.806, 0.958] SAE —
-P(SAE better) = 0.54 posterior. Controller: 0.295 → 0.017 (18×), oracle
+AUROC 0.859 [0.780, 0.952] conventional vs 0.864 [0.793, 0.954] SAE —
+P(SAE better) = 0.53 posterior. Controller: 0.295 → 0.017 (18×), oracle
 1.4× away; monitor-source ablation: SAE arm ≡ random arm (bit-identical).
 SOTA comparison (new): NTK-adaptive 0.0064 beats controller 0.0166;
 GradNorm 2.01 and RBA 2.19 actively harm — the controller is honest

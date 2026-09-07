@@ -22,9 +22,9 @@ A GPU-accelerated research framework for analyzing, monitoring, and intervening 
 - **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing, annotated physics latent features, effective rank / participation ratio / local tangent rank analysis, statistical hardening (power analysis, Bayesian posteriors, threshold sensitivity), and activation-manifold visualizations.
 - **SOTA Optimization Baselines (`experiments/sota_baselines.py`)**: GradNorm, NTK-adaptive weighting, and RBA residual attention for comparison against the controller.
 
-## Current Evidence (v3.1)
+## Current Evidence (v3.2)
 
-The current benchmark is a **basis-independent hardened negative mechanistic result, with the regime boundary measured on both sides**. All numbers below are read from the artifacts of the [fresh full-campaign rerun](docs/fresh_campaign_record.md) (regenerate with `scripts/reproduce_main_results.sh`; machine-checked by `scripts/check_results_grounded.py` in CI):
+The current benchmark is a **basis-independent hardened negative mechanistic result, with the regime boundary measured on both sides**. All numbers below are read from the artifacts of the [fresh full-campaign rerun](docs/fresh_campaign_record.md) plus the stage-14 operator causal battery (regenerate with `scripts/reproduce_main_results.sh`; machine-checked by `scripts/check_results_grounded.py` in CI):
 
 1. **SAE causal null (stage 5):** $E_T$ = +0.0020, 95% CI [−0.0034, +0.0084] — includes zero; 0/8 features survive Bonferroni or BH-FDR; planted-feature positive control passes (cosine 0.989, pipeline validated).
 2. **PCA causal null (stage 8):** the identical battery on PCA components — $E_T$ = −0.0203 [−0.0331, −0.0085], 0/8 survive, same all-positive representational signature. No feature basis, linear or sparse, is causally specific here.
@@ -204,7 +204,7 @@ This automatically executes:
 ├── scripts/                  # User-facing reproducibility commands
 │   ├── setup_env.sh          #   pinned venv setup (requirements.lock)
 │   ├── run_smoke_test.sh     #   CPU smoke: tests + 60-step train + geometry
-│   ├── run_full_pipeline.sh  #   full 13-stage campaign (~6 GPU-hours)
+│   ├── run_full_pipeline.sh  #   full 14-stage campaign (~6 GPU-hours)
 │   ├── reproduce_main_results.sh  # stages 2–13 + headline verification
 │   ├── generate_figures.sh   #   all publication figures
 │   └── generate_tables.{sh,py}  # LaTeX tables from artifacts

@@ -26,7 +26,7 @@ have different standards:
   `runs/` artifacts (see `figures/_common.py` and
   `scripts/generate_tables.py` for the pattern).
 * **Tests.** New modules need unit tests; the suite must pass:
-  `python -m pytest tests/ -q` (139 tests at time of writing). CI runs the
+  `python -m pytest tests/ -q` (146 tests at time of writing). CI runs the
   CPU path on Python 3.10/3.12.
 * **Claim ladder.** Result summaries must respect the claim-strength
   language in `RESULTS.md` §8 (e.g., "supported with scope",

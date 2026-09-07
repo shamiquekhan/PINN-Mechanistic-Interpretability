@@ -31,7 +31,7 @@ development: [requirements.txt](../requirements.txt). The
 
 **GPU memory:** the full campaign runs on a 4 GB GPU. Peak observed usage
 is < 2 GB (largest model: 512-wide Poisson; largest SAE input: 65,000×64).
-CPU-only execution works for the entire unit-test suite (139 tests) and all
+CPU-only execution works for the entire unit-test suite (146 tests) and all
 analysis stages; only stage-1 training is slower (see §6).
 
 ## 2. Installation
@@ -79,11 +79,11 @@ pip install -r requirements.txt
 
 ## 4. Exact reproduction commands
 
-Unit tests first, then the full 13-stage campaign:
+Unit tests first, then the full 14-stage campaign:
 
 ```bash
-python -m pytest tests/ -q                 # 139 tests, ~12 s CPU
-python -m experiments.run_pipeline          # all 13 stages
+python -m pytest tests/ -q                 # 146 tests, ~15 s CPU
+python -m experiments.run_pipeline          # all 14 stages
 ```
 
 Or stage-by-stage (each stage reads its predecessors' artifacts from
@@ -114,7 +114,7 @@ Helper wrappers (deterministic ordering + artifact verification):
 
 ```bash
 scripts/run_smoke_test.sh              # fast CPU sanity (< 5 min)
-scripts/reproduce_main_results.sh      # stages 2–13 (uses existing stage-1 runs)
+scripts/reproduce_main_results.sh      # stages 2–14 (uses existing stage-1 runs)
 scripts/generate_figures.sh            # all publication figures from runs/
 scripts/generate_tables.sh             # all publication tables from runs/
 ```
@@ -128,13 +128,13 @@ After the campaign completes, these JSON fields must match RESULTS.md
 |---|---|---|---|
 | Failure atlas reproduces | `runs/failure_atlas/seed_matrix_stats.json` | `boundary_starvation.label_counts` | 10/10 boundary_starvation |
 | Positive control passes | `runs/positive_control.json` | `pipeline_pass` | `true` |
-| SAE causal null | `runs/causal_intervention_results.json` | `causal_strength_ci` | mean ≈ −0.0002, CI spans 0 |
+| SAE causal null | `runs/causal_intervention_results.json` | `causal_strength_ci` | mean ≈ +0.0020, CI spans 0 |
 | SAE MC correction | `runs/causal_intervention_results.json` | `multiple_comparisons.bonferroni_n_survivors` | 0 |
 | PCA causal null | `runs/pca_causal_results.json` | `multiple_comparisons.bonferroni_n_survivors` | 0 |
 | Causal abstraction null | `runs/causal_abstraction_results.json` | `verdict.pca.beats_random_every_run` | `false` |
-| Geometry | `runs/effective_rank_analysis/effective_rank_report.json` | `summary.mean_participation_ratio` | ≈ 1.34 |
+| Geometry | `runs/effective_rank_analysis/effective_rank_report.json` | `summary.mean_participation_ratio` | ≈ 1.78 (fresh pool; see fresh_campaign_record §3) |
 | FNO regime boundary | `runs/operator_boundary/operator_boundary_report.json` | `verdict.sae_beats_k_matched_pca` | `true` |
-| Monitor | `runs/monitor_report.json` | `conventional_logistic.auroc` | ≈ 0.872 |
+| Monitor | `runs/monitor_report.json` | `conventional_logistic.auroc` | ≈ 0.859 |
 | Controller rescue | `runs/controller_demo/controller_comparison.json` | `verdict.controller_final` | ≈ 0.0166 |
 | SOTA: NTK beats controller | `runs/sota_baselines/sota_baseline_report.json` | `baselines.NTK-adaptive.final_rel_l2` | ≈ 0.0064 |
 | Stage-14 machinery gate | `runs/operator_causal/operator_causal_report.json` | `positive_control.pipeline_pass` | `true` |
@@ -145,8 +145,8 @@ The reproducibility checklist for a fresh environment is maintained at
 
 ## 6. CPU-only execution
 
-All 139 unit tests pass CPU-only (`CUDA_VISIBLE_DEVICES="" python -m
-pytest tests/ -q`, ~12 s). Analysis stages (2–13) that only read `runs/`
+All 146 unit tests pass CPU-only (`CUDA_VISIBLE_DEVICES="" python -m
+pytest tests/ -q`, ~12 s). Analysis stages (2–14) that only read `runs/`
 artifacts are CPU-only by construction. Stage 1 training and stages 7/10/11
 retraining arms run on CPU at roughly 5–10× slower wall time. The GitHub CI
 workflow (`.github/workflows/tests.yml`) runs the CPU path, including a

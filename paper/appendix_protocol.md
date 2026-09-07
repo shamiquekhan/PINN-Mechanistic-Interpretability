@@ -119,7 +119,7 @@ threshold sensitivity 0.02–0.20.
 
 **Outcome:** MDE = 85.7% sign-agreement at 80% power (11 runs/feature) —
 the batteries can only detect near-deterministic causal features, and none
-approach the threshold. P(SAE monitor better) = 0.53 (no advantage). Label
+approach the threshold. P(SAE monitor better) = 0.54 (no advantage). Label
 ordering is stable for boundary/spectral regimes; the `success` regime's
 label fraction is threshold-sensitive (0.3 → 0.0 over 0.02–0.20) — already
 reflected in its "unlabeled" exclusion from failure-class claims.

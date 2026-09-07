@@ -22,10 +22,10 @@ Failure
 | Field | Definition |
 |---|---|
 | **Trigger (config)** | λ_pde = 100, λ_bc = 0.01 (`configs/failure_boundary_starvation.yaml`) |
-| **Observable** | loss_bc plateaus ≫ 0 while loss_pde → 0; final rel L2 ≈ 2.31 ± 1.59 |
+| **Observable** | loss_bc plateaus ≫ 0 while loss_pde → 0; final rel L2 ≈ 2.31 ± 1.59 (CI [1.31, 3.40]) |
 | **Expected trajectory** | interior residual satisfied, Dirichlet conditions violated; solution drifts to the unforced PDE family |
 | **Physics interpretation** | the boundary term is weighted out of the gradient signal: the collocation objective admits solutions outside the BC-compatible family |
-| **Detection** | loss_bc stagnation + loss_pde/loss_bc ratio explosion (monitors pick this up: conventional AUROC 0.872) |
+| **Detection** | loss_bc stagnation + loss_pde/loss_bc ratio explosion (monitors pick this up: conventional AUROC 0.859) |
 | **Intervention** | λ_bc rebalancing (controller action; NTK-adaptive weighting does this best: 0.0064 final) |
 | **Role in this study** | the causal-battery evaluation class — the regime where SAE/PCA features were hypothesized to encode the failure |
 
@@ -37,7 +37,7 @@ Failure
 | **Observable** | error spectrum dominated by high-frequency power; final rel L2 ≈ 0.395 ± 0.114 |
 | **Expected trajectory** | the network fits the smooth part of the solution first (spectral bias) and aliases the sharp part |
 | **Physics interpretation** | frequency-domain under-capacity: tanh MLPs learn low modes first; large source amplitude makes high modes load-bearing |
-| **Detection** | `high_freq_power` in the diagnostics spectrum (dictionary view #2, r = 0.63 with best SAE latents — representational only) |
+| **Detection** | `high_freq_power` in the diagnostics spectrum (dictionary view #2, r = 0.24 with best SAE latents — representational only) |
 | **Intervention** | Fourier-feature injection (controller action) |
 | **Role in this study** | second reproducible regime; confirms the geometry result is not Poisson-specific |
 

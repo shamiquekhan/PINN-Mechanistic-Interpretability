@@ -187,7 +187,7 @@ lambda_pde, lambda_bc, event = controller.step(
 
 ## 7. Master Research Campaign Execution
 
-To run all 13 stages sequentially in a single automated pipeline:
+To run all 14 stages sequentially in a single automated pipeline:
 
 ```bash
 python -m experiments.run_pipeline

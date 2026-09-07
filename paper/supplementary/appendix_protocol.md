@@ -31,9 +31,11 @@ Decision rule: the "linear methods are causal" claim (guide Phase 10) is
 adopted ONLY under H8b; under H8a the negative result is *generalized*
 beyond SAEs to all feature-basis causal interpretability in this benchmark.
 
-**Outcome (recorded after running):** H8a **confirmed**. E_T = −0.0186
-[−0.0301, −0.0092]; 0/8 survive; all 88 target deltas positive
-(representational signature); probe beats target in 34% of evaluations.
+**Outcome (recorded after running):** H8a **confirmed**. E_T = −0.0203
+[−0.0331, −0.0085] (fresh-campaign values; v3.0 pool had −0.0186
+[−0.0301, −0.0092] — same sign, same CI exclusion, verdict unchanged);
+0/8 survive; all 88 target deltas positive (representational signature);
+probe beats target in 45% of evaluations.
 
 ## H2 — Causal abstraction (Stage 9)
 
@@ -54,9 +56,9 @@ checkpoints × 3 bases (PCA, SAE decoder top-8, random orthonormal).
 **Decision rule.** A basis is a causal abstraction of H_boundary iff its
 mean movement beats the random basis on every checkpoint run.
 
-**Outcome:** H9a **confirmed**. PCA mean diff vs random −0.030 (4/11 runs
-positive); SAE −0.090 (5/11). No candidate passes; the failure is
-basis-independent.
+**Outcome:** H9a **confirmed**. PCA mean diff vs random +0.028 (7/11 runs
+positive); SAE −0.087 (6/11). No candidate passes on every run; the failure
+is basis-independent.
 
 ## H3 — Dimensional boundary (Stage 10)
 
@@ -67,7 +69,7 @@ do not raise PR above the steady 2D band because training explores an
 effectively low-parameter family of states.
 
 **Outcome:** All three confirmed. Tangent rank 2 everywhere; PR: AD-2D 2.47,
-RD-2D 2.29, Burgers 1.63, Allen-Cahn 1.51. Time-dependent PR is *below*
+RD-2D 2.29, Burgers 1.42, Allen-Cahn 1.92. Time-dependent PR is *below*
 steady 2D.
 
 ## H4 — Operator regime boundary (Stage 11)
@@ -90,7 +92,7 @@ SAE (expansion 4×, k=8) and k-matched PCA protocol as the PINN battery.
 **Decision rule.** Regime boundary declared at the measured PR/W and the
 sign of the SAE-vs-PCA reconstruction gap.
 
-**Outcome:** H4a **confirmed**. PR = 6.8 of 64 (ρ = 0.106, 5× the PINN);
+**Outcome:** H4a **confirmed**. PR = 6.8 of 64 (ρ = 0.106, ≈3.8× the PINN pooled mean of 1.78);
 PCA needs 19 components for 95% energy (vs 2 for PINNs); TopK SAE
 reconstruction 0.00070 vs k-matched PCA 0.00334 — **SAE wins 4.7×**.
 The regime boundary is measured on both sides.
@@ -117,7 +119,7 @@ threshold sensitivity 0.02–0.20.
 
 **Outcome:** MDE = 85.7% sign-agreement at 80% power (11 runs/feature) —
 the batteries can only detect near-deterministic causal features, and none
-approach the threshold. P(SAE monitor better) = 0.54 (no advantage). Label
+approach the threshold. P(SAE monitor better) = 0.53 (no advantage). Label
 ordering is stable for boundary/spectral regimes; the `success` regime's
 label fraction is threshold-sensitive (0.3 → 0.0 over 0.02–0.20) — already
 reflected in its "unlabeled" exclusion from failure-class claims.

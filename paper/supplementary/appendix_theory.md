@@ -65,7 +65,7 @@ layer manufactures more input-space directions than the domain has.
 A smooth curve in `R^W` generically has full affine span (e.g., the moment
 curve `(t, t², …, t^W)` has full-rank covariance). Therefore **no bound of the
 form `PR ≤ d + 1` holds in general**, and Whitney embedding does not provide
-one. The observed covariance PR ≈ 1.3–2.0 (1D tasks), ≈ 2.1–3.2 (2D tasks) is
+one. The observed covariance PR ≈ 1.14–2.51 (1D suite, mean 1.78), ≈ 2.3–2.5 (steady 2D tasks) is
 an *empirical property of trained PINN representations on this benchmark*:
 training on a low-dimensional objective produces activation curves with
 rapidly decaying singular spectra.

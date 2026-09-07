@@ -28,8 +28,8 @@ Legend: *Art.* = artifact under `runs/`; *Fig.* = script in `figures/`;
 
 | ID | Hypothesis | Candidate basis | Checkpoints | Controls | Command | Art. | Output | Fig./Tab. |
 |---|---|---|---|---|---|---|---|---|
-| C1 | SAE features are causal (H1; REJECTED) | top-8 SAE latents | 11 boundary-starvation | unrelated / random / probe | `run_pipeline --stages 5` | `causal_intervention_results.json` | E_T −0.0002 [−0.0051,+0.0060]; 0/8 survive | Fig. 4 / T3 |
-| C2 | PCA components are causal (H8b; FALSIFIED → H8a) | top-8 PCA comps | same 11 | same 3 | `run_pipeline --stages 8` | `pca_causal_results.json` | E_T −0.0186 [−0.0301,−0.0092]; 0/8; 88/88 positive | Fig. 4 / T3 |
+| C1 | SAE features are causal (H1; REJECTED) | top-8 SAE latents | 11 boundary-starvation | unrelated / random / probe | `run_pipeline --stages 5` | `causal_intervention_results.json` | E_T +0.0020 [−0.0034,+0.0084]; 0/8 survive | Fig. 4 / T3 |
+| C2 | PCA components are causal (H8b; FALSIFIED → H8a) | top-8 PCA comps | same 11 | same 3 | `run_pipeline --stages 8` | `pca_causal_results.json` | E_T −0.0203 [−0.0331,−0.0085]; 0/8; 88/88 positive | Fig. 4 / T3 |
 | C3 | Machinery detects causal features when they exist | planted synthetic | synthetic bank | same battery | `run_pipeline --stages 5` (positive control) | `positive_control.json` | PASS, cosine 0.99, 15× controls | Fig. 4F |
 
 ## Phase D — Causal abstraction (stage 9; preregistered H9a/H9b)
@@ -42,7 +42,7 @@ Legend: *Art.* = artifact under `runs/`; *Fig.* = script in `figures/`;
 
 | ID | Hypothesis | Input dim | PDE families | Widths | Seeds | Command | Art. | Output | Fig./Tab. |
 |---|---|---|---|---|---|---|---|---|---|
-| E1 | PR ≪ width (no superposition) | 1 | Poisson/Adv/RD | 64 | 45 runs | `python -m analysis.effective_rank` | `effective_rank_analysis/effective_rank_report.json` | PR 1.34 mean; PR/W 0.021 | Fig. 2 / T5 |
+| E1 | PR ≪ width (no superposition) | 1 | Poisson/Adv/RD | 64 | 46 runs | `python -m analysis.effective_rank` | `effective_rank_analysis/effective_rank_report.json` | PR 1.78 mean (1.14–2.51); PR/W 0.028 | Fig. 2 / T5 |
 | E2 | Width alone does not create superposition | 1 | Poisson | 16–512 | 1 | `python -m experiments.width_scaling` | `width_scaling/width_scaling_report.json` | PR 1.74–2.00, tangent 1 | Fig. 2 inset |
 | E3 | 2D raises rank; tangent = 2 | 2 | Poisson2D | 32 | 5 | `python -m experiments.dimensional_boundary` | `dimensional_boundary_2d/...json` | PR 2.89–3.17 | Fig. 2 inset / T6 |
 | E4 | Geometry holds across 2D operators + time (H3) | 2 | AD2D, RD2D, Burgers, Allen-Cahn | 32/64 | 3 | `run_pipeline --stages 10` | `dimensional_boundary_expanded/...json` | PR 1.51–2.47; tangent 2 everywhere | Fig. 2 / T6 |
@@ -57,9 +57,17 @@ Legend: *Art.* = artifact under `runs/`; *Fig.* = script in `figures/`;
 
 | ID | Hypothesis | Arms | Command | Art. | Output | Fig./Tab. |
 |---|---|---|---|---|---|---|---|
-| G1 | Conventional signals predict failure; SAE adds nothing | loss-only / conventional / SAE+conv | `run_pipeline --stages 6` | `monitor_report.json` | AUROC 0.468 / 0.872 / 0.878 (CIs overlap) | Fig. 7 / T8 |
+| G1 | Conventional signals predict failure; SAE adds nothing | loss-only / conventional / SAE+conv | `run_pipeline --stages 6` | `monitor_report.json` | AUROC 0.468 / 0.859 / 0.864 (CIs overlap) | Fig. 7 / T8 |
 | G2 | Controller rescues boundary starvation; SAE monitor is inert cargo | controller / no-action / oracle / SAE-mon / rand-mon | `run_pipeline --stages 7` | `controller_demo/controller_comparison.json` | 0.0166 vs 0.2953 vs 0.0119; SAE≡random bit-identical | Fig. 8 / T9 |
 | G3 | Specialized reweighting beats generic controller (H5) | GradNorm / NTK-adaptive / RBA / controller refs | `run_pipeline --stages 12` | `sota_baselines/sota_baseline_report.json` | NTK 0.0064 < ctrl 0.0166 < oracle 0.0119; GN/RBA ≈ 2.0–2.2 (harm) | Fig. 9 / T10 |
+
+## Phase H — Statistical hardening (stage 13)
+
+| ID | Analysis | Command | Art. | Output | Tab. |
+|---|---|---|---|---|---|
+| H1 | Sign-test power for causal batteries | `run_pipeline --stages 13` | `statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power, 11 runs/feature | T11 |
+| H2 | Bayesian posterior, monitor difference | same | same | P(SAE better) = 0.53 | T11 |
+| H3 | Failure-label threshold sensitivity | same | same | stable for boundary/spectral; success regime sensitive | T11 |
 
 ## Phase I — Operator causal battery (stage 14; preregistered H14a/H14b)
 
@@ -67,13 +75,6 @@ Legend: *Art.* = artifact under `runs/`; *Fig.* = script in `figures/`;
 |---|---|---|---|---|---|---|---|
 | I1 | SAE features causally specific in the high-rank regime (H14a conjunctive; fired H14b on sign condition) | FNO1d W=64 (stage-11 retrain) | 3 controls, 8 held-out batches, Bonferroni + BH-FDR, machinery gate, interchange | `run_pipeline --stages 14` | `operator_causal/operator_causal_report.json` | 6/8 survive, E_T CI [+7.1e-6, +1.6e-5]; beats-all 75% vs PINN 14–32% | T12 |
 
-## Phase H — Statistical hardening (stage 13)
-
-| ID | Analysis | Command | Art. | Output | Tab. |
-|---|---|---|---|---|---|
-| H1 | Sign-test power for causal batteries | `run_pipeline --stages 13` | `statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power, 11 runs/feature | T11 |
-| H2 | Bayesian posterior, monitor difference | same | same | P(SAE better) = 0.54 | T11 |
-| H3 | Failure-label threshold sensitivity | same | same | stable for boundary/spectral; success regime sensitive | T11 |
 
 ---
 

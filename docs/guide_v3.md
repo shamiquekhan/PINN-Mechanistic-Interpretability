@@ -19,7 +19,7 @@ Three counterexplanations, three measurements:
 | :--- | :--- | :--- |
 | "...the intervention/scoring machinery is broken" | **Planted-feature positive control**: synthetic activations with known causal structure through the exact pipeline | ✅ implemented (`experiments/positive_control.py`), PASSES |
 | "...the statistics are naive (88 tests, no correction)" | **Bonferroni + BH-FDR** on per-feature paired sign tests | ✅ implemented (`interventions/causal.py`), 0/8 survive |
-| "...the method was applied to data where its precondition fails" | **Effective-rank / participation-ratio analysis**: superposition requires features > neurons; measure whether that precondition holds | ✅ implemented (`analysis/effective_rank.py`), PR ≈ 1.3 of 64 → precondition fails, null *explained* |
+| "...the method was applied to data where its precondition fails" | **Effective-rank / participation-ratio analysis**: superposition requires features > neurons; measure whether that precondition holds | ✅ implemented (`analysis/effective_rank.py`), PR ≈ 1.8 of 64 → precondition fails, null *explained* |
 
 Additionally v3 converts two previously-asserted claims into measurements:
 - "The controller is driven by conventional signals" → **monitor-source ablation** (SAE-feature vs matched random-feature vs conventional monitors driving identical controllers).
@@ -87,9 +87,9 @@ SAEs presuppose superposition: more features than neurons. Measure whether the t
 
 ## 2. v3 claim ladder (final, with current evidence status)
 
-1. **Representational** — *explained-null*: strong raw associations (r up to 0.75, 8–32× random controls) but PR ≈ 1.3/64 shows they are geometry along a low-rank curve, not superposed features.
-2. **Causal** — *rejected, hardened*: E_T CI [−0.005, +0.006]; 0/8 survive Bonferroni or BH-FDR; sign-consistent with representational encoding; probe ≥ SAE in 10% of evaluations; positive control passes so the machinery is exonerated.
-3. **Predictive** — *supported with scope*: conventional and SAE-augmented monitor AUROCs are 0.872/0.878 on the current held-out failure mixture, while the loss-only threshold is near chance; overlapping CIs do not establish an SAE advantage.
+1. **Representational** — *explained-null*: raw associations beat random controls 7–57× (fresh pool) but PR ≈ 1.8/64 shows they are geometry along a low-rank curve, not superposed features.
+2. **Causal** — *rejected, hardened*: E_T CI [−0.003, +0.008]; 0/8 survive Bonferroni or BH-FDR; sign-consistent with representational encoding; probe ≥ SAE in 8% of evaluations; positive control passes so the machinery is exonerated.
+3. **Predictive** — *supported with scope*: conventional and SAE-augmented monitor AUROCs are 0.859/0.864 on the current held-out failure mixture, while the loss-only threshold is near chance; overlapping CIs do not establish an SAE advantage.
 4. **Prevention** — *supported for controller machinery only*: 0.295→0.017 rescue (18× over no-action, 1.4× off oracle), with the measured ablation showing SAE features are inert in the loop.
 
 **Title-level claim the evidence supports:** SAE-derived features provide no causal information beyond matched controls for PINN failure diagnosis in this benchmark; effective-rank analysis explains why (no superposition); a conventional-signal closed-loop controller reduces failure rate independently; consistent with Korznikov et al. 2026, Leask et al. 2025, Wu et al. 2025.
@@ -126,7 +126,8 @@ A manufactured 2D Poisson prototype is now available at `configs/poisson_2d_boun
 | Superposition precondition | `runs/effective_rank_analysis/` | `analysis.effective_rank` |
 | Monitor suite + run-level CIs | `runs/monitor_report.json` | `--stages 6` |
 | Controller rescue + monitor-source ablation | `runs/controller_demo/controller_comparison.json` | `--stages 7` |
-| Full test suite (92 incl. hardening regression tests) | — | `pytest tests/` |
+| PCA causal battery / causal abstraction / operator boundary / operator causal / SOTA / hardening | `runs/pca_causal_results.json`, `runs/causal_abstraction_results.json`, `runs/operator_boundary/`, `runs/operator_causal/`, `runs/sota_baselines/`, `runs/statistical_hardening/` | `run_pipeline --stages 8,9,11,12,13,14` |
+| Full test suite (146 tests) | — | `pytest tests/` |
 
 ---
 

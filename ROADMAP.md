@@ -22,16 +22,16 @@ for an established result.
 - [x] Causal-abstraction interchange battery → **no alignment (PCA, SAE)
   beats random for region identity**.
 - [x] Geometry: tangent rank = input dim in all families/widths; covariance
-  PR 1.3–3.2; width scaling; dimensional + time-dependent boundary.
+  PR 1.14–2.51 (mean 1.78); width scaling; dimensional + time-dependent boundary.
 - [x] Operator regime boundary: FNO on nonlinear Green's-function
   regression → PR/W 0.106, SAE beats k-matched PCA 4.7× — the
   superposition regime measured with the same protocol.
-- [x] Leakage-audited monitors (conventional AUROC 0.872; no SAE
+- [x] Leakage-audited monitors (conventional AUROC 0.859; no SAE
   advantage), closed-loop controller with rollback + monitor-source
   ablation, SOTA baseline comparison (NTK-adaptive beats controller on its
   target failure; GradNorm/RBA harm).
 - [x] Statistical hardening: sign-test MDE (85.7% @ 80% power), Bayesian
-  monitor posterior (P=0.54), threshold sensitivity.
+  monitor posterior (P=0.53), threshold sensitivity.
 - [x] Research packaging: preregistration, theory note, data card,
   experiment matrix, reproducibility docs, figures/tables scripts, CI,
   Docker, license (CC BY 4.0), citation metadata.

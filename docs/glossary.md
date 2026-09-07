@@ -136,8 +136,8 @@ causal-abstraction gate requires beating the random basis on every run.
 
 **Monitor (loss-only / conventional / SAE-augmented)** — early-warning
 classifiers on past-only trajectory features; leakage-audited, evaluated
-with run-level bootstrap CIs. Conventional AUROC 0.872; SAE adds nothing
-(P(SAE better) = 0.54).
+with run-level bootstrap CIs. Conventional AUROC 0.859; SAE adds nothing
+(P(SAE better) = 0.53).
 
 **Monitor-source ablation** — controller experiment where only the alarm
 source differs (SAE features vs matched random projection): the rescue
