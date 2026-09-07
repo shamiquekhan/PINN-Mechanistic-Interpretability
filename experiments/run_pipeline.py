@@ -1244,6 +1244,9 @@ def main(stages: str = "all"):
     if want("14"):
         from experiments.operator_causal import run_operator_causal_experiment
         run_operator_causal_experiment()
+    if want("15"):
+        from experiments.ntk_bridge import run_ntk_bridge_experiment
+        run_ntk_bridge_experiment()
     print("\n=== PIPELINE COMPLETE ===")
 
 
@@ -1251,6 +1254,6 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--stages", default="all",
-                    help="all or comma list / single stage number 1-14")
+                    help="all or comma list / single stage number 1-15")
     args = ap.parse_args()
     main(args.stages)

@@ -240,3 +240,60 @@ that the low-rank regime entirely lacks. Full numbers:
   RESULTS.md §5A.7 for the outcome.
 - All artifacts referenced above are the JSON files in `runs/` produced by
   the stage scripts; none were edited by hand.
+
+## H8 — NTK gradient-conflict ↔ SAE feature-activity bridge (Stage 15)
+
+*Registered 2026-09-08, before the stage-15 run (revision-gap audit,
+Gap 2: the NTK↔SAE bridge must be constructed, not asserted).*
+
+**Hypothesis H15a (bridge exists).** SAE feature activity on the fixed
+probe grid is *feature-specifically* elevated during high-conflict
+training steps — steps where the pde-vs-bc gradient cosine is negative,
+Wang et al. (2021/2022)'s gradient-pathology criterion — beyond what a
+random dictionary of the same geometry exhibits.
+
+**Hypothesis H15b (no specific bridge).** Any apparent feature↔conflict
+association is either (i) not feature-specific (driven by global activity
+surges that correlate with loss magnitude) or (ii) matched by random
+dictionary directions.
+
+**Construction (Option A of the revision guide — the correlational
+bridge, defined precisely).** For each logged training step t with both
+a gradient record and probe-grid activations:
+
+- conflict(t) = 1[cos(∇θℒ_pde, ∇θℒ_bc)(t) < 0]  (Wang et al. criterion;
+  values already logged per step in `runs/<config>/gradients.jsonl`)
+- For each SAE feature k: a_k(t) = mean probe-grid activation of feature
+  k at step t (SAE encoder applied to the fixed 50-point grid logged in
+  `activations.jsonl`; the probe hash is constant per run, so the grid
+  is identical across steps)
+- Specificity: s_k(t) = a_k(t) − mean_j a_j(t)  (feature-specific lift,
+  removing the global activity component)
+
+**Statistics.** Per feature: point-biserial correlation ρ_k between
+s_k(t) and conflict(t); per-run significance via exact permutation test
+(labels shuffled 1,000×, fixed rng); Bonferroni + BH-FDR across the 8
+candidate features (same MC standard as stages 5/8/14); random-dictionary
+control: median |ρ| over 32 random orthonormal directions of matching
+dimensionality through the identical pipeline.
+
+**Decision rule (conjunctive, all three required for H15a).**
+(i) ≥1 candidate feature survives Bonferroni with |ρ_k| ≥ 0.3;
+(ii) the surviving feature's |ρ_k| exceeds the 95th percentile of the
+random-direction |ρ| distribution;
+(iii) the association is not explained by the global-activity covariate:
+|ρ_k| on s_k (specificity-filtered) must be ≥ 0.5 × |ρ_k| on a_k (raw).
+
+If any of (i)–(iii) fails, H15b is recorded. Machinery gate: on
+synthetic activations with a planted conflict-locked feature (active iff
+cosine < 0), the pipeline must recover ρ > 0.7 for the planted feature;
+gate failure voids the run and the stage is fixed and re-run before any
+hypothesis is tested.
+
+**Interpretation scope (pre-committed).** This is a *correlational*
+first pass by design (guide Option A). Confirming H15a would justify —
+not constitute — the causal follow-up (amplify/ablate at high-conflict
+steps), and Option B (training the SAE on NTK-eigenmode-projected
+activations) stays registered as future work either way. A null here
+does NOT weaken any existing claim (stages 5/8/9 stand on their own);
+it closes the last unconstructed bridge the revision review identified.
