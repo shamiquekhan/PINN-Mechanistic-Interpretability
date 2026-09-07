@@ -3,56 +3,56 @@
     "battery": "causal_intervention_results.json",
     "features": [
       {
-        "feature_idx": 9,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.0,
-        "observed_power_at_observed_effect": 0.0
-      },
-      {
-        "feature_idx": 14,
+        "feature_idx": 8,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
         "observed_positive_rate": 0.5,
         "observed_power_at_observed_effect": 0.0327
       },
       {
-        "feature_idx": 68,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 1.0,
-        "observed_power_at_observed_effect": 1.0
-      },
-      {
-        "feature_idx": 124,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.0,
-        "observed_power_at_observed_effect": 0.0
-      },
-      {
-        "feature_idx": 149,
+        "feature_idx": 49,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
         "observed_positive_rate": 0.25,
         "observed_power_at_observed_effect": 0.0001
       },
       {
-        "feature_idx": 172,
+        "feature_idx": 101,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.0,
-        "observed_power_at_observed_effect": 0.0
+        "observed_positive_rate": 0.6667,
+        "observed_power_at_observed_effect": 0.2341
+      },
+      {
+        "feature_idx": 114,
+        "n_runs": 11,
+        "mde_success_prob_at_80pct_power": 0.8571,
+        "observed_positive_rate": 0.5,
+        "observed_power_at_observed_effect": 0.0327
+      },
+      {
+        "feature_idx": 126,
+        "n_runs": 11,
+        "mde_success_prob_at_80pct_power": 0.8571,
+        "observed_positive_rate": 0.6,
+        "observed_power_at_observed_effect": 0.1189
       },
       {
         "feature_idx": 194,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
+        "observed_positive_rate": 0.75,
+        "observed_power_at_observed_effect": 0.4552
+      },
+      {
+        "feature_idx": 205,
+        "n_runs": 11,
+        "mde_success_prob_at_80pct_power": 0.8571,
         "observed_positive_rate": 0.0,
         "observed_power_at_observed_effect": 0.0
       },
       {
-        "feature_idx": 205,
+        "feature_idx": 228,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
         "observed_positive_rate": 0.0,
@@ -72,35 +72,35 @@
         "feature_idx": 0,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.3636,
-        "observed_power_at_observed_effect": 0.0028
+        "observed_positive_rate": 0.2727,
+        "observed_power_at_observed_effect": 0.0003
       },
       {
         "feature_idx": 1,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.4545,
-        "observed_power_at_observed_effect": 0.016
+        "observed_positive_rate": 0.3636,
+        "observed_power_at_observed_effect": 0.0028
       },
       {
         "feature_idx": 2,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.3636,
-        "observed_power_at_observed_effect": 0.0028
+        "observed_positive_rate": 0.5455,
+        "observed_power_at_observed_effect": 0.0615
       },
       {
         "feature_idx": 3,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.4545,
-        "observed_power_at_observed_effect": 0.016
+        "observed_positive_rate": 0.2727,
+        "observed_power_at_observed_effect": 0.0003
       },
       {
         "feature_idx": 4,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.0909,
+        "observed_positive_rate": 0.1818,
         "observed_power_at_observed_effect": 0.0
       },
       {
@@ -114,15 +114,15 @@
         "feature_idx": 6,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.3636,
-        "observed_power_at_observed_effect": 0.0028
+        "observed_positive_rate": 0.2727,
+        "observed_power_at_observed_effect": 0.0003
       },
       {
         "feature_idx": 7,
         "n_runs": 11,
         "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.4545,
-        "observed_power_at_observed_effect": 0.016
+        "observed_positive_rate": 0.3636,
+        "observed_power_at_observed_effect": 0.0028
       }
     ],
     "summary": {
@@ -133,16 +133,16 @@
   },
   "monitor_bayesian": {
     "method": "normal-approximation from run-level bootstrap CIs",
-    "auroc_conventional": 0.8718360787464845,
-    "auroc_sae": 0.878076034552029,
-    "posterior_mean_diff": 0.006239955805544484,
-    "posterior_sd": 0.056024568729418085,
-    "prob_sae_better": 0.544342061193687,
+    "auroc_conventional": 0.8585275210928083,
+    "auroc_sae": 0.8636123945359583,
+    "posterior_mean_diff": 0.0050848734431500064,
+    "posterior_sd": 0.06010924639508693,
+    "prob_sae_better": 0.5337078614873922,
     "95pct_interval_diff": [
-      -0.10356819890411496,
-      0.11604811051520393
+      -0.11272924949122037,
+      0.12289899637752039
     ],
-    "interpretation": "P(SAE-augmented monitor better) = 0.54 \u2014 the posterior does not support an SAE advantage."
+    "interpretation": "P(SAE-augmented monitor better) = 0.53 \u2014 the posterior does not support an SAE advantage."
   },
   "threshold_sensitivity": {
     "thresholds": [

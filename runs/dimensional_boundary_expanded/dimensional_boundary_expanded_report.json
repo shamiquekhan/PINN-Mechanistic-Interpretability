@@ -10,10 +10,10 @@
       "steps": 1000,
       "results": [
         {
-          "n_samples": 16000,
+          "n_samples": 8000,
           "dim": 32,
-          "participation_ratio": 2.527956908142602,
-          "stable_rank": 1.5104473611931242,
+          "participation_ratio": 2.5279569081426048,
+          "stable_rank": 1.5104473611931237,
           "n_components_95pct": 3,
           "n_components_99pct": 6,
           "n_components_999pct": 10,
@@ -22,9 +22,9 @@
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 16000,
+          "n_samples": 8000,
           "dim": 32,
-          "participation_ratio": 2.3919897256109834,
+          "participation_ratio": 2.3919897256109826,
           "stable_rank": 1.3514099086995743,
           "n_components_95pct": 3,
           "n_components_99pct": 5,
@@ -34,10 +34,10 @@
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 16000,
+          "n_samples": 8000,
           "dim": 32,
-          "participation_ratio": 2.5035136383625605,
-          "stable_rank": 1.765330790992311,
+          "participation_ratio": 2.503513638362561,
+          "stable_rank": 1.76533079099231,
           "n_components_95pct": 3,
           "n_components_99pct": 6,
           "n_components_999pct": 9,
@@ -47,10 +47,10 @@
         }
       ],
       "summary": {
-        "mean_participation_ratio": 2.474486757372049,
+        "mean_participation_ratio": 2.4744867573720497,
         "pr_range": [
-          2.3919897256109834,
-          2.527956908142602
+          2.3919897256109826,
+          2.5279569081426048
         ],
         "tangent_ranks": [
           2
@@ -68,10 +68,10 @@
       "steps": 1000,
       "results": [
         {
-          "n_samples": 16000,
+          "n_samples": 8000,
           "dim": 32,
-          "participation_ratio": 2.074004270945522,
-          "stable_rank": 1.219365921546778,
+          "participation_ratio": 2.073887454962042,
+          "stable_rank": 1.2193374538975146,
           "n_components_95pct": 3,
           "n_components_99pct": 5,
           "n_components_999pct": 9,
@@ -80,10 +80,10 @@
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 16000,
+          "n_samples": 8000,
           "dim": 32,
-          "participation_ratio": 2.133921468742197,
-          "stable_rank": 1.2513316415807898,
+          "participation_ratio": 2.1339186595269375,
+          "stable_rank": 1.2513261880733777,
           "n_components_95pct": 3,
           "n_components_99pct": 5,
           "n_components_999pct": 9,
@@ -92,10 +92,10 @@
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 16000,
+          "n_samples": 8000,
           "dim": 32,
-          "participation_ratio": 2.6655959057813443,
-          "stable_rank": 1.6387699699426286,
+          "participation_ratio": 2.6655809518214304,
+          "stable_rank": 1.6387654466621508,
           "n_components_95pct": 3,
           "n_components_99pct": 6,
           "n_components_999pct": 10,
@@ -105,10 +105,10 @@
         }
       ],
       "summary": {
-        "mean_participation_ratio": 2.291173881823021,
+        "mean_participation_ratio": 2.2911290221034704,
         "pr_range": [
-          2.074004270945522,
-          2.6655959057813443
+          2.073887454962042,
+          2.6655809518214304
         ],
         "tangent_ranks": [
           2
@@ -123,55 +123,55 @@
         42,
         123
       ],
-      "steps": 3000,
+      "steps": 2000,
       "results": [
         {
-          "n_samples": 14000,
+          "n_samples": 8000,
           "dim": 64,
-          "participation_ratio": 1.4198900336537328,
-          "stable_rank": 1.0179700120889874,
+          "participation_ratio": 1.28186576921076,
+          "stable_rank": 1.0071140444110818,
           "n_components_95pct": 3,
-          "n_components_99pct": 5,
+          "n_components_99pct": 4,
           "n_components_999pct": 9,
           "seed": 7,
-          "final_relative_l2": 6.142735958099365,
+          "final_relative_l2": 6.088809490203857,
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 14000,
+          "n_samples": 8000,
           "dim": 64,
-          "participation_ratio": 1.5753531367766789,
-          "stable_rank": 1.0349137095545549,
+          "participation_ratio": 1.3799109976254342,
+          "stable_rank": 1.0142206265416522,
           "n_components_95pct": 3,
-          "n_components_99pct": 5,
-          "n_components_999pct": 10,
+          "n_components_99pct": 4,
+          "n_components_999pct": 9,
           "seed": 42,
-          "final_relative_l2": 6.091797351837158,
+          "final_relative_l2": 6.112037658691406,
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 14000,
+          "n_samples": 8000,
           "dim": 64,
-          "participation_ratio": 1.9005673177504323,
-          "stable_rank": 1.158055637474872,
+          "participation_ratio": 1.5866507137166708,
+          "stable_rank": 1.0484172950306183,
           "n_components_95pct": 3,
-          "n_components_99pct": 5,
+          "n_components_99pct": 4,
           "n_components_999pct": 10,
           "seed": 123,
-          "final_relative_l2": 6.056960582733154,
+          "final_relative_l2": 6.106292247772217,
           "local_tangent_rank": 2
         }
       ],
       "summary": {
-        "mean_participation_ratio": 1.6319368293936147,
+        "mean_participation_ratio": 1.4161424935176214,
         "pr_range": [
-          1.4198900336537328,
-          1.9005673177504323
+          1.28186576921076,
+          1.5866507137166708
         ],
         "tangent_ranks": [
           2
         ],
-        "mean_final_relative_l2": 6.097164630889893
+        "mean_final_relative_l2": 6.10237979888916
       }
     },
     "allen_cahn_1d": {
@@ -181,55 +181,55 @@
         42,
         123
       ],
-      "steps": 3000,
+      "steps": 2000,
       "results": [
         {
-          "n_samples": 14000,
+          "n_samples": 8000,
           "dim": 64,
-          "participation_ratio": 1.4171625955164295,
-          "stable_rank": 1.024983431364533,
-          "n_components_95pct": 2,
-          "n_components_99pct": 5,
-          "n_components_999pct": 9,
-          "seed": 7,
-          "final_relative_l2": 6.120919704437256,
-          "local_tangent_rank": 2
-        },
-        {
-          "n_samples": 14000,
-          "dim": 64,
-          "participation_ratio": 1.5273153589392376,
-          "stable_rank": 1.0240840827221476,
+          "participation_ratio": 1.803531034647431,
+          "stable_rank": 1.1122264466418155,
           "n_components_95pct": 3,
-          "n_components_99pct": 7,
-          "n_components_999pct": 12,
-          "seed": 42,
-          "final_relative_l2": 6.047629356384277,
+          "n_components_99pct": 5,
+          "n_components_999pct": 10,
+          "seed": 7,
+          "final_relative_l2": 5.882426738739014,
           "local_tangent_rank": 2
         },
         {
-          "n_samples": 14000,
+          "n_samples": 8000,
           "dim": 64,
-          "participation_ratio": 1.581534440741203,
-          "stable_rank": 1.0481100964497134,
+          "participation_ratio": 2.0882165612143315,
+          "stable_rank": 1.1407470300367153,
+          "n_components_95pct": 4,
+          "n_components_99pct": 7,
+          "n_components_999pct": 13,
+          "seed": 42,
+          "final_relative_l2": 5.477312088012695,
+          "local_tangent_rank": 2
+        },
+        {
+          "n_samples": 8000,
+          "dim": 64,
+          "participation_ratio": 1.8716212177532525,
+          "stable_rank": 1.14449654827023,
           "n_components_95pct": 3,
           "n_components_99pct": 5,
           "n_components_999pct": 10,
           "seed": 123,
-          "final_relative_l2": 5.892690181732178,
+          "final_relative_l2": 5.548396110534668,
           "local_tangent_rank": 2
         }
       ],
       "summary": {
-        "mean_participation_ratio": 1.508670798398957,
+        "mean_participation_ratio": 1.9211229378716717,
         "pr_range": [
-          1.4171625955164295,
-          1.581534440741203
+          1.803531034647431,
+          2.0882165612143315
         ],
         "tangent_ranks": [
           2
         ],
-        "mean_final_relative_l2": 6.020413080851237
+        "mean_final_relative_l2": 5.636044979095459
       }
     }
   },

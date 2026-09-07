@@ -60,9 +60,15 @@ def main():
     diag_logger = None
     if args.log_diagnostics:
         if cfg.pde.name != 'poisson_1d':
-            raise ValueError('diagnostics logging currently supports only 1D PDEs')
-        bin_config = SpatialBinConfig(n_bins=10, domain_left=pde.left, domain_right=pde.right)
-        diag_logger = DiagnosticsLogger(model, pde, bin_config, log_every=args.diag_log_every)
+            # Graceful degradation: spatial-bin diagnostics are implemented
+            # only for the 1D Poisson family; other PDEs train without the
+            # diagnostics stream (the stage-1 pipeline requests diagnostics
+            # for every config, so raising here would kill the run).
+            print(f"diagnostics logging unavailable for pde={cfg.pde.name}; "
+                  f"continuing without diagnostics")
+        else:
+            bin_config = SpatialBinConfig(n_bins=10, domain_left=pde.left, domain_right=pde.right)
+            diag_logger = DiagnosticsLogger(model, pde, bin_config, log_every=args.diag_log_every)
     
     if act_logger:
         act_logger.setup(device, dtype)

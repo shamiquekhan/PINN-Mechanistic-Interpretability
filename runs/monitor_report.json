@@ -13,28 +13,28 @@
     }
   },
   "conventional_logistic": {
-    "auroc": 0.8718360787464845,
-    "auprc": 0.7481898331642904,
+    "auroc": 0.8585275210928083,
+    "auprc": 0.7110064604481132,
     "recall_at_fpr0.1": 0.5328947368421053,
     "n_examples": 676,
     "n_positive": 152,
     "prevalence": 0.22485207100591717,
     "auroc_ci": {
-      "ci_lower": 0.7945613597969302,
-      "ci_upper": 0.9525946573265723,
+      "ci_lower": 0.7799865630737302,
+      "ci_upper": 0.9518247467648911,
       "n_boot_valid": 1997
     }
   },
   "sae_plus_conventional": {
-    "auroc": 0.878076034552029,
-    "auprc": 0.7553309224180329,
-    "recall_at_fpr0.1": 0.5526315789473685,
+    "auroc": 0.8636123945359583,
+    "auprc": 0.7170255829756669,
+    "recall_at_fpr0.1": 0.5328947368421053,
     "n_examples": 676,
     "n_positive": 152,
     "prevalence": 0.22485207100591717,
     "auroc_ci": {
-      "ci_lower": 0.805575063116476,
-      "ci_upper": 0.9580768671545582,
+      "ci_lower": 0.7926087838045601,
+      "ci_upper": 0.9538300878462486,
       "n_boot_valid": 1997
     }
   }

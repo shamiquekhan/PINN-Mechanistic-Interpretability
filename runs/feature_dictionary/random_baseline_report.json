@@ -1,37 +1,37 @@
 {
   "loss_pde": {
-    "max_real_abs_corr": 0.4317229948846835,
-    "max_random_abs_corr": 0.021562061337334067,
+    "max_real_abs_corr": 0.28776422513820354,
+    "max_random_abs_corr": 0.013685437003315443,
     "real_exceeds_random": true
   },
   "loss_bc": {
-    "max_real_abs_corr": 0.3065244579435693,
-    "max_random_abs_corr": 0.01856807994491091,
+    "max_real_abs_corr": 0.2280999694704266,
+    "max_random_abs_corr": 0.015009392414711128,
     "real_exceeds_random": true
   },
   "rel_l2": {
-    "max_real_abs_corr": 0.39851663349958394,
-    "max_random_abs_corr": 0.021038974447656778,
+    "max_real_abs_corr": 0.2611714135895933,
+    "max_random_abs_corr": 0.014418586389271923,
     "real_exceeds_random": true
   },
   "grad_cosine": {
-    "max_real_abs_corr": 0.7470817825104473,
-    "max_random_abs_corr": 0.02300367482656554,
+    "max_real_abs_corr": 0.22642197085093618,
+    "max_random_abs_corr": 0.013355207213779299,
     "real_exceeds_random": true
   },
   "high_freq_power": {
-    "max_real_abs_corr": 0.6309892745498966,
-    "max_random_abs_corr": 0.021926097572173894,
+    "max_real_abs_corr": 0.2408080504015257,
+    "max_random_abs_corr": 0.011519150787723665,
     "real_exceeds_random": true
   },
   "boundary_dist": {
-    "max_real_abs_corr": 0.19499890076256937,
-    "max_random_abs_corr": 0.02368072691505744,
+    "max_real_abs_corr": 0.11914833447405875,
+    "max_random_abs_corr": 0.01654792291259349,
     "real_exceeds_random": true
   },
   "data_std": {
-    "max_real_abs_corr": 0.9988634054555057,
-    "max_random_abs_corr": 0.020090136397660514,
+    "max_real_abs_corr": 0.9303398609017058,
+    "max_random_abs_corr": 0.016269261761736296,
     "real_exceeds_random": true
   }
 }

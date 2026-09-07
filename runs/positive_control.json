@@ -1,27 +1,27 @@
 {
   "pipeline_pass": true,
   "matched_feature": 144,
-  "decoder_cosine_to_planted": 0.9902507066726685,
-  "targeted_delta": 0.02625507116317749,
-  "ctrl_unrelated_delta": 0.005983829498291016,
-  "ctrl_random_delta": 0.0006687641143798828,
+  "decoder_cosine_to_planted": 0.9894713759422302,
+  "targeted_delta": 0.026091396808624268,
+  "ctrl_unrelated_delta": 0.005999386310577393,
+  "ctrl_random_delta": 0.0003814101219177246,
   "ctrl_random_delta_trials": [
-    0.0002917051315307617,
-    -0.00044846534729003906,
-    0.0006687641143798828,
-    0.0008156895637512207,
-    0.0016183853149414062
+    -0.00016939640045166016,
+    -0.00038695335388183594,
+    0.0003814101219177246,
+    0.0010195374488830566,
+    0.0004902482032775879
   ],
-  "ctrl_probe_delta": 0.014398634433746338,
-  "delta_bc_non_target": 0.0030347704887390137,
+  "ctrl_probe_delta": 0.014805138111114502,
+  "delta_bc_non_target": 0.0030379295349121094,
   "causal_score": {
-    "causal_strength": 0.011856436729431152,
-    "specificity": 8.651390524158396,
-    "target_effect": 0.02625507116317749,
-    "max_control_effect": 0.014398634433746338,
-    "control_unrelated_effect": 0.005983829498291016,
-    "control_random_effect": 0.0006687641143798828,
-    "control_probe_effect": 0.014398634433746338
+    "causal_strength": 0.011286258697509766,
+    "specificity": 8.588517483241851,
+    "target_effect": 0.026091396808624268,
+    "max_control_effect": 0.014805138111114502,
+    "control_unrelated_effect": 0.005999386310577393,
+    "control_random_effect": 0.0003814101219177246,
+    "control_probe_effect": 0.014805138111114502
   },
   "config": {
     "n_dim": 64,

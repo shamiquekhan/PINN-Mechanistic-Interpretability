@@ -1,17 +1,17 @@
 {
   "run": {
-    "name": "allen_cahn_1d_baseline_seed42",
-    "output_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/dimensional_boundary_expanded/allen_cahn_1d",
-    "seed": 42,
+    "name": "debug_advection",
+    "output_dir": "runs",
+    "seed": 7,
     "deterministic": true,
     "device": "cuda",
     "dtype": "float32",
     "failure_label": "unlabeled"
   },
   "pde": {
-    "name": "allen_cahn_1d",
+    "name": "advection_1d",
     "domain": [
-      -1.0,
+      0.0,
       1.0
     ],
     "domain_y": null,
@@ -21,17 +21,18 @@
     ],
     "source": 1.0,
     "forcing": 0.0,
-    "diffusion": 0.05,
+    "diffusion": 0.01,
     "boundary_values": [
-      0.0,
+      1.0,
       0.0
     ],
-    "validation_points": 400
+    "validation_points": 1001
   },
   "model": {
-    "input_dim": 2,
+    "input_dim": 1,
     "output_dim": 1,
     "hidden_layers": [
+      64,
       64,
       64,
       64
@@ -45,25 +46,27 @@
   "training": {
     "optimizer": "adam",
     "learning_rate": 0.001,
-    "steps": 2000,
-    "interior_points": 512,
-    "boundary_points": 66,
-    "log_every": 50,
+    "steps": 20,
+    "interior_points": 256,
+    "boundary_points": 1,
+    "log_every": 100,
     "checkpoint_every": 1000,
     "lambda_pde": 1.0,
-    "lambda_bc": 10.0,
-    "resample_every": 100,
+    "lambda_bc": 1.0,
+    "resample_every": 0,
     "spatial_bias": 0.0
   },
   "logging": {
     "save_activations": true,
     "activation_layers": [
-      1
+      0,
+      1,
+      2
     ],
     "save_pointwise_residuals": true,
     "log_gradients": true,
     "grad_log_every": 100,
-    "log_diagnostics": false,
+    "log_diagnostics": true,
     "diag_log_every": 100
   },
   "sae": null,

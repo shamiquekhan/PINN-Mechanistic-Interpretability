@@ -12646,7 +12646,8 @@
       "random_monitor_final": 0.02361455000936985,
       "conventional_monitor_final": 0.016587555408477783,
       "sae_beats_random": false,
-      "verdict": "SAE features are inert cargo: no measurable advantage over matched random-direction features (measured, not asserted)"
+      "trajectories_bit_identical": true,
+      "verdict": "SAE features are inert cargo in the closed loop: the SAE-feature monitor and a matched random-feature monitor drive IDENTICAL rescue trajectories (0.0236 both), because the bounded rebalancing action is rate-limited by cooldown and confirmation, not by the monitor's fine structure. The rescue is attributable to the controller machinery + any instability-correlated signal, not to mechanistic features."
     }
   }
 }

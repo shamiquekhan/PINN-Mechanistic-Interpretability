@@ -1,68 +1,428 @@
 {
   "per_run": {
     "advection_baseline": {
-      "n_samples": 4000,
+      "n_samples": 1000,
       "dim": 64,
-      "participation_ratio": 1.204419678410688,
-      "stable_rank": 1.007430227832598,
+      "participation_ratio": 1.1418376663426308,
+      "stable_rank": 1.002741441467759,
       "n_components_95pct": 2,
       "n_components_99pct": 3,
       "n_components_999pct": 5
     },
-    "failure_boundary_starvation": {
-      "n_samples": 4000,
+    "boundary_starvation_seed123": {
+      "n_samples": 1000,
       "dim": 64,
-      "participation_ratio": 1.4222882491318065,
-      "stable_rank": 1.0256764646690706,
+      "participation_ratio": 1.7720441045159219,
+      "stable_rank": 1.1298864688234065,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "boundary_starvation_seed2024": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.6521357992621553,
+      "stable_rank": 1.0928017260208818,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "boundary_starvation_seed2025": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.6159792137747484,
+      "stable_rank": 1.073067785877985,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 5
+    },
+    "boundary_starvation_seed2026": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.4311962880816314,
+      "stable_rank": 1.0332790483972032,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 5
+    },
+    "boundary_starvation_seed42": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.6248130264031933,
+      "stable_rank": 1.0710773708494554,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 5
+    },
+    "boundary_starvation_seed555": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.6979061529025408,
+      "stable_rank": 1.0896498832304264,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 5
+    },
+    "boundary_starvation_seed7": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.643331485143315,
+      "stable_rank": 1.0763416907670509,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 6
+    },
+    "boundary_starvation_seed777": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.6171270407469744,
+      "stable_rank": 1.0746651460379588,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 5
+    },
+    "boundary_starvation_seed888": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.719079957758734,
+      "stable_rank": 1.0985762212129953,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 6
+    },
+    "boundary_starvation_seed999": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.608799536442979,
+      "stable_rank": 1.0769083873133622,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 5
+    },
+    "collocation_starvation_seed123": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.9487932061416688,
+      "stable_rank": 1.327325679626111,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 6
+    },
+    "collocation_starvation_seed2024": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 2.0371247953307665,
+      "stable_rank": 1.2789400354412035,
+      "n_components_95pct": 3,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "collocation_starvation_seed2025": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 2.034617594567862,
+      "stable_rank": 1.3470434852020112,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 8
+    },
+    "collocation_starvation_seed2026": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.931796117564607,
+      "stable_rank": 1.3335858498719217,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "collocation_starvation_seed42": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.9787279690440922,
+      "stable_rank": 1.2085790410300874,
+      "n_components_95pct": 3,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "collocation_starvation_seed555": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.9016827750518006,
+      "stable_rank": 1.271722615712105,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 6
+    },
+    "collocation_starvation_seed7": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8392183638735018,
+      "stable_rank": 1.2204940596632206,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 7
+    },
+    "collocation_starvation_seed777": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 2.07119003998149,
+      "stable_rank": 1.4682524743781078,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 6
+    },
+    "collocation_starvation_seed888": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.9817016097157676,
+      "stable_rank": 1.353323984586573,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "collocation_starvation_seed999": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8467462735861957,
+      "stable_rank": 1.1923196829307856,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "failure_boundary_starvation": {
+      "n_samples": 2000,
+      "dim": 64,
+      "participation_ratio": 1.2284856650338862,
+      "stable_rank": 1.0062949190989507,
       "n_components_95pct": 2,
       "n_components_99pct": 4,
       "n_components_999pct": 7
     },
     "failure_collocation_starvation": {
-      "n_samples": 4000,
+      "n_samples": 2000,
       "dim": 64,
-      "participation_ratio": 1.52612938530256,
-      "stable_rank": 1.0725359445219282,
+      "participation_ratio": 1.4619117711506933,
+      "stable_rank": 1.0545112278745479,
       "n_components_95pct": 2,
       "n_components_99pct": 2,
-      "n_components_999pct": 5
+      "n_components_999pct": 3
     },
     "failure_gradient_conflict": {
-      "n_samples": 4000,
+      "n_samples": 2000,
       "dim": 64,
-      "participation_ratio": 1.0286549897279187,
-      "stable_rank": 1.0001283830333696,
-      "n_components_95pct": 1,
-      "n_components_99pct": 2,
-      "n_components_999pct": 4
+      "participation_ratio": 2.2390737148308038,
+      "stable_rank": 1.198827347842699,
+      "n_components_95pct": 3,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "gradient_conflict_seed123": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 2.391466318570321,
+      "stable_rank": 1.2574959574448612,
+      "n_components_95pct": 3,
+      "n_components_99pct": 7,
+      "n_components_999pct": 12
+    },
+    "gradient_conflict_seed2024": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8993712066020345,
+      "stable_rank": 1.2493047725664934,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "gradient_conflict_seed2025": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.7267213130385262,
+      "stable_rank": 1.1382299544767425,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 7
+    },
+    "gradient_conflict_seed2026": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.253706600199659,
+      "stable_rank": 1.0096527984824328,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 5
+    },
+    "gradient_conflict_seed42": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.7494674572205837,
+      "stable_rank": 1.0977671188147655,
+      "n_components_95pct": 3,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "gradient_conflict_seed555": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.758145158226793,
+      "stable_rank": 1.0956860384026037,
+      "n_components_95pct": 3,
+      "n_components_99pct": 3,
+      "n_components_999pct": 7
+    },
+    "gradient_conflict_seed7": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.364505960296284,
+      "stable_rank": 1.0288289087946512,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "gradient_conflict_seed777": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 2.5127324096069,
+      "stable_rank": 1.2928214471981871,
+      "n_components_95pct": 3,
+      "n_components_99pct": 4,
+      "n_components_999pct": 7
+    },
+    "gradient_conflict_seed888": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.2311866655764276,
+      "stable_rank": 1.0060657216832167,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "gradient_conflict_seed999": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 2.454232063137468,
+      "stable_rank": 1.456331902234619,
+      "n_components_95pct": 3,
+      "n_components_99pct": 5,
+      "n_components_999pct": 10
     },
     "poisson_baseline": {
-      "n_samples": 4000,
+      "n_samples": 2000,
       "dim": 64,
-      "participation_ratio": 1.4565495220700528,
-      "stable_rank": 1.05333287040123,
+      "participation_ratio": 1.4073203025030843,
+      "stable_rank": 1.0414378517502663,
       "n_components_95pct": 2,
       "n_components_99pct": 2,
       "n_components_999pct": 4
     },
     "reaction_diffusion_baseline": {
-      "n_samples": 4000,
+      "n_samples": 1000,
       "dim": 64,
-      "participation_ratio": 1.3852739653076942,
-      "stable_rank": 1.0253933659011747,
+      "participation_ratio": 1.432270370474029,
+      "stable_rank": 1.043311217307576,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "success_seed123": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.7748927850245861,
+      "stable_rank": 1.1780685243635762,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "success_seed2024": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8418900410330816,
+      "stable_rank": 1.243186035023543,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "success_seed2025": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.9035929064889692,
+      "stable_rank": 1.274057080360926,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 7
+    },
+    "success_seed2026": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8844846766192722,
+      "stable_rank": 1.284012245445499,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "success_seed42": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8619949385595784,
+      "stable_rank": 1.2601698262340602,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "success_seed555": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.799799135131887,
+      "stable_rank": 1.2078600911500885,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 4
+    },
+    "success_seed7": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.9056959511789164,
+      "stable_rank": 1.1943821272244732,
+      "n_components_95pct": 2,
+      "n_components_99pct": 4,
+      "n_components_999pct": 6
+    },
+    "success_seed777": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.963078377147482,
+      "stable_rank": 1.38948809563287,
       "n_components_95pct": 2,
       "n_components_99pct": 3,
       "n_components_999pct": 5
+    },
+    "success_seed888": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.915954121663462,
+      "stable_rank": 1.315605808198022,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
+    },
+    "success_seed999": {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.7337607029724287,
+      "stable_rank": 1.157242208822806,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6
     }
   },
   "summary": {
-    "n_runs": 6,
-    "mean_participation_ratio": 1.33721929832512,
-    "min_participation_ratio": 1.0286549897279187,
-    "max_participation_ratio": 1.52612938530256,
-    "mean_components_95pct": 1.8333333333333333,
+    "n_runs": 46,
+    "mean_participation_ratio": 1.778078035402603,
+    "min_participation_ratio": 1.1418376663426308,
+    "max_participation_ratio": 2.5127324096069,
+    "mean_components_95pct": 2.1739130434782608,
     "dim": 64,
-    "superposition_ratio_mean_to_dim": 0.02089405153633
+    "superposition_ratio_mean_to_dim": 0.02778246930316567
   },
   "verdict": "LOW-RANK / NOT IN SUPERPOSITION \u2014 the activation manifold has far fewer effective dimensions than neurons; PCA is the appropriate tool and the SAE null result is mechanically explained"
 }

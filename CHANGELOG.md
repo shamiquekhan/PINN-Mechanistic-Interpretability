@@ -4,6 +4,36 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.1.0] — 2026-09-07 — "Fresh Full-Campaign Record"
+
+Complete pipeline rerun (stages 1–13 from scratch), recorded in
+`docs/fresh_campaign_record.md`. 18/19 headline checks reproduce within
+tolerance; the single drift (pooled mean PR 1.34 → 1.78) is an explained
+correction (see below). Artifacts + checksums regenerated
+(`data/manifest.json` v3.1.0).
+
+### Fixed (found by the rerun)
+
+- `experiments/train.py` no longer crashes on `--log-diagnostics` for
+  non-Poisson PDEs (graceful degradation) — stage 1 had silently dropped
+  the advection and reaction-diffusion baselines in previous full runs.
+- `configs/reaction_diffusion_1d_baseline.yaml`: forcing 0 → 1 (the old
+  configuration's exact solution was u≡0, making relative-L2 a 0/0
+  artifact; the fresh run converges to rel_l2 ≈ 0.0015).
+
+### Changed (research record)
+
+- Pooled 1D-suite mean PR updated 1.34 → 1.78: the degenerate RD run's
+  trivial activations previously biased the pooled mean downward. PR/W
+  stays 0.028 (low-rank verdict unchanged); FNO boundary unchanged (6.8);
+  every causal/regime claim unaffected (see the drift table in
+  `docs/fresh_campaign_record.md`).
+- Monitor AUROCs on the fresh split: conventional 0.859, SAE+conventional
+  0.864 (published: 0.872/0.878 — split-level noise; no SAE advantage
+  either way).
+- `scripts/reproduce_main_results.sh`: geometry check updated to the
+  corrected low-rank band (1.0 < PR < 2.5).
+
 ## [3.0.0] — 2026-09-07 — "Regime-Boundary Campaign"
 
 ### Added (code)

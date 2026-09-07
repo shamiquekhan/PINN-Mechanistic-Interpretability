@@ -1,40 +1,40 @@
 {
   "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts (v3)",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "date": "2026-09-07",
   "license": "CC-BY-4.0",
-  "generator": "experiments/run_pipeline.py stages 1-13 (commit 816bd2e)",
-  "description": "SHA256 checksums for the JSON artifacts that back every headline claim in RESULTS.md. The full raw tree (runs/ per-seed logs and checkpoints, ~470 MB) is distributed via the Git repository; this manifest covers the slim re-analysis set read by figures/ and scripts/generate_tables.sh.",
+  "generator": "experiments/run_pipeline.py stages 1-13, fresh full-campaign rerun (post 437cced)",
+  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. This revision covers the FRESH full-campaign rerun (all stages retrained from scratch, including the advection/reaction-diffusion baselines that a stage-1 logging bug had silently dropped, and the non-degenerate reaction-diffusion forcing fix).",
   "files": [
     {
       "path": "runs/causal_intervention_results.json",
-      "bytes": 218497,
-      "sha256": "b2a83718793102092fc8b16fd448c3906db0ccf5bcdb1eeca2ccd76bf115c4fa"
+      "bytes": 218850,
+      "sha256": "3a1a02d0de438281bc9c4529b38aa4e36de795e36894f23d80676d462964e6c3"
     },
     {
       "path": "runs/pca_causal_results.json",
-      "bytes": 266113,
-      "sha256": "1d9f939913a3977f3503e917e1780338554e92117588412c323b84bea780a6c4"
+      "bytes": 266013,
+      "sha256": "c10775ba3e671199534691c37a8603ba719dc06e3ebc18892c86a656c3ec662b"
     },
     {
       "path": "runs/causal_abstraction_results.json",
-      "bytes": 9544,
-      "sha256": "6796ae1feb4efdcfd4096bd39c122b185999915207a6904322d2fd3b0b2d2733"
+      "bytes": 9558,
+      "sha256": "05f75870b9f86798417468d57a8d8bdd67339f582570343c096bf8cdf90d8416"
     },
     {
       "path": "runs/monitor_report.json",
-      "bytes": 1069,
-      "sha256": "38608c8e3bf070a47c6c73bef6197d0702434941827509cb2276cbd602a4cc14"
+      "bytes": 1071,
+      "sha256": "9455ba89860b4e1931a045f08407639157dda11ca8fd3eac1f3fb0426fcdd996"
     },
     {
       "path": "runs/positive_control.json",
-      "bytes": 1009,
-      "sha256": "a7b87261813bec4df57d9d2554eee87e93a6b264f118200da0a8229ae9f68bfd"
+      "bytes": 1013,
+      "sha256": "dda43543dd22d65b706dce6a9d08804a1cd9b22400038ad79f236c386bf39202"
     },
     {
       "path": "runs/controller_demo/controller_comparison.json",
-      "bytes": 365717,
-      "sha256": "81d06c4d75ccf1feefaea254644eec893d9901dc90e565d0bea35d5da433b7b5"
+      "bytes": 366045,
+      "sha256": "f941584332028c2b31903a3252337d5ec5c4515df8be66038c470e6c41ec2f6e"
     },
     {
       "path": "runs/operator_boundary/operator_boundary_report.json",
@@ -48,18 +48,18 @@
     },
     {
       "path": "runs/statistical_hardening/analysis_report.json",
-      "bytes": 7145,
-      "sha256": "8fbb4887272d907c7df7c2c4daeffd8b1cc529fb91ae97526da6da93a1abb505"
+      "bytes": 7167,
+      "sha256": "679106316a7cea5ef64796c426ae0212d1bb631f616cbf9c23f7e4be5ed88a24"
     },
     {
       "path": "runs/effective_rank_analysis/effective_rank_report.json",
-      "bytes": 2123,
-      "sha256": "b4349b8b662d25bd1262a54828e08c5e44cf27aac9a2dc2a2d1251ab506fda30"
+      "bytes": 12751,
+      "sha256": "536af9fc58f983d745c872866707ed354d1e82d51b53db342e6b9e4eda616f8c"
     },
     {
       "path": "runs/failure_atlas/seed_matrix_stats.json",
       "bytes": 1895,
-      "sha256": "4c6e920d6513edbe908387eaba3261e9168a180c034da3b3f2bc7430e0d822d0"
+      "sha256": "b6d446380b2da62cd1847f532eab6d0a2cb3300ce437be64f9685a191f5206e6"
     },
     {
       "path": "runs/width_scaling/width_scaling_report.json",
@@ -73,19 +73,19 @@
     },
     {
       "path": "runs/dimensional_boundary_expanded/dimensional_boundary_expanded_report.json",
-      "bytes": 6815,
-      "sha256": "770064c0739bd2bde9c089d033e1b46acb5ccece8c7f1768eb340b4e1f9aa748"
+      "bytes": 6803,
+      "sha256": "2fdb6064fcb1d0b0d3b5c9addbb8e92690975f1b8bb3c5c96030caae01aad386"
     },
     {
       "path": "runs/sae_models_v2/sae_stage3_summary.json",
-      "bytes": 4108,
-      "sha256": "70935a5561463f7cb3dac235bf634ee7d4ddcc50cb491bd5d8640e01a3362dae"
+      "bytes": 5284,
+      "sha256": "98af5c18da8f308e85b01bfc69797acf91e9bed6328050ce3f604d13314c7fb8"
     },
     {
       "path": "runs/feature_dictionary/random_baseline_report.json",
-      "bytes": 1042,
-      "sha256": "d763f3158ca20c641541f76c2cd7c84504ae961cbf7e7c9b10611c054a6cbd62"
+      "bytes": 1045,
+      "sha256": "139c4b6ee1460f2d9b099e2fb0e1cdc9ec553d55e3da6057141cd018a8abdae7"
     }
   ],
-  "note": "Raw data provenance: all datasets are GENERATED in-repo by the stage scripts (PDE training runs, synthetic planted-feature banks, and the FNO Green's-function dataset). No external or third-party data is used anywhere in the benchmark."
+  "note": "Raw data provenance: all datasets are GENERATED in-repo by the stage scripts. No external or third-party data is used."
 }

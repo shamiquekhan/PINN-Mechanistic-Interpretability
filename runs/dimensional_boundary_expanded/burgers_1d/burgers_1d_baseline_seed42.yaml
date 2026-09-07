@@ -33,7 +33,7 @@ model:
 training:
   optimizer: adam
   learning_rate: 0.001
-  steps: 3000
+  steps: 2000
   interior_points: 512
   boundary_points: 66
   log_every: 50

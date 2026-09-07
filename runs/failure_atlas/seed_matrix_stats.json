@@ -24,8 +24,8 @@
       "ci_upper": 0.017354230594937684
     },
     "label_counts": {
-      "success": 7,
-      "unlabeled": 3
+      "unlabeled": 3,
+      "success": 7
     }
   },
   "gradient_conflict": {
@@ -39,9 +39,9 @@
       "ci_upper": 0.8035058985366778
     },
     "label_counts": {
+      "unlabeled": 1,
       "success": 1,
-      "spectral_suppression": 8,
-      "unlabeled": 1
+      "spectral_suppression": 8
     }
   },
   "spectral_suppression": {
@@ -69,9 +69,9 @@
       "ci_upper": 0.06907597648969385
     },
     "label_counts": {
-      "success": 6,
       "unlabeled": 3,
-      "collocation_starvation": 1
+      "collocation_starvation": 1,
+      "success": 6
     }
   }
 }

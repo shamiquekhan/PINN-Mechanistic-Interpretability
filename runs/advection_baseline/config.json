@@ -14,6 +14,11 @@
       0.0,
       1.0
     ],
+    "domain_y": null,
+    "time_domain": [
+      0.0,
+      1.0
+    ],
     "source": 1.0,
     "forcing": 0.0,
     "diffusion": 0.01,
