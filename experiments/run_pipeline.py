@@ -28,6 +28,8 @@ Stages:
      controller (Phase 14).
  13. Statistical hardening — power analysis, Bayesian AUROC posterior,
      threshold sensitivity (Phase 13).
+ 14. Operator causal battery — the 3-control causal protocol + interchange
+     on FNO block states, completing the regime-boundary claim (Phase 15).
 """
 from __future__ import annotations
 import json
@@ -1239,6 +1241,9 @@ def main(stages: str = "all"):
     if want("13"):
         from analysis.statistical_hardening import run_statistical_hardening
         run_statistical_hardening()
+    if want("14"):
+        from experiments.operator_causal import run_operator_causal_experiment
+        run_operator_causal_experiment()
     print("\n=== PIPELINE COMPLETE ===")
 
 
@@ -1246,6 +1251,6 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--stages", default="all",
-                    help="all or comma list / single stage number 1-13")
+                    help="all or comma list / single stage number 1-14")
     args = ap.parse_args()
     main(args.stages)

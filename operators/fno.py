@@ -99,6 +99,11 @@ class FNO1d(nn.Module):
         Returns intermediates (post-activation block states) when requested —
         each has shape (batch, length, width), i.e. the FUNCTION-SPACE
         representation this architecture is designed around.
+
+        Block states are routed through ``self.acts[i]`` (Identity modules)
+        so forward hooks registered on them fire — the same convention the
+        MLP uses (``model.acts[layer_index]``), letting the intervention /
+        interchange machinery operate on FNOs uniformly.
         """
         x = self.lift(x)  # (b, L, width)
         intermediates: List[torch.Tensor] = []
@@ -107,6 +112,7 @@ class FNO1d(nn.Module):
             x_spec = self.spectral_layers[i](x_t)  # (b, width, L)
             x_spec = x_spec.permute(0, 2, 1)       # (b, L, width)
             x = self.act(x_spec + self.skips[i](x))
+            x = self.acts[i](x)                    # hook point (Identity)
             if return_intermediates:
                 intermediates.append(x)
         x = self.act(self.project1(x))
