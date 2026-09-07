@@ -42,7 +42,18 @@ for an established result.
   condition with a direction-reversal criterion (amplify-vs-ablate asymmetry)
   and re-run the operator battery; if the asymmetry confirms, upgrade the
   boundary claim from suggestive to confirmed.
+- [ ] **Stage-15 redesign (registered in preregistration H8 outcome):**
+  continuous conflict-magnitude label (or cross-regime run sampling) for the
+  NTK↔SAE bridge — the binary label is structurally low-sensitivity in a
+  chronically-conflicted regime; also Option B (SAE on
+  NTK-eigenmode-projected activations).
 
+- [x] **NTK conflict↔SAE bridge (stage 15, v3.3):** preregistered
+  (H15a/H15b at 747f82d), executed, recorded H15b — 0/8 Bonferroni
+  survivors, best |rho| 0.578 within the random-direction p95 (0.494);
+  a duplicated-step-records bug (degenerate rho=±1) was caught and fixed
+  before the verdict was read. Revision Gap 2 closed with a measured null.
+  See docs/revision_gap_audit.md, RESULTS.md §5A.8.
 - [x] **Operator causal battery (stage 14, v3.2):** preregistered (H14a/H14b
   at f6eedf9), executed, recorded. Preregistered conjunctive rule fires
   H14b (sign condition non-diagnostic), but by the MC-correction standard

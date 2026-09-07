@@ -150,15 +150,24 @@ activation covariance before training any SAE on a scientific model.
 \paragraph{PINN failure modes.} Characterized failure modes include
 gradient imbalance between PDE residual and boundary terms
 \cite{wang2020understanding,krishnapriyan2021characterizing}, spectral bias
-toward low frequencies, and collocation starvation; adaptive remedies include
-GradNorm \cite{chen2018gradnorm}, NTK-based weighting
-\cite{wang2021learning}, and residual-based attention
-\cite{anagnostopoulos2024residual}. We compare all three against our
-controller on the same failure (\S\ref{sec:sota}).
+toward low frequencies (the Frequency Principle
+\cite{xu2019frequency,rahaman2019spectral} — the cheap Fourier/NTK baseline
+any SAE diagnostic must be benchmarked against; our probe controls and
+Fourier readouts implement exactly this comparison), and collocation
+starvation. Adaptive remedies include GradNorm \cite{chen2018gradnorm},
+NTK-based weighting \cite{wang2021learning}, self-adaptive soft attention
+\cite{mccclenny2023self}, causal training for time-dependent PDEs
+\cite{wang2024respecting}, and residual-based attention
+\cite{anagnostopoulos2024residual}; we compare the three standard
+reweighting baselines against our controller on the same failure
+(\S\ref{sec:sota}). Reduced-order-model autoencoders
+\cite{kim2022fast} are the existing shallow-linear precedent our
+SAE-vs-PCA gap claim differentiates from.
 
 \paragraph{Superposition and SAEs.} The superposition hypothesis
-\cite{elbage2022toy} holds that networks store more features than neurons by
-encoding them in non-orthogonal directions; SAEs
+\cite{elbage2022toy,chen2023toy} — derived from sparse, overcomplete,
+unequal-importance feature structure — holds that networks store more
+features than neurons by encoding them in non-orthogonal directions; SAEs
 \cite{cunningham2023sparse,bricken2023towards,gao2025scaling} are the
 standard tool to un-mix them, and causal validation via targeted
 interventions is the accepted standard of evidence
@@ -550,6 +559,17 @@ methodology is appropriate --- demonstrated positively on the FNO.
         sign-agreement effects at 80\% power; subtler effects would
         require $\approx$4$\times$ the checkpoints. We report this as a
         design limitation, not a hidden weakness.
+  \item \textbf{NTK bridge.} The correlational gradient-conflict
+        $\leftrightarrow$ feature-activity bridge (preregistered H15a/H15b)
+        fired the null: 0/8 features survive Bonferroni and the best
+        association ($|\rho| = 0.578$) sits within the random-direction
+        distribution (95th percentile 0.494). Gradient conflict is also
+        \emph{chronic} in the starvation regime (75–100\% of steps),
+        so the binary conflict label has little within-run variation
+        there; a continuous-magnitude redesign is registered future
+        work. A duplicated-step logging artifact that initially produced
+        degenerate $\rho = \pm 1$ values was caught and fixed before
+        the verdict was read.
   \item \textbf{Controller.} Not optimization SOTA (NTK-adaptive wins on
         its target failure); its value is failure-agnosticism, bounded
         actions, and rollback.

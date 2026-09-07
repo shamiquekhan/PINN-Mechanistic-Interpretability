@@ -26,6 +26,16 @@ Machinery gate: a synthetic planted conflict-locked feature (active iff
 the pde-vs-bc cosine < 0) must be recovered with rho > 0.7 through the
 identical pipeline. A gate failure voids the run.
 
+Data-handling bug fixed before the recorded run (documented in
+preregistration H8 outcome): the activation logs repeat each step's
+probe-grid record twice; the first implementation joined the duplicates,
+which (a) inflated n past the exact permutation-test floor and (b) let
+runs with only two non-conflict steps produce degenerate rho = +/-1
+driven by single points. The fix deduplicates steps (first occurrence)
+and requires >= 3 steps in both classes per run; runs that fail the
+balance guard are skipped with recorded reasons. The decision rule is
+unchanged — only the machinery was corrected.
+
 Correlational by design: confirming H15a justifies (does not constitute)
 the causal follow-up; Option B (NTK-eigenmode-projected SAE training)
 stays future work either way.
@@ -86,13 +96,16 @@ def _feature_activity_matrix(sae: SparseAutoencoder,
     probe-grid activations)."""
     steps: List[int] = []
     rows: List[np.ndarray] = []
+    seen_steps = set()
     for rec in activation_records:
         key = _layer_key(rec)
         if not key:
             continue
         raw = rec["activations"][key].get("raw")
-        if not raw:
-            continue
+        if not raw or rec["step"] in seen_steps:
+            continue  # dedup: the activation log repeats steps; duplicates
+                      # break permutation exchangeability and inflate n
+        seen_steps.add(rec["step"])
         acts = torch.tensor(raw, dtype=torch.float32, device=device)
         with torch.no_grad():
             z = sae.encode(acts)            # (n_probe, latent_dim)
@@ -236,8 +249,15 @@ def run_ntk_bridge_experiment(n_perm: int = 1000) -> dict:
         steps_np = np.array(steps)[keep]
         A = A[keep]
         labels = labels[keep]
-        if labels.std() == 0:
-            continue  # no conflict variation in this run
+        n_pos = int((labels == 1).sum())
+        n_neg = int((labels == 0).sum())
+        if n_pos < 3 or n_neg < 3:
+            per_run.append({"run": run_dir.name, "skipped": True,
+                            "reason": f"degenerate label balance "
+                                      f"({n_neg} non-conflict / {n_pos} conflict "
+                                      f"of {len(labels)} steps; need >=3 both classes)",
+                            "n_steps": int(len(labels)), "n_conflict": n_pos})
+            continue
 
         # Specificity lift: remove per-step global mean across candidates
         S = A - A.mean(axis=1, keepdims=True)
@@ -288,7 +308,8 @@ def run_ntk_bridge_experiment(n_perm: int = 1000) -> dict:
     # Random-control comparison for the best feature
     best = max(summary_features, key=lambda s: s.get("max_abs_rho", 0))
     rand_p95s = [r["random_rho_p95"] for r in per_run
-                 if not math.isnan(r["random_rho_p95"])]
+                 if "random_rho_p95" in r
+                 and not math.isnan(r["random_rho_p95"])]
     random_p95 = float(np.mean(rand_p95s)) if rand_p95s else float("nan")
 
     # ---- Preregistered conjunctive rule ----

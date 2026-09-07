@@ -240,3 +240,95 @@ that the low-rank regime entirely lacks. Full numbers:
   RESULTS.md §5A.7 for the outcome.
 - All artifacts referenced above are the JSON files in `runs/` produced by
   the stage scripts; none were edited by hand.
+
+## H8 — NTK gradient-conflict ↔ SAE feature-activity bridge (Stage 15)
+
+*Registered 2026-09-08, before the stage-15 run (revision-gap audit,
+Gap 2: the NTK↔SAE bridge must be constructed, not asserted).*
+
+**Hypothesis H15a (bridge exists).** SAE feature activity on the fixed
+probe grid is *feature-specifically* elevated during high-conflict
+training steps — steps where the pde-vs-bc gradient cosine is negative,
+Wang et al. (2021/2022)'s gradient-pathology criterion — beyond what a
+random dictionary of the same geometry exhibits.
+
+**Hypothesis H15b (no specific bridge).** Any apparent feature↔conflict
+association is either (i) not feature-specific (driven by global activity
+surges that correlate with loss magnitude) or (ii) matched by random
+dictionary directions.
+
+**Construction (Option A of the revision guide — the correlational
+bridge, defined precisely).** For each logged training step t with both
+a gradient record and probe-grid activations:
+
+- conflict(t) = 1[cos(∇θℒ_pde, ∇θℒ_bc)(t) < 0]  (Wang et al. criterion;
+  values already logged per step in `runs/<config>/gradients.jsonl`)
+- For each SAE feature k: a_k(t) = mean probe-grid activation of feature
+  k at step t (SAE encoder applied to the fixed 50-point grid logged in
+  `activations.jsonl`; the probe hash is constant per run, so the grid
+  is identical across steps)
+- Specificity: s_k(t) = a_k(t) − mean_j a_j(t)  (feature-specific lift,
+  removing the global activity component)
+
+**Statistics.** Per feature: point-biserial correlation ρ_k between
+s_k(t) and conflict(t); per-run significance via exact permutation test
+(labels shuffled 1,000×, fixed rng); Bonferroni + BH-FDR across the 8
+candidate features (same MC standard as stages 5/8/14); random-dictionary
+control: median |ρ| over 32 random orthonormal directions of matching
+dimensionality through the identical pipeline.
+
+**Decision rule (conjunctive, all three required for H15a).**
+(i) ≥1 candidate feature survives Bonferroni with |ρ_k| ≥ 0.3;
+(ii) the surviving feature's |ρ_k| exceeds the 95th percentile of the
+random-direction |ρ| distribution;
+(iii) the association is not explained by the global-activity covariate:
+|ρ_k| on s_k (specificity-filtered) must be ≥ 0.5 × |ρ_k| on a_k (raw).
+
+If any of (i)–(iii) fails, H15b is recorded. Machinery gate: on
+synthetic activations with a planted conflict-locked feature (active iff
+cosine < 0), the pipeline must recover ρ > 0.7 for the planted feature;
+gate failure voids the run and the stage is fixed and re-run before any
+hypothesis is tested.
+
+**Interpretation scope (pre-committed).** This is a *correlational*
+first pass by design (guide Option A). Confirming H15a would justify —
+not constitute — the causal follow-up (amplify/ablate at high-conflict
+steps), and Option B (training the SAE on NTK-eigenmode-projected
+activations) stays registered as future work either way. A null here
+does NOT weaken any existing claim (stages 5/8/9 stand on their own);
+it closes the last unconstructed bridge the revision review identified.
+
+**Outcome (recorded after running).** The preregistered conjunctive rule
+fires **H15b** — condition (i) failed: no candidate survives Bonferroni
+(best max |rho| = 0.578, permutation p = 0.070 uncorrected; Bonferroni
+p = 0.56 across 8 features); the best feature only marginally exceeds
+the random-direction 95th percentile (0.578 vs 0.494), nowhere near a
+consistent bridge.
+
+**Machinery incident, recorded (fixed BEFORE the recorded run was read as
+a verdict):** the first implementation joined the activation logs'
+duplicated step records, which (a) inflated n past the exact permutation
+floor and (b) let runs with only 1–2 non-conflict steps produce
+degenerate rho = ±1 single-point artifacts — condition (i) initially
+fired with rho = 1.000 "survivors". The fix (step deduplication +
+a >=3-steps-in-both-classes balance guard, with skipped runs and reasons
+recorded in the artifact) preceded reading any verdict. Post-fix numbers
+above are the recorded ones.
+
+**Design observation (honest limitation of this bridge test):** 9 of 11
+boundary-starvation runs were skipped by the balance guard because the
+pde-vs-bc cosine is negative in 75–100% of logged steps — gradient
+conflict in this regime is *chronic*, so a binary conflict label has
+almost no within-run variation to correlate against, precisely in the
+regime where features were hypothesized causal. The bridge as specified
+(Option A, binary label) is structurally low-sensitivity for this
+failure mode. A higher-powered redesign would use the continuous
+conflict *magnitude* (or cosine *value*) rather than the binary label,
+and/or sample runs across regimes (failure + recovery) where the label
+actually varies — registered as future work, NOT run post-hoc.
+
+**Recorded conclusion:** H15b — no feature-specific conflict↔activity
+bridge at the preregistered bar. This does not weaken stages 5/8/9
+(which never asserted a bridge); it closes revision Gap 2 with a null
+plus a documented redesign path. Full numbers:
+`runs/ntk_bridge/ntk_bridge_report.json`; RESULTS.md §5A.8.

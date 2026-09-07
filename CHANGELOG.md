@@ -4,6 +4,51 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.3.0] — 2026-09-08 — "Revision-Gap Audit + NTK Bridge (Stage 15)"
+
+Driven by the four-gap revision review of the original proposal; gap
+statuses audited against artifacts (docs/revision_gap_audit.md).
+
+### Added
+
+- `docs/revision_gap_audit.md`: gap-by-gap verdicts with receipts.
+  Gap 1 (superposition precondition) CLOSED by the executed campaign;
+  Gap 3 (spectral-bias baselines) closed in structure, citations
+  actioned; Gap 4 (controller positioning) closed by stage 12 + the
+  monitor-source ablation; Gap 2 OPEN → stage 15.
+- `experiments/ntk_bridge.py` (stage 15, wired into run_pipeline):
+  the guide's Option-A correlational bridge — feature-specific SAE
+  activity vs Wang-et-al. gradient-conflict label (pde-vs-bc cosine),
+  point-biserial + 1000-permutation exact tests, 32 random-direction
+  control, Bonferroni + BH-FDR, planted-feature machinery gate,
+  per-step deduplication and a >=3-steps-both-classes balance guard.
+- `docs/preregistration.md` §H8: H15a/H15b + conjunctive decision rule,
+  committed (747f82d) BEFORE the run.
+- 9 unit tests (`tests/unit/test_ntk_bridge.py`; 155 total).
+- Paper citations the review required: Xu et al. (F-Principle),
+  Rahaman et al. (spectral bias), McClenny & Braga-Neto (self-adaptive
+  PINNs), Wang et al. (causal training), Kim et al. (ROM autoencoder),
+  + a flagged placeholder for the toy-model phase-transition analysis.
+  Background section now benchmarks SAE diagnostics explicitly against
+  the Fourier/NTK baseline literature.
+
+### Research outcome (recorded as preregistered)
+
+- Machinery gate: PASS. Preregistered conjunctive rule fires **H15b**:
+  0/8 features survive Bonferroni; best |rho| = 0.578 (uncorrected
+  p = 0.070) vs random-direction p95 = 0.494.
+- Machinery incident, fixed BEFORE the verdict was read: the first
+  implementation joined duplicated activation-log step records,
+  inflating n past the exact permutation floor and producing degenerate
+  rho = ±1 single-point artifacts (condition (i) initially "passed" at
+  rho = 1.000). Post-fix numbers are the recorded ones; skipped runs
+  and reasons are in the artifact.
+- Design observation: 9/11 runs fail the label-balance guard —
+  gradient conflict is CHRONIC in boundary starvation (75–100% of
+  steps), so the binary label has near-zero within-run variation
+  exactly where features were hypothesized causal. Continuous-magnitude
+  redesign registered as future work, not run post-hoc.
+
 ## [3.2.1] — 2026-09-07 — "Submission Packaging"
 
 No research-claim changes; every v3.2.0 verdict stands as recorded.

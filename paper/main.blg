@@ -4,45 +4,45 @@ The top-level auxiliary file: main.aux
 The style file: unsrtnat.bst
 Database file #1: references.bib
 Warning--can't use both volume and number fields in wang2020understanding
-You've used 21 entries,
+You've used 27 entries,
             2481 wiz_defined-function locations,
-            641 strings with 7827 characters,
-and the built_in function-call counts, 7712 in all, are:
-= -- 575
-> -- 469
-< -- 10
-+ -- 178
-- -- 136
-* -- 527
-:= -- 1248
-add.period$ -- 63
-call.type$ -- 21
-change.case$ -- 42
-chr.to.int$ -- 21
-cite$ -- 22
-duplicate$ -- 438
-empty$ -- 744
-format.name$ -- 165
-if$ -- 1650
+            671 strings with 9026 characters,
+and the built_in function-call counts, 10086 in all, are:
+= -- 758
+> -- 619
+< -- 12
++ -- 234
+- -- 180
+* -- 718
+:= -- 1640
+add.period$ -- 82
+call.type$ -- 27
+change.case$ -- 54
+chr.to.int$ -- 27
+cite$ -- 28
+duplicate$ -- 554
+empty$ -- 958
+format.name$ -- 218
+if$ -- 2147
 int.to.chr$ -- 1
-int.to.str$ -- 22
-missing$ -- 21
-newline$ -- 113
-num.names$ -- 63
-pop$ -- 223
+int.to.str$ -- 28
+missing$ -- 27
+newline$ -- 144
+num.names$ -- 81
+pop$ -- 272
 preamble$ -- 1
-purify$ -- 21
+purify$ -- 27
 quote$ -- 0
-skip$ -- 245
+skip$ -- 309
 stack$ -- 0
-substring$ -- 158
-swap$ -- 69
+substring$ -- 255
+swap$ -- 82
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 147
+type$ -- 189
 warning$ -- 1
-while$ -- 50
+while$ -- 67
 width$ -- 0
-write$ -- 265
+write$ -- 343
 (There was 1 warning)

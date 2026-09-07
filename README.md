@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 146/146 Passed](https://img.shields.io/badge/Tests-146%2F146%20Passed-brightgreen.svg)](tests/)
+[![Tests: 155/155 Passed](https://img.shields.io/badge/Tests-155%2F155%20Passed-brightgreen.svg)](tests/)
 [![CI](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml/badge.svg)](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
@@ -104,12 +104,12 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 146 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 155 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
 ```bash
-python -m experiments.run_pipeline              # all 14 stages
+python -m experiments.run_pipeline              # all 15 stages
 python -m experiments.run_pipeline --stages 5   # any subset, e.g. the causal battery
 ```
 
@@ -136,6 +136,7 @@ This automatically executes:
 12. **SOTA baselines** — GradNorm / NTK-adaptive / RBA vs controller (`runs/sota_baselines/`).
 13. **Statistical hardening** — power, Bayesian posterior, threshold sensitivity (`runs/statistical_hardening/`).
 14. **Operator causal battery** — the 3-control causal protocol + interchange on FNO block states, completing the regime-boundary claim (`runs/operator_causal/`).
+15. **NTK conflict↔SAE bridge** — the preregistered correlational bridge between Wang-et-al. gradient conflict and feature-specific SAE activity (revision Gap 2; recorded null) (`runs/ntk_bridge/`).
 
 ---
 
@@ -190,7 +191,7 @@ This automatically executes:
 │   ├── causal_abstraction.py # Interchange battery driver (v3)
 │   ├── positive_control.py   # Planted-feature pipeline sanity
 │   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–13)
-├── tests/                    # Comprehensive Unit Test Suite (146 tests)
+├── tests/                    # Comprehensive Unit Test Suite (155 tests)
 │   └── unit/
 ├── docs/
 │   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion

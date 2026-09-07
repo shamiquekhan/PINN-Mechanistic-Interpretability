@@ -78,6 +78,12 @@ Legend: *Art.* = artifact under `runs/`; *Fig.* = script in `figures/`;
 
 ---
 
+## Phase J — NTK conflict↔SAE bridge (stage 15; preregistered H15a/H15b)
+
+| ID | Hypothesis | Model | Protocol | Command | Art. | Output | Fig./Tab. |
+|---|---|---|---|---|---|---|---|
+| J1 | Feature-specific SAE activity coincides with gradient-conflict steps (H15a; FIRED H15b) | PINN boundary-starvation runs | point-biserial + 1000-perm exact tests, 32 random-direction control, Bonferroni + BH-FDR, machinery gate, label-balance guard | `run_pipeline --stages 15` | `ntk_bridge/ntk_bridge_report.json` | 0/8 survive; best \|ρ\| 0.578 vs random p95 0.494; 2/11 runs pass balance guard (chronic conflict) | — |
+
 ## Traceability example (the intended workflow)
 
 > **Claim (RESULTS.md §5A.4):** "the TopK SAE beats k-matched PCA 4.7× on FNO

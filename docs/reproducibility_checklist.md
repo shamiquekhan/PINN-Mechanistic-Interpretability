@@ -13,7 +13,7 @@ maps to a command and an expected outcome (details in
 
 ## Unit tests
 
-- [ ] `python -m pytest tests/ -q` → **146 passed** (~15 s, CPU or GPU)
+- [ ] `python -m pytest tests/ -q` → **155 passed** (~15 s, CPU or GPU)
 - [ ] `python -m compileall -q analysis controller experiments interventions monitoring operators pinn pinn_logging sae tests` → no output (clean compile)
 
 ## Smoke tests
@@ -22,7 +22,7 @@ maps to a command and an expected outcome (details in
   - short boundary-starvation training run logs activations
   - effective-rank analysis returns nonzero participation ratio
 
-## Campaign (stages 2–14 reproduce from committed `runs/` stage-1 artifacts; stage 1 retrains from scratch)
+## Campaign (stages 2–15 reproduce from committed `runs/` stage-1 artifacts; stage 1 retrains from scratch)
 
 - [ ] `--stages 2`: failure atlas — boundary_starvation labels 10/10
 - [ ] `--stages 3`: SAEs — 3 TopK replicas trained; PCA/random baselines logged
@@ -37,6 +37,7 @@ maps to a command and an expected outcome (details in
 - [ ] `--stages 12`: SOTA — NTK-adaptive ≈ 0.0064 < controller 0.0166
 - [ ] `--stages 13`: hardening — MDE 85.7%, P(SAE monitor better) ≈ 0.53
 - [ ] `--stages 14`: operator causal battery — machinery gate passes; 6/8 Bonferroni survivors; preregistered rule fires H14b (see RESULTS.md §5A.7)
+- [ ] `--stages 15`: NTK bridge — machinery gate passes; `decision_rule.recorded=H15b`; 0/8 Bonferroni survivors; 9/11 runs skipped by the label-balance guard (chronic conflict)
 
 ## Figures and tables
 

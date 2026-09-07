@@ -31,7 +31,7 @@ development: [requirements.txt](../requirements.txt). The
 
 **GPU memory:** the full campaign runs on a 4 GB GPU. Peak observed usage
 is < 2 GB (largest model: 512-wide Poisson; largest SAE input: 65,000×64).
-CPU-only execution works for the entire unit-test suite (146 tests) and all
+CPU-only execution works for the entire unit-test suite (155 tests) and all
 analysis stages; only stage-1 training is slower (see §6).
 
 ## 2. Installation
@@ -79,11 +79,11 @@ pip install -r requirements.txt
 
 ## 4. Exact reproduction commands
 
-Unit tests first, then the full 14-stage campaign:
+Unit tests first, then the full 15-stage campaign:
 
 ```bash
 python -m pytest tests/ -q                 # 146 tests, ~15 s CPU
-python -m experiments.run_pipeline          # all 14 stages
+python -m experiments.run_pipeline          # all 15 stages
 ```
 
 Or stage-by-stage (each stage reads its predecessors' artifacts from
@@ -105,6 +105,7 @@ Or stage-by-stage (each stage reads its predecessors' artifacts from
 | 12 | `--stages 12` | `runs/sota_baselines/` | ~12 min |
 | 13 | `--stages 13` | `runs/statistical_hardening/` | < 1 min |
 | 14 | `--stages 14` | `runs/operator_causal/operator_causal_report.json` | ~8 min (FNO/SAE retrain + 8-batch battery) |
+| 15 | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | ~3 min (11 runs × 8 features × 1000 perms) |
 
 Total compute budget of the published campaign: **≈ 6 GPU-hours**
 (RTX-class 4 GB; estimate, not metered — no CO2 estimate is reported
@@ -139,14 +140,16 @@ After the campaign completes, these JSON fields must match RESULTS.md
 | SOTA: NTK beats controller | `runs/sota_baselines/sota_baseline_report.json` | `baselines.NTK-adaptive.final_rel_l2` | ≈ 0.0064 |
 | Stage-14 machinery gate | `runs/operator_causal/operator_causal_report.json` | `positive_control.pipeline_pass` | `true` |
 | Stage-14 survivors | `runs/operator_causal/operator_causal_report.json` | `battery_summary.multiple_comparisons.bonferroni_n_survivors` | ≈ 6 (PINN batteries: 0) |
+| Stage-15 verdict | `runs/ntk_bridge/ntk_bridge_report.json` | `decision_rule.recorded` | `H15b` |
+| Stage-15 survivors | `runs/ntk_bridge/ntk_bridge_report.json` | per-feature `bonferroni_survivor` | all `false` (0/8) |
 
 The reproducibility checklist for a fresh environment is maintained at
 [docs/reproducibility_checklist.md](reproducibility_checklist.md).
 
 ## 6. CPU-only execution
 
-All 146 unit tests pass CPU-only (`CUDA_VISIBLE_DEVICES="" python -m
-pytest tests/ -q`, ~12 s). Analysis stages (2–14) that only read `runs/`
+All 155 unit tests pass CPU-only (`CUDA_VISIBLE_DEVICES="" python -m
+pytest tests/ -q`, ~12 s). Analysis stages (2–15) that only read `runs/`
 artifacts are CPU-only by construction. Stage 1 training and stages 7/10/11
 retraining arms run on CPU at roughly 5–10× slower wall time. The GitHub CI
 workflow (`.github/workflows/tests.yml`) runs the CPU path, including a

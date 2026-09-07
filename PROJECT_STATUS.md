@@ -1,6 +1,6 @@
 # Project Status
 
-**Last verified:** 2026-09-07 (post-stage-14; every item below re-verified)
+**Last verified:** 2026-09-08 (post-stage-15; every item below re-verified)
 **Verification method:** commands executed end-to-end on this machine; every
 "verified" item lists the exact command and the artifact it produced. A
 machine check (`scripts/check_results_grounded.py`, wired into CI via
@@ -24,12 +24,13 @@ Each item: what ran → where the output lives.
 | FNO regime boundary | `--stages 11` | `runs/operator_boundary/operator_boundary_report.json` | PR 6.80/64; SAE beats k-matched PCA 4.7× |
 | SOTA baselines | `--stages 12` | `runs/sota_baselines/sota_baseline_report.json` | NTK-adaptive 0.0064 < controller 0.0166; GradNorm 2.01 / RBA 2.19 (harm) |
 | Statistical hardening | `--stages 13` | `runs/statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power; P(SAE monitor better) 0.53 |
+| NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 < random p95 0.494; machinery gate PASS |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.859/0.864; rescue 0.2953→0.0166; SAE arm bit-identical to random |
-| Unit tests | `python -m pytest tests/ -q` | — | **146 passed** (2026-09-07, CPU-only) |
+| Unit tests | `python -m pytest tests/ -q` | — | **155 passed** (2026-09-08, CPU-only) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
 | Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
 | Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |
-| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v3.2.0) | 17/17 OK |
+| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v3.3.0) | 18/18 OK |
 | Results-doc grounding | `python scripts/check_results_grounded.py` | — | OK (exit 0) |
 
 ## Completed since last verification (stage 14 — preregistered, run, recorded)

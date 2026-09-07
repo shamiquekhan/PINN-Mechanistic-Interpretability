@@ -297,3 +297,38 @@ steps), and Option B (training the SAE on NTK-eigenmode-projected
 activations) stays registered as future work either way. A null here
 does NOT weaken any existing claim (stages 5/8/9 stand on their own);
 it closes the last unconstructed bridge the revision review identified.
+
+**Outcome (recorded after running).** The preregistered conjunctive rule
+fires **H15b** — condition (i) failed: no candidate survives Bonferroni
+(best max |rho| = 0.578, permutation p = 0.070 uncorrected; Bonferroni
+p = 0.56 across 8 features); the best feature only marginally exceeds
+the random-direction 95th percentile (0.578 vs 0.494), nowhere near a
+consistent bridge.
+
+**Machinery incident, recorded (fixed BEFORE the recorded run was read as
+a verdict):** the first implementation joined the activation logs'
+duplicated step records, which (a) inflated n past the exact permutation
+floor and (b) let runs with only 1–2 non-conflict steps produce
+degenerate rho = ±1 single-point artifacts — condition (i) initially
+fired with rho = 1.000 "survivors". The fix (step deduplication +
+a >=3-steps-in-both-classes balance guard, with skipped runs and reasons
+recorded in the artifact) preceded reading any verdict. Post-fix numbers
+above are the recorded ones.
+
+**Design observation (honest limitation of this bridge test):** 9 of 11
+boundary-starvation runs were skipped by the balance guard because the
+pde-vs-bc cosine is negative in 75–100% of logged steps — gradient
+conflict in this regime is *chronic*, so a binary conflict label has
+almost no within-run variation to correlate against, precisely in the
+regime where features were hypothesized causal. The bridge as specified
+(Option A, binary label) is structurally low-sensitivity for this
+failure mode. A higher-powered redesign would use the continuous
+conflict *magnitude* (or cosine *value*) rather than the binary label,
+and/or sample runs across regimes (failure + recovery) where the label
+actually varies — registered as future work, NOT run post-hoc.
+
+**Recorded conclusion:** H15b — no feature-specific conflict↔activity
+bridge at the preregistered bar. This does not weaken stages 5/8/9
+(which never asserted a bridge); it closes revision Gap 2 with a null
+plus a documented redesign path. Full numbers:
+`runs/ntk_bridge/ntk_bridge_report.json`; RESULTS.md §5A.8.

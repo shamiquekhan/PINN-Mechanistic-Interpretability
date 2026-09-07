@@ -85,6 +85,8 @@ def test_feature_activity_matrix_shapes_and_steps():
         raw = (torch.randn(10, 16) * 0.1).tolist()
         recs.append({"step": step, "probe_hash": "x",
                      "activations": {"layers.1": {"raw": raw}}})
+    # duplicated step records (as the real activation logs contain) must be deduped
+    recs = recs + recs
     steps, A = _feature_activity_matrix(sae, recs, [0, 3, 5], torch.device("cpu"))
     assert steps == [0, 100, 200, 300, 400]
     assert A.shape == (5, 3)

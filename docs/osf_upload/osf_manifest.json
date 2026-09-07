@@ -12,14 +12,14 @@
   "files": [
     {
       "path": "preregistration.md",
-      "bytes": 12615,
-      "sha256": "d244c67b8dda27c62359d976ea2a88077d20f71748b77ce7644f5684ebfb40e3",
+      "bytes": 17751,
+      "sha256": "b60cac9699d9998ee4bf99fcec241054f1d6f6dc249dade434a0b80da665a24d",
       "source_in_repo": "docs/preregistration.md"
     },
     {
       "path": "experiment_matrix.md",
-      "bytes": 7290,
-      "sha256": "8370d4208584de4cd06c49202f5e712ad7e5b4727a0e0772884ba25cc1a38622",
+      "bytes": 7912,
+      "sha256": "0be47856d0d9577ff1564a06356413e9b0992e44e5bf2e82257ad133ccbf6e43",
       "source_in_repo": "docs/experiment_matrix.md"
     },
     {

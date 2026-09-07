@@ -121,6 +121,13 @@ CLAIMS = [
      "runs/effective_rank_analysis/effective_rank_report.json",
      lambda d: round(d["summary"]["mean_participation_ratio"], 3),
      lambda v: rf"\b{v}\b"),
+    # Stage 15 (NTK bridge): the null verdict numbers in RESULTS.md 5A.8.
+    ("RESULTS.md", "runs/ntk_bridge/ntk_bridge_report.json",
+     lambda d: d["decision_rule"]["recorded"],
+     lambda v: rf"\b{v}\b" if v == "H15b" else rf"\b{v}\b"),
+    ("RESULTS.md", "runs/ntk_bridge/ntk_bridge_report.json",
+     lambda d: d["per_feature_summary"],
+     lambda v: rf"0/8" if all(not s.get("bonferroni_survivor", False) for s in v) else "NONZERO-SURVIVORS-NOT-GROUNDED"),
     # Stage 14 (operator causal battery): the FNO-vs-PINN survivor asymmetry
     # is the headline of RESULTS.md 5A.7 and must stay grounded.
     ("RESULTS.md", "runs/operator_causal/operator_causal_report.json",

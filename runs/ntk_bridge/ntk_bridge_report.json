@@ -1,0 +1,283 @@
+{
+  "stage": "ntk_bridge",
+  "hypotheses": "H15a/H15b (docs/preregistration.md H8)",
+  "machinery_gate": {
+    "planted_rho_raw": 0.9378187500133521,
+    "planted_rho_specific": 0.9921279701294148,
+    "permutation_p": 0.000999000999000999,
+    "gate_pass": true
+  },
+  "n_runs": 11,
+  "candidates": [
+    194,
+    114,
+    205,
+    49,
+    126,
+    101,
+    8,
+    228
+  ],
+  "per_run": [
+    {
+      "run": "boundary_starvation_seed123",
+      "skipped": true,
+      "reason": "degenerate label balance (1 non-conflict / 9 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 9
+    },
+    {
+      "run": "boundary_starvation_seed2024",
+      "skipped": true,
+      "reason": "degenerate label balance (1 non-conflict / 9 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 9
+    },
+    {
+      "run": "boundary_starvation_seed2025",
+      "skipped": true,
+      "reason": "degenerate label balance (1 non-conflict / 9 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 9
+    },
+    {
+      "run": "boundary_starvation_seed2026",
+      "skipped": true,
+      "reason": "degenerate label balance (2 non-conflict / 8 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 8
+    },
+    {
+      "run": "boundary_starvation_seed42",
+      "n_steps": 10,
+      "n_conflict": 7,
+      "features": {
+        "194": {
+          "rho_raw": -0.5091750772173154,
+          "rho_specific": -0.5561413500394008,
+          "perm_p": 0.3166833166833167
+        },
+        "114": {
+          "rho_raw": NaN,
+          "rho_specific": -0.5740746520707818,
+          "perm_p": 0.000999000999000999
+        },
+        "205": {
+          "rho_raw": -0.5091750772173156,
+          "rho_specific": -0.5574836650637229,
+          "perm_p": 0.28471528471528473
+        },
+        "49": {
+          "rho_raw": NaN,
+          "rho_specific": -0.5740746520707818,
+          "perm_p": 0.000999000999000999
+        },
+        "126": {
+          "rho_raw": NaN,
+          "rho_specific": -0.5740746520707818,
+          "perm_p": 0.000999000999000999
+        },
+        "101": {
+          "rho_raw": -0.5091750772173155,
+          "rho_specific": -0.5659528316588536,
+          "perm_p": 0.2887112887112887
+        },
+        "8": {
+          "rho_raw": 0.2182178902359924,
+          "rho_specific": -0.559084036580478,
+          "perm_p": 1.0
+        },
+        "228": {
+          "rho_raw": 0.5784652287511698,
+          "rho_specific": 0.5765649227905956,
+          "perm_p": 0.06993006993006994
+        }
+      },
+      "random_rho_p95": 0.5834787078050662
+    },
+    {
+      "run": "boundary_starvation_seed555",
+      "skipped": true,
+      "reason": "degenerate label balance (1 non-conflict / 9 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 9
+    },
+    {
+      "run": "boundary_starvation_seed7",
+      "skipped": true,
+      "reason": "degenerate label balance (2 non-conflict / 8 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 8
+    },
+    {
+      "run": "boundary_starvation_seed777",
+      "skipped": true,
+      "reason": "degenerate label balance (0 non-conflict / 10 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 10
+    },
+    {
+      "run": "boundary_starvation_seed888",
+      "skipped": true,
+      "reason": "degenerate label balance (2 non-conflict / 8 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 8
+    },
+    {
+      "run": "boundary_starvation_seed999",
+      "skipped": true,
+      "reason": "degenerate label balance (0 non-conflict / 10 conflict of 10 steps; need >=3 both classes)",
+      "n_steps": 10,
+      "n_conflict": 10
+    },
+    {
+      "run": "failure_boundary_starvation",
+      "n_steps": 20,
+      "n_conflict": 15,
+      "features": {
+        "194": {
+          "rho_raw": -0.06909946250198401,
+          "rho_specific": -0.08850613777867264,
+          "perm_p": 0.7742257742257742
+        },
+        "114": {
+          "rho_raw": -0.061130524894660025,
+          "rho_specific": -0.12116565137804504,
+          "perm_p": 0.936063936063936
+        },
+        "205": {
+          "rho_raw": -0.2809459168780544,
+          "rho_specific": -0.2993625162652366,
+          "perm_p": 0.13686313686313686
+        },
+        "49": {
+          "rho_raw": 0.39762636128667167,
+          "rho_specific": 0.38974196537586026,
+          "perm_p": 0.1068931068931069
+        },
+        "126": {
+          "rho_raw": -0.13629933124849566,
+          "rho_specific": -0.16924514663235585,
+          "perm_p": 0.5534465534465535
+        },
+        "101": {
+          "rho_raw": NaN,
+          "rho_specific": -0.09375524894175172,
+          "perm_p": 0.000999000999000999
+        },
+        "8": {
+          "rho_raw": NaN,
+          "rho_specific": -0.09375524894175172,
+          "perm_p": 0.000999000999000999
+        },
+        "228": {
+          "rho_raw": NaN,
+          "rho_specific": -0.09375524894175172,
+          "perm_p": 0.000999000999000999
+        }
+      },
+      "random_rho_p95": 0.40542261779904637
+    }
+  ],
+  "per_feature_summary": [
+    {
+      "feature": 194,
+      "n_runs": 2,
+      "mean_abs_rho": 0.2891372698596497,
+      "max_abs_rho": 0.5091750772173154,
+      "max_abs_rho_run_rho_raw": -0.5091750772173154,
+      "rho_specific_at_max": -0.5561413500394008,
+      "min_perm_p": 0.3166833166833167,
+      "bonferroni_p": 1.0,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 114,
+      "n_runs": 1,
+      "mean_abs_rho": 0.061130524894660025,
+      "max_abs_rho": 0.061130524894660025,
+      "max_abs_rho_run_rho_raw": -0.061130524894660025,
+      "rho_specific_at_max": -0.12116565137804504,
+      "min_perm_p": 0.936063936063936,
+      "bonferroni_p": 1.0,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 205,
+      "n_runs": 2,
+      "mean_abs_rho": 0.395060497047685,
+      "max_abs_rho": 0.5091750772173156,
+      "max_abs_rho_run_rho_raw": -0.5091750772173156,
+      "rho_specific_at_max": -0.5574836650637229,
+      "min_perm_p": 0.13686313686313686,
+      "bonferroni_p": 1.0,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 49,
+      "n_runs": 1,
+      "mean_abs_rho": 0.39762636128667167,
+      "max_abs_rho": 0.39762636128667167,
+      "max_abs_rho_run_rho_raw": 0.39762636128667167,
+      "rho_specific_at_max": 0.38974196537586026,
+      "min_perm_p": 0.1068931068931069,
+      "bonferroni_p": 0.8551448551448552,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 126,
+      "n_runs": 1,
+      "mean_abs_rho": 0.13629933124849566,
+      "max_abs_rho": 0.13629933124849566,
+      "max_abs_rho_run_rho_raw": -0.13629933124849566,
+      "rho_specific_at_max": -0.16924514663235585,
+      "min_perm_p": 0.5534465534465535,
+      "bonferroni_p": 1.0,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 101,
+      "n_runs": 1,
+      "mean_abs_rho": 0.5091750772173155,
+      "max_abs_rho": 0.5091750772173155,
+      "max_abs_rho_run_rho_raw": -0.5091750772173155,
+      "rho_specific_at_max": -0.5659528316588536,
+      "min_perm_p": 0.2887112887112887,
+      "bonferroni_p": 1.0,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 8,
+      "n_runs": 1,
+      "mean_abs_rho": 0.2182178902359924,
+      "max_abs_rho": 0.2182178902359924,
+      "max_abs_rho_run_rho_raw": 0.2182178902359924,
+      "rho_specific_at_max": -0.559084036580478,
+      "min_perm_p": 1.0,
+      "bonferroni_p": 1.0,
+      "bonferroni_survivor": false
+    },
+    {
+      "feature": 228,
+      "n_runs": 1,
+      "mean_abs_rho": 0.5784652287511698,
+      "max_abs_rho": 0.5784652287511698,
+      "max_abs_rho_run_rho_raw": 0.5784652287511698,
+      "rho_specific_at_max": 0.5765649227905956,
+      "min_perm_p": 0.06993006993006994,
+      "bonferroni_p": 0.5594405594405595,
+      "bonferroni_survivor": false
+    }
+  ],
+  "random_control": {
+    "mean_p95_abs_rho": 0.4944506628020563
+  },
+  "decision_rule": {
+    "cond_i_bonferroni_survivor": false,
+    "cond_ii_beats_random_p95": true,
+    "cond_iii_specificity_retained": true,
+    "passes_h15a": false,
+    "recorded": "H15b"
+  },
+  "interpretation_note": "Correlational bridge only (revision-guide Option A). A null does not weaken stages 5/8/9; a pass justifies a causal amplify/ablate follow-up and Option B as future work."
+}

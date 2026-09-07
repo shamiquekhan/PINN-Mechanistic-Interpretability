@@ -1,10 +1,10 @@
 {
   "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts",
-  "version": "3.2.0",
-  "date": "2026-09-07",
+  "version": "3.3.0",
+  "date": "2026-09-08",
   "license": "CC-BY-4.0",
-  "generator": "experiments/run_pipeline.py stages 1-14 (fresh campaign + stage-14 operator causal battery)",
-  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v3.2.0 adds the operator causal battery artifact (stage 14).",
+  "generator": "experiments/run_pipeline.py stages 1-15 (fresh campaign + operator causal + NTK bridge)",
+  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v3.3.0 adds the stage-15 NTK-bridge artifact.",
   "files": [
     {
       "path": "runs/causal_intervention_results.json",
@@ -45,6 +45,11 @@
       "path": "runs/operator_causal/operator_causal_report.json",
       "bytes": 132205,
       "sha256": "0995014e117f463558e5419bea57578e78ab60fcead1546cce73e0173d0b0723"
+    },
+    {
+      "path": "runs/ntk_bridge/ntk_bridge_report.json",
+      "bytes": 8492,
+      "sha256": "85535c26f721ef151a7633aa49ae3b825a26075807f9a5cbb93f4cdd00b51ca1"
     },
     {
       "path": "runs/sota_baselines/sota_baseline_report.json",
