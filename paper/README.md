@@ -1,18 +1,21 @@
 # `paper/` — Submission Artifact
 
-LaTeX skeleton for the NeurIPS/ICML-target manuscript. The working draft
-with full prose lives in [`docs/paper_draft.md`](../docs/paper_draft.md);
+Full LaTeX manuscript for the NeurIPS/ICML-target paper (v3.2.0: complete
+prose, 9 figures, 7 artifact-generated tables, 12-page compiled PDF).
+The narrative outline lives in [`docs/paper_draft.md`](../docs/paper_draft.md);
 this directory is the compiled-submission artifact.
 
 ## Layout
 
 | File | Purpose |
 |---|---|
-| `main.tex` | Article skeleton with all headline tables `\input` |
+| `main.tex` | Full manuscript (all sections in prose; tables `\input`) |
 | `references.bib` | Citation backbone (verify bibliographic details before submission) |
+| `main.pdf` | Reference build (12 pages) |
 | `tables/*.tex` | **Generated** by `scripts/generate_tables.py` from `runs/` JSONs — do not hand-edit |
-| `figures/` | Copy `figures/generated/*.png` here before building |
+| `figures/` | Copies of `figures/generated/*.png` (refreshed by `scripts/generate_figures.sh`) |
 | `supplementary/` | Appendices (proofs from `docs/theory_activation_rank.md`, full protocol text) |
+| `arxiv_package/` | Self-contained submission bundle (README = submission checklist) |
 
 ## Build
 

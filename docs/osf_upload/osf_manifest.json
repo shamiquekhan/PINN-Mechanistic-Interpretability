@@ -1,0 +1,32 @@
+{
+  "title": "When Superposition Fails \u2014 Preregistration & Campaign Records (OSF bundle)",
+  "repo": "shamiquekhan/PINN-Mechanistic-Interpretability",
+  "version": "3.2.0",
+  "prepared": "2026-09-07",
+  "provenance": {
+    "preregistration_committed_before_runs": "in-repo git history (public timestamps)",
+    "stage14_rules_commit": "f6eedf9",
+    "stage14_outcome_commit": "ab54b82",
+    "fresh_campaign_commit": "e9cbf4a"
+  },
+  "files": [
+    {
+      "path": "preregistration.md",
+      "bytes": 12455,
+      "sha256": "783e4bc3704085c42ed37d992a63511cade722022b8277b0195a6ae19cc517ac",
+      "source_in_repo": "docs/preregistration.md"
+    },
+    {
+      "path": "experiment_matrix.md",
+      "bytes": 7277,
+      "sha256": "0fd968347b8c3e8dec07644ce011f9bf39bce924d1a6d412a8b1eda39915b807",
+      "source_in_repo": "docs/experiment_matrix.md"
+    },
+    {
+      "path": "fresh_campaign_record.md",
+      "bytes": 5921,
+      "sha256": "280edfc4948536f5e703ade583d581786f9a0668e3afc5e8367c3f024a8575df",
+      "source_in_repo": "docs/fresh_campaign_record.md"
+    }
+  ]
+}

@@ -27,9 +27,9 @@ Each item: what ran → where the output lives.
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.859/0.864; rescue 0.2953→0.0166; SAE arm bit-identical to random |
 | Unit tests | `python -m pytest tests/ -q` | — | **146 passed** (2026-09-07, CPU-only) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
-| Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 8/8 generated |
-| Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 6/6 generated from artifacts |
-| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v3.1.0) | 16/16 OK |
+| Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
+| Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |
+| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v3.2.0) | 17/17 OK |
 | Results-doc grounding | `python scripts/check_results_grounded.py` | — | OK (exit 0) |
 
 ## Completed since last verification (stage 14 — preregistered, run, recorded)
@@ -50,7 +50,14 @@ Each item: what ran → where the output lives.
 ## Explicitly not yet started (honest backlog)
 
 - OSF / AsPredicted external archival of `docs/preregistration.md`
-  (repo-internal preregistration only, so far).
+  (repo-internal preregistration only, so far). **Bundle prepared:** the
+  upload-ready files + manifest + provenance table live in
+  `docs/osf_upload/`; only the account-holder upload step remains.
+- arXiv submission: **package prepared and compiled** at
+  `paper/arxiv_package/` (main.tex, references.bib, 9 figures, 7 tables,
+  12-page reference PDF; build recipe + submission checklist in its
+  README). Remaining: verify bib details against originals, then upload
+  (requires author account).
 - Human-expert validation study (blinded PCA-vs-SAE identification).
 - Wider function-space suite (Darcy-style operators, DeepONet, wider FNOs).
 - Power upgrade for the causal batteries (44 runs/feature).

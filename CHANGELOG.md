@@ -4,7 +4,32 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
-## [3.2.0] — 2026-09-07 — "Operator Causal Battery (Stage 14)"
+## [3.2.1] — 2026-09-07 — "Submission Packaging"
+
+No research-claim changes; every v3.2.0 verdict stands as recorded.
+
+### Added
+
+- `paper/main.tex`: full manuscript (complete prose, 9 figures, 7
+  artifact-generated tables; compiled 12-page reference PDF `paper/main.pdf`).
+  Claim strength matches the RESULTS.md claim ladder — the operator causal
+  result is reported as suggestive (H14b fired), not confirmed.
+- `paper/arxiv_package/`: self-contained arXiv submission bundle (tex, bib,
+  figures, tables, reference PDF, submission checklist with bib-verification
+  and claims-discipline notes).
+- `docs/osf_upload/`: OSF/AsPredicted archival bundle — preregistration,
+  experiment matrix, fresh-campaign record, plus `osf_manifest.json` with
+  SHA256s and the git-SHA provenance chain binding each stage's
+  preregistration to the commit that preceded its run.
+- `PROJECT_STATUS.md`: arXiv/OSF moved from not-started to
+  "package prepared, account-holder upload pending"; stale counts fixed
+  (17/17 checksums, 9/9 figures, 7/7 tables).
+
+### Changed
+
+- `paper/README.md`: skeleton description → full-manifest description.
+- `docs/fresh_campaign_record.md`: checksum count corrected to 17/17.
+
 
 Preregistered (H14a/H14b committed at `f6eedf9` BEFORE the run), then
 executed and recorded exactly as the decision rules fired.
