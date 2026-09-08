@@ -96,6 +96,7 @@ class OperatorSAEHook:
         self.feature_idx = feature_idx
         self.alpha = alpha
         self.random_seed = random_seed
+        self.last_control_was_noop = False
         if probe_direction is not None:
             d = probe_direction.detach().to("cpu")
             self.probe_direction = d / d.norm().clamp(min=1e-8)
@@ -113,22 +114,39 @@ class OperatorSAEHook:
             z[:, k] = z[:, k] * self.alpha
             return z
         if mode == "unrelated_control":
+            # C3a fix (mirror of interventions/engine.py): sample only from
+            # features ACTIVE in >=1 row so the control is never a silent
+            # no-op on the ~79%-dead operator dictionary.
             z = z.clone()
             rng = torch.Generator(device=z.device)
             rng.manual_seed(self.random_seed)
-            choices = [i for i in range(z.shape[1]) if i != k]
+            active = (z > 0).any(dim=0)
+            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
+            if not choices:
+                self.last_control_was_noop = True
+                return z
+            self.last_control_was_noop = False
             ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
                                           device=z.device).item()]
             z[:, ctrl] = z[:, ctrl] * self.alpha
             return z
         if mode == "random_direction":
+            # C3b fix: matched DELETION (ablate a random active non-target
+            # feature) instead of noise injection — the target ablates, so
+            # the control must perturb the same way.
+            z = z.clone()
             rng = torch.Generator(device=z.device)
             rng.manual_seed(self.random_seed)
-            per_row_mag = z[:, k].abs() if k is not None else z.abs().mean(dim=1)
-            rand_dir = torch.randn(z.shape[1], device=z.device,
-                                    dtype=z.dtype, generator=rng)
-            rand_dir = rand_dir / rand_dir.norm().clamp(min=1e-8)
-            return z.clone() + rand_dir.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            active = (z > 0).any(dim=0)
+            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
+            if not choices:
+                self.last_control_was_noop = True
+                return z
+            self.last_control_was_noop = False
+            ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
+                                          device=z.device).item()]
+            z[:, ctrl] = z[:, ctrl] * self.alpha
+            return z
         if mode == "probe_direction":
             per_row_mag = z[:, k].abs() if k is not None else z.abs().mean(dim=1)
             d = self.probe_direction.to(z.device, z.dtype)

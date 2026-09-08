@@ -1,4 +1,13 @@
-# Comprehensive Research Results & Benchmark Report (v3.2)
+# Comprehensive Research Results & Benchmark Report (v3.4)
+
+> **External-review fix campaign (2026-09-08):** a 29-issue external review
+> (`GUIDE.md`) was executed end-to-end; the three critical issues (stale
+> headline gate, degenerate time-dependent validation, no-op-prone causal
+> controls) were fixed, all affected stages **re-run**, and the verdict
+> drift recorded in
+> [`docs/external_review_response.md`](docs/external_review_response.md).
+> All numbers below are from the post-fix artifacts; where a verdict
+> changed strength, both the old and new readings are recorded.
 
 This document reports the quantitative empirical findings of the **PINN Mechanistic Interpretability** research campaign: the v2.1 hardened negative SAE result (stages 1–7) plus the **v3 regime-boundary campaign** (stages 8–14): PCA causal battery, causal-abstraction interchange battery, dimensional-boundary expansion (2D + time-dependent PDEs), the FNO operator positive control, SOTA optimization baselines, statistical hardening, and the operator causal battery. Hypotheses and decision rules for all v3 stages were preregistered in `docs/preregistration.md` before running.
 
@@ -63,13 +72,14 @@ Associations against seven metric views simultaneously, with a random-direction 
 
 | Quantity | Estimate | 95% bootstrap CI |
 | :--- | :--- | :--- |
-| **Causal strength $E_T$** | **+0.0020** | **[−0.0034, +0.0084]** |
-| Specificity $S_{\text{spec}}$ | 0.66 | [0.58, 0.74] |
-| Raw "beats all 3 controls" evaluations | 12/88 (13.6%) | — |
+| **Causal strength $E_T$** | **−0.0173** | **[−0.0329, −0.0037]** |
+| Specificity $S_{\text{spec}}$ | 0.65 | [0.58, 0.74] |
+| Raw "beats all 3 controls" evaluations | 9/88 (10.2%) | — |
+| Matched-deletion controls: no-op rate | 0/88 | (`control_was_noop` diagnostic) |
 | **Bonferroni survivors** ($\alpha/m$, $m{=}8$) | **0/8** | threshold $p \le 0.00625$ |
 | **BH-FDR survivors** ($q{=}0.05$) | **0/8** | chance expectation: 0.4 hits |
 
-**Zero features survived multiple-comparison-corrected causal testing.** The $E_T$ CI includes zero; specificity sits below 1. The 12 raw wins at 13.6% is consistent with chance-level accumulation (each control is ~matched in expectation); after Bonferroni or BH-FDR correction across the 8 features tested, nothing survives.
+**Zero features survived multiple-comparison-corrected causal testing.** Under the matched-deletion controls (external-review C3 fix: the control ablates another *active* latent, so the arms are perturbation-matched) the $E_T$ CI excludes zero on the **negative** side: ablating the target feature moves the loss *less* than ablating any other active latent — the representational (non-causal) signature, now measured against honest controls. The 9 raw wins at 10.2% are chance-level; after Bonferroni or BH-FDR correction across the 8 features, nothing survives.
 
 ### 4.2 Sign diagnostic
 
@@ -77,7 +87,7 @@ All 88 target deltas are positive (ablation always *increases* PDE loss): the fe
 
 ### 4.3 Probe-control comparison
 
-The supervised linear-probe direction beats the SAE feature's causal effect outright in **7/88 (8.0%)** of evaluations and matches it elsewhere — AXBench-consistent (simple linear baselines ≈ SAEs), now as a measured comparison rather than an inference.
+The supervised linear-probe direction beats the SAE feature's causal effect outright in **8.0%** of evaluations and matches it elsewhere — AXBench-consistent (simple linear baselines ≈ SAEs), now as a measured comparison rather than an inference.
 
 ### 4.4 Positive control — the pipeline works (planted-feature experiment)
 
@@ -87,10 +97,10 @@ Before trusting a null, we verified the machinery can detect a *known* causal fe
 | :--- | :--- |
 | SAE recovery of planted feature (decoder cosine) | **0.989** |
 | Targeted ablation Δ target loss | **+0.026** |
-| Random-direction control Δ (median of 5 trials) | 0.0004 |
+| Random-direction control Δ (median of 5 trials) | 0.0028 |
 | Unrelated-feature control Δ | 0.006 |
 | Probe-direction control Δ | 0.015 |
-| **Pipeline verdict** | **PASS** — targeted effect 68× the random control, 2–4× the noisier controls |
+| **Pipeline verdict** | **PASS** — targeted effect **9.2×** the random control under matched deletion (was 68× under the old injection control — a harder control narrows the margin; that is the fix working, not the gate weakening) |
 
 The pipeline recovers and causally validates a planted feature when one exists. The PINN null is therefore attributable to **the PINN activations**, not to a machinery bug.
 
@@ -153,14 +163,15 @@ The identical 3-control causal protocol (unrelated-component, random-coefficient
 
 | Quantity | SAE features (v2.1) | PCA components (v3) |
 | :--- | :--- | :--- |
-| Causal strength $E_T$ (mean) | +0.0020 [−0.0034, +0.0084] | **−0.0203 [−0.0331, −0.0085]** |
-| Specificity $S_{\text{spec}}$ | 0.66 [0.58, 0.74] | 2.58 [0.87, 5.30] |
+| Causal strength $E_T$ (mean) | −0.0173 [−0.0329, −0.0037] | **−0.0131 [−0.0268, −0.0006]** |
+| Specificity $S_{\text{spec}}$ | 0.65 [0.58, 0.74] | straddles 1 (chance) |
 | Sign diagnostic | 88/88 positive | **88/88 positive** |
 | Bonferroni / BH-FDR survivors | 0/8 | **0/8** |
+| Raw beats-all | 9/88 | 36/88 |
 | Probe control beats target | 8.0% | 45.5% |
-| Paired PCA−SAE $E_T$ diff | — | −0.0223 [−0.0363, −0.0090] |
+| Paired PCA−SAE $E_T$ diff | — | **+0.0042 [−0.0139, +0.0232]** (spans zero) |
 
-**Interpretation.** The guide's Phase-10 hypothesis ("PCA components are the causal features; SAEs merely fragmented them") is **falsified**. PCA components carry *larger* reconstruction-relevant footprints (bigger target deltas) but the same representational (all-positive) signature and no direction-specific causal information: ablating any leading component damages the decode exactly as ablating any active SAE latent does. **The correct conclusion is stronger than the v2.1 claim: no feature basis — linear or sparse — provides direction-specific causal interpretability for these PINN activations.** The positive control (planted feature) still passes, so this is attributable to the activations, not the machinery. Preregistered as H8a vs H8b in `docs/preregistration.md`; H8a confirmed.
+**Interpretation.** The guide's Phase-10 hypothesis ("PCA components are the causal features; SAEs merely fragmented them") is **falsified**. Under matched-deletion controls both bases sit at 0/8 survivors with all-positive target deltas, and the paired PCA−SAE $E_T$ difference now **spans zero** (+0.0042 [−0.0139, +0.0232]) — the two bases are statistically indistinguishable under honest controls. **No feature basis — linear or sparse — provides direction-specific causal interpretability for these PINN activations.** The positive control still passes, so this is attributable to the activations, not the machinery. Preregistered as H8a vs H8b in `docs/preregistration.md`; H8a confirmed.
 
 ### 5A.2 Causal abstraction — no candidate alignment satisfies the interchange criterion (Stage 9)
 
@@ -178,14 +189,25 @@ The movement is large and positive for **every** basis — because swapping 8 of
 
 New PDE families (manufactured-solution 2D suite + time-dependent Burgers/Allen-Cahn with enforced initial conditions and stable integrating-factor reference solvers) measure the same geometry statistics (3 seeds each; `experiments/dimensional_boundary_expanded.py`, artifact `runs/dimensional_boundary_expanded/`):
 
-| PDE family | Input dim | Mean PR | PR range | Tangent rank | Final rel $L_2$ |
+| PDE family | Input dim | Mean PR | PR range | Tangent rank | Final rel $L_2$ (space-time) |
 | :--- | :---: | ---: | ---: | :---: | ---: |
 | Poisson 1D (width study, ref) | 1 | 1.87 | 1.74–2.00 | 1 | — |
 | Poisson 2D (pilot, ref) | 2 | 3.03 | 2.89–3.17 | 2 | 0.211 |
 | **Advection-Diffusion 2D** | 2 | **2.47** | 2.39–2.53 | **2** | 0.025 |
-| **Reaction-Diffusion 2D** | 2 | **2.29** | 2.07–2.67 | **2** | 1.92 |
-| **Burgers 1D (t,x)** | 2 | **1.63** | 1.32–1.90 | **2** | 6.1 |
-| **Allen-Cahn 1D (t,x)** | 2 | **1.51** | 1.34–1.58 | **2** | 6.0 |
+| **Reaction-Diffusion 2D** | 2 | **2.29** | 2.07–2.67 | **2** | 1.93 |
+| **Burgers 1D (t,x)** | 2 | **1.42** | 1.28–1.59 | **2** | **0.111** |
+| **Allen-Cahn 1D (t,x)** | 2 | **1.92** | 1.80–2.09 | **2** | **0.550** |
+
+> **C2 correction (external review):** the v3.2/v3.3 table reported Burgers
+> 6.1 and Allen-Cahn 6.0. Those values were artifacts of a degenerate
+> validation: `exact()` returned the reference only at final time and
+> literal zeros for all $t < t_T$ while the validation grid spans the full
+> $(t,x)$ domain, so the metric measured distance-from-zero, not error.
+> The corrected space-time references give **0.111 / 0.550** — the PINNs
+> were training acceptably all along. Geometry conclusions (tangent rank,
+> PR bands) are unaffected. Failure labels derived from these runs in
+> monitor training are inherited from the same trajectories; the monitor
+> stage was re-run post-fix regardless.
 
 Two findings: (i) **local tangent rank exactly saturates the input-dimension bound in every family** — the provable statement in `docs/theory_activation_rank.md` — while covariance PR stays in the 1.14–3.2 band (no superposition onset from dimension alone at these widths); (ii) time-dependent inputs (t,x) show PR *below* steady 2D: training explores an effectively one-parameter family of solution states on the (t,x) domain at these schedules. The theory document also records an explicit correction: covariance rank is **not** bounded by input dimension (the v2 planning guide's "Whitney" sketch is false; moment-curve counterexample), so PR remains an empirical diagnostic and the tangent rank is the only rigorous bound.
 
@@ -199,22 +221,33 @@ A dependency-free **FNO1d** (width 64, 4 spectral layers, 12 modes) trained on p
 | 2D + time-dependent PINNs | 1.4–3.2 | 32–64 | 0.02–0.10 | 2–3 / 3–5 | PCA wins (2D pilot) |
 | **FNO block states (Green's)** | **6.80** | 64 | **0.106** | **19 / 38** | **SAE wins 4.7×** (7.0e-4 vs 3.3e-3) |
 
-This is the **regime boundary, measured on both sides with the same SAE and the same protocol**: function-space representations are genuinely higher-rank (PR 5× the PINNs, 19 PCA components for 95% energy), and there the TopK SAE *beats* k-matched PCA on reconstruction — the superposition-regime signature (Elhage et al. 2022) that is absent from every PINN layer measured. The claim is scoped to reconstruction quality; a causal battery on operator features is future work. Preregistered as H4a vs H4b; H4a confirmed.
+This is the **regime boundary, measured on both sides with the same SAE and the same protocol**: function-space representations are genuinely higher-rank (PR 5× the PINNs, 19 PCA components for 95% energy), and there the TopK SAE *beats* k-matched PCA on reconstruction — the superposition-regime signature (Elhage et al. 2022) that is absent from every PINN layer measured. The claim was scoped to reconstruction quality when preregistered; the causal side was completed by stage 14 (see §5A.7: a suggestive, not confirmed, causal asymmetry). Preregistered as H4a vs H4b; H4a confirmed.
 
 ### 5A.5 SOTA optimization baselines vs the controller (Stage 12)
 
 Three literature-standard adaptive-training baselines on the same boundary-starvation configuration as the stage-7 controller demo (`experiments/sota_baselines.py`, artifact `runs/sota_baselines/sota_baseline_report.json`):
 
-| Method | Final rel $L_2$ | vs controller (0.0166) |
+| Method | Final rel $L_2$ | vs controller (0.00016) |
 | :--- | ---: | :--- |
-| GradNorm (gradient equalization) | 2.0134 | loses (worse than no-action 0.295 — actively harmful here) |
-| **NTK-adaptive weighting (Wang 2021)** | **0.0064** | **beats controller and oracle (0.0119)** |
+| GradNorm (gradient equalization) | 2.0134 | loses (worse than no-action 0.421 — actively harmful here) |
+| NTK-adaptive weighting (Wang 2021) | 0.0064 | **loses to the controller on the config-faithful protocol** (was recorded as beating the controller under the non-faithful loop — see below) |
 | RBA (residual-based attention) | 2.1918 | loses (actively harmful) |
-| Closed-loop controller (ours) | 0.0166 | — |
-| No-action | 0.2953 | reference |
-| Oracle static reweight | 0.0119 | reference |
+| Closed-loop controller (ours) | 0.00016 | — |
+| No-action | 0.4208 | reference |
+| Oracle static reweight | 0.00023 | reference |
 
-Honest positioning: instantaneous NTK-ratio reweighting is better suited to this static misweighting failure than the controller's conservative bounded actions, and the controller is not claimed as optimization SOTA. The controller's distinct claims remain: failure-agnostic machinery with rollback, measured monitor-source ablation, and no requirement to know the correct reweighting in advance. GradNorm and RBA actively harm in this regime — equalization and residual-attention do not address starvation of a boundary term.
+Honest positioning (revised post external-review fix): the v3.3 record —
+"NTK-adaptive (0.0064) beats the controller (0.0166)" — was an artifact of
+the stage-7 hand-rolled loop violating `resample_every: 0` (fresh
+collocation every step), which handicapped the controller's reference arms.
+On the config-faithful protocol the controller (0.0002) beats all three
+SOTA reweighting baselines on this failure, landing at oracle level. The
+controller's distinct claims remain: failure-agnostic machinery with
+rollback, a measured monitor-source ablation, and no requirement to know
+the correct reweighting in advance. GradNorm and RBA actively harm in this
+regime — equalization and residual-attention do not address starvation of
+a boundary term. A single-failure comparison is not optimization-SOTA
+evidence in either direction; both protocol readings are recorded.
 
 ### 5A.6 Statistical hardening (Stage 13)
 
@@ -230,16 +263,26 @@ Hypotheses H14a/H14b were preregistered and committed (`f6eedf9`) **before** the
 
 | Quantity | SAE on PINNs (stage 5) | PCA on PINNs (stage 8) | **SAE on FNO (stage 14)** |
 | :--- | :--- | :--- | :--- |
-| Bonferroni / BH-FDR survivors | 0/8, 0/8 | 0/8, 0/8 | **6/8, 6/8** (each 8/8 batch consistency, p = 0.0039) |
-| $E_T$ bootstrap CI | [−0.0034, +0.0084] (spans 0) | [−0.0331, −0.0085] | **[+7.1e-6, +1.6e-5]** (excludes 0, positive) |
-| Target beats all 3 controls | 12/88 (14%) | 28/88 (32%) | **48/64 (75%)** |
-| Median target/control ratio | 1.00× | 0.98× | **1.2×** |
-| Machinery gate (planted feature) | PASS | — | PASS (targeted 0.0229 vs random 0.0125) |
+| Bonferroni / BH-FDR survivors | 0/8, 0/8 | 0/8, 0/8 | **2/8, 2/8** (each at 8/8 batch consistency, p = 0.0039) |
+| $E_T$ bootstrap CI | [−0.0329, −0.0037] (excludes 0, negative) | [−0.0268, −0.0006] | **[+5.6e-6, +1.6e-5]** (excludes 0, positive) |
+| Target beats all 3 controls | 9/88 (10%) | 36/88 (41%) | **42/64 (66%)** |
+| Median target/control ratio | <1× | <1× | **1.18×** |
+| Machinery gate (planted feature) | PASS | — | PASS (targeted 0.0229 vs random 0.0140) |
 | Interchange beats random basis | No | No | No (−1.257 vs −1.226) |
+
+> **C3 correction (external review):** the v3.2 record's 6/8 survivors were
+> measured against a `random_direction` control that **injected noise**
+> while the target **ablated** — arms not matched in kind — and an
+> `unrelated_control` that on this ~79%-dead dictionary frequently zeroed
+> an already-inactive latent (a literal no-op). With matched-deletion
+> controls the survivor count is **2/8** (features 173 and 225 at 8/8
+> batch consistency) and beats-all is 66%. The suggestive asymmetry
+> **weakens but does not vanish** — it is recorded at this strength
+> everywhere it is cited.
 
 **Verdict (as preregistered):** the conjunctive H14a rule fires **H14b**, because condition (iii) — a mixed sign diagnostic — failed (all 64 target deltas positive). Conditions (i) and (ii) were met. The all-positive sign diagnostic was a carry-over from the PINN batteries and is **not diagnostic for an ablation battery on a reconstruction readout** (removing an active feature always increases the loss; target-vs-controls is the discriminative statistic) — recorded as a post-hoc design observation, explicitly NOT used to overturn the preregistered verdict (see preregistration §H7 for the full reasoning).
 
-**Honest reading of the evidence:** by exactly the statistical standard that established the PINN nulls (MC-corrected survivors + $E_T$ CI), the operator features **are** causally specific — 6/8 survive where every PINN basis had 0/8, and the $E_T$ CI excludes zero on the positive side for the first time in this campaign. Weaknesses: absolute $E_T$ magnitudes are tiny (~1e-5 on a near-zero baseline loss), the specificity ratio (0.002 against the spectral non-target readout) is cross-unit and not directly interpretable, and the interchange does not beat a random basis. **Reported claim (hedged):** the high-rank regime shows a *suggestive causal asymmetry* — reconstruction advantage accompanied by weak-but-consistent control-beating specificity that the low-rank regime entirely lacks. The strictly-conjunctive "causal on both sides" claim is **not confirmed**; the boundary's reconstruction side remains strong, its causal side suggestive. Future preregistrations should replace the mixed-sign condition with a direction-reversal criterion (amplify-vs-ablate asymmetry).
+**Honest reading of the evidence (post external-review fix):** by exactly the statistical standard that established the PINN nulls (MC-corrected survivors + $E_T$ CI), the operator features **are** causally specific — 2/8 survive where every PINN basis had 0/8, and the $E_T$ CI excludes zero on the positive side (the PINN CIs now exclude zero on the *negative* side — the directions are opposite). Weaknesses: absolute $E_T$ magnitudes are tiny (~1e-5 on a near-zero baseline loss), only two of eight features clear the bar, beats-all is 66% (was 75% under the asymmetric controls), the specificity ratio is cross-unit, and the interchange does not beat a random basis. **Reported claim (hedged, weakened from v3.2):** the high-rank regime shows a *weaker but persistent* causal asymmetry — reconstruction advantage accompanied by 2/8 MC-corrected survivors that the low-rank regime entirely lacks. The strictly-conjunctive "causal on both sides" claim remains **not confirmed**. Future preregistrations should replace the mixed-sign condition with a direction-reversal criterion (amplify-vs-ablate asymmetry).
 
 ### 5A.8 NTK conflict ↔ SAE activity bridge (Stage 15) — closing revision Gap 2
 
@@ -265,8 +308,17 @@ Trained on 40 runs, evaluated on **18 held-out runs**, failure steps derived fro
 | Monitor | AUROC | AUROC 95% CI | AUPRC |
 | :--- | :--- | :--- | :--- |
 | Loss-only threshold | 0.468 | [0.406, 0.511] | 0.233 |
-| Conventional logistic | 0.859 | [0.780, 0.952] | 0.711 |
-| SAE + conventional | **0.864** | **[0.793, 0.954]** | 0.717 |
+| Conventional logistic | 0.875 | [0.814, 0.960] | 0.721 |
+| SAE + conventional | **0.877** | **[0.817, 0.960]** | 0.723 |
+
+> **H1 correction (external review):** the "gradients" arm of the
+> conventional monitor was a no-op stub in v3.2/v3.3 — the reported
+> monitor never actually consumed gradient features. It now joins real
+> per-window pde-vs-bc cosine statistics from `gradients.jsonl`; the
+> AUROC moved 0.859 → 0.875. The "no SAE advantage" conclusion is
+> unchanged (CIs overlap; P(SAE better) = 0.51). The leakage audit was
+> also vacuous (`failure_step=10**9` can never fail); it is now the real
+> feature-window invariant and passes on all 12 auditable held-out runs.
 
 The conventional and SAE-augmented monitors are clearly above the loss-only threshold on this held-out split; their CIs overlap, so the small SAE increment is not established. The loss-only monitor remains compatible with chance. These results support predictive monitoring of the configuration-determined failure mixture, but do not establish that SAE features add predictive value beyond conventional signals.
 
@@ -278,11 +330,23 @@ The v1 controller demo reported a "recovery" to $L_2 = 0.579$ (worse than its 0.
 
 ### 7.1 Three-arm rescue comparison
 
-| Arm | Final rel $L_2$ | Best | Interventions | Rollbacks |
-| :--- | :--- | :--- | :--- | :--- |
-| **Closed-loop controller** (conventional signals) | **0.0166** | 0.0116 | 8 | 1 |
-| No-action | 0.2953 | 0.2789 | 0 | 0 |
-| Oracle reweight ($\lambda{=}$1,1 from step 0) | 0.0119 | 0.0119 | 0 | 0 |
+| Arm | Final rel $L_2$ | Interventions | Rollbacks |
+| :--- | :--- | :--- | :--- |
+| **Closed-loop controller** (conventional signals) | **0.00016** | 8 | 1 |
+| No-action | 0.4208 | 0 | 0 |
+| Oracle reweight ($\lambda{=}$1,1 from step 0) | 0.00023 | 0 | 0 |
+
+> **H3 correction (external review):** stage 7's v3.2/v3.3 numbers were
+> produced by a hand-rolled loop that resampled collocation points EVERY
+> step — violating the run config's `resample_every: 0` — and never
+> exercised the documented `PINNTrainer` integration. The demo now runs
+> through the trainer (one loop), obeys the config, and the controller
+> observes/decides via the `post_step_fn`/`get_lambdas` seams. On the
+> config-faithful protocol the rescue is far larger (0.42 → 0.0002) and
+> the controller reaches oracle territory; the v3.3-era numbers (0.295 →
+> 0.0166) are retained above in the historical drift tables. The
+> monitor-source ablation verdict is unchanged: SAE and random feature
+> monitors drive **bit-identical** trajectories (0.000129 both).
 
 ### 7.2 Monitor-source ablation (v2.1)
 
@@ -290,11 +354,11 @@ Identical controller and actions; only the alarm source differs — SAE feature 
 
 | Arm | Final rel $L_2$ | Interventions |
 | :--- | :--- | :--- |
-| SAE-feature monitor | 0.0236 | 10 |
-| Random-feature monitor | 0.0236 | 10 |
-| Conventional (loss/$L_2$) monitor | **0.0166** | 8 |
+| SAE-feature monitor | 0.000129 | 10 |
+| Random-feature monitor | 0.000129 | 10 |
+| Conventional (loss/$L_2$) monitor | **0.00016** | 8 |
 
-The SAE- and random-feature arms produce **bit-identical rescue trajectories** (verified equal at every step, `controller_comparison.json: trajectories_bit_identical=true`). Both activity signals rise with training instability, and the bounded rebalancing action is rate-limited by cooldown and confirmation — not by the monitor's fine structure. The conventional loss/$L_2$ monitor is *slightly better* (fewer interventions, lower final error).
+The SAE- and random-feature arms produce **bit-identical rescue trajectories** (verified equal at every step, `controller_comparison.json: trajectories_bit_identical=true`). Both activity signals rise with training instability, and the bounded rebalancing action is rate-limited by cooldown and confirmation — not by the monitor's fine structure.
 
 **Measured conclusion:** the SAE features are inert cargo in the closed loop. The rescue is attributable to the controller machinery driven by any instability-correlated signal — with the conventional signal best. This ablation converts "driven by conventional signals" from an inference into a citable measurement.
 
@@ -307,17 +371,17 @@ This validates the *controller engineering* (bounded actions, genuine rollback, 
 ## 8. Claim ladder — where the evidence lands (v3)
 
 1. **Representational claim — WEAKENED TO EXPLAINED-NULL.** Strong directional associations with physics quantities exist (r = 0.12–0.29, beating random controls 7–57×), but the effective-rank analysis shows the activation manifold is a ~1.8-dimensional curve: the "features" are coordinates along geometry, not superposed concepts. The strongest association (`data_std`, r = 0.930) is a labeled run-type confound.
-2. **Causal claim — REJECTED (hardened negative).** $E_T$ CI includes zero; 0/8 features survive Bonferroni *or* BH-FDR; all target deltas sign-consistent with representational (not causal) encoding; probe directions match or beat SAE features. The planted-feature positive control PASSES, so the null is attributable to the PINN activations, not the pipeline.
-3. **Causal claim v3 — GENERALIZED BEYOND SAEs.** The same battery on PCA components: 0/8 survive, same all-positive representational signature, paired PCA−SAE difference negative. **No feature basis (linear or sparse) carries direction-specific causal information in these activations.** The causal-abstraction interchange test independently confirms: neither PCA nor SAE alignments beat a random basis for region identity.
+2. **Causal claim — REJECTED (hardened negative, honest controls).** Under matched-deletion controls (external-review C3 fix) the $E_T$ CIs exclude zero on the NEGATIVE side for both SAE (−0.0173 [−0.0329, −0.0037]) and PCA (−0.0131 [−0.0268, −0.0006]) — ablating a candidate feature moves the loss LESS than ablating another active latent, the representational signature. 0/8 features survive Bonferroni *or* BH-FDR on either basis; 0/88 controls were no-ops (diagnostic recorded). The planted-feature positive control PASSES at 9.2× its matched control, so the null is attributable to the PINN activations, not the pipeline.
+3. **Causal claim v3 — GENERALIZED BEYOND SAEs.** The same battery on PCA components: 0/8 survive, same all-positive representational signature, and under matched deletion the paired PCA−SAE difference spans zero (+0.0042 [−0.0139, +0.0232]) — the bases are indistinguishable. **No feature basis (linear or sparse) carries direction-specific causal information in these activations.** The causal-abstraction interchange test independently confirms: neither PCA nor SAE alignments beat a random basis for region identity.
 4. **Geometry claim — MEASURED ACROSS THE DIMENSIONAL AND ARCHITECTURE BOUNDARY.** Local tangent rank exactly equals input dimension in all six PDE families and all widths (the provable bound, saturated); covariance PR stays low (1.14–2.51, mean 1.78 after the fresh rerun) for every PINN including time-dependent (t,x) inputs; the FNO's function-space representations have PR 6.8 (PR/W 0.106) and **there the SAE beats k-matched PCA 4.7×** — the superposition regime exists and SAE methodology is appropriate in it. The boundary is measured, not asserted.
-5. **Operator causal claim (v3.2) — SUGGESTIVE, NOT CONFIRMED.** By the preregistered conjunctive rule, stage 14 fires H14b (the mixed-sign condition failed). But by the same MC-correction standard that established the PINN nulls, the FNO features pass (6/8 Bonferroni survivors, E_T CI positive) where every PINN basis had 0/8. Reported as a *suggestive causal asymmetry* across the regime boundary — weak effect sizes, non-diagnostic sign condition recorded as a design lesson — and NOT as a confirmed causal boundary (§5A.7).
-6. **Predictive claim — SUPPORTED WITH SCOPE.** Conventional and SAE-augmented monitors discriminate the held-out failure mixture (AUROC 0.859 and 0.864 in the fresh rerun), while the loss-only threshold is near chance; overlapping CIs and P(SAE better)=0.53 do not show an SAE advantage.
+5. **Operator causal claim (v3.4) — SUGGESTIVE, WEAKENED, NOT CONFIRMED.** By the preregistered conjunctive rule, stage 14 fires H14b (the mixed-sign condition failed). Under matched-deletion controls, 2/8 FNO features survive Bonferroni (at 8/8 batch consistency) where every PINN basis had 0/8, with a positive $E_T$ CI. The asymmetry is real but recorded at this weaker strength (was 6/8 under the asymmetric v3.2 controls) — 2/8 vs 0/8, beats-all 66%, interchange null (§5A.7).
+6. **Predictive claim — SUPPORTED WITH SCOPE.** Conventional and SAE-augmented monitors discriminate the held-out failure mixture (AUROC 0.875 and 0.877, CIs [0.814, 0.960] / [0.817, 0.960] — the gradient arm is real since the H1 fix), while the loss-only threshold is near chance; overlapping CIs and P(SAE better)=0.51 do not show an SAE advantage.
 8. **NTK-bridge claim (v3.3) — NULL, AS PREREGISTERED.** The gradient-conflict ↔ feature-activity bridge (revision Gap 2) was preregistered (H15a/H15b) and fired H15b: 0/8 features survive Bonferroni; the best association (|ρ| = 0.578) is within the random-direction distribution (p95 0.494); a machinery bug (duplicated step records → degenerate ρ = ±1) was caught and fixed before the verdict was read (§5A.8). No causal or correlational NTK↔SAE bridge exists in this benchmark at the registered bar.
-9. **Prevention claim — SUPPORTED FOR CONTROLLER MACHINERY ONLY, AND NOW MEASURED.** The closed-loop controller rescues boundary starvation (0.295 → 0.017; beats no-action 18×; within 1.4× of oracle), and the monitor-source ablation proves the SAE features contribute nothing — the rescue runs on conventional signals. **The controller is not optimization SOTA:** NTK-adaptive weighting reaches 0.0064 on this failure (better than oracle); GradNorm and RBA actively harm. The controller's value is failure-agnosticism + rollback + no foreknowledge of the correct reweighting.
+9. **Prevention claim — SUPPORTED FOR CONTROLLER MACHINERY, REVISED POSITIONING.** On the config-faithful protocol (H3 fix) the closed-loop controller rescues boundary starvation 0.421 → 0.0002, matching oracle (0.00023) and beating all three SOTA reweighting baselines (NTK-adaptive 0.0064; GradNorm/RBA actively harm); the monitor-source ablation proves the SAE features contribute nothing — SAE and random monitors are bit-identical. The v3.3 reading ("controller not optimization SOTA") was measured under a loop that violated the run config; both readings are recorded with their protocols. The controller's durable value remains failure-agnosticism + rollback + no foreknowledge of the correct reweighting.
 
 **The paper this evidence supports:** *"We built and preregistered a full mechanistic-interpretability pipeline for PINN failure diagnosis — failure atlas, TopK SAEs with mandatory PCA/random/probe controls, planted-feature positive control, multi-view feature dictionary, multiple-comparison-corrected causal battery, causal-abstraction interchange battery, leakage-audited monitors with run-level CIs, and a rollback-capable closed-loop controller — and found that SAE-derived features provide no causal information beyond matched controls in this benchmark. The null is basis-independent: PCA components fail the identical battery and no candidate alignment satisfies the interchange criterion for region identity. Effective-rank analysis explains why: these activations are not in superposition (participation ratio ≈ 1.8 of 64 dimensions; local tangent rank exactly equals input dimension across eight PDE families), so sparse dictionary learning solves a problem that does not exist — and in a Fourier neural operator trained on function-space regression, where PR/W reaches 0.106, the same SAE beats k-matched PCA 4.7×. The regime boundary is measured on both sides. A conventional-signal-driven controller meaningfully reduces failure rate independently of interpretability, with NTK-adaptive weighting the stronger specialized alternative for known misweighting failures."*
 
-**Limitations (scoped, explicit):** this does not rule out SAEs on wider PINNs, ensembles, or higher-dimensional parameterizations; the operator causal battery (stage 14) is suggestive, not confirmed (preregistered rule fired H14b); the operator/2D/time-dependent geometry runs are 1–5 seed pilots; the causal batteries at 11 runs/feature can only detect ≥85.7% sign-agreement effects at 80% power; the monitor result is specific to this held-out failure mixture and window protocol; gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly; covariance participation ratio is an empirical diagnostic, not a theorem (the tangent-rank bound is the provable statement — see `docs/theory_activation_rank.md`).
+**Limitations (scoped, explicit):** this does not rule out SAEs on wider PINNs, ensembles, or higher-dimensional parameterizations; the operator causal battery (stage 14) is suggestive at weakened strength — 2/8 survivors under matched-deletion controls (preregistered rule fired H14b); the operator/2D/time-dependent geometry runs are 1–5 seed pilots; the causal batteries at 11 runs/feature can only detect ≥85.7% sign-agreement effects at 80% power; the monitor result is specific to this held-out failure mixture and window protocol; gradient-conflict and collocation-starvation were stress-tested but excluded from final failure-class claims because their operational labels did not reproduce cleanly; covariance participation ratio is an empirical diagnostic, not a theorem (the tangent-rank bound is the provable statement — see `docs/theory_activation_rank.md`); the time-dependent validation values were corrected in this release (the v3.2-era 6.1/6.0 were distance-from-zero artifacts — see §5A.3) and the stage-7/12 controller comparison is protocol-dependent (both readings recorded — §7, §5A.5).
 
 ---
 

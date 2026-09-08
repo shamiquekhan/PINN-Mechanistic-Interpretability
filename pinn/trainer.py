@@ -4,6 +4,7 @@ qualification scripts, and the closed-loop controller can all share
 one authoritative implementation.
 """
 from __future__ import annotations
+import logging
 import time
 from pathlib import Path
 from typing import Callable, Dict, List, Optional, Tuple
@@ -14,6 +15,8 @@ from pinn.pdes import BasePDE
 from pinn.model import MLP
 from pinn.gradients import compute_per_loss_gradients, log_gradient_stats
 from pinn.activations import ActivationLogger, create_probe_points
+
+logger = logging.getLogger(__name__)
 from pinn.diagnostics import DiagnosticsLogger, SpatialBinConfig
 from pinn_logging.io import append_jsonl, save_checkpoint
 
@@ -53,7 +56,19 @@ class PINNTrainer:
         lcfg = cfg.logging
         rcfg = cfg.run
 
-        self.device = torch.device(rcfg.device if torch.cuda.is_available() or rcfg.device == "cpu" else "cpu")
+        # M3 fix: refuse to silently downgrade cuda->cpu (a silent 10-100x
+        # slowdown is worse than a loud failure) and validate dtype clearly.
+        requested = torch.device(rcfg.device)
+        if requested.type == "cuda" and not torch.cuda.is_available():
+            raise RuntimeError(
+                f"config requests device '{requested}' but CUDA is unavailable "
+                "on this machine — refusing to silently downgrade to CPU. "
+                "Set run.device='cpu' explicitly if CPU training is intended.")
+        self.device = requested
+        if not hasattr(torch, rcfg.dtype):
+            raise ValueError(
+                f"unknown dtype '{rcfg.dtype}' in config "
+                f"(expected e.g. 'float32', 'float64')")
         self.dtype = getattr(torch, rcfg.dtype)
 
         # Activation logger (optional)
@@ -80,10 +95,33 @@ class PINNTrainer:
     # Training loop
     # ------------------------------------------------------------------
 
-    def train(self, start: int = 0, steps: Optional[int] = None) -> List[Dict]:
+    def train(self, start: int = 0, steps: Optional[int] = None,
+              get_lambdas: Optional[Callable] = None,
+              resample_fn: Optional[Callable] = None,
+              post_step_fn: Optional[Callable] = None) -> List[Dict]:
         """Run training from `start` to `steps` (exclusive).
 
         Returns a list of step records for downstream analysis.
+
+        H3 seams (external review):
+          get_lambdas: callable(step) -> (lambda_pde, lambda_bc), applied
+              BEFORE loss construction each step so controller lambda
+              updates take effect on the step they are decided (the old
+              intervention_fn path mutated tcfg after loss construction,
+              landing a step late).  Falls back to the config values.
+          resample_fn: callable(x_current, step) -> x_new, invoked before
+              the forward pass; used by the controller's trigger_resample
+              action (H4).
+          post_step_fn: callable(model, step, loss, rel_l2) -> None, fired
+              after the optimizer step each step. This is the CONTROLLER
+              OBSERVATION seam: the controller sees the step's actual loss
+              and rel_l2 and decides lambdas that take effect next step
+              via get_lambdas — exactly the timing of the original
+              stage-7 loop (H3).
+        intervention_fn (constructor arg): fires BEFORE the forward pass
+        (moved from after loss computation) so weight-affecting
+        interventions are not stale.  Lambda-affecting controllers should
+        prefer get_lambdas.
         """
         cfg = self.cfg
         tcfg = cfg.training
@@ -91,7 +129,7 @@ class PINNTrainer:
         device = self.device
         dtype = self.dtype
 
-        steps = steps or tcfg.steps
+        steps = steps if steps is not None else tcfg.steps  # M5: steps=0 must mean 0
         records: List[Dict] = []
 
         x = self.pde.sample_interior(
@@ -104,10 +142,23 @@ class PINNTrainer:
         for step in range(start, steps):
             t0 = time.perf_counter()
 
-            # ---- Resample collocation if configured ----
+            # ---- Resample collocation if configured (or controller-triggered) ----
             if tcfg.resample_every > 0 and step % tcfg.resample_every == 0:
                 x = self.pde.sample_interior(tcfg.interior_points, device, dtype,
                                              spatial_bias=getattr(tcfg, 'spatial_bias', None))
+            if resample_fn is not None:
+                x = resample_fn(x, step)
+
+            # ---- Intervention BEFORE forward (H3 fix: was after loss ----
+            # construction, so weight mutations rode a stale loss) ----
+            if self.intervention_fn is not None:
+                self.intervention_fn(self.model, step)
+
+            # ---- Per-step lambdas (H3 seam: controller-visible) ----
+            if get_lambdas is not None:
+                lam_pde, lam_bc = get_lambdas(step)
+            else:
+                lam_pde, lam_bc = tcfg.lambda_pde, tcfg.lambda_bc
 
             # ---- PDE residual loss ----
             r = self.pde.residual(self.model, x)
@@ -117,17 +168,13 @@ class PINNTrainer:
             bc_res = self.pde.boundary_residual(self.model)
             lb = bc_res.mean()
 
-            loss = tcfg.lambda_pde * lp + tcfg.lambda_bc * lb
-
-            # ---- Optional intervention before backward ----
-            if self.intervention_fn is not None:
-                self.intervention_fn(self.model, step)
+            loss = lam_pde * lp + lam_bc * lb
 
             # ---- Gradient logging ----
             if lcfg.log_gradients and step % lcfg.grad_log_every == 0:
                 loss_dict = {
-                    "pde": tcfg.lambda_pde * lp,
-                    "bc":  tcfg.lambda_bc  * lb,
+                    "pde": lam_pde * lp,
+                    "bc":  lam_bc  * lb,
                 }
                 grads = compute_per_loss_gradients(self.model, loss_dict)
                 grad_stats = log_gradient_stats(grads)
@@ -137,6 +184,19 @@ class PINNTrainer:
             self.opt.zero_grad()
             loss.backward()
             self.opt.step()
+
+            # ---- Post-step observation seam (H3: controller decides here) ----
+            if post_step_fn is not None:
+                xv = self.pde.validation_grid(cfg.pde.validation_points, device, dtype)
+                with torch.no_grad():
+                    pred = self.model(xv)
+                    exact = self.pde.exact(xv)
+                if exact is not None:
+                    rel_now = float(torch.linalg.vector_norm(pred - exact)
+                                    / torch.linalg.vector_norm(exact).clamp(min=1e-12))
+                else:
+                    rel_now = float("nan")
+                post_step_fn(self.model, step, float(loss), rel_now)
 
             # ---- Activation logging ----
             if self.act_logger is not None:
@@ -177,10 +237,11 @@ class PINNTrainer:
                 }
                 append_jsonl(self.out_dir / "metrics.jsonl", rec)
                 records.append(rec)
-                print(rec)
+                logger.info("step=%s loss=%.6f rel_l2=%.6f",
+                            step, rec["loss"], rel_l2)
 
-            # ---- Checkpointing ----
-            if step % tcfg.checkpoint_every == 0 or step == steps - 1:
+            # ---- Checkpointing (M4: skip the step-0 artifact) ----
+            if (step > 0 and step % tcfg.checkpoint_every == 0) or step == steps - 1:
                 manifest = cfg.model_dump(mode="json")
                 save_checkpoint(
                     self.out_dir / f"checkpoint_{step:07d}.pt",
@@ -194,8 +255,13 @@ class PINNTrainer:
     # ------------------------------------------------------------------
 
     def load_checkpoint(self, path: Path) -> int:
-        """Load model + optimizer state; returns the step to resume from."""
-        ck = torch.load(path, map_location=self.device, weights_only=False)
+        """Load model + optimizer state; returns the step to resume from.
+
+        M2 fix: weights_only=True (these are first-party artifacts, so the
+        restrictive unpickler is safe here — dict/str/int/float/tensors
+        only; the config manifest is a plain dict).
+        """
+        ck = torch.load(path, map_location=self.device, weights_only=True)
         self.model.load_state_dict(ck["model"])
         self.opt.load_state_dict(ck["optimizer"])
         return ck["step"] + 1

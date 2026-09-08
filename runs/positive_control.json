@@ -3,14 +3,14 @@
   "matched_feature": 144,
   "decoder_cosine_to_planted": 0.9894713759422302,
   "targeted_delta": 0.026091396808624268,
-  "ctrl_unrelated_delta": 0.005999386310577393,
-  "ctrl_random_delta": 0.0003814101219177246,
+  "ctrl_unrelated_delta": 0.002839982509613037,
+  "ctrl_random_delta": 0.002839982509613037,
   "ctrl_random_delta_trials": [
-    -0.00016939640045166016,
-    -0.00038695335388183594,
-    0.0003814101219177246,
-    0.0010195374488830566,
-    0.0004902482032775879
+    0.002839982509613037,
+    0.004648268222808838,
+    0.0030301809310913086,
+    0.0008241534233093262,
+    -0.0007602572441101074
   ],
   "ctrl_probe_delta": 0.014805138111114502,
   "delta_bc_non_target": 0.0030379295349121094,
@@ -19,8 +19,8 @@
     "specificity": 8.588517483241851,
     "target_effect": 0.026091396808624268,
     "max_control_effect": 0.014805138111114502,
-    "control_unrelated_effect": 0.005999386310577393,
-    "control_random_effect": 0.0003814101219177246,
+    "control_unrelated_effect": 0.002839982509613037,
+    "control_random_effect": 0.002839982509613037,
     "control_probe_effect": 0.014805138111114502
   },
   "config": {

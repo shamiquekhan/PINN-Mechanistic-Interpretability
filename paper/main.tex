@@ -42,7 +42,9 @@ planted-feature positive control, a multiple-comparison-corrected causal
 battery, causal-abstraction interchange tests, leakage-audited early-warning
 monitors, and a rollback-capable closed-loop controller. The result is a
 hardened negative: SAE-derived features carry no causal information beyond
-matched controls ($\ET = +0.0020$, 95\% CI $[-0.0034, +0.0084]$; 0/8 features
+matched-deletion controls ($\ET = -0.0173$, 95\% CI $[-0.0329, -0.0037]$ ---
+ablating a candidate feature moves the loss \emph{less} than ablating
+another active latent, the representational signature; 0/8 features
 survive Bonferroni \emph{or} BH-FDR), and the failure is
 \emph{basis-independent} --- PCA components fail the identical battery, and no
 candidate alignment satisfies the interchange criterion of causal abstraction.
@@ -55,13 +57,13 @@ trained on function-space regression has participation ratio $6.8$ of $64$,
 needs 19 PCA components for 95\% of energy, and there the same TopK SAE
 \emph{beats} $k$-matched PCA by $4.7\times$ in reconstruction. A
 preregistered causal battery in the operator regime shows a
-\emph{suggestive} asymmetry --- 6/8 features survive multiple-comparison
+\emph{suggestive} asymmetry --- 2/8 features survive multiple-comparison
 correction with a strictly positive effect-size CI where every PINN basis
 had 0/8 --- which we report as suggestive rather than confirmed, per the
-preregistered decision rules. Practically, conventional signals (gradients,
-residuals) drive an early-warning monitor (AUROC 0.859) and a closed-loop
-controller that rescues the boundary-starvation failure 18$\times$ over
-no-action, with SAE features measured as inert cargo. We recommend a
+preregistered decision rules. Practically, conventional signals (losses,
+residuals, gradient cosines) drive an early-warning monitor (AUROC 0.875)
+and a closed-loop controller that rescues the boundary-starvation failure
+to oracle level, with SAE features measured as inert cargo. We recommend a
 participation-ratio precheck before applying SAEs to scientific models.
 \end{abstract}
 
@@ -125,14 +127,15 @@ positive-control-validated, \emph{explained} negative result:
         superposition signature absent from every PINN layer. A
         preregistered causal battery on the operator side fires the
         null-hypothesis rule on its conjunction condition but shows
-        6/8 MC-corrected survivors where every PINN basis had 0/8 --- a
-        suggestive causal asymmetry we report with its caveats.
+        2/8 MC-corrected survivors where every PINN basis had 0/8 --- a
+        suggestive, weakened causal asymmetry we report with its caveats
+        (matched-deletion controls throughout).
   \item \textbf{An engineering alternative that works.} Conventional
-        signals (gradient statistics, residual spectra) drive a monitor
-        with AUROC 0.859 and a bounded closed-loop controller that rescues
-        boundary starvation 18$\times$ over no-action --- with a
-        monitor-source ablation proving the SAE features are inert cargo
-        in the loop.
+        signals (trajectory losses, residual statistics, gradient cosines)
+        drive a monitor with AUROC 0.875 and a bounded closed-loop
+        controller that rescues boundary starvation to oracle level on
+        the config-faithful protocol --- with a monitor-source ablation
+        proving the SAE features are inert cargo in the loop.
 \end{enumerate}
 
 Recent SAE-skepticism (downstream-task failures
@@ -342,15 +345,18 @@ prediction (i) and (ii).
 \label{sec:results-causal}
 
 The core evidence (Figure~\ref{fig:causal}; Table~\ref{tab:causal}): for
-SAE features, $\ET = +0.0020$ with CI $[-0.0034, +0.0084]$ --- includes
-zero; 0/8 features survive Bonferroni \emph{or} BH-FDR; all 88 target
-deltas are positive (the representational signature: any active-latent
-ablation damages the decode). The identical battery on PCA components:
-$\ET = -0.0203$, CI $[-0.0331, -0.0085]$, 0/8 survive. The planted-feature
-positive control \emph{passes} (targeted effect 15$\times$ its controls,
-decoder cosine 0.989 to the planted direction), so the machinery detects
-causal structure when it exists --- the null is the activations', not the
-pipeline's.
+SAE features, $\ET = -0.0173$ with CI $[-0.0329, -0.0037]$ --- excludes
+zero on the \emph{negative} side: ablating the target moves the loss less
+than ablating another \emph{active} latent (the controls are
+matched-deletion, never no-ops --- the $\text{control\_was\_noop}$
+diagnostic fires on 0/88 evaluations); 0/8 features survive Bonferroni
+\emph{or} BH-FDR; all 88 target deltas are positive. The identical battery
+on PCA components: $\ET = -0.0131$, CI $[-0.0268, -0.0006]$, 0/8 survive;
+the paired PCA$-$SAE difference spans zero ($+0.0042$, CI
+$[-0.0139, +0.0232]$). The planted-feature positive control \emph{passes}
+(targeted effect $9.2\times$ its matched control, decoder cosine 0.989 to
+the planted direction), so the machinery detects causal structure when it
+exists --- the null is the activations', not the pipeline's.
 
 Statistical hardening: the power analysis gives a minimum detectable effect
 of 85.7\% sign-agreement at 80\% power for the 11-run battery --- the null
@@ -437,27 +443,31 @@ follows:
 \begin{itemize}
   \item Machinery gate: PASS (targeted effect 0.0229 vs.\ random control
         0.0125; planted feature recovered through the real operator hook).
-  \item Condition (i) MET: 6/8 features survive Bonferroni \emph{and}
+  \item Condition (i) MET: 2/8 features survive Bonferroni \emph{and}
         BH-FDR, each at 8/8 batch consistency ($p = 0.0039$, the exact
-        sign test's floor at $n{=}8$).
-  \item Condition (ii) MET: $\ET$ CI $[+7.1\times10^{-6}, +1.6\times10^{-5}]$
+        sign test's floor at $n{=}8$). (The v3.2 record of 6/8 survivors
+        was measured against an injection-style control unmatched in kind
+        to the ablation target; matched-deletion controls are the honest
+        arm and give 2/8.)
+  \item Condition (ii) MET: $\ET$ CI $[+5.6\times10^{-6}, +1.6\times10^{-5}]$
         --- excludes zero, positive; the first battery in this campaign to
-        do so (PINN: $[-0.0034, +0.0084]$ SAE, $[-0.0331, -0.0085]$ PCA).
+        do so (PINN post-fix: $[-0.0329, -0.0037]$ SAE, $[-0.0268, -0.0006]$
+        PCA --- both \emph{negative}).
   \item Condition (iii) NOT met: 64/64 target deltas positive.
 \end{itemize}
 
 By the preregistered rule, H14a is not confirmed and we record H14b.
-Comparative context, from the same scoring code: the target beats all
-three controls in 48/64 evaluations (75\%) for the FNO battery vs.\ 12/88
-(14\%) for SAE-on-PINN and 28/88 (32\%) for PCA-on-PINN; the median
-target/control ratio is 1.2$\times$ vs.\ 1.00$\times$ and 0.98$\times$
+Comparative context, from the same scoring code under matched deletion:
+the target beats all three controls in 42/64 evaluations (66\%) for the
+FNO battery vs.\ 9/88 (10\%) for SAE-on-PINN and 36/88 (41\%) for
+PCA-on-PINN; the median target/control ratio is 1.18$\times$
 (Figure~\ref{fig:operator-causal}, Table~\ref{tab:operator-causal}).
 
-We report this as a \emph{suggestive causal asymmetry} across the regime
-boundary, deliberately not as a confirmed causal boundary, for three
-recorded reasons: (a) absolute effect sizes are tiny ($\sim$10$^{-5}$ on a
-near-zero baseline regression loss); (b) the partial interchange does not
-beat a random basis in the operator setting either ($-1.257$ vs.\
+We report this as a \emph{suggestive, weakened causal asymmetry} across
+the regime boundary, deliberately not as a confirmed causal boundary, for
+three recorded reasons: (a) absolute effect sizes are tiny ($\sim$10$^{-5}$
+on a near-zero baseline regression loss); (b) the partial interchange does
+not beat a random basis in the operator setting either ($-1.257$ vs.\
 $-1.226$); and (c) the mixed-sign condition, designed on PINN intuition,
 is itself non-diagnostic for ablation batteries --- removing an active
 feature from a well-fit regression model always increases the loss, so
@@ -485,12 +495,12 @@ retroactively.
 \section{What To Do Instead}
 \label{sec:alternative}
 
-\paragraph{Monitors.} Conventional signals (loss-component gradients,
-residual statistics) drive an early-warning monitor with AUROC 0.859
-[0.780, 0.952] on a run-level held-out split (leakage-audited); adding SAE
-features moves it to 0.864 with P(SAE better) $= 0.53$ --- no established
-advantage. The loss-only threshold is near chance (0.468)
-(Figure~\ref{fig:monitor}).
+\paragraph{Monitors.} Conventional signals (trajectory losses, rel-$L_2$,
+and per-window gradient-cosine statistics) drive an early-warning monitor
+with AUROC 0.875 [0.814, 0.960] on a run-level held-out split under the
+real feature-window leakage invariant; adding SAE features moves it to
+0.877 with P(SAE better) $= 0.51$ --- no established advantage. The
+loss-only threshold is near chance (0.468) (Figure~\ref{fig:monitor}).
 
 \begin{figure}[t]
   \centering
@@ -501,24 +511,27 @@ advantage. The loss-only threshold is near chance (0.468)
 \end{figure}
 
 \paragraph{Controller.} A deterministic state-machine controller
-(IDLE$\to$WARNING$\to$CONFIRMED$\to$ACTING$\to$COOLDOWN) executes bounded
-reweighting actions with rollback: it rescues boundary starvation from
-0.295 to 0.017 (18$\times$ over no-action; within 1.4$\times$ of the oracle
-reweighting). The monitor-source ablation is the punchline: an SAE-feature
-monitor and a matched \emph{random}-feature monitor drive bit-identical
-rescue trajectories (0.0236 both) --- the SAE features are inert cargo in
-the closed loop.
+(IDLE$\to$WARNING$\to$CONFIRMED$\to$COOLDOWN; the action fires on
+CONFIRMED entry) executes bounded reweighting actions with rollback
+through the trainer's per-step lambda seam: on the config-faithful
+protocol it rescues boundary starvation from 0.421 to 0.0002, matching
+the oracle reweighting (0.00023). The monitor-source ablation is the
+punchline: an SAE-feature monitor and a matched \emph{random}-feature
+monitor drive bit-identical rescue trajectories (0.000129 both) --- the
+SAE features are inert cargo in the closed loop.
 
 \paragraph{SOTA baselines.}
 \label{sec:sota}
 On the same failure, NTK-adaptive weighting \cite{wang2021learning} reaches
-0.0064 --- better than both our controller (0.0166) and the oracle;
-GradNorm \cite{chen2018gradnorm} (2.01) and RBA
-\cite{anagnostopoulos2024residual} (2.19) actively harm. The honest
-position: the controller is failure-agnostic machinery with rollback ---
-not optimization SOTA --- and the interpretability claims are kept
-structurally separate from the engineering claims
-(Figure~\ref{fig:controller}).
+0.0064; GradNorm \cite{chen2018gradnorm} (2.01) and RBA
+\cite{anagnostopoulos2024residual} (2.19) actively harm. Positioning note:
+under the pre-fix stage-7 loop (which violated the run config's resampling
+and is retained in the historical record) the controller reached 0.0166
+and NTK-adaptive was the stronger specialized alternative; under the
+config-faithful protocol the controller (0.0002) beats all three
+baselines. A single-failure comparison is not optimization-SOTA evidence
+in either direction; the interpretability claims are kept structurally
+separate from the engineering claims (Figure~\ref{fig:controller}).
 
 \begin{figure}[t]
   \centering
@@ -549,6 +562,15 @@ methodology is appropriate --- demonstrated positively on the FNO.
         out wider architectures, ensembles, or higher-dimensional
         parameterizations, which we state as the honest boundary of the
         claim.
+  \item \textbf{Corrected measurements.} An external review found that the
+        time-dependent validation compared the network to a final-time-only
+        reference (distance-from-zero artifacts of 6.1/6.0, corrected to
+        0.111/0.550 under full space-time references), that the causal
+        batteries' controls were unmatched in kind and sometimes no-ops,
+        and that the controller demo's loop violated its own resampling
+        config. All affected stages were re-run; no headline verdict
+        flipped, three numbers moved materially, and both protocol
+        readings are recorded (\texttt{docs/external\_review\_response.md}).
   \item \textbf{The operator causal result is suggestive, not confirmed.}
         The preregistered conjunctive rule fired the null; the survivor
         asymmetry (6/8 vs.\ 0/8) is real but the effect sizes are tiny,

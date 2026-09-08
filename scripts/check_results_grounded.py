@@ -43,6 +43,18 @@ RESULTS_DOCS = [
     "docs/fresh_campaign_record.md",
 ]
 
+# Stale-marker guard scans only the LIVING docs. fresh_campaign_record.md
+# is a historical drift table (its old values are the point of the
+# published-vs-fresh comparison) and is exempt from the marker sweep while
+# still being covered by the artifact-existence and reference checks above.
+STALE_SCAN_DOCS = [
+    "RESULTS.md",
+    "README.md",
+    "PROJECT_STATUS.md",
+    "ROADMAP.md",
+    "CONTRIBUTING.md",
+]
+
 
 def load_artifact(rel: str):
     p = ROOT / rel
@@ -132,7 +144,7 @@ CLAIMS = [
     # is the headline of RESULTS.md 5A.7 and must stay grounded.
     ("RESULTS.md", "runs/operator_causal/operator_causal_report.json",
      lambda d: d["battery_summary"]["multiple_comparisons"]["bonferroni_n_survivors"],
-     lambda v: rf"6/8, 6/8" if v == 6 else rf"\b{v}/8\b"),
+     lambda v: rf"\b{v}/8, {v}/8\b"),
     ("RESULTS.md", "runs/operator_causal/operator_causal_report.json",
      lambda d: d["positive_control"]["pipeline_pass"],
      lambda v: r"PASS \(targeted" if v else r"FAIL"),
@@ -177,10 +189,41 @@ def check_artifact_references() -> list:
     return failures
 
 
+# C4 guard (external review): documentation-drift markers that must never
+# silently reappear in the living docs (historical records are exempt).
+STALE_MARKERS = [
+    r"0\.872",            # v3.0 monitor AUROC (superseded by fresh 0.859)
+    r"stages 1–13",        # 15 stages exist
+    r"7 intervention modes",  # 8 exist
+    r"ACTING",             # controller state that does not exist
+]
+# (exemptions applied implicitly: the guard below only scans RESULTS_DOCS +
+# the living ledgers; historical records like fresh_campaign_record are
+# drift tables whose old values are the point.)
+
+
+def check_stale_markers() -> list:
+    failures = []
+    for doc in STALE_SCAN_DOCS:
+        p = ROOT / doc
+        if not p.exists():
+            continue
+        text = p.read_text()
+        for marker in STALE_MARKERS:
+            import re
+            for m in re.finditer(marker, text):
+                line_no = text[:m.start()].count("\n") + 1
+                snippet = text.splitlines()[line_no - 1][:80]
+                failures.append(
+                    f"{doc}:{line_no}: stale marker /{marker}/ — {snippet}")
+    return failures
+
+
 def main() -> int:
     failures = []
     failures += check_claims()
     failures += check_artifact_references()
+    failures += check_stale_markers()
     failures += verify_checksums()
 
     if failures:

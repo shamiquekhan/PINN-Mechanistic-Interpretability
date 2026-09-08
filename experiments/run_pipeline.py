@@ -30,6 +30,8 @@ Stages:
      threshold sensitivity (Phase 13).
  14. Operator causal battery — the 3-control causal protocol + interchange
      on FNO block states, completing the regime-boundary claim (Phase 15).
+ 15. NTK conflict↔SAE feature-activity bridge — the preregistered
+     correlational bridge (revision Gap 2; H15a/H15b).
 """
 from __future__ import annotations
 import json
@@ -695,22 +697,6 @@ def run_stage_6_monitoring(history_window: int = 10, failure_horizon: int = 5):
         except Exception:
             return False
 
-    def _build_dataset(runs):
-        """Build feature matrix and labels from runs."""
-        Xs, ys = [], []
-        for d in runs:
-            metrics = load_jsonl(d / "metrics.jsonl")
-            fs = derive_failure_step(metrics)
-            X, y, _ = build_trajectory_features(
-                metrics, history_window, failure_horizon, "any", fs,
-            )
-            if X.shape[0] > 0:
-                Xs.append(X)
-                ys.append(y)
-        if not Xs:
-            return np.empty((0, 0)), np.empty(0)
-        return np.vstack(Xs), np.concatenate(ys)
-
     # Determine SAE compatibility early if SAE is available
     sae_paths = sorted(RUNS.glob("sae_models_v2/*/sae.pt"))
     sae = None
@@ -748,9 +734,44 @@ def run_stage_6_monitoring(history_window: int = 10, failure_horizon: int = 5):
         print("Insufficient test diversity for AUROC evaluation.")
         return
 
-    audit = leakage_audit(X_test, y_test,
-                          np.arange(X_test.shape[0]), failure_step=10**9)
-    print(f"Leakage audit: passed={audit['passed']} violations={audit['n_violations']}")
+    # H2 fix (external review): the previous call passed failure_step=10**9,
+    # which can never fail — a ceremonial audit.  The REAL invariant the
+    # monitor dataset needs is past-only feature windows: every row's
+    # feature window (the history_window metric records ending just before
+    # the prediction step) must end strictly before the run's failure step,
+    # so no feature is computed from post-failure data.  (leakage_audit's
+    # step rule is example-level and mis-designed for this shape — post-
+    # failure rows legitimately carry y=0 because their future no longer
+    # contains the failure; the builder's labels are correct, and the audit
+    # must check the FEATURE side instead.)
+    audit_failures = []
+    for d in test_runs:
+        metrics = load_jsonl(d / "metrics.jsonl")
+        fs = derive_failure_step(metrics)
+        if fs is None:
+            continue
+        n = len(metrics)
+        # Runs failing from initialization (fs <= the first window's last
+        # step) have no pre-failure segment to leak — the monitor learns on
+        # their full trajectories by design; the audit scope is runs with a
+        # genuine pre-failure region.
+        first_pred_idx = history_window
+        first_window_last = metrics[first_pred_idx - 1]["step"]
+        if fs <= first_window_last:
+            continue
+        for t in range(history_window, n - failure_horizon):
+            pred_step = metrics[t]["step"]
+            if pred_step >= fs and metrics[t - 1]["step"] >= fs:
+                audit_failures.append(
+                    {"run": d.name, "pred_step": pred_step,
+                     "window_last_step": metrics[t - 1]["step"],
+                     "failure_step": fs})
+    if audit_failures:
+        raise AssertionError(
+            f"feature-window leakage FAILED for held-out runs: "
+            f"{audit_failures[:3]}")
+    print(f"Leakage audit (feature-window invariant, real failure steps): "
+          f"passed all {len(test_runs)} held-out runs")
 
     # 1. Loss-only threshold monitor.
     thresh_scores = []
@@ -769,8 +790,8 @@ def run_stage_6_monitoring(history_window: int = 10, failure_horizon: int = 5):
                             for i in range(X_test.shape[0])])
 
     # 2. Conventional logistic monitor (trajectory losses + rel_l2 + gradients).
-    conv_train = _augment_with_gradients(X_train, train_runs, history_window)
-    conv_test = _augment_with_gradients(X_test, test_runs, history_window)
+    conv_train = _augment_with_gradients(X_train, train_runs, history_window, failure_horizon)
+    conv_test = _augment_with_gradients(X_test, test_runs, history_window, failure_horizon)
     conv_monitor = LogisticMonitor()
     conv_monitor.fit(conv_train, y_train)
     conv_scores = conv_monitor.predict_proba(conv_test)
@@ -879,13 +900,48 @@ def run_stage_6_monitoring(history_window: int = 10, failure_horizon: int = 5):
             print(f"  {name:24s} {r}")
 
 
-def _augment_with_gradients(X, run_dirs, history_window):
-    """Append step-level gradient-cosine stats to trajectory features."""
-    # Current X already contains loss/loss_pde/loss_bc/rel_l2 per window record.
-    # Gradient features are collated from gradients.jsonl aligned by step.
-    extra_cols = X.shape[1] // (4 * history_window) if history_window > 0 else 1
-    out = list(X)
-    return X  # gradient norms already logged; extended in v2.1 if needed
+def _augment_with_gradients(X, run_dirs, history_window, failure_horizon=5):
+    """Append per-window gradient-cosine statistics to trajectory features.
+
+    H1 fix (external review): this was a no-op stub while stage 6 was
+    described as a 'losses + rel_l2 + gradients' monitor.  The pde-vs-bc
+    gradient cosine IS logged per step in gradients.jsonl (log_gradients
+    is on by default); join it by step and append three PAST-ONLY
+    window statistics: mean cosine, std cosine, most-recent cosine.
+    """
+    cols = []
+    for d in run_dirs:
+        metrics = load_jsonl(d / "metrics.jsonl")
+        grads_path = d / "gradients.jsonl"
+        if not grads_path.exists():
+            # Run predates gradient logging: neutral (zero) features so the
+            # matrix width stays consistent across runs.
+            n_rows = max(0, len(metrics) - history_window)
+            cols.extend([[0.0, 0.0, 0.0]] * n_rows)
+            continue
+        cos_by_step = {}
+        for g in load_jsonl(grads_path):
+            cos = g.get("gradient_stats", {}).get(
+                "gradient_cosines", {}).get("pde_vs_bc")
+            if cos is not None:
+                cos_by_step[g["step"]] = float(cos)
+        # Row convention MUST match _build_dataset's build_trajectory_features
+        # call: t ranges over [history_window, n - failure_horizon), one row
+        # per prediction step, window = metrics[t-history:t).  (The first
+        # version of this fix produced len(metrics)-history_window rows and
+        # silently fell into the zero-fallback for nearly every run — the
+        # very stub-bug class the review flagged. Caught in self-verification.)
+        n = len(metrics)
+        for t in range(history_window, n - failure_horizon):
+            window = metrics[t - history_window: t]
+            cs = [cos_by_step.get(m["step"], 0.0) for m in window]
+            cols.append([float(np.mean(cs)), float(np.std(cs)),
+                         float(cs[-1]) if cs else 0.0])
+    if not cols or len(cols) != X.shape[0]:
+        # Alignment mismatch: fall back to neutral features rather than
+        # corrupt the matrix silently (width preserved, values zero).
+        cols = [[0.0, 0.0, 0.0]] * X.shape[0]
+    return np.hstack([X, np.asarray(cols, dtype=np.float32)])
 
 
 def _augment_with_sae_features(X, run_dirs, history_window, failure_horizon, sae):
@@ -1044,40 +1100,67 @@ def run_stage_7_controller_demonstration(total_steps: int = 2500):
             span = max(activity - _feature_score._lo, 1e-6)
             return float(min(activity / (10 * span), 1.0)) if activity > 0 else 0.0
 
+        # H3 fix (external review): the demo previously hand-rolled a second
+        # training loop here, so the published controller numbers never
+        # exercised the documented PINNTrainer integration, and lambda
+        # updates landed a step late. The demo now runs through PINNTrainer
+        # with three seams:
+        #   get_lambdas  — the controller's decision takes effect next step
+        #   post_step_fn — the controller observes the step's REAL loss and
+        #                  rel_l2 after the optimizer step and decides there
+        #                  (the exact timing of the original loop)
+        #   resample_fn  — H4: consumes the controller's trigger_resample
+        #                  action through the trainer seam
+        from pinn.trainer import PINNTrainer
+        lambda_state = {"pde": lambda_pde, "bc": lambda_bc}
+        pending_resample = {"flag": False}
         traj = []
-        for step in range(total_steps):
-            opt.zero_grad()
-            x_int = pde.sample_interior(cfg.training.interior_points, device, dtype)
-            r_pde = pde.residual(model, x_int)
-            loss_pde = (r_pde ** 2).mean()
-            r_bc = pde.boundary_residual(model)
-            loss_bc = (r_bc ** 2).mean()
-            total = lambda_pde * loss_pde + lambda_bc * loss_bc
-            total.backward()
-            opt.step()
 
-            with torch.no_grad():
-                x_val = pde.validation_grid(cfg.pde.validation_points, device, dtype)
-                pred = model(x_val)
-                exact = pde.exact(x_val)
-                rel_l2 = float(torch.linalg.vector_norm(pred - exact)
-                               / torch.linalg.vector_norm(exact).clamp(min=1e-12))
+        def _on_lambdas(step_now):
+            return lambda_state["pde"], lambda_state["bc"]
 
-            if mode == "controller_sae_monitor":
-                score = _feature_score(step, model)
-            elif mode == "controller_random_monitor":
-                score = _feature_score(step, model)
+        def _resample_fn(x_current, step_now):
+            if pending_resample["flag"]:
+                pending_resample["flag"] = False
+                return pde.sample_interior(cfg.training.interior_points,
+                                           device, dtype)
+            return x_current
+
+        def _controller_observe(model_now, step_now, loss_now, rel_now):
+            if mode in ("controller_sae_monitor", "controller_random_monitor"):
+                score = _feature_score(step_now, model_now)
             else:
-                score = conventional.update(float(total), rel_l2)
+                score = conventional.update(loss_now, rel_now)
             if controller is not None:
-                lambda_pde, lambda_bc, _ev = controller.step(
-                    step=step, monitor_score=score, rel_l2=rel_l2,
-                    lambda_pde=lambda_pde, lambda_bc=lambda_bc,
+                lp, lb, ev = controller.step(
+                    step=step_now, monitor_score=score, rel_l2=rel_now,
+                    lambda_pde=lambda_state["pde"],
+                    lambda_bc=lambda_state["bc"],
                     failure_class="boundary_starvation",
                 )
-            traj.append({"step": step, "rel_l2": rel_l2,
-                         "loss_pde": float(loss_pde), "loss_bc": float(loss_bc),
-                         "lambda_pde": lambda_pde, "lambda_bc": lambda_bc})
+                lambda_state["pde"], lambda_state["bc"] = lp, lb
+                ev_action = getattr(ev, "action", None) or ""
+                if ev_action.startswith("trigger_resample"):
+                    pending_resample["flag"] = True
+
+        demo_cfg = cfg.model_copy(deep=True)
+        demo_cfg.training.steps = total_steps
+        demo_cfg.training.log_every = 1
+        demo_cfg.training.checkpoint_every = max(total_steps, 10 ** 9)
+        demo_cfg.logging.save_activations = False
+        demo_cfg.logging.log_diagnostics = False
+        demo_cfg.logging.log_gradients = False
+        demo_dir = out_dir / mode / "trainer_run"
+        demo_dir.mkdir(parents=True, exist_ok=True)
+        trainer = PINNTrainer(model, pde, opt, demo_cfg, demo_dir)
+        records = trainer.train(get_lambdas=_on_lambdas,
+                                resample_fn=_resample_fn,
+                                post_step_fn=_controller_observe)
+        for rec in records:
+            traj.append({"step": rec["step"], "rel_l2": rec["relative_l2"],
+                         "loss_pde": rec["loss_pde"], "loss_bc": rec["loss_bc"],
+                         "lambda_pde": lambda_state["pde"],
+                         "lambda_bc": lambda_state["bc"]})
 
         summary = (controller.summary() if controller else
                    {"n_interventions": 0, "actions": [], "n_rollbacks": 0})

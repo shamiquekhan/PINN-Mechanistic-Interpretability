@@ -1,6 +1,8 @@
 """
 Causal intervention engine — inserts a frozen SAE at a hidden layer
-and supports 7 intervention modes as specified in the implementation plan.
+and supports 8 intervention modes (7 from the v2 plan plus the
+probe_direction control added in v2.1) as specified in the
+implementation plan.
 
 Modes:
   natural              — original z (baseline, no modification)
@@ -93,29 +95,47 @@ class SAEInterventionHook:
             return z
 
         if mode == "unrelated_control":
+            # External-review C3a fix: on a TopK SAE (L0=k of latent_dim),
+            # a uniformly sampled 'unrelated' feature is already-zero in
+            # ~1-k/latent_dim of rows, so the old uniform choice was
+            # frequently a literal no-op control.  Sample only from
+            # features that are ACTIVE in at least one row (excluding the
+            # target), so the control is a real perturbation.
             z = z.clone()
             rng = torch.Generator(device=z.device)
             rng.manual_seed(self.random_seed)
-            choices = [i for i in range(z.shape[1]) if i != k]
+            active = (z > 0).any(dim=0)
+            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
+            if not choices:
+                # Degenerate fallback: nothing but the target is active;
+                # record it so the caller can report control_was_noop.
+                self.last_control_was_noop = True
+                return z
+            self.last_control_was_noop = False
             ctrl_feat = choices[torch.randint(len(choices), (1,), generator=rng, device=z.device).item()]
             z[:, ctrl_feat] = 0.0
             return z
 
         if mode == "random_direction":
-            # Random-direction control with PER-ROW magnitude matching to the
-            # target feature's activity (the original version used the
-            # whole-batch norm, over-amplifying by ~sqrt(batch)).  The
-            # target feature is NOT ablated here — the control tests whether
-            # perturbing a random latent direction reproduces the target
-            # effect, per the v2 plan's control semantics.
+            # External-review C3b fix: the target intervention ABLATES
+            # (removes a feature's per-row magnitude).  The old control
+            # ADDED a random unit direction scaled by the same magnitude —
+            # a different KIND of perturbation (injection vs deletion),
+            # biased toward large loss effects.  The matched-deletion
+            # control ablates a random ACTIVE non-target feature instead,
+            # so both arms perturb the same way.
+            z = z.clone()
             rng = torch.Generator(device=z.device)
             rng.manual_seed(self.random_seed)
-            per_row_mag = z[:, k].abs() if k is not None else \
-                z.abs().mean(dim=1)
-            rand_dir = torch.randn(z.shape[1], device=z.device, dtype=z.dtype, generator=rng)
-            rand_dir = rand_dir / rand_dir.norm().clamp(min=1e-8)
-            out = z.clone() + rand_dir.unsqueeze(0) * per_row_mag.unsqueeze(1)
-            return out
+            active = (z > 0).any(dim=0)
+            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
+            if not choices:
+                self.last_control_was_noop = True
+                return z
+            self.last_control_was_noop = False
+            ctrl_feat = choices[torch.randint(len(choices), (1,), generator=rng, device=z.device).item()]
+            z[:, ctrl_feat] = 0.0
+            return z
 
         if mode == "probe_direction":
             # Supervised linear-probe direction, per-row magnitude matched to
@@ -158,7 +178,11 @@ class SAEInterventionHook:
     def remove(self):
         if self._hook is not None:
             self._hook.remove()
-            self._hook = None
+        self._hook = None
+        # C3 diagnostic: set by _intervene for the control modes when the
+        # sampled control degenerated (nothing but the target active).
+        # measure_intervention_effect copies this into each result row.
+        self.last_control_was_noop = False
 
     def __enter__(self):
         return self
@@ -239,6 +263,9 @@ def measure_intervention_effect(
         "baseline_bc":   lb_base,
         "intervened_pde": lp_int,
         "intervened_bc": lb_int,
+        # C3 diagnostic: whether the sampled control degenerated (nothing
+        # but the target active).  Non-control modes always False.
+        "control_was_noop": bool(getattr(hook_int, "last_control_was_noop", False)),
     }
 
 

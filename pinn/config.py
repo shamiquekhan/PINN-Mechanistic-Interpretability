@@ -45,6 +45,11 @@ class PDEConfig(BaseModel):
     time_domain: list[float] = Field(default=[0.0, 1.0], min_length=2, max_length=2)
     source: float = 1.0         # primary scalar PDE param (source / speed / reaction)
     forcing: float = 0.0        # secondary forcing for advection / reaction-diffusion
+    # H5 (external review): explicit per-family fields so configs cannot
+    # silently overload 'source'. When set, they take precedence and must
+    # not conflict with the legacy alias.
+    speed: Optional[float] = None          # advection_1d / advection_diffusion_2d x-speed
+    reaction_rate: Optional[float] = None  # reaction-diffusion families
     diffusion: float = 0.01     # ε for reaction-diffusion (ignored for other PDEs)
     boundary_values: list[float] = Field(min_length=2, max_length=2)
     validation_points: int = Field(default=1001, ge=10)

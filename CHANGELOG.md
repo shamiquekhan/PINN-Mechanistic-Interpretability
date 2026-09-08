@@ -4,6 +4,71 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.4.0] — 2026-09-08 — "External-Review Fix Campaign"
+
+Executed the 29-issue external code review end-to-end (GUIDE.md = review
+snapshot; docs/external_review_response.md = full disposition record).
+Every fixed bug carries a regression test; every affected stage was
+RE-RUN and its drift recorded — no verdict was patched.
+
+### Fixed (critical)
+
+- C1: reproduce-script headline gate is now artifact-derived
+  (scripts/generate_expected_headlines.py -> runs/expected_headlines.json;
+  CI-derived ranges instead of hard-coded points — the stale 0.872 check
+  is structurally impossible now).
+- C2: Burgers/AllenCahn exact() now interpolate the FULL space-time
+  spectral trajectory (padded cell map, per-PDE pad policy: periodic for
+  Burgers' continuous IC, edge-clamp for AllenCahn's aperiodic x³).
+  Stage-10 rel L2 was 6.1/6.0 distance-from-zero artifacts -> genuine
+  0.111/0.550.
+- C3: causal controls are matched-deletion (unrelated control samples
+  only ACTIVE features -> 0/88 no-ops with the control_was_noop
+  diagnostic; random control ablates instead of injecting), applied to
+  the SAE, PCA, and operator batteries.
+- C4: doc drift swept (ACTING state removed — action fires on CONFIRMED
+  entry; 15 stages; 8 intervention modes; stale §5A.4 forward-link) +
+  CI stale-marker guard in check_results_grounded.py.
+
+### Fixed (high/medium) + re-run
+
+- H1: stage-6 gradient monitor arm implemented for real (joins
+  gradients.jsonl window cosines); monitor 0.859 -> 0.875.
+- H2: ceremonial leakage audit (failure_step=10**9) replaced with the
+  true feature-window invariant; 12/12 held-out runs pass; fail-from-init
+  runs correctly exempt.
+- H3: PINNTrainer seams (get_lambdas / resample_fn / post_step_fn);
+  stage 7 now runs THROUGH the trainer — the old loop violated the
+  config's resample_every: 0. Config-faithful controller: 0.421 -> 0.0002
+  (oracle level); it now beats NTK-adaptive (0.0064) on this failure.
+  Both protocol readings recorded.
+- H4: trigger_resample wired through the trainer seam; fourier trigger
+  documented as signal-only (input-dim-changing restart = future work).
+- H5: explicit speed/reaction_rate config fields; loud ambiguity errors.
+- M1: SAE post_step() normalisation entry point, windowed dead-mask,
+  format_version=2 checkpoints, unit-norm assert-at-save.
+- M2: weights_only=True in trainer/SAE loaders (3 legacy sites flagged
+  as follow-up). M3: no silent cuda->cpu downgrade; dtype validated.
+- M4: no step-0 checkpoint; logging instead of print. M5: steps=0 means
+  zero; AllenCahn docstring cleaned; unused failure_label deprecated.
+- M7: stiff-RD overflow guarded (float32 exp overflows near 88, not
+  350; final eval in float64; stiff configs -> None fallback).
+- M6: DECLINED by repository owner — CC BY 4.0 retained.
+
+### Research drift (recorded, verdicts unchanged in kind)
+
+- SAE E_T +0.0020 -> -0.0173 (negative side = representational signature
+  against honest controls); PCA -0.0203 -> -0.0131; paired diff now spans
+  zero. Nulls HOLD: 0/8 survivors everywhere on PINNs.
+- Stage-14 survivors 6/8 -> 2/8 under matched deletion — the suggestive
+  operator asymmetry weakens (2/8 vs PINN 0/8) and is re-reported at
+  this strength everywhere.
+- Monitor 0.859/0.864 -> 0.875/0.877; P(SAE better) 0.53 -> 0.51.
+- Controller rescue 0.295->0.0166 -> 0.421->0.0002 (config-faithful);
+  controller now beats all three SOTA baselines on this failure; both
+  readings recorded with their protocols.
+- 171 tests (16 new regression tests for the review fixes).
+
 ## [3.3.0] — 2026-09-08 — "Revision-Gap Audit + NTK Bridge (Stage 15)"
 
 Driven by the four-gap revision review of the original proposal; gap

@@ -839,9 +839,9 @@
     }
   },
   "reference_arms": {
-    "controller_final": 0.016587555408477783,
-    "no_action_final": 0.2953014671802521,
-    "oracle_final": 0.011936554685235023
+    "controller_final": 0.00016152721946127713,
+    "no_action_final": 0.4208385944366455,
+    "oracle_final": 0.00023417745251208544
   },
   "config": {
     "total_steps": 2500,

@@ -239,9 +239,19 @@ class PINNController:
             return new_pde, new_bc, f"gradnorm_rebalance (pde={new_pde:.4f}, bc={new_bc:.4f})"
 
         elif failure_class == "collocation_starvation":
+            # H4 (external review): these are TRIGGER events — the training
+            # loop must consume event.action and act (resample collocation /
+            # warm-restart with Fourier features). Returning unchanged
+            # lambdas is the intended semantics of a trigger, but a loop
+            # that ignores event.action turns them into silent no-ops; the
+            # stage-7 driver wires trigger_resample through
+            # PINNTrainer.train(resample_fn=...) since the H3 seam.
             return lambda_pde, lambda_bc, "trigger_resample"
 
         elif failure_class == "spectral_suppression":
+            # trigger_fourier_features remains a SIGNAL ONLY in this version:
+            # consuming it correctly requires an input-dim-changing warm
+            # restart (documented limitation; see docs/external_review_response.md).
             return lambda_pde, lambda_bc, "trigger_fourier_features"
 
         else:

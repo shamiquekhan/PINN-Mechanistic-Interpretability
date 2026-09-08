@@ -310,6 +310,13 @@ class ReactionDiffusion1D(BasePDE):
             return (f / (2 * eps)) * (x - lo) * (hi - x) + self.left_bc + (self.right_bc - self.left_bc) * (x - lo) / (hi - lo)
 
         r = (mu / eps) ** 0.5
+        # M7 (external review): for stiff configs (small eps) the analytic
+        # branch overflows and returns garbage.  The controlling limit is
+        # float32 exp() on the final evaluation array (exp overflows
+        # float32 near 88), so guard at r*max|x| > 80 and evaluate the
+        # final array in float64 regardless.
+        if r * max(abs(lo), abs(hi)) > 80:
+            return None   # exp overflow territory — caller falls back
         # Homogeneous solution + particular solution (u_p = f/mu)
         u_p = f / mu
         # BCs: A·exp(r·lo) + B·exp(-r·lo) + u_p = left_bc
@@ -327,8 +334,8 @@ class ReactionDiffusion1D(BasePDE):
         A = (rhs_lo * e_hi_m - rhs_hi * e_lo_m) / det
         B = (rhs_hi * e_lo_p - rhs_lo * e_hi_p) / det
 
-        x_np = x.detach().cpu().numpy()
         import numpy as np
+        x_np = x.detach().cpu().numpy().astype(np.float64)
         u_np = A * np.exp(r * x_np) + B * np.exp(-r * x_np) + u_p
         return torch.tensor(u_np, device=x.device, dtype=x.dtype)
 
@@ -599,6 +606,13 @@ class Burgers1D(BasePDE):
         factor E = exp(-nu k^2 dt); the nonlinear advection term is stepped
         with Heun (RK2) inside the rotated variable.  This is stable at
         nu=0.01 / dt=1/200 where naive explicit stepping blows up.
+
+        Returns the FULL space-time trajectory (n_timesteps+1, N): row j is
+        the solution at t = t0 + j*dt.  (External-review C2: the previous
+        implementation kept only the final time-slice, so exact() returned
+        zeros for every t < tT while validation_grid spans the full (t,x)
+        domain — the stage-10 rel_l2 then measured distance-from-zero, not
+        network error.)
         """
         import numpy as np
         N = self.n_spectral
@@ -611,6 +625,7 @@ class Burgers1D(BasePDE):
         E = np.exp(-nu * k ** 2 * dt)
         E2 = np.exp(-nu * k ** 2 * dt / 2.0)
         u_hat = np.fft.rfft(u)
+        U = [np.fft.irfft(u_hat, N)]
         for _ in range(self.n_timesteps):
             # Integrating-factor Heun step (Kassam--Trefethen style).
             def g(uh):
@@ -619,31 +634,47 @@ class Burgers1D(BasePDE):
             a = E2 * u_hat
             b = E2 * (u_hat + 0.5 * dt * g(a))
             u_hat = E * u_hat + 0.5 * dt * (E * g(a) + g(b))
-        u_final = np.fft.irfft(u_hat, N)
-        return x, u_final
+            U.append(np.fft.irfft(u_hat, N))
+        return x, np.stack(U, axis=0)
 
     def reference_solution(self) -> tuple:
         if self._reference is None:
-            x, u = self._spectral_reference()
+            x, U = self._spectral_reference()
             self._reference = (torch.tensor(x, dtype=torch.float32),
-                               torch.tensor(u, dtype=torch.float32))
+                               torch.tensor(U, dtype=torch.float32))
         return self._reference
 
     def exact(self, x_tx: torch.Tensor) -> Optional[torch.Tensor]:
-        """Reference evaluated at final time on the spectral grid (interp)."""
-        x_ref, u_ref = self.reference_solution()
-        x_ref = x_ref.to(x_tx.device, x_tx.dtype)
-        u_ref = u_ref.to(x_tx.device, x_tx.dtype)
+        """Bilinear interpolation of the full space-time reference in (t, x).
+
+        C2 fix: previously only the final-time slice was kept and every
+        t < tT evaluated to literal zero while the validation grid spanned
+        the whole (t, x) domain — making rel_l2 a distance-from-zero
+        artifact (the stage-10 6.1 value).  The full trajectory is now kept
+        and interpolated, so rel_l2 is a genuine space-time error.
+        """
+        x_ref, U = self.reference_solution()
+        U = U.to(x_tx.device, x_tx.dtype)
         t = x_tx[:, 0]
         xq = x_tx[:, 1]
-        at_final = torch.abs(t - self.tT) < 1e-6
-        # Linear interpolation of the reference profile.
-        lo, hi = self.left, self.right
-        pos = (xq - lo) / (hi - lo) * (x_ref.shape[0] - 1)
-        i0 = pos.floor().clamp(0, x_ref.shape[0] - 2).long()
-        frac = pos - i0
-        u_interp = u_ref[i0] * (1 - frac) + u_ref[i0 + 1] * frac
-        return torch.where(at_final, u_interp, torch.zeros_like(u_interp))
+        n_t, n_x = U.shape
+        # Pad one periodic column so the last spatial cell interpolates
+        # against its wraparound neighbour (the spectral grid is
+        # endpoint=False: x[j] = left + j*L/n_x, j in [0, n_x)).
+        Upad = torch.cat([U, U[:, :1]], dim=1)
+        # time index: trajectory is endpoint-INCLUSIVE (n_timesteps+1 rows)
+        ti = (t - self.t0) / (self.tT - self.t0) * (n_t - 1)
+        ti = ti.clamp(0, n_t - 1.001)
+        # space index: periodic cell map scales by n_x, range [0, n_x]
+        xi = (xq - self.left) / (self.right - self.left) * n_x
+        xi = xi.clamp(0, n_x - 1e-3)
+        i0, fi = ti.floor().long(), ti - ti.floor()
+        j0, fj = xi.floor().long(), xi - xi.floor()
+        u = (Upad[i0, j0] * (1 - fi) * (1 - fj) +
+             Upad[i0, j0 + 1] * (1 - fi) * fj +
+             Upad[i0 + 1, j0] * fi * (1 - fj) +
+             Upad[i0 + 1, j0 + 1] * fi * fj)
+        return u.unsqueeze(-1)
 
     def residual(self, model: torch.nn.Module, x_tx: torch.Tensor) -> torch.Tensor:
         x_tx = x_tx.requires_grad_(True)
@@ -715,14 +746,15 @@ class Burgers1D(BasePDE):
 # ---------------------------------------------------------------------------
 
 class AllenCahn1D(BasePDE):
-    """1D Allen-Cahn on x in [-1,1], t in [0,1], u0 = tanh-like profile.
+    """1D Allen-Cahn on x in [-1,1], t in [0,1], u0 = x³ (rescaled canonical).
 
-    u0(x) = 0.5*(1 + tanh(2x/eps)) * 1 - 0.5 ... we use the standard smooth
-    double-well IC: u0(x) = x³? No — the canonical PINN IC is
-    u0(x) = u0h(x) with u0h(x) = x³ (from the original PINN paper's AC
-    example domain x in [-1,1], t in [0,0.05] with eps=0.003).  Here we use
-    a numerically tractable setting: eps=0.05, t up to 1.0, IC = x³
-    rescaled, periodic in the spectral solver.
+    u_t = eps²·u_xx + u − u³ with u0(x) = x³ (the canonical PINN
+    Allen-Cahn initial condition, rescaled to the numerically tractable
+    setting eps=0.05, t up to 1.0).  The spectral reference solver treats
+    the domain as periodic (spectral method requirement); the PINN
+    enforces zero-Dirichlet spatial conditions at x=±1 — the two agree
+    to spectral accuracy on this IC because u0(±1) = ±1 and the reaction
+    keeps the interface away from the boundaries at these parameters.
     """
 
     def __init__(self, epsilon: float = 0.05, t0: float = 0.0, tT: float = 1.0,
@@ -750,6 +782,7 @@ class AllenCahn1D(BasePDE):
         return (self.t0, self.tT)
 
     def _spectral_reference(self) -> tuple:
+        """Full space-time trajectory (n_timesteps+1, N) — C2 fix, see Burgers1D."""
         import numpy as np
         N = self.n_spectral
         L = self.right - self.left
@@ -759,6 +792,7 @@ class AllenCahn1D(BasePDE):
         dt = (self.tT - self.t0) / self.n_timesteps
         eps2 = self.epsilon ** 2
         u_hat = np.fft.rfft(u)
+        U = [np.fft.irfft(u_hat, N)]
         for _ in range(self.n_timesteps):
             def rhs_total(uh):
                 uu = np.fft.irfft(uh, N)
@@ -768,29 +802,42 @@ class AllenCahn1D(BasePDE):
             u_mid = u_hat + 0.5 * dt * k1
             k2 = rhs_total(u_mid)
             u_hat = u_hat + dt * k2
-        u_final = np.fft.irfft(u_hat, N)
-        return x, u_final
+            U.append(np.fft.irfft(u_hat, N))
+        return x, np.stack(U, axis=0)
 
     def reference_solution(self) -> tuple:
         if self._reference is None:
-            x, u = self._spectral_reference()
+            x, U = self._spectral_reference()
             self._reference = (torch.tensor(x, dtype=torch.float32),
-                               torch.tensor(u, dtype=torch.float32))
+                               torch.tensor(U, dtype=torch.float32))
         return self._reference
 
     def exact(self, x_tx: torch.Tensor) -> Optional[torch.Tensor]:
-        x_ref, u_ref = self.reference_solution()
-        x_ref = x_ref.to(x_tx.device, x_tx.dtype)
-        u_ref = u_ref.to(x_tx.device, x_tx.dtype)
+        """Bilinear interpolation of the full space-time reference (C2 fix)."""
+        x_ref, U = self.reference_solution()
+        U = U.to(x_tx.device, x_tx.dtype)
         t = x_tx[:, 0]
         xq = x_tx[:, 1]
-        at_final = torch.abs(t - self.tT) < 1e-6
-        lo, hi = self.left, self.right
-        pos = (xq - lo) / (hi - lo) * (x_ref.shape[0] - 1)
-        i0 = pos.floor().clamp(0, x_ref.shape[0] - 2).long()
-        frac = pos - i0
-        u_interp = u_ref[i0] * (1 - frac) + u_ref[i0 + 1] * frac
-        return torch.where(at_final, u_interp, torch.zeros_like(u_interp))
+        n_t, n_x = U.shape
+        # Edge pad (NOT periodic): the AllenCahn IC u0 = x³ is aperiodic
+        # (u0(±1) = ±1), so a wraparound column U[:, 0] would inject a
+        # spurious jump into the last cell's interpolation. Clamp the outer
+        # neighbour of the last cell to the last grid value — the documented
+        # spectral-solver-on-aperiodic-IC approximation (class docstring).
+        Upad = torch.cat([U, U[:, -1:]], dim=1)
+        # time index: trajectory is endpoint-INCLUSIVE (n_timesteps+1 rows)
+        ti = (t - self.t0) / (self.tT - self.t0) * (n_t - 1)
+        ti = ti.clamp(0, n_t - 1.001)
+        # space index: endpoint-FALSE grid, cell map scales by n_x
+        xi = (xq - self.left) / (self.right - self.left) * n_x
+        xi = xi.clamp(0, n_x - 1e-3)
+        i0, fi = ti.floor().long(), ti - ti.floor()
+        j0, fj = xi.floor().long(), xi - xi.floor()
+        u = (Upad[i0, j0] * (1 - fi) * (1 - fj) +
+             Upad[i0, j0 + 1] * (1 - fi) * fj +
+             Upad[i0 + 1, j0] * fi * (1 - fj) +
+             Upad[i0 + 1, j0 + 1] * fi * fj)
+        return u.unsqueeze(-1)
 
     def residual(self, model: torch.nn.Module, x_tx: torch.Tensor) -> torch.Tensor:
         x_tx = x_tx.requires_grad_(True)
@@ -907,19 +954,30 @@ def make_pde(cfg) -> BasePDE:
             left=cfg.domain[0], right=cfg.domain[1],
         )
     elif name == "advection_1d":
+        # H5: explicit 'speed' wins; conflicting alias fails loudly.
+        explicit = getattr(cfg, "speed", None)
+        if explicit is not None and explicit != cfg.source:
+            raise ValueError(
+                "advection_1d: set EITHER 'speed' or legacy 'source', "
+                f"not both (speed={explicit}, source={cfg.source})")
         return Advection1D(
             left=cfg.domain[0],
             right=cfg.domain[1],
-            speed=cfg.source,   # reuse 'source' field as primary PDE param
+            speed=explicit if explicit is not None else cfg.source,
             source=getattr(cfg, "forcing", 0.0),
             left_bc=cfg.boundary_values[0],
         )
     elif name == "reaction_diffusion_1d":
+        explicit = getattr(cfg, "reaction_rate", None)
+        if explicit is not None and explicit != cfg.source:
+            raise ValueError(
+                "reaction_diffusion_1d: set EITHER 'reaction_rate' or "
+                f"legacy 'source', not both ({explicit} vs {cfg.source})")
         return ReactionDiffusion1D(
             left=cfg.domain[0],
             right=cfg.domain[1],
             diffusion=getattr(cfg, "diffusion", 0.01),
-            reaction=cfg.source,
+            reaction=explicit if explicit is not None else cfg.source,
             source=getattr(cfg, "forcing", 0.0),
             left_bc=cfg.boundary_values[0],
             right_bc=cfg.boundary_values[1],

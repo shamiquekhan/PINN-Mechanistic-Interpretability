@@ -108,16 +108,19 @@ class PCAInterventionHook:
             return coeffs
 
         if mode == "random_direction":
-            # Matched per-row magnitude to |c_k| — identical semantics to the
-            # SAE random-direction control in interventions/engine.py.
+            # C3b fix (external review): the previous control INJECTED a
+            # random direction while the target ABLATED — arms not matched
+            # in kind. On a dense PCA basis every coefficient is "active",
+            # so the matched-deletion control scales a random non-target
+            # component by the same alpha the target arm uses.
             rng = torch.Generator(device=coeffs.device)
             rng.manual_seed(self.random_seed)
-            per_row_mag = coeffs[:, k].abs() if k is not None else \
-                coeffs.abs().mean(dim=1)
-            rand_dir = torch.randn(coeffs.shape[1], device=coeffs.device,
-                                   dtype=coeffs.dtype, generator=rng)
-            rand_dir = rand_dir / rand_dir.norm().clamp(min=1e-8)
-            return coeffs.clone() + rand_dir.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            choices = [i for i in range(coeffs.shape[1]) if i != k]
+            ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
+                                          device=coeffs.device).item()]
+            coeffs = coeffs.clone()
+            coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
+            return coeffs
 
         if mode == "probe_direction":
             # Supervised probe direction, per-row magnitude matched to |c_k|

@@ -1,0 +1,51 @@
+{
+  "_generator": "scripts/generate_expected_headlines.py \u2014 derive from artifacts, never hand-edit",
+  "monitor_conventional_auroc": {
+    "expected": 0.875,
+    "range": [
+      0.804,
+      0.97
+    ]
+  },
+  "sae_et_ci_spans_zero": {
+    "expected": false
+  },
+  "sae_bonferroni_survivors": {
+    "expected": 0
+  },
+  "pca_bonferroni_survivors": {
+    "expected": 0
+  },
+  "fno_sae_beats_pca": {
+    "expected": true
+  },
+  "geometry_mean_pr": {
+    "expected": 1.778,
+    "range": [
+      1.0,
+      2.5
+    ]
+  },
+  "controller_final": {
+    "expected": 0.0002,
+    "range": [
+      0.0,
+      0.1
+    ]
+  },
+  "no_action_final": {
+    "expected": 0.4208
+  },
+  "ntk_adaptive_final": {
+    "expected": 0.0064
+  },
+  "stage14_bonferroni_survivors": {
+    "expected": 2
+  },
+  "stage14_recorded": {
+    "expected": "H14b"
+  },
+  "stage15_recorded": {
+    "expected": "H15b"
+  }
+}

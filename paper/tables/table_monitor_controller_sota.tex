@@ -4,8 +4,8 @@
 Monitor & AUROC & 95\% CI & AUPRC \\
 \midrule
 Loss-only threshold & 0.468 & [0.406, 0.511] & 0.233 \\
-Conventional logistic & 0.859 & [0.780, 0.952] & 0.711 \\
-SAE + conventional & 0.864 & [0.793, 0.954] & 0.717 \\
+Conventional logistic & 0.875 & [0.814, 0.960] & 0.721 \\
+SAE + conventional & 0.877 & [0.817, 0.960] & 0.723 \\
 \bottomrule
 \end{tabular}
 
@@ -14,9 +14,9 @@ SAE + conventional & 0.864 & [0.793, 0.954] & 0.717 \\
 \toprule
 Method & Final rel $L_2$ (boundary starvation) \\
 \midrule
-No action & 0.2953 \\
-\textbf{Closed-loop controller (ours)} & 0.0166 \\
-Oracle static reweight & 0.0119 \\
+No action & 0.4208 \\
+\textbf{Closed-loop controller (ours)} & 0.0002 \\
+Oracle static reweight & 0.0002 \\
 GradNorm & 2.0134 \\
 NTK-adaptive weighting & 0.0064 \\
 RBA (residual attention) & 2.1918 \\
@@ -29,6 +29,6 @@ RBA (residual attention) & 2.1918 \\
 Quantity & Value \\
 \midrule
 Minimum detectable sign-agreement at 80\% power ($n=11$ runs/feature) & 85.7\% \\
-$P$(SAE-augmented monitor $>$ conventional) & 0.53 \\
+$P$(SAE-augmented monitor $>$ conventional) & 0.51 \\
 \bottomrule
 \end{tabular}

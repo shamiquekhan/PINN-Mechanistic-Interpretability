@@ -20,7 +20,7 @@ def build_trajectory_features(
     metrics: List[Dict],
     history_window: int,
     failure_horizon: int,
-    failure_label: str,
+    failure_label: Optional[str] = None,   # M5: unused; kept for call-site compat
     failure_step: Optional[int] = None,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Build supervised examples from a single run's trajectory.

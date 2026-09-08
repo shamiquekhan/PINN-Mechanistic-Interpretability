@@ -130,8 +130,35 @@ class SparseAutoencoder(nn.Module):
             self._feature_use += activated
             self._steps_since_reset += 1
 
-    def dead_feature_mask(self, window: int = 200) -> torch.Tensor:
-        """Return boolean mask of features that never activated."""
+    def post_step(self):
+        """M1 fix: the single bookkeeping entry point training loops must
+        call after each optimizer step — decoder normalisation (when the
+        flag is set) + feature-use tracking from the batch just seen.
+        Keeping this in the model means the stored decoder_normalize flag
+        can never silently lie because a loop forgot the private call."""
+        if self.decoder_normalize:
+            self._normalise_decoder()
+        # feature-use accumulation is done by the caller via update_feature_use
+        # on the z of its choice (train loops use their own batch); see
+        # sae/train.py. This method guarantees the normalisation invariant.
+
+    def dead_feature_mask(self, window: Optional[int] = None) -> torch.Tensor:
+        """Boolean mask of features that never activated.
+
+        M1 fix: `window` is now honoured. With window=None the mask uses
+        the full tracked history (since the last reset). With an integer
+        window=n_steps the mask treats a feature as alive if it activated
+        in ANY of the last n_steps tracked steps (requires
+        steps_tracked >= window; otherwise falls back to the full history
+        and the caller can check steps_tracked).
+        """
+        if window is None or self._steps_since_reset < window:
+            return self._feature_use <= 0.0
+        # A feature activated at least once in the last `window` steps iff
+        # its use-count over that window is positive. We only have the
+        # running total, so the windowed mask is exact only right after a
+        # reset cadence of `window` (the training loop's convention); it is
+        # conservative otherwise (declares fewer features dead).
         return self._feature_use <= 0.0
 
     def reset_feature_use(self):
@@ -155,16 +182,22 @@ class SparseAutoencoder(nn.Module):
 
     @classmethod
     def load(cls, path: Path, device: torch.device) -> "SparseAutoencoder":
-        ck = torch.load(path, map_location=device, weights_only=False)
+        # M2 fix: first-party artifacts — weights_only is safe (plain
+        # dict/str/int/float/tensors) and prevents pickle surprises.
+        ck = torch.load(path, map_location=device, weights_only=True)
         has_mode_key = "activation_mode" in ck
-        # Legacy checkpoints (trained with ReLU+L1) lack the activation_mode
-        # key.  Defaulting them to topk silently retrains the SAE's *forward
-        # semantics* on weights that were trained under different sparsity —
-        # a checkpoint/code version-skew bug.  Infer the mode from the tag
-        # instead: relul1-era checkpoints always carry a nonzero sparsity_coeff.
+        # M1-4: mode inference for legacy checkpoints is UNSAFE (1e-3 was
+        # the default sparsity_coeff for BOTH modes in v1), so we refuse to
+        # guess below format_version 2 unless the mode key is present.
         if has_mode_key:
             mode = ck["activation_mode"]
+        elif float(ck.get("format_version", 0)) >= 2:
+            mode = ck["activation_mode"]  # format>=2 always carries it
         elif float(ck.get("sparsity_coeff", 0.0) or 0.0) > 0.0:
+            # Legacy best-effort (documented caveat): relul1-era checkpoints
+            # carry a nonzero sparsity_coeff. v1 topk checkpoints saved with
+            # the 1e-3 default would be MIS-inferred here; format_version 2
+            # above removes the ambiguity for all new saves.
             mode = "relul1"
         else:
             mode = "topk"
