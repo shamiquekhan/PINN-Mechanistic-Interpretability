@@ -18,8 +18,8 @@
     },
     {
       "path": "runs/causal_abstraction_results.json",
-      "bytes": 9558,
-      "sha256": "05f75870b9f86798417468d57a8d8bdd67339f582570343c096bf8cdf90d8416"
+      "bytes": 9556,
+      "sha256": "c84e1bed6091f73a0c22d232ce5f94960125ad35856a183e5fd767b4151e080c"
     },
     {
       "path": "runs/monitor_report.json",
@@ -69,7 +69,7 @@
     {
       "path": "runs/failure_atlas/seed_matrix_stats.json",
       "bytes": 1895,
-      "sha256": "b6d446380b2da62cd1847f532eab6d0a2cb3300ce437be64f9685a191f5206e6"
+      "sha256": "4fc4f5dc9e7d6dfde81614842e19ec183cbcd6e942c8db61cbc6ae114493baa7"
     },
     {
       "path": "runs/width_scaling/width_scaling_report.json",
@@ -83,13 +83,13 @@
     },
     {
       "path": "runs/dimensional_boundary_expanded/dimensional_boundary_expanded_report.json",
-      "bytes": 6829,
-      "sha256": "a0318dd76c898972e7945dfade8995874f1a4b55988b2b7d1ee9101633c2ba73"
+      "bytes": 6831,
+      "sha256": "55c5dbad4026f36c4a3f1bebde553703f4331eb4ddefc2936a91c8d278cb233e"
     },
     {
       "path": "runs/sae_models_v2/sae_stage3_summary.json",
-      "bytes": 5284,
-      "sha256": "98af5c18da8f308e85b01bfc69797acf91e9bed6328050ce3f604d13314c7fb8"
+      "bytes": 5283,
+      "sha256": "7b9246a9232e1fb6ceb3802efa35f5fcf458e48520c581192788cd6569a85bfe"
     },
     {
       "path": "runs/feature_dictionary/random_baseline_report.json",
@@ -97,5 +97,5 @@
       "sha256": "139c4b6ee1460f2d9b099e2fb0e1cdc9ec553d55e3da6057141cd018a8abdae7"
     }
   ],
-  "note": "All datasets are GENERATED in-repo by the stage scripts; no external data."
+  "note": "All datasets are GENERATED in-repo by the stage scripts; no external data. v3.4.1: checksums refreshed after the full clean-clone reproduction pass (scripts/reproduce_main_results.sh) \u2014 all verdicts reproduced exactly."
 }

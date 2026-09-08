@@ -97,7 +97,7 @@ def run_causal_abstraction_experiment(
         model = MLP(cfg.model.input_dim, cfg.model.output_dim,
                     cfg.model.hidden_layers, cfg.model.activation).to(DEVICE)
         ckpt = torch.load(sorted(run_dir.glob("checkpoint_*.pt"))[-1],
-                          map_location=DEVICE, weights_only=False)
+                          map_location=DEVICE, weights_only=True)
         state = ckpt["model"]
         if any(k.startswith("net.") for k in state):
             state = _remap_legacy_state(state)

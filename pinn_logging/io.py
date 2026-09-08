@@ -53,7 +53,10 @@ def save_checkpoint(path: Path, model, optimizer, step: int, config: dict):
 
 
 def load_checkpoint(path: Path, device: torch.device) -> Dict:
-    return torch.load(path, map_location=device, weights_only=False)
+    # M2 completion (v3.5): committed checkpoints are first-party artifacts
+    # (plain dict/str/int/float/tensors — verified) so the restrictive
+    # unpickler is safe and preferred.
+    return torch.load(path, map_location=device, weights_only=True)
 
 
 # ---------------------------------------------------------------------------

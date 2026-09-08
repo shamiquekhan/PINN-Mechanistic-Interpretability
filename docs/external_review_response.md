@@ -1,5 +1,9 @@
 # External-Review Fix Campaign Record (v3.4)
 
+> **APPEND-ONLY.** This file is the authoritative disposition + drift record.
+> Later reviews append new sections here; nothing already recorded is edited
+> retroactively. Reviewer-facing summary: [`REVIEW_RESPONSE.md`](../REVIEW_RESPONSE.md).
+
 **Date:** 2026-09-08
 **Input:** the external code review (29 issues; `GUIDE.md` is the review
 snapshot; this file is the execution record).
@@ -29,7 +33,7 @@ verdict was patched, only regenerated.
 | M3 | **FIXED** | Silent cuda→cpu downgrade now raises; dtype validated with a clear error |
 | M4 | **FIXED** | No step-0 checkpoint; per-step prints → `logging` |
 | M5 | **FIXED** | `steps=0` means zero steps (was config-default); AllenCahn docstring cleaned (drafting text removed, periodic-solver-vs-Dirichlet note reconciled); `build_trajectory_features`' unused `failure_label` made optional |
-| M6 | **DECLINED** | Repository owner elected to retain CC BY 4.0 for the whole repository (code included). The reviewer's OSI-license recommendation is recorded here for provenance |
+| M6 | **DECLINED** | Repository owner elected to retain CC BY 4.0 for the whole repository (code included), for simplicity of a single license across code, paper text, and figures. The reviewer's OSI-license recommendation (MIT/BSD/Apache for the code component) is recorded here so the decision is visible as deliberate; if the project is ever submitted to an artifact-track venue requiring an OSI code license, re-visit this row first |
 | M7 | **FIXED** | Stiff-RD overflow guarded (float32 exp overflows near 88, not 350 — the guard is `r·max|x| > 80`) and the final array evaluated in float64; stiff configs return `None` (caller falls back) |
 
 ## 2. Stage re-runs and verdict drift

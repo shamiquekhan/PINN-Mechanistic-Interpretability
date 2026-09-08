@@ -332,3 +332,118 @@ bridge at the preregistered bar. This does not weaken stages 5/8/9
 (which never asserted a bridge); it closes revision Gap 2 with a null
 plus a documented redesign path. Full numbers:
 `runs/ntk_bridge/ntk_bridge_report.json`; RESULTS.md §5A.8.
+
+---
+
+# v3.5 Preregistration (H16–H19) — committed BEFORE any v3.5 run
+
+*Registered 2026-09-08 per the forward guide's discipline: hashes for this
+section are recorded when committed; outcomes are appended only after the
+corresponding stage completes.*
+
+## H16 — Operator causal asymmetry: high-n resolution (Stage 16)
+
+**Motivation (from the drift record).** The v3.4 stage-14 outcome (2/8
+survivors at 8/8 batch consistency) sits at the exact sign-test floor for
+n=8: p = 0.0039 is the minimum achievable, so the count cannot distinguish
+a real boundary effect from two lucky features. This stage resolves T1.
+
+**Design.**
+- **H16a (n-raise):** re-run the stage-14 battery with **n ≥ 20 held-out
+  function batches per feature** (MDE at 80% power ≈ 72% sign agreement —
+  a real effect must be large to survive; a marginal one honestly does
+  not), on the **top-16** SAE candidates by activation (MC-corrected
+  across 16 tests), with the matched-deletion controls unchanged.
+- **H16b (direction-reversal):** replace the retired mixed-sign condition
+  with the **crossover criterion** already named in the H7 record: a
+  causal feature must show a consistent *amplify-vs-ablate asymmetry* —
+  amplification (α = 1.5) moves the target readout oppositely to
+  ablation (α = 0), with the crossover direction consistent across
+  ≥ 15/20 batches (exact binomial p < 0.05, two-sided).
+
+**Decision rule (pre-written).**
+- If ≥1 feature survives Bonferroni at n ≥ 20 AND satisfies the crossover
+  criterion → the asymmetry is promoted to **"supported, small"** and §5A.7
+  + abstract say so.
+- Otherwise → **T1 is closed**: the causal side of the boundary was not
+  found even at 2.5× power; the regime claim rests on the reconstruction
+  side (PR 6.8, SAE-beats-PCA 4.7×) alone, and the paper says exactly
+  that, without hedging.
+
+**Machinery gate (unchanged):** planted-feature positive control through
+the real operator hook must pass at the same n; a gate failure voids the
+run.
+
+## H17 — Controller generalization: the failure battery (Stage 17)
+
+**Motivation.** v3.4's "controller beats NTK-adaptive" rests on ONE
+failure (boundary starvation), one protocol — exactly the fragility H3
+exposed. This stage resolves T2.
+
+**Design.** Preregistered evaluation across the reproducible failure
+classes of the atlas: **boundary starvation, spectral suppression, and the
+2D reaction-diffusion pilot** (the classes whose operational labels
+reproduce; gradient-conflict and collocation are excluded per the
+existing label-reproducibility record). Same state-machine controller,
+same no-oracle protocol, arms = {controller, NTK-adaptive, GradNorm,
+no-action} × 3 seeds per class.
+
+**Pre-written expectations (either direction is publishable):**
+- H17a: the controller wins or ties on classes where no specialized
+  method's trigger condition applies, and loses to the specialized method
+  where it does (NTK on static misweighting, GradNorm on
+  gradient-imbalance-style failures) → positioning: *"robustness across
+  unknown failures, not per-failure SOTA."*
+- H17b: the controller wins/ties everywhere tested → positioning:
+  *"matches or beats specialized baselines across the reproducible
+  failure set"* — still scoped to exactly the classes tested.
+- The paper's SOTA paragraph is rewritten to match whichever pattern
+  emerges; **no claim beyond the tested set.**
+
+**`trigger_fourier_features` (R2b, pre-decided):** the action is REMOVED
+from the controller's action space before this stage runs — a half-wired
+action is not carried into a generalization test. (Implementing the
+input-dim-changing warm restart is registered as explicit future work,
+not a hidden stub.)
+
+## H18 — Scope boundary probe: Fourier-feature PINN + depth (Stage 18)
+
+**Motivation.** The strongest reviewer attack on the null: "width-16–512
+tanh MLPs — of course no superposition." The FNO demonstrates the positive
+side of the boundary; within-PINN architectural variation is missing.
+
+**Design.** Fixed 1D Poisson task (the width-scaling control), width 64:
+- (a) **Fourier-feature PINN** (the model config already carries
+  `fourier_embed: true`, n_freq=32 — known to change the NTK/activation
+  geometry substantially), 3 seeds;
+- (b) **depth sweep** 2→6 hidden layers, 3 seeds each;
+- the rank diagnostic (PR/W, tangent rank, PCA-95% components) is
+  computed for every run and the SAE-vs-k-matched-PCA reconstruction
+  comparison is run wherever PR moves.
+
+**Pre-written outcomes (both strengthen the paper):**
+- H18a: the Fourier-feature PINN's activation PR rises toward the
+  superposition regime and the SAE's relative advantage over PCA appears
+  *within PINNs* → the thesis "the regime boundary, measured, not
+  asserted" gains a within-PINN demonstration, with the rank diagnostic
+  as *predictor*.
+- H18b: PR stays ~2 and the SAE stays null under the geometry-changing
+  trick → the null is robust to architectural perturbation that *should*
+  have moved the geometry; scope is honestly drawn at
+  operator/function-space representations.
+
+## H19 — Monitor label provenance audit (Stage 19)
+
+**Design.**
+- (a) RD2D audit: the v3.4 stage-10 RD2D rel L2 of 1.93 either reflects a
+  genuinely hard manufactured solution or mislabels runs entering monitor
+  training. Trace every RD2D run's label derivation; runs labeled
+  "failure" for the wrong reason are excluded from monitor training and
+  the audit is recorded in the artifact.
+- (b) A loss-only **trajectory** monitor (logistic on past-loss windows,
+  same splits/CIs) replaces the single-threshold straw man as the floor
+  baseline; if it closes much of the 0.468→0.875 gap, the monitor section
+  says so and repositions the conventional arm's value honestly.
+
+**Acceptance:** the monitor section states its label provenance
+explicitly and the floor baseline is no longer a threshold rule alone.

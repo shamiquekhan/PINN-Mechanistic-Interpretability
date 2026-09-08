@@ -22,7 +22,7 @@ Each item: what ran → where the output lives.
 | Causal abstraction (interchange) | `--stages 9` | `runs/causal_abstraction_results.json` | PCA/SAE both fail beats-random-every-run |
 | Dimensional boundary (2D + time-dep.) | `--stages 10` | `runs/dimensional_boundary_expanded/` | tangent rank = input dim in all families; time-dep rel L2 now genuine space-time error (0.111/0.550, was 6.1/6.0 artifacts) |
 | FNO regime boundary | `--stages 11` | `runs/operator_boundary/operator_boundary_report.json` | PR 6.80/64; SAE beats k-matched PCA 4.7× |
-| SOTA baselines | `--stages 12` | `runs/sota_baselines/sota_baseline_report.json` | NTK-adaptive 0.0064 < controller 0.0166; GradNorm 2.01 / RBA 2.19 (harm) |
+| SOTA baselines | `--stages 12` | `runs/sota_baselines/sota_baseline_report.json` | Config-faithful: controller 0.0002 < NTK 0.0064 (NTK beat the pre-fix controller 0.0166 — see drift record); GradNorm 2.01 / RBA 2.19 (harm) |
 | Statistical hardening | `--stages 13` | `runs/statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power; P(SAE monitor better) 0.51 |
 | NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 < random p95 0.494; machinery gate PASS |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
@@ -36,17 +36,15 @@ Each item: what ran → where the output lives.
 ## Completed since last verification (stage 14 — preregistered, run, recorded)
 
 - **Stage 14 — operator causal battery** (`--stages 14` →
-  `runs/operator_causal/operator_causal_report.json`): hypotheses
-  H14a/H14b + decision rules were committed and pushed (`f6eedf9`)
-  BEFORE the run. **Recorded outcome:** machinery gate PASS; preregistered
-  conjunctive rule fires **H14b** (mixed-sign condition failed, 64/64
-  positive); conditions (i) 6/8 Bonferroni + BH-FDR survivors at 8/8
-  batch consistency and (ii) E_T CI [+7.1e-6, +1.6e-5] excluding zero
-  were met — 75% beats-all-controls vs 14–32% for the PINN batteries.
-  Reported as a **suggestive causal asymmetry**, NOT a confirmed causal
-  boundary; the sign condition is documented as a non-diagnostic design
-  lesson. Full record: docs/preregistration.md §H7, RESULTS.md §5A.7,
-  CHANGELOG.md 3.2.0.
+  `runs/operator_causal/operator_causal_report.json`): preregistered
+  (H14a/H14b at `f6eedf9`), executed, recorded H14b. **Post-external-review
+  (v3.4) outcome under matched-deletion controls:** machinery gate PASS;
+  2/8 Bonferroni + BH-FDR survivors (was 6/8 under the pre-fix asymmetric
+  controls — see docs/external_review_response.md §2), each at 8/8 batch
+  consistency; E_T CI [+5.6e-6, +1.6e-5] positive; beats-all 66%.
+  Reported as a **suggestive, weakened asymmetry** (2/8 vs 0/8 on PINNs),
+  NOT a confirmed boundary. Thread now pending the H16 high-n resolution
+  (docs/preregistration.md §H8/H16). Full record: RESULTS.md §5A.7.
 
 ## Explicitly not yet started (honest backlog)
 

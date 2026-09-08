@@ -557,7 +557,7 @@ def run_stage_5_causal_interventions(sae_dir: Path):
         ckpts = sorted(run_dir.glob("checkpoint_*.pt"))
         if not ckpts:
             continue
-        ckpt = torch.load(ckpts[-1], map_location=DEVICE, weights_only=False)
+        ckpt = torch.load(ckpts[-1], map_location=DEVICE, weights_only=True)
         state = ckpt["model"]
         # Legacy checkpoints use the old `net.Sequential` layout (net.0, net.2,
         # ...); current MLP uses `layers.N`.  Remap if needed.

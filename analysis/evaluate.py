@@ -18,7 +18,7 @@ def load_metrics(metrics_path: Path) -> List[Dict]:
 
 
 def load_checkpoint(ckpt_path: Path, device: torch.device, dtype: torch.dtype) -> Dict:
-    return torch.load(ckpt_path, map_location=device, weights_only=False)
+    return torch.load(ckpt_path, map_location=device, weights_only=True)
 
 
 def rebuild_model_from_config(cfg, device: torch.device, dtype: torch.dtype):

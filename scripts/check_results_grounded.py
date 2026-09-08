@@ -192,17 +192,36 @@ def check_artifact_references() -> list:
 # C4 guard (external review): documentation-drift markers that must never
 # silently reappear in the living docs (historical records are exempt).
 STALE_MARKERS = [
-    r"0\.872",            # v3.0 monitor AUROC (superseded by fresh 0.859)
+    r"0\.872",            # v3.0 monitor AUROC (superseded)
     r"stages 1–13",        # 15 stages exist
     r"7 intervention modes",  # 8 exist
     r"ACTING",             # controller state that does not exist
 ]
+
+# v3.4-era moved numbers: an UNMARKED occurrence in a living doc is drift.
+# A hit is allowed only when its line carries one of these context markers
+# (historical / drift / pre-fix phrasing), which the drift tables and
+# response docs always include.
+MOVED_NUMBERS = [
+    r"E_T \+0\.0020",     # pre-C3 SAE E_T (now −0.0173)
+    r"−0\.0203",          # pre-C3 PCA E_T (now −0.0131)
+    r"6/8 Bonferroni survivors, E_T CI positive",  # pre-C3 stage-14 count
+    r"0\.859",            # pre-H1 monitor AUROC (now 0.875)
+    r"0\.0166",           # pre-H3 controller (now 0.0002)
+    r"rescues boundary starvation 18×",   # pre-H3 rescue phrasing
+    r"18\$\\times\$ over no-action",  # LaTeX rescue phrasing
+]
+MOVED_CONTEXT_OK = ("was ", "pre-fix", "moved", "→", "->", "artifact of",
+                    "historical", "drift", "v3.2 record", "v3.3 record",
+                    "retained in the", "see docs/external_review_response",
+                    "(was ", "corrected", "old", "Old")
 # (exemptions applied implicitly: the guard below only scans RESULTS_DOCS +
 # the living ledgers; historical records like fresh_campaign_record are
 # drift tables whose old values are the point.)
 
 
 def check_stale_markers() -> list:
+    import re
     failures = []
     for doc in STALE_SCAN_DOCS:
         p = ROOT / doc
@@ -210,12 +229,21 @@ def check_stale_markers() -> list:
             continue
         text = p.read_text()
         for marker in STALE_MARKERS:
-            import re
             for m in re.finditer(marker, text):
                 line_no = text[:m.start()].count("\n") + 1
                 snippet = text.splitlines()[line_no - 1][:80]
                 failures.append(
                     f"{doc}:{line_no}: stale marker /{marker}/ — {snippet}")
+        # v3.4 moved numbers: only allowed inside explicitly-marked
+        # historical/drift contexts
+        for marker in MOVED_NUMBERS:
+            for m in re.finditer(marker, text):
+                line_no = text[:m.start()].count("\n") + 1
+                line = text.splitlines()[line_no - 1]
+                if not any(ctx in line for ctx in MOVED_CONTEXT_OK):
+                    failures.append(
+                        f"{doc}:{line_no}: unmarked moved number "
+                        f"/{marker}/ — {line[:90]}")
     return failures
 
 

@@ -33,7 +33,7 @@ The current benchmark is a **basis-independent hardened negative mechanistic res
 5. **Regime boundary (stage 11):** an FNO on function-space regression has PR 6.8 of 64 and there the same TopK SAE **beats k-matched PCA 4.7×** — the superposition regime exists. **Stage 14 (operator causal battery)** completes the causal side: 2/8 features survive MC correction at 8/8 batch consistency where every PINN basis has 0/8 — a suggestive, weakened asymmetry (preregistered H14a/H14b; see `docs/preregistration.md` and [RESULTS.md §5A.7](RESULTS.md)).
 6. **Engineering (stages 6/7/12, config-faithful protocol):** conventional monitor AUROC 0.875 [0.814, 0.960]; SAE-augmented 0.877 (P(SAE better) = 0.51 — no advantage); controller rescues boundary starvation 0.421 → 0.0002 (oracle level) with SAE features measured as bit-identical inert cargo; on the config-faithful protocol the controller beats NTK-adaptive weighting (0.0064) while GradNorm/RBA actively harm — both protocol readings are recorded (the pre-fix loop violated the run config).
 
-See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations. For what is *verified end-to-end right now* versus in-flight, see [PROJECT_STATUS.md](PROJECT_STATUS.md).
+See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations. For what is *verified end-to-end right now* versus in-flight, see [PROJECT_STATUS.md](PROJECT_STATUS.md). For the executed 29-issue external review — every fix, re-run, and the errata for numbers that moved — see [REVIEW_RESPONSE.md](REVIEW_RESPONSE.md).
 
 ---
 

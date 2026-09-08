@@ -249,10 +249,15 @@ class PINNController:
             return lambda_pde, lambda_bc, "trigger_resample"
 
         elif failure_class == "spectral_suppression":
-            # trigger_fourier_features remains a SIGNAL ONLY in this version:
-            # consuming it correctly requires an input-dim-changing warm
-            # restart (documented limitation; see docs/external_review_response.md).
-            return lambda_pde, lambda_bc, "trigger_fourier_features"
+            # H17/R2b decision (v3.5 preregistration): the fourier trigger is
+            # REMOVED from the action space — a half-wired action is worse
+            # than an honest no-op. Correct implementation requires an
+            # input-dim-changing warm restart (registered future work).
+            # Spectral suppression now falls through to bounded lambda
+            # rebalancing (the same machinery the battery evaluates), which
+            # the failure battery (H17) measures as-is.
+            new_bc = min(lambda_bc * cfg.bc_rebalance_factor, cfg.max_lambda_bc)
+            return lambda_pde, new_bc, f"increase_lambda_bc_spectral ({lambda_bc:.4f} -> {new_bc:.4f})"
 
         else:
             return lambda_pde, lambda_bc, "no_action"

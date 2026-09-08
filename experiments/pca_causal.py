@@ -81,7 +81,7 @@ def run_pca_causal_experiment(
         ckpts = sorted(run_dir.glob("checkpoint_*.pt"))
         if not ckpts:
             continue
-        ckpt = torch.load(ckpts[-1], map_location=DEVICE, weights_only=False)
+        ckpt = torch.load(ckpts[-1], map_location=DEVICE, weights_only=True)
         state = ckpt["model"]
         if any(k.startswith("net.") for k in state):
             state = _remap_legacy_state(state)

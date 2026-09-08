@@ -26,7 +26,7 @@ for an established result.
 - [x] Operator regime boundary: FNO on nonlinear Green's-function
   regression → PR/W 0.106, SAE beats k-matched PCA 4.7× — the
   superposition regime measured with the same protocol.
-- [x] Leakage-audited monitors (conventional AUROC 0.859; no SAE
+- [x] Leakage-audited monitors (conventional AUROC 0.875 post-review-fix, was 0.859; no SAE
   advantage), closed-loop controller with rollback + monitor-source
   ablation, SOTA baseline comparison (NTK-adaptive beats controller on its
   target failure; GradNorm/RBA harm).
@@ -58,7 +58,8 @@ for an established result.
   at f6eedf9), executed, recorded. Preregistered conjunctive rule fires
   H14b (sign condition non-diagnostic), but by the MC-correction standard
   used for the PINN nulls the operator features pass (6/8 Bonferroni
-  survivors, E_T CI positive) — recorded as a SUGGESTIVE causal asymmetry,
+  survivors pre-fix, 2/8 under matched-deletion controls — see
+  docs/external_review_response.md; E_T CI positive both ways) — recorded as a SUGGESTIVE causal asymmetry,
   not a confirmed causal boundary. See docs/preregistration.md §H7 and
   RESULTS.md §5A.7.
 - [ ] **Wider function-space task suite:** Darcy-flow-style operators,

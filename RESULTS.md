@@ -164,7 +164,7 @@ The identical 3-control causal protocol (unrelated-component, random-coefficient
 | Quantity | SAE features (v2.1) | PCA components (v3) |
 | :--- | :--- | :--- |
 | Causal strength $E_T$ (mean) | −0.0173 [−0.0329, −0.0037] | **−0.0131 [−0.0268, −0.0006]** |
-| Specificity $S_{\text{spec}}$ | 0.65 [0.58, 0.74] | straddles 1 (chance) |
+| Specificity $S_{\text{spec}}$ | 0.65 [0.58, 0.74] | 2.58 [0.87, 5.30] (CI straddles 1 — chance-level specificity) |
 | Sign diagnostic | 88/88 positive | **88/88 positive** |
 | Bonferroni / BH-FDR survivors | 0/8 | **0/8** |
 | Raw beats-all | 9/88 | 36/88 |

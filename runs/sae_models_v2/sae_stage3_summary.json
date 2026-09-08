@@ -123,10 +123,10 @@
   ],
   "baselines": {
     "pca_full_n_components": 64,
-    "pca_full_train_mse": 6.626729026626421e-11,
+    "pca_full_train_mse": 3.3116578923575446e-11,
     "pca_k_matched_components": 8,
     "pca_k_matched_train_mse": 0.0437193401157856,
-    "random_sae_test_mse": 3.0502573084831237
+    "random_sae_test_mse": 2.75458453142643
   },
   "sae_beats_random": true,
   "sae_beats_pca_k_matched": false,

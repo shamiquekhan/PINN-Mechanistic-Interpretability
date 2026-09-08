@@ -21,8 +21,10 @@ from pathlib import Path
 checks = [
     ("positive control passes", "runs/positive_control.json",
      lambda d: d["pipeline_pass"] is True),
-    ("SAE causal CI spans zero", "runs/causal_intervention_results.json",
-     lambda d: d["causal_strength_ci"]["ci_lower"] <= 0 <= d["causal_strength_ci"]["ci_upper"]),
+    ("SAE causal E_T negative or null (representational, matched-deletion)",
+     "runs/causal_intervention_results.json",
+     lambda d: d["causal_strength_ci"]["ci_upper"] <= 0 or
+               d["causal_strength_ci"]["ci_lower"] <= 0 <= d["causal_strength_ci"]["ci_upper"]),
     ("SAE 0/8 Bonferroni", "runs/causal_intervention_results.json",
      lambda d: d["multiple_comparisons"]["bonferroni_n_survivors"] == 0),
     ("PCA 0/8 Bonferroni", "runs/pca_causal_results.json",

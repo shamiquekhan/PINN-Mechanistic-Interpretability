@@ -4,6 +4,52 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.4.1] — 2026-09-08 — "Lock-In: Review-Response Package + v3.5 Preregistration"
+
+P0 execution of the forward guide. No research claims changed.
+
+### Added
+
+- `REVIEW_RESPONSE.md` (top-level, reviewer-facing): the 29-issue
+  campaign summary + a mandatory **errata table** for every number that
+  moved in v3.4 (6.1→0.111, 6/8→2/8, 0.0166→0.0002, 0.859→0.875, the
+  E_T sign flip, the SOTA-reading flip) — each with the reason and the
+  authoritative section link.
+- `docs/external_review_response.md`: append-only policy header; M6
+  decline rationale documented so the next reviewer sees it as
+  deliberate.
+- v3.5 preregistration (H16–H19) committed BEFORE any v3.5 run:
+  H16 operator-asymmetry high-n resolution (n≥20 batches, top-16
+  features, direction-reversal criterion, both outcomes pre-written);
+  H17 controller failure battery (3 reproducible classes, fourier
+  trigger removed as a precondition); H18 Fourier-feature-PINN +
+  depth-sweep scope probe; H19 monitor label-provenance audit +
+  trajectory-loss floor baseline.
+- CI stale-marker guard extended: the v3.4 moved numbers may now only
+  appear inside explicitly-marked historical/drift contexts.
+
+### Fixed (post-grep triage)
+
+- PCA specificity in RESULTS §5A.1 now matches the artifact (2.58
+  [0.87, 5.30] — the earlier "straddles 1" phrasing was wrong; the
+  generated table was right).
+- Paper Figure-9 caption + operator-table caption: 6/8 → 2/8 (the
+  figure itself had been regenerated correctly; the captions hadn't).
+- ROADMAP/PROJECT_STATUS stale references re-grounded (0.859 marked
+  historical; stage-14 completed entry rewritten to the v3.4 outcome).
+- M2 completion: all 5 live `weights_only=False` sites migrated to
+  `weights_only=True` (verified safe on committed checkpoints); build/
+  artifacts gitignored.
+- `trigger_fourier_features` REMOVED from the controller action space
+  (H17 precondition): spectral suppression now falls through to the
+  bounded lambda rebalance the battery measures. Tests green.
+- reproduce-script expectation corrected to the v3.4 verdict class
+  ("SAE E_T negative or null" — the old "CI spans zero" check encoded
+  the pre-C3 convention; the clean-clone verification pass caught it).
+- Full clean-clone reproduction: stages 2–15 re-executed, all verdicts
+  reproduced exactly, 16/16 headline checks PASS, artifacts
+  re-checksummed (manifest note records the replication).
+
 ## [3.4.0] — 2026-09-08 — "External-Review Fix Campaign"
 
 Executed the 29-issue external code review end-to-end (GUIDE.md = review
