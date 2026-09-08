@@ -374,6 +374,31 @@ a real boundary effect from two lucky features. This stage resolves T1.
 the real operator hook must pass at the same n; a gate failure voids the
 run.
 
+**Outcome (recorded after running):** The preregistered conjunctive rule
+fires **H16b** --- condition (ii) failed: the best feature's |ρ| = 0.22
+does not exceed the random-direction 95th percentile (0.34); no feature
+survives the crossover criterion. Condition (i) MET: 6/16 features
+survive Bonferroni; condition (iii) MET. The machinery gate PASSED
+(rho 0.96 raw / 0.98 specific). The 6 Bonferroni survivors do not
+exhibit a consistent amplify-vs-ablate crossover direction.
+
+**Design observation (honest limitation of this bridge test):** the
+binary conflict label is *chronically high-conflict* (75–100% of steps
+in boundary starvation), so a binary label has almost no within-run
+variation to correlate against, precisely in the regime where features
+were hypothesized causal. The bridge as specified (Option A, binary
+label) is structurally low-sensitivity for this failure mode. A
+continuous-magnitude redesign (or cross-regime sampling) is registered
+as future work, NOT run post-hoc.
+
+**Recorded conclusion:** H16b --- no feature-specific conflict↔activity
+bridge at the preregistered bar. This does not weaken stages 5/8/9
+(which never asserted a bridge); it closes the last unconstructed
+bridge the revision review identified. Full numbers:
+`runs/operator_highn/operator_highn_report.json`; docs/preregistration.md §H16.
+
+---
+
 ## H17 — Controller generalization: the failure battery (Stage 17)
 
 **Motivation.** v3.4's "controller beats NTK-adaptive" rests on ONE

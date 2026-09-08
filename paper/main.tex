@@ -60,7 +60,11 @@ preregistered causal battery in the operator regime shows a
 \emph{suggestive} asymmetry --- 2/8 features survive multiple-comparison
 correction with a strictly positive effect-size CI where every PINN basis
 had 0/8 --- which we report as suggestive rather than confirmed, per the
-preregistered decision rules. Practically, conventional signals (losses,
+preregistered decision rules. \textbf{Stage 16 (H16) closes the
+causal-asymmetry thread:} a preregistered high-n battery (n=20, top-16
+candidates, direction-reversal criterion) fires H16b --- 6/16 Bonferroni
+survivors but 0/16 direction-reversal survivors; the operator causal
+asymmetry thread T1 is closed. Practically, conventional signals (losses,
 residuals, gradient cosines) drive an early-warning monitor (AUROC 0.875)
 and a closed-loop controller that rescues the boundary-starvation failure
 to oracle level, with SAE features measured as inert cargo. We recommend a
@@ -477,7 +481,51 @@ $\ET$ and the sign tests measure. The corrected criterion
 (amplify-vs-ablate asymmetry) is registered as future work, not applied
 retroactively.
 
-\begin{figure}[t]
+\subsection{The operator causal battery at high n: closing the asymmetry thread (H16)}
+\label{sec:operator-causal-highn}
+
+The FNO reconstruction advantage would be hollow if it were not
+accompanied by causal specificity, so we preregistered (committed before
+the run, in \texttt{docs/preregistration.md} \S H16) a conjunctive
+decision rule for a high-n battery on the same FNO: H16a (the operator
+features are causally specific at high n) requires (i) $\ge$1 Bonferroni
+survivor, (ii) $E_T$ CI excluding zero on the positive side, (iii) a
+consistent \emph{amplify-vs-ablate crossover} direction. The battery ---
+16 candidate features, 20 held-out function batches, the same three
+controls as the PINN battery, with a planted-feature machinery gate in
+the operator setting --- fired as follows:
+
+\begin{itemize}
+  \item Machinery gate: PASS (targeted effect 0.0229 vs.\ random control
+        0.0140; planted feature recovered through the real operator hook).
+  \item Condition (i) MET: 6/16 features survive Bonferroni \emph{and}
+        BH-FDR, each at 20/20 batch consistency ($p = 0.0039$, the exact
+        sign test's floor at $n{=}20$).
+  \item Condition (ii) MET: $\ET$ CI $[+5.6\times10^{-6}, +1.6\times10^{-5}]$
+        --- excludes zero, positive.
+  \item Condition (iii) NOT met: 320/320 target deltas positive; \emph{no
+        feature} satisfies the amplify-vs-ablate crossover criterion
+        (0/16 crossover survivors).
+\end{itemize}
+
+By the preregistered conjunctive rule, H16a is not confirmed and we
+record \textbf{H16b}. Comparative context, from the same scoring code:
+the target beats all three controls in 181/320 evaluations (56.6\%) for
+the FNO high-n battery vs.\ 9/88 (10\%) for SAE-on-PINN and 36/88 (41\%)
+for PCA-on-PINN; the median target/control ratio is 1.21$\times$
+(Figure~\ref{fig:operator-causal}, Table~\ref{tab:operator-causal}).
+
+We report this as a \emph{suggestive, weakened causal asymmetry} across
+the regime boundary, deliberately not as a confirmed causal boundary, for
+the same three recorded reasons as the stage-14 battery, with the
+additional nuance that the direction-reversal criterion --- designed to
+distinguish load-bearing structure from generic decode damage --- found no
+consistent amplify-vs-ablate signature in any of the 16 candidate
+features. The operator causal asymmetry thread T1 is closed; the regime
+boundary's reconstruction side remains strong (PR 6.8, SAE-beats-PCA
+4.7$\times$), its causal side is closed at H16b. Full record:
+\texttt{runs/operator\_highn/operator\_highn\_report.json};
+\texttt{docs/preregistration.md} \S H16.
   \centering
   \includegraphics[width=0.85\linewidth]{figures/figure_09_operator_causal.png}
   \caption{\textbf{The operator causal battery.} Left: per-feature
@@ -572,11 +620,12 @@ methodology is appropriate --- demonstrated positively on the FNO.
         flipped, three numbers moved materially, and both protocol
         readings are recorded (\texttt{docs/external\_review\_response.md}).
   \item \textbf{The operator causal result is suggestive, not confirmed.}
-        The preregistered conjunctive rule fired the null; the survivor
-        asymmetry (6/8 vs.\ 0/8) is real but the effect sizes are tiny,
-        the interchange is null, and the sign condition is documented as
-        mis-designed for ablation batteries. The corrected criterion is
-        preregistered for future work.
+        The preregistered conjunctive rule fired H14b (mixed-sign
+        condition failed); the high-n follow-up (Stage 16, H16) fires
+        H16b: 6/16 Bonferroni survivors but 0/16 direction-reversal
+        survivors; the operator causal asymmetry thread T1 is closed.
+        The regime boundary's reconstruction side remains strong (PR 6.8,
+        SAE beats PCA 4.7$\times$); its causal side is closed at H16b.
   \item \textbf{Power.} The causal batteries can detect $\ge$85.7\%
         sign-agreement effects at 80\% power; subtler effects would
         require $\approx$4$\times$ the checkpoints. We report this as a
@@ -614,7 +663,11 @@ the boundary, what the SAE literature assumes: the tool works exactly
 where the representation is genuinely high-rank --- and PINN activations
 are curves, not clouds. The full benchmark, preregistered protocols,
 positive and negative controls, statistical machinery, and the measured
-regime boundary are released for exactly that purpose.
+regime boundary are released for exactly that purpose. \textbf{The
+operator causal-asymmetry thread T1 is closed at H16b:} the high-n
+battery (n=20, direction-reversal criterion) fires H16b --- 6/16
+Bonferroni survivors but 0/16 direction-reversal survivors; the
+operator causal asymmetry is not a boundary-crossing signal.
 
 \paragraph{Reproducibility statement.} All numbers in this paper are
 regenerated from committed JSON artifacts (\texttt{runs/}) by

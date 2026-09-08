@@ -1,0 +1,365 @@
+{
+  "stage": "operator_highn",
+  "hypotheses": "H16a/H16b (docs/preregistration.md H16; v3.5)",
+  "preregistration": "committed at ae8dafd BEFORE this run",
+  "machinery_gate": {
+    "pipeline_pass": true,
+    "matched_feature": 228,
+    "decoder_cosine_to_planted": 0.4125072658061981,
+    "targeted_delta": 0.02286982536315918,
+    "ctrl_unrelated_delta": 0.01548844575881958,
+    "ctrl_random_delta": 0.013966739177703857,
+    "ctrl_random_delta_trials": [
+      0.012804508209228516,
+      0.015294551849365234,
+      0.012774765491485596,
+      0.014732837677001953,
+      0.013966739177703857
+    ],
+    "ctrl_probe_delta": 0.004528462886810303,
+    "causal_score": {
+      "causal_strength": 0.0073813796043396,
+      "specificity": 0.6597693025123461,
+      "target_effect": 0.02286982536315918,
+      "max_control_effect": 0.01548844575881958,
+      "control_unrelated_effect": 0.01548844575881958,
+      "control_random_effect": 0.013966739177703857,
+      "control_probe_effect": 0.004528462886810303
+    },
+    "config": {
+      "n_dim": 64,
+      "n_features": 256,
+      "sae_steps": 1500,
+      "topk": 8,
+      "expansion": 4,
+      "seed": 0
+    }
+  },
+  "n_batches": 20,
+  "n_candidates": 16,
+  "candidates": [
+    173,
+    40,
+    181,
+    225,
+    142,
+    64,
+    20,
+    105,
+    62,
+    106,
+    82,
+    201,
+    136,
+    209,
+    76,
+    245
+  ],
+  "battery_summary": {
+    "n_evaluations": 320,
+    "n_beats_all_controls": 181,
+    "verification_rate": 0.565625,
+    "causal_strength_ci": {
+      "mean": 9.313573031022315e-06,
+      "std": 3.516280537134547e-05,
+      "ci_lower": 5.61736342859831e-06,
+      "ci_upper": 1.3187233059213099e-05
+    },
+    "specificity_ci": {
+      "mean": 0.002605346705393482,
+      "std": 0.00156780635393197,
+      "ci_lower": 0.0024403408619849513,
+      "ci_upper": 0.002778111868771882
+    },
+    "sign_diagnostic": {
+      "n_target_delta_positive": 320,
+      "n_target_delta_negative": 0
+    },
+    "multiple_comparisons": {
+      "n_features_tested": 16,
+      "bonferroni_survivors": [
+        62,
+        82,
+        106,
+        136,
+        142,
+        173
+      ],
+      "bonferroni_n_survivors": 6,
+      "bh_fdr_survivors": [
+        62,
+        82,
+        106,
+        136,
+        142,
+        173,
+        245
+      ],
+      "bh_fdr_n_survivors": 7,
+      "chance_expected_hits_at_alpha": 0.8,
+      "per_feature": [
+        {
+          "feature_idx": 20,
+          "n_runs": 20,
+          "mean_diff": -8.489712899972802e-06,
+          "n_pos": 3,
+          "n_neg": 17,
+          "sign_test_p": 0.9997987747192383
+        },
+        {
+          "feature_idx": 40,
+          "n_runs": 20,
+          "mean_diff": -1.2105852010790841e-05,
+          "n_pos": 0,
+          "n_neg": 20,
+          "sign_test_p": 1.0
+        },
+        {
+          "feature_idx": 62,
+          "n_runs": 20,
+          "mean_diff": 8.672985723023885e-06,
+          "n_pos": 18,
+          "n_neg": 2,
+          "sign_test_p": 0.00020122528076171875
+        },
+        {
+          "feature_idx": 64,
+          "n_runs": 20,
+          "mean_diff": -4.521049186223536e-06,
+          "n_pos": 6,
+          "n_neg": 14,
+          "sign_test_p": 0.9793052673339844
+        },
+        {
+          "feature_idx": 76,
+          "n_runs": 20,
+          "mean_diff": -3.544927903931239e-06,
+          "n_pos": 7,
+          "n_neg": 13,
+          "sign_test_p": 0.9423408508300781
+        },
+        {
+          "feature_idx": 82,
+          "n_runs": 20,
+          "mean_diff": 7.58338799187186e-05,
+          "n_pos": 20,
+          "n_neg": 0,
+          "sign_test_p": 9.5367431640625e-07
+        },
+        {
+          "feature_idx": 105,
+          "n_runs": 20,
+          "mean_diff": 7.077478130668168e-07,
+          "n_pos": 11,
+          "n_neg": 9,
+          "sign_test_p": 0.41190147399902344
+        },
+        {
+          "feature_idx": 106,
+          "n_runs": 20,
+          "mean_diff": 9.979104424928664e-06,
+          "n_pos": 19,
+          "n_neg": 1,
+          "sign_test_p": 2.002716064453125e-05
+        },
+        {
+          "feature_idx": 136,
+          "n_runs": 20,
+          "mean_diff": 7.01403437233239e-05,
+          "n_pos": 20,
+          "n_neg": 0,
+          "sign_test_p": 9.5367431640625e-07
+        },
+        {
+          "feature_idx": 142,
+          "n_runs": 20,
+          "mean_diff": 4.466369864530861e-06,
+          "n_pos": 18,
+          "n_neg": 2,
+          "sign_test_p": 0.00020122528076171875
+        },
+        {
+          "feature_idx": 173,
+          "n_runs": 20,
+          "mean_diff": 5.411263100540964e-05,
+          "n_pos": 20,
+          "n_neg": 0,
+          "sign_test_p": 9.5367431640625e-07
+        },
+        {
+          "feature_idx": 181,
+          "n_runs": 20,
+          "mean_diff": -2.058958384623111e-05,
+          "n_pos": 2,
+          "n_neg": 18,
+          "sign_test_p": 0.9999799728393555
+        },
+        {
+          "feature_idx": 201,
+          "n_runs": 20,
+          "mean_diff": -2.0879858448097365e-05,
+          "n_pos": 8,
+          "n_neg": 12,
+          "sign_test_p": 0.8684120178222656
+        },
+        {
+          "feature_idx": 209,
+          "n_runs": 20,
+          "mean_diff": -2.9749984969384967e-05,
+          "n_pos": 0,
+          "n_neg": 20,
+          "sign_test_p": 1.0
+        },
+        {
+          "feature_idx": 225,
+          "n_runs": 20,
+          "mean_diff": 1.1700238883349811e-05,
+          "n_pos": 14,
+          "n_neg": 6,
+          "sign_test_p": 0.057659149169921875
+        },
+        {
+          "feature_idx": 245,
+          "n_runs": 20,
+          "mean_diff": 1.3284836404636735e-05,
+          "n_pos": 15,
+          "n_neg": 5,
+          "sign_test_p": 0.020694732666015625
+        }
+      ]
+    }
+  },
+  "crossover": {
+    "173": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "40": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "181": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "225": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "142": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "64": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "20": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "105": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "62": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "106": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "82": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "201": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "136": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "209": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "76": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    },
+    "245": {
+      "n_batches_both": 20,
+      "crossover_rate": 0.0,
+      "consistent_direction_rate": 0.0,
+      "consistent": false,
+      "p": 1.9073486328125e-06
+    }
+  },
+  "bonferroni_survivors": [
+    62,
+    82,
+    106,
+    136,
+    142,
+    173
+  ],
+  "crossover_survivors": [],
+  "promoted_features": [],
+  "decision_rule": {
+    "gate_pass": true,
+    "n_bonferroni_survivors": 6,
+    "n_crossover_survivors": 0,
+    "n_promoted": 0,
+    "passes_h16a": false,
+    "recorded": "H16b"
+  },
+  "pre_written_interpretation": "T1 CLOSED: the causal side of the boundary was NOT found even at 2.5x power; the regime claim rests on the reconstruction side (PR 6.8, SAE-beats-PCA 4.7x) alone, stated without hedging."
+}

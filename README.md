@@ -135,7 +135,7 @@ This automatically executes:
 11. **Operator regime boundary** — FNO on Green's-function regression (`runs/operator_boundary/`).
 12. **SOTA baselines** — GradNorm / NTK-adaptive / RBA vs controller (`runs/sota_baselines/`).
 13. **Statistical hardening** — power, Bayesian posterior, threshold sensitivity (`runs/statistical_hardening/`).
-14. **Operator causal battery** — the 3-control causal protocol + interchange on FNO block states, completing the regime-boundary claim (`runs/operator_causal/`).
+14. **Operator causal battery** — the 3-control causal protocol + interchange on FNO block states, completing the regime-boundary claim at reconstruction level (`runs/operator_causal/`). **Stage 16 (H16)** closes the causal-asymmetry thread: high-n battery (n=20, direction-reversal criterion) fires H16b — 6/16 Bonferroni survivors, 0/16 direction-reversal survivors (`runs/operator_highn/`).
 15. **NTK conflict↔SAE bridge** — the preregistered correlational bridge between Wang-et-al. gradient conflict and feature-specific SAE activity (revision Gap 2; recorded null) (`runs/ntk_bridge/`).
 
 ---

@@ -4,7 +4,34 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
-## [3.4.1] — 2026-09-08 — "Lock-In: Review-Response Package + v3.5 Preregistration"
+## [3.4.2] — 2026-09-08 — "H16 Operator Causal Asymmetry High-N Resolution (T1 Closed)"
+
+Stage 16 (H16) executed per v3.5 preregistration (committed at ae8dafd
+BEFORE the run). Outcome: **H16b** — the preregistered conjunctive rule
+fires the null.
+
+- Machinery gate: PASS (planted feature through real operator hook).
+- Condition (i) MET: 6/16 features survive Bonferroni + BH-FDR at 20/20
+  batch consistency (p = 0.0039 exact binomial floor at n=20).
+- Condition (ii) MET: E_T CI [+5.6e-6, +1.6e-5] excludes zero.
+- Condition (iii) NOT MET: 0/16 crossover survivors; no feature
+  exhibits a consistent amplify-vs-ablate crossover direction.
+- Preregistered conjunctive rule fires **H16b** (T1 closed).
+
+Design observation recorded (honest limitation): the binary conflict
+label is chronically high-conflict (75–100% of steps), so the binary
+label has almost no within-run variation to correlate against — the
+discriminative statistic is target-vs-controls, which is what E_T and
+the sign tests measure. A continuous-magnitude redesign (or cross-regime
+sampling) is registered as future work (H18), NOT run post-hoc.
+
+Recorded conclusion: **H16b — no feature-specific conflict↔activity
+bridge at the preregistered bar.** The operator causal-asymmetry thread
+T1 is closed; the regime boundary claim rests on the reconstruction
+side (PR 6.8, SAE beats PCA 4.7x) alone. Full record:
+`runs/operator_highn/operator_highn_report.json`; docs/preregistration.md §H16.
+
+## [3.4.1] — 2026-09-08 — "Lock-In: Review-Response Package + v3.5 Preregistration" 
 
 P0 execution of the forward guide. No research claims changed.
 

@@ -38,6 +38,11 @@ for an established result.
 
 ## Planned (next)
 
+- [x] **Stage 16 (H16) — Operator causal asymmetry at high n (v3.5):** preregistered
+  (H16a/H16b at ae8dafd), executed, recorded H16b --- 6/16 Bonferroni survivors
+  at 20/20 batch consistency, 0/16 direction-reversal survivors; the operator
+  causal asymmetry thread T1 is closed. The regime boundary claim rests on the
+  reconstruction side (PR 6.8, SAE beats PCA 4.7x). See docs/preregistration.md §H16.
 - [ ] **Stage-14 follow-up (preregister next):** replace the mixed-sign
   condition with a direction-reversal criterion (amplify-vs-ablate asymmetry)
   and re-run the operator battery; if the asymmetry confirms, upgrade the
