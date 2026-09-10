@@ -174,7 +174,8 @@ statuses audited against artifacts (docs/revision_gap_audit.md).
 
 - Machinery gate: PASS. Preregistered conjunctive rule fires **H15b**:
   0/8 features survive Bonferroni; best |rho| = 0.578 (uncorrected
-  p = 0.070) vs random-direction p95 = 0.494.
+  p = 0.070) marginally exceeds the random-direction p95 = 0.494 but
+  fails the Bonferroni bar (p = 0.56).
 - Machinery incident, fixed BEFORE the verdict was read: the first
   implementation joined duplicated activation-log step records,
   inflating n past the exact permutation floor and producing degenerate

@@ -1,6 +1,6 @@
 # Project Status
 
-**Last verified:** 2026-09-08 (post-external-review-fix campaign v3.4; every item below re-verified)
+**Last verified:** 2026-09-10 (post-external-review-fix campaign v3.4 + v3.5 docs/paper sync; every item below re-verified)
 **Verification method:** commands executed end-to-end on this machine; every
 "verified" item lists the exact command and the artifact it produced. A
 machine check (`scripts/check_results_grounded.py`, wired into CI via
@@ -24,9 +24,9 @@ Each item: what ran → where the output lives.
 | FNO regime boundary | `--stages 11` | `runs/operator_boundary/operator_boundary_report.json` | PR 6.80/64; SAE beats k-matched PCA 4.7× |
 | SOTA baselines | `--stages 12` | `runs/sota_baselines/sota_baseline_report.json` | Config-faithful: controller 0.0002 < NTK 0.0064 (NTK beat the pre-fix controller 0.0166 — see drift record); GradNorm 2.01 / RBA 2.19 (harm) |
 | Statistical hardening | `--stages 13` | `runs/statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power; P(SAE monitor better) 0.51 |
-| NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 < random p95 0.494; machinery gate PASS |
+| NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 exceeds random p95 0.494 but fails Bonferroni (p=0.56) → no bridge at the registered bar; machinery gate PASS |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
-| Unit tests | `python -m pytest tests/ -q` | — | **155 passed** (2026-09-08, CPU-only) |
+| Unit tests | `python -m pytest tests/ -q` | — | **171 passed, 1 skipped** (2026-09-10, CPU-only; 155 at the 2026-09-08 fresh campaign, +16 from the v3.4.2 stage-17 framework) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
 | Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
 | Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |

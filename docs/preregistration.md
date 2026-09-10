@@ -382,20 +382,14 @@ survive Bonferroni; condition (iii) MET. The machinery gate PASSED
 (rho 0.96 raw / 0.98 specific). The 6 Bonferroni survivors do not
 exhibit a consistent amplify-vs-ablate crossover direction.
 
-**Design observation (honest limitation of this bridge test):** the
-binary conflict label is *chronically high-conflict* (75–100% of steps
-in boundary starvation), so a binary label has almost no within-run
-variation to correlate against, precisely in the regime where features
-were hypothesized causal. The bridge as specified (Option A, binary
-label) is structurally low-sensitivity for this failure mode. A
-continuous-magnitude redesign (or cross-regime sampling) is registered
-as future work, NOT run post-hoc.
-
-**Recorded conclusion:** H16b --- no feature-specific conflict↔activity
-bridge at the preregistered bar. This does not weaken stages 5/8/9
-(which never asserted a bridge); it closes the last unconstructed
-bridge the revision review identified. Full numbers:
-`runs/operator_highn/operator_highn_report.json`; docs/preregistration.md §H16.
+**Recorded conclusion:** H16b — no operator feature exhibits the
+preregistered causal crossover (amplify-vs-ablate direction reversal)
+even at 2.5× power: 6/16 Bonferroni survivors, 0/16 direction-reversal
+survivors. Condition (ii) failed, so thread T1 (operator causal
+asymmetry) is closed at H16b; the regime-boundary claim rests on the
+reconstruction side (PR 6.8, SAE beats k-matched PCA 4.7×) alone, as
+the pre-written decision rule specifies. Full numbers:
+`runs/operator_highn/operator_highn_report.json`.
 
 ---
 

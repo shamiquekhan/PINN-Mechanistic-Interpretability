@@ -526,6 +526,8 @@ boundary's reconstruction side remains strong (PR 6.8, SAE-beats-PCA
 4.7$\times$), its causal side is closed at H16b. Full record:
 \texttt{runs/operator\_highn/operator\_highn\_report.json};
 \texttt{docs/preregistration.md} \S H16.
+
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.85\linewidth]{figures/figure_09_operator_causal.png}
   \caption{\textbf{The operator causal battery.} Left: per-feature
@@ -633,8 +635,9 @@ methodology is appropriate --- demonstrated positively on the FNO.
   \item \textbf{NTK bridge.} The correlational gradient-conflict
         $\leftrightarrow$ feature-activity bridge (preregistered H15a/H15b)
         fired the null: 0/8 features survive Bonferroni and the best
-        association ($|\rho| = 0.578$) sits within the random-direction
-        distribution (95th percentile 0.494). Gradient conflict is also
+        association ($|\rho| = 0.578$) exceeds the random-direction
+        95th percentile (0.494) but fails the preregistered Bonferroni
+        criterion ($p = 0.56$). Gradient conflict is also
         \emph{chronic} in the starvation regime (75–100\% of steps),
         so the binary conflict label has little within-run variation
         there; a continuous-magnitude redesign is registered future

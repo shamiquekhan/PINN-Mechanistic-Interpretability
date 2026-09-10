@@ -35,14 +35,29 @@ for an established result.
 - [x] Research packaging: preregistration, theory note, data card,
   experiment matrix, reproducibility docs, figures/tables scripts, CI,
   Docker, license (CC BY 4.0), citation metadata.
-
-## Planned (next)
-
+- [x] **Operator causal battery (stage 14, v3.2):** preregistered (H14a/H14b
+  at f6eedf9), executed, recorded. Preregistered conjunctive rule fires
+  H14b (sign condition non-diagnostic), but by the MC-correction standard
+  used for the PINN nulls the operator features pass (6/8 Bonferroni
+  survivors pre-fix, 2/8 under matched-deletion controls — see
+  docs/external_review_response.md; E_T CI positive both ways) — recorded as a SUGGESTIVE causal asymmetry,
+  not a confirmed causal boundary. See docs/preregistration.md §H7 and
+  RESULTS.md §5A.7.
+- [x] **NTK conflict↔SAE bridge (stage 15, v3.3):** preregistered
+  (H15a/H15b at 747f82d), executed, recorded H15b — 0/8 Bonferroni
+  survivors, best |rho| 0.578 marginally exceeds the random-direction p95
+  (0.494) but fails the preregistered Bonferroni bar (p = 0.56);
+  a duplicated-step-records bug (degenerate rho=±1) was caught and fixed
+  before the verdict was read. Revision Gap 2 closed with a measured null.
+  See docs/revision_gap_audit.md, RESULTS.md §5A.8.
 - [x] **Stage 16 (H16) — Operator causal asymmetry at high n (v3.5):** preregistered
   (H16a/H16b at ae8dafd), executed, recorded H16b --- 6/16 Bonferroni survivors
   at 20/20 batch consistency, 0/16 direction-reversal survivors; the operator
   causal asymmetry thread T1 is closed. The regime boundary claim rests on the
   reconstruction side (PR 6.8, SAE beats PCA 4.7x). See docs/preregistration.md §H16.
+
+## Planned (next)
+
 - [ ] **Stage-14 follow-up (preregister next):** replace the mixed-sign
   condition with a direction-reversal criterion (amplify-vs-ablate asymmetry)
   and re-run the operator battery; if the asymmetry confirms, upgrade the
@@ -52,21 +67,15 @@ for an established result.
   NTK↔SAE bridge — the binary label is structurally low-sensitivity in a
   chronically-conflicted regime; also Option B (SAE on
   NTK-eigenmode-projected activations).
-
-- [x] **NTK conflict↔SAE bridge (stage 15, v3.3):** preregistered
-  (H15a/H15b at 747f82d), executed, recorded H15b — 0/8 Bonferroni
-  survivors, best |rho| 0.578 within the random-direction p95 (0.494);
-  a duplicated-step-records bug (degenerate rho=±1) was caught and fixed
-  before the verdict was read. Revision Gap 2 closed with a measured null.
-  See docs/revision_gap_audit.md, RESULTS.md §5A.8.
-- [x] **Operator causal battery (stage 14, v3.2):** preregistered (H14a/H14b
-  at f6eedf9), executed, recorded. Preregistered conjunctive rule fires
-  H14b (sign condition non-diagnostic), but by the MC-correction standard
-  used for the PINN nulls the operator features pass (6/8 Bonferroni
-  survivors pre-fix, 2/8 under matched-deletion controls — see
-  docs/external_review_response.md; E_T CI positive both ways) — recorded as a SUGGESTIVE causal asymmetry,
-  not a confirmed causal boundary. See docs/preregistration.md §H7 and
-  RESULTS.md §5A.7.
+- [ ] **Stage 17 (H17) — Controller generalization failure battery:** framework
+  landed (`experiments/controller_failure_battery.py`, v3.4.2); run the
+  preregistered {controller, NTK, GradNorm, no-action} × {boundary starvation,
+  spectral suppression, RD-2D} × 3-seed matrix and record H17a/H17b.
+- [ ] **Stage 18 (H18) — Fourier-feature PINN + depth sweep:** scope-boundary
+  probe (PR/W, tangent rank, PCA-95, SAE-vs-PCA reconstruction) to answer the
+  "your PINNs are too simple" attack.
+- [ ] **Stage 19 (H19) — Monitor label provenance audit:** RD2D label trace +
+  loss-history trajectory monitor to replace the threshold floor baseline.
 - [ ] **Wider function-space task suite:** Darcy-flow-style operators,
   DeepONet comparison, wider FNOs (W = 128–512) to map the ρ threshold
   more finely.
