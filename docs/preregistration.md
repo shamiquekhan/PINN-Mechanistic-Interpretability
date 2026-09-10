@@ -716,3 +716,44 @@ programs discovered independently. R2 (causal battery on the
 high-rank Fourier PINN) remains the registered next step — the
 reconstruction advantage there is the one regime where specificity
 could still emerge.
+
+**Outcome (recorded after running, 2026-09-11).** Machinery gate: PASS
+pre-verdict (the established stage-5 planted world through the exact
+measure_intervention_effect path at battery scale: planted cosine
+0.989, 20/20 beats-controls batches). Full artifact:
+`runs/r2_fourier_causal/r2_report.json`.
+
+**Analysis correction (made BEFORE any verdict was recorded anywhere):**
+the first crossover implementation used a two-sided binomial, which
+spuriously certifies never-crossing features (P(0/20) is small);
+corrected to the registered ONE-SIDED rule (>= 15/20 consistent
+amplify-vs-ablate reversals). Raw crossover counts are unchanged by
+the correction and unambiguous: every feature in both arms crosses
+0/20 times.
+
+The preregistered decision rule fires **R2b** on BOTH arms:
+
+- **Fourier arm** (the H18 checkpoints, PR 4.0-5.6, the regime with the
+  25-56x reconstruction advantage): E_T = -15.89 [-17.46, -14.27] —
+  target ablations move the residual LESS than matched-deletion
+  controls, the representational signature; 4/45 Bonferroni survivors,
+  all on the NEGATIVE side; 0/45 crossover survivors (no feature
+  reverses direction under amplification); beats-all-controls 22%.
+- **Tanh control arm** (depth-3 twin, PR 1.39-1.48): the identical
+  null signature at smaller scale (E_T -0.058; 0 crossovers).
+
+**Recorded conclusion (R2b): superposition is necessary but not
+sufficient.** The within-PINN regime boundary is now measured on BOTH
+sides with BOTH criteria: crossing into the high-rank regime
+transfers the SAE's *reconstruction* advantage (25-56x) but NOT
+*effect-magnitude causal specificity* — the third arrow of the chain
+(rank -> reconstruction advantage -> causal specificity) does not
+close. The reconciliation with PhysSAE completes: their evidence
+(alignment + spatial concentration) lives below the specificity bar,
+achieved equally by random bases (R1), and the specificity criterion
+is null in every regime tested — low-rank tanh (stages 5/8), operator
+(H16b), and now the high-rank Fourier PINN (R2b). The chain's first
+two arrows are real and measured; the third is consistently absent.
+Honest scope: one SAE family (TopK k=8), one site (layers.1), 3 seeds;
+R3's frequency sweep and R4's SAE-seed/config robustness remain the
+registered probes of whether ANY configuration closes the third arrow.

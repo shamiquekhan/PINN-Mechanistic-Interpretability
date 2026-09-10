@@ -333,12 +333,15 @@ def analyze_r2(rows: List[Dict]) -> Dict:
     for r in rows:
         cross_counts.setdefault(r["feature_idx"], 0)
         cross_counts[r["feature_idx"]] += int(r["crossover"])
-    # crossover binomial p per feature
-    cross_p = {k: _exact_binomial_two_sided(c, N_BATCHES)
-               for k, c in cross_counts.items()}
+    # Crossover criterion (registered, ONE-SIDED): a causal feature must
+    # show the amplify-vs-ablate direction reversal CONSISTENTLY — >=
+    # CROSSOVER_BATCHES of N_BATCHES.  0/N crossovers is a FAILURE of the
+    # criterion, not a "significant" pattern: the two-sided binomial
+    # would spuriously certify never-crossing features (P(0) is tiny).
+    crossover_survivors = [k for k, c in cross_counts.items()
+                           if c >= CROSSOVER_BATCHES]
 
     survivors = mc["bonferroni"]["survivors"]
-    crossover_survivors = [k for k, p in cross_p.items() if p < 0.05]
 
     # decision rule (pre-written)
     both = [k for k in survivors if k in crossover_survivors]

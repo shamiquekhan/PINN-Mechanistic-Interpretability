@@ -131,13 +131,18 @@ rank-collapse-with-convergence regularity from the failure side).
   programs' claims stand at different level-ladder rungs. See
   docs/preregistration.md §R1 outcome, RESULTS.md §5A.12,
   docs/physSAE_reconciliation.md.
-- [ ] **R2 — causal battery on the Fourier PINN:** the missing third
-  arrow (rank → reconstruction advantage → causal specificity); H16
-  direction-reversal machinery on the H18 Fourier dictionaries.
-  Pre-written both ways: specificity found, or "superposition is
-  necessary but not sufficient" as the reconciliation with PhysSAE.
-  Sharpened by R1: the Fourier regime is the one place specificity
-  could still emerge (all low-rank substrates are null).
+- [x] **R2 — causal battery on the Fourier PINN (v4.1):** preregistered,
+  executed 2026-09-11, recorded **R2b on both arms** — gate PASS
+  (planted cosine 0.989, 20/20); the Fourier regime (PR 4.0-5.6, the
+  25-56x reconstruction regime) shows E_T -15.89 [-17.46, -14.27]
+  with 4/45 Bonferroni survivors all on the NEGATIVE side and 0/45
+  crossover survivors; the tanh control shows the same null at smaller
+  scale. The chain rank -> reconstruction -> causality: first two
+  arrows measured, the third consistently absent (stages 5/8, H16b,
+  R2b). Superposition is necessary but not sufficient. Analysis
+  correction pre-verdict: crossover rule applied one-sided (>=15/20)
+  as registered. See docs/preregistration.md §R2 outcome, RESULTS.md
+  §5A.13.
 - [ ] **R3 — Fourier frequency sweep:** n_freq ∈ {2,4,8,16,32,64},
   3 seeds, PR/PR-W/PCA-95 + reconstruction (both SAE families) + R2
   battery where PR moves. Pre-written: smooth / threshold /

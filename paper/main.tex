@@ -58,12 +58,16 @@ work, PhysSAE reports physically aligned, spatially concentrated SAE
 features in PINNs; we reconcile the findings: the studies ask different
 causal questions (spatial concentration of an exactly-linear ablation
 footprint vs.\ effect-magnitude specificity against matched-deletion
-controls), on different layers and dictionaries --- and a head-to-head
-experiment on matched-architecture checkpoints is preregistered and
-reported. Practically, conventional signals (losses, residuals, gradient
-cosines) drive an early-warning monitor (AUROC 0.875; an honest
-loss-trajectory floor reaches 0.786, so the gradient channels' margin is
-thin but real) and a closed-loop controller that rescues boundary
+controls), on different layers and dictionaries --- and a preregistered
+head-to-head on matched checkpoints shows their evidence replicates but
+is achieved equally by random bases, while the causal-specificity
+criterion is null in every regime tested, including the high-rank
+Fourier PINN itself: \emph{superposition is necessary but not
+sufficient}. Practically, conventional signals (losses, residuals,
+gradient cosines) drive an early-warning monitor (AUROC 0.875; an
+honest loss-trajectory floor reaches 0.786, so the gradient channels'
+margin is thin but real) and a closed-loop controller that rescues
+boundary
 starvation to oracle level and never degrades catastrophically across a
 three-failure battery --- with SAE features measured as inert cargo
 throughout. We recommend a participation-ratio precheck before applying
@@ -633,6 +637,28 @@ dictionaries (does the reconstruction advantage extend to
 \emph{effect-magnitude specificity}?) are preregistered as R2/R3/R5
 (\S\ref{sec:reconciliation}).
 
+\paragraph{The causal arrow does not close (R2, preregistered and
+run).} The H18 chain measures rank $\to$ reconstruction advantage; the
+third arrow --- reconstruction advantage $\to$ causal specificity ---
+was tested by running the high-n causal battery (the H16 protocol:
+top-16 candidates, $n{=}20$ held-out batches, matched-deletion +
+probe controls, one-sided amplify-vs-ablate crossover at
+$\ge$15/20) on the same Fourier checkpoints, with the tanh depth-3
+twin as the low-rank control. Machinery gate: PASS (the planted world
+through the same hook; cosine 0.989, 20/20 batches). Verdict
+\textbf{R2b on both arms}: in the Fourier regime --- despite PR
+4.0--5.6 and the 25--56$\times$ reconstruction advantage ---
+$\ET = -15.89$ [$-17.46, -14.27$]: target ablations move the residual
+\emph{less} than matched-deletion controls (4/45 Bonferroni survivors,
+all negative-side), and \emph{no} feature (0/45) shows the
+amplify-vs-ablate direction reversal. The tanh control shows the
+identical null at smaller scale. \textbf{Superposition is necessary
+but not sufficient}: crossing into the high-rank regime transfers the
+SAE's compression advantage but not effect-magnitude causal
+specificity. The chain now reads: rank $\to$ reconstruction advantage
+(measured, both regimes), reconstruction advantage $\to$ causal
+specificity (absent, every regime tested: stages 5/8, H16b, R2b).
+
 \subsection{Concurrent work: PhysSAE, reconciled}
 \label{sec:reconciliation}
 
@@ -699,9 +725,11 @@ rank-collapse-with-convergence regularity from the failure side
 measured, discovered from two directions), and our level ladder ---
 association $\to$ predictivity $\to$ effect-magnitude specificity $\to$
 spatial localization --- assigns the two studies' evidence to different
-rungs, which is a reconciliation, not a dispute. R2--R5 remain
-preregistered; R2 (the causal battery on the high-rank Fourier PINN)
-is the one regime where specificity could still emerge.
+rungs, which is a reconciliation, not a dispute. R2 has since run
+(\S\ref{sec:architecture-boundary}): even in the high-rank Fourier
+regime, the specificity criterion is null --- the PhysSAE evidence
+lives below the specificity bar in every regime we have measured.
+R3--R5 remain preregistered.
 
 \section{What To Do Instead}
 \label{sec:alternative}

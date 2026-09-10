@@ -4,6 +4,37 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [4.1.1] — 2026-09-11 — "R2 Run: Superposition Is Necessary but Not Sufficient (R2b)"
+
+R2 — the causal battery on the Fourier PINN (the third arrow), run per
+the §R2 preregistration through the standard PINN hook at the H18
+measurement site, H16 protocol (top-16 x n=20 x matched-deletion +
+probe controls + one-sided crossover at >=15/20). Gate PASS (the
+stage-5 planted world through the same path: cosine 0.989, 20/20).
+
+- Fourier arm (PR 4.0-5.6 — the 25-56x reconstruction regime):
+  E_T -15.89 [-17.46, -14.27]; 4/45 Bonferroni survivors ALL on the
+  negative side (target ablations move the residual LESS than
+  controls — the representational signature); 0/45 crossover
+  survivors; beats-all 22%.
+- Tanh control arm (PR 1.39-1.48): the identical null at smaller
+  scale (E_T -0.058; 0 crossovers).
+- Verdict R2b as pre-written: the within-PINN boundary is measured
+  on both sides with BOTH criteria — crossing into the high-rank
+  regime transfers the reconstruction advantage but NOT causal
+  specificity. The chain rank -> reconstruction -> causality: two
+  arrows measured, the third consistently absent across every regime
+  tested (stages 5/8, H16b, R2b).
+- Analysis correction, made BEFORE any verdict was recorded: the
+  crossover criterion applied ONE-SIDED (>=15/20) as registered; a
+  first two-sided implementation spuriously certified never-crossing
+  features (P(0/20) small). Raw counts unchanged: every feature
+  crosses 0/20 in both arms.
+
+Also: README evidence section updated to the v4.1 state (within-PINN
+boundary thesis, R1b, honest engineering claims); test-count
+receipts 155 -> 171; RESULTS.md 5A.13; checksums 23/23.
+
 ## [4.1.0] — 2026-09-11 — "R1 Head-to-Head Run: R1b (Criteria Dissociate) + v4.0 Paper Rebuild"
 
 ### R1 — PhysSAE head-to-head (preregistered, gates passed, run, recorded R1b)

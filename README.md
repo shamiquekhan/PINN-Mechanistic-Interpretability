@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 155/155 Passed](https://img.shields.io/badge/Tests-155%2F155%20Passed-brightgreen.svg)](tests/)
+[![Tests: 171/171 Passed](https://img.shields.io/badge/Tests-171%2F171%20Passed-brightgreen.svg)](tests/)
 [![CI](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml/badge.svg)](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
@@ -22,16 +22,18 @@ A GPU-accelerated research framework for analyzing, monitoring, and intervening 
 - **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing, annotated physics latent features, effective rank / participation ratio / local tangent rank analysis, statistical hardening (power analysis, Bayesian posteriors, threshold sensitivity), and activation-manifold visualizations.
 - **SOTA Optimization Baselines (`experiments/sota_baselines.py`)**: GradNorm, NTK-adaptive weighting, and RBA residual attention for comparison against the controller.
 
-## Current Evidence (v3.2)
+## Current Evidence (v4.1)
 
-The current benchmark is a **basis-independent hardened negative mechanistic result, with the regime boundary measured on both sides**. All numbers below are read from the artifacts of the [fresh full-campaign rerun](docs/fresh_campaign_record.md) plus the stage-14 operator causal battery (regenerate with `scripts/reproduce_main_results.sh`; machine-checked by `scripts/check_results_grounded.py` in CI):
+The thesis: **when** sparse feature representations support mechanistic interpretation is a measurable function of representational geometry — and the boundary runs *inside* the PINN family, not between PINNs and operators. All numbers are read from committed artifacts (regenerate with `scripts/reproduce_main_results.sh`; machine-checked by `scripts/check_results_grounded.py` in CI):
 
-1. **SAE causal null (stage 5, honest controls):** $E_T$ = −0.0173, 95% CI [−0.0329, −0.0037] — ablating a candidate feature moves the loss *less* than ablating another active latent (matched-deletion controls, 0 no-ops); 0/8 features survive Bonferroni or BH-FDR; planted-feature positive control passes (cosine 0.989, 9.2× its matched control).
-2. **PCA causal null (stage 8):** the identical battery on PCA components — $E_T$ = −0.0131 [−0.0268, −0.0006], 0/8 survive, paired PCA−SAE difference spans zero. No feature basis, linear or sparse, is causally specific here.
+1. **SAE causal null (stage 5, honest controls):** $E_T$ = −0.0173, 95% CI [−0.0329, −0.0037] — ablating a candidate feature moves the loss *less* than ablating another active latent (matched-deletion controls); 0/8 features survive Bonferroni or BH-FDR; planted-feature positive control passes (cosine 0.989, 9.2× its matched control).
+2. **PCA causal null (stage 8):** the identical battery on PCA components — 0/8 survive, paired PCA−SAE difference spans zero. No feature basis, linear or sparse, is causally specific in the low-rank regime.
 3. **Causal abstraction null (stage 9):** neither PCA nor SAE alignments beat a random basis in partial interchange interventions for region identity.
-4. **Geometry (stages 3/10):** local tangent rank exactly equals input dimension across all eight PDE families and widths 16–512 (the provable bound, saturated); covariance participation ratio stays 1.14–2.51 (mean 1.78 of 64) — PINN activations are not in superposition (see `docs/theory_activation_rank.md` for the corrected theory: covariance rank is *not* bounded by input dimension; the tangent-rank bound is).
-5. **Regime boundary (stage 11):** an FNO on function-space regression has PR 6.8 of 64 and there the same TopK SAE **beats k-matched PCA 4.7×** — the superposition regime exists. **Stage 14 (operator causal battery)** completes the causal side: 2/8 features survive MC correction at 8/8 batch consistency where every PINN basis has 0/8 — a suggestive, weakened asymmetry (preregistered H14a/H14b; see `docs/preregistration.md` and [RESULTS.md §5A.7](RESULTS.md)).
-6. **Engineering (stages 6/7/12, config-faithful protocol):** conventional monitor AUROC 0.875 [0.814, 0.960]; SAE-augmented 0.877 (P(SAE better) = 0.51 — no advantage); controller rescues boundary starvation 0.421 → 0.0002 (oracle level) with SAE features measured as bit-identical inert cargo; on the config-faithful protocol the controller beats NTK-adaptive weighting (0.0064) while GradNorm/RBA actively harm — both protocol readings are recorded (the pre-fix loop violated the run config).
+4. **Geometry (stages 3/10 + H18):** local tangent rank exactly equals input dimension across all eight PDE families and widths 16–512 (the provable bound, saturated); covariance PR 1.14–2.51 — and **depth lowers it further** (2.05 → 1.15, depths 2–6). PINN activations are not in superposition.
+5. **The boundary is WITHIN PINNs (stage 18, H18a — the centerpiece):** a Fourier-feature PINN (width 64, n_freq=32) on the same 1D Poisson task reaches activation PR 4.0–5.6 (FNO neighborhood: 6.8) and there **the same TopK SAE beats k-matched PCA 25–56×** (3/3 seeds). Tangent rank stays 1 everywhere — covariance rank is the regime discriminator, dissociated from manifold dimension. The preregistered rank diagnostic predicted which runs would flip.
+6. **Operator regime (stages 11/14/16):** FNO PR 6.8, SAE beats k-matched PCA 4.7× (reconstruction); the operator causal-asymmetry thread is closed at H16b (6/16 Bonferroni, 0/16 direction-reversal) — the boundary's causal side rests on R2.
+7. **PhysSAE reconciliation (v4.1, R1 — R1b):** on matched-architecture checkpoints (5×128, their training spec, 3 seeds), PhysSAE-style evidence replicates but is *generic*: concept alignment appears for every basis including random directions (max |r| 0.85–0.96); SAE ablation footprints are 2.0–2.5× more concentrated than PCA/ICA — *and equally more concentrated than random directions*; our effect-magnitude battery is null for every basis (random at the 0/8 chance floor on all 6 runs). The causal criteria dissociate; both programs independently discovered the rank-collapse-with-convergence regularity. See `docs/physSAE_reconciliation.md`.
+8. **Engineering, honestly bounded (stages 6/7/12 + H17/H19):** conventional monitor AUROC 0.875 — but the honest loss-trajectory floor reaches 0.786 (H19: much of the apparent margin was the rule, not the features); controller rescues boundary starvation to oracle level, **wins its home class** (0.00012 vs NTK 0.0044), never degrades catastrophically across the three-failure battery, and loses to NTK-adaptive elsewhere (H17: robustness, not per-failure SOTA). SAE features are inert cargo throughout.
 
 See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations. For what is *verified end-to-end right now* versus in-flight, see [PROJECT_STATUS.md](PROJECT_STATUS.md). For the executed 29-issue external review — every fix, re-run, and the errata for numbers that moved — see [REVIEW_RESPONSE.md](REVIEW_RESPONSE.md).
 
@@ -104,7 +106,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 155 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 171 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -191,7 +193,7 @@ This automatically executes:
 │   ├── causal_abstraction.py # Interchange battery driver (v3)
 │   ├── positive_control.py   # Planted-feature pipeline sanity
 │   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–15)
-├── tests/                    # Comprehensive Unit Test Suite (155 tests)
+├── tests/                    # Comprehensive Unit Test Suite (171 tests)
 │   └── unit/
 ├── docs/
 │   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion
