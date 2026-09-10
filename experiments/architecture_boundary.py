@@ -62,7 +62,8 @@ PR_MOVE_THRESHOLD = 3.0
 
 
 def build_h18_config(name: str, hidden_layers: List[int], seed: int,
-                     fourier: bool, output_root: Path) -> Dict:
+                     fourier: bool, output_root: Path,
+                     n_freq: int = 32) -> Dict:
     """Fixed 1D Poisson task (the width-scaling control), width 64."""
     return {
         "run": {
@@ -90,7 +91,7 @@ def build_h18_config(name: str, hidden_layers: List[int], seed: int,
             "activation": "tanh",
             "init": "xavier",
             "fourier_embed": fourier,
-            "fourier_n_freq": 32,
+            "fourier_n_freq": n_freq,
             "fourier_scale": 1.0,
         },
         "training": {
