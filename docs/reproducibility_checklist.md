@@ -13,7 +13,7 @@ maps to a command and an expected outcome (details in
 
 ## Unit tests
 
-- [ ] `python -m pytest tests/ -q` → **155 passed** (~15 s, CPU or GPU)
+- [ ] `python -m pytest tests/ -q` → **171 passed** (~15 s, CPU or GPU)
 - [ ] `python -m compileall -q analysis controller experiments interventions monitoring operators pinn pinn_logging sae tests` → no output (clean compile)
 
 ## Smoke tests

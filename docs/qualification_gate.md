@@ -1,3 +1,8 @@
+> **HISTORICAL (Week-8 qualification record).** The operational thresholds
+> defined here were the v1 labeling standard; the current labeler is
+> `monitoring/features.py:derive_failure_step` and the current provenance
+> audit is stage 19 (H19, `runs/monitor_audit/`). Retained as provenance.
+
 # Qualification Gate Results (Week 8)
 
 ## Summary

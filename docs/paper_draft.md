@@ -1,7 +1,12 @@
 # Paper Draft — "When Superposition Fails: The Limits of Sparse Autoencoders in Scientific Machine Learning"
 
-**Status:** v3 draft skeleton with measured numbers filled in from `runs/`.
-Target: NeurIPS 2026 / ICML 2027 main track, 9 pages.
+**Status:** HISTORICAL (v3 draft skeleton). Superseded by the current
+manuscript at [`paper/`](../paper/) — *"When Sparse Features Become
+Mechanistic: Representation Geometry and Causal Interpretability in
+Physics-Informed Neural Networks"* (17 pp, v4.1 evidence state) — and the
+arXiv package at `paper/arxiv_package/`. Retained for the preregistration
+provenance trail (this skeleton predates the H16–H19 + R1–R5 outcomes); its
+numbers reflect the v3 evidence state and are NOT current.
 
 ---
 

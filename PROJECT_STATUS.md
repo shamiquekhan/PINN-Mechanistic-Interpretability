@@ -101,8 +101,8 @@ Each item: what ran → where the output lives.
   upload-ready files + manifest + provenance table live in
   `docs/osf_upload/`; only the account-holder upload step remains.
 - arXiv submission: **package prepared and compiled** at
-  `paper/arxiv_package/` (main.tex, references.bib, 9 figures, 7 tables,
-  12-page reference PDF; build recipe + submission checklist in its
+  `paper/arxiv_package/` (main.tex, references.bib, 10 figures, 7 tables,
+  17-page reference PDF; build recipe + submission checklist in its
   README). Remaining: verify bib details against originals, then upload
   (requires author account).
 - Human-expert validation study (blinded PCA-vs-SAE identification).
@@ -127,7 +127,7 @@ Each item: what ran → where the output lives.
 ```bash
 git clone https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability
 cd PINN-Mechanistic-Interpretability
-python -m pytest tests/ -q                              # 155 tests
+python -m pytest tests/ -q                              # 171 tests
 python scripts/check_results_grounded.py                # doc/artifact grounding
 sha256sum -c data/checksums.sha256                      # artifact integrity
 python -m experiments.run_pipeline --stages 5           # re-run any stage

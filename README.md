@@ -139,6 +139,17 @@ This automatically executes:
 13. **Statistical hardening** — power, Bayesian posterior, threshold sensitivity (`runs/statistical_hardening/`).
 14. **Operator causal battery** — the 3-control causal protocol + interchange on FNO block states, completing the regime-boundary claim at reconstruction level (`runs/operator_causal/`). **Stage 16 (H16)** closes the causal-asymmetry thread: high-n battery (n=20, direction-reversal criterion) fires H16b — 6/16 Bonferroni survivors, 0/16 direction-reversal survivors (`runs/operator_highn/`).
 15. **NTK conflict↔SAE bridge** — the preregistered correlational bridge between Wang-et-al. gradient conflict and feature-specific SAE activity (revision Gap 2; recorded null) (`runs/ntk_bridge/`).
+16. **Operator causal asymmetry, high n** — the direction-reversal battery on FNO block states; H16b closed thread T1 (`runs/operator_highn/`).
+17. **Controller failure battery** — H17a: robustness across three failure classes, not per-failure SOTA (`runs/controller_failure_battery/`).
+18. **Architecture boundary** — H18a: Fourier PINN PR 4.0–5.6, SAE beats PCA 25–56× — superposition *within PINNs* (`runs/architecture_boundary/`).
+19. **Monitor label provenance audit** — H19: honest trajectory floor 0.786; threshold floor was a straw man (`runs/monitor_audit/`).
+20. **R1 — PhysSAE head-to-head** — preregistered reconciliation on matched checkpoints: their evidence is generic (R1b) (`runs/r1_physSAE/`).
+21. **R2 — causal battery on the Fourier PINN** — the third arrow does not close; superposition necessary but not sufficient (R2b) (`runs/r2_fourier_causal/`).
+22. **R3 — frequency sweep** — the dose-response curve: rank saturates, compression keeps climbing (`runs/r3_frequency_sweep/`).
+23. **R4 — SAE-seed robustness** — dictionaries non-unique (cosine 0.41), verdicts stable 18/18 (`runs/r4_sae_seed_robustness/`).
+24. **R5 — Burgers boundary** — R5a: the boundary replicates on a time-dependent family (`runs/r5_burgers_boundary/`).
+
+Stages 1–15 run through `experiments/run_pipeline.py`; stages 16–19 and R1–R5 have dedicated preregistered drivers (see the experiments tree below).
 
 ---
 
@@ -192,17 +203,30 @@ This automatically executes:
 │   ├── pca_causal.py         # PCA causal battery driver (v3)
 │   ├── causal_abstraction.py # Interchange battery driver (v3)
 │   ├── positive_control.py   # Planted-feature pipeline sanity
+│   ├── operator_causal.py    # Operator causal battery (stage 14)
+│   ├── ntk_bridge.py        # NTK conflict ↔ SAE activity bridge (stage 15)
+│   ├── operator_highn.py    # High-n direction-reversal battery (stage 16 / H16)
+│   ├── controller_failure_battery.py # Controller generalization battery (stage 17 / H17)
+│   ├── architecture_boundary.py # Fourier/depth rank probe (stage 18 / H18)
+│   ├── monitor_label_audit.py # Monitor label provenance audit (stage 19 / H19)
+│   ├── r1_physSAE_head_to_head.py # PhysSAE reconciliation head-to-head (R1)
+│   ├── r2_fourier_causal.py # Causal battery on the Fourier PINN (R2)
+│   ├── r3_frequency_sweep.py # Fourier frequency dose-response (R3)
+│   ├── r4_sae_seed_robustness.py # SAE-seed robustness, Hungarian matching (R4)
+│   ├── r5_burgers_boundary.py # Within-PINN boundary on Burgers (R5)
 │   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–15)
 ├── tests/                    # Comprehensive Unit Test Suite (171 tests)
 │   └── unit/
 ├── docs/
 │   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion
-│   ├── preregistration.md    # Preregistered v3 hypotheses & outcomes
-│   ├── paper_draft.md        # NeurIPS-target draft skeleton with measured numbers
+│   ├── preregistration.md    # Preregistered hypotheses & outcomes (H1–H19, R1–R5)
+│   ├── physSAE_reconciliation.md # Concurrent-work reconciliation + the level ladder
+│   ├── final_claim_ladder_v4.md # The binding claim wording + evidence chains
+│   ├── paper_draft.md        # Historical v3 draft skeleton (superseded by paper/)
 │   └── data_card.md          # Benchmark data card
 ├── figures/                  # Publication figure scripts (read runs/ JSONs only)
 │   ├── _common.py            #   shared artifact-loading + style helpers
-│   ├── figure_01..08_*.py    #   one script per paper figure
+│   ├── figure_01..10_*.py    #   one script per paper figure
 │   └── generated/            #   PNG output (git-ignored)
 ├── scripts/                  # User-facing reproducibility commands
 │   ├── setup_env.sh          #   pinned venv setup (requirements.lock)
@@ -221,7 +245,7 @@ This automatically executes:
 ├── Dockerfile                # Pinned reproducible environment
 ├── LICENSE                   # CC BY 4.0
 ├── CITATION.cff              # Machine-readable citation metadata
-├── CHANGELOG.md              # Research + code evolution (v1 → v3)
+├── CHANGELOG.md              # Research + code evolution (v1 → v4)
 ├── ROADMAP.md                # Completed / Planned / Future
 ├── CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md
 ├── ARCHITECTURE.md           # In-depth architectural design specifications
@@ -235,7 +259,9 @@ This automatically executes:
 | Document | Purpose |
 |---|---|
 | [RESULTS.md](RESULTS.md) | The evidence: every claim with numbers, CIs, and limitations |
-| [docs/preregistration.md](docs/preregistration.md) | Stage 8–13 hypotheses + decision rules, written before running |
+| [docs/preregistration.md](docs/preregistration.md) | All hypotheses + decision rules (H1–H19, R1–R5), written before running |
+| [docs/physSAE_reconciliation.md](docs/physSAE_reconciliation.md) | Concurrent-work reconciliation, confound decomposition, level ladder |
+| [docs/final_claim_ladder_v4.md](docs/final_claim_ladder_v4.md) | Binding claim wording + evidence chains + the L1–L5 interpretability ladder |
 | [docs/experiment_matrix.md](docs/experiment_matrix.md) | Claim → hypothesis → command → artifact → figure map |
 | [docs/reproducibility.md](docs/reproducibility.md) | Environment, seeds, nondeterminism, expected outputs |
 | [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md) | Fresh-environment verification protocol |

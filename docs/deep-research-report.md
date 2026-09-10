@@ -1,3 +1,13 @@
+> **HISTORICAL (pre-research planning, 2026-09-06).** The original research
+> proposal that motivated this framework — written BEFORE any experiment.
+> Its central hypothesis (SAE features causally drive PINN failures) was
+> tested and REJECTED by the preregistered campaign; see
+> [preregistration.md](preregistration.md) and [RESULTS.md](../RESULTS.md)
+> for the measured outcomes, and
+> [physSAE_reconciliation.md](physSAE_reconciliation.md) for the concurrent-
+> work reconciliation. Retained as the provenance of the original
+> predictions.
+
 # Mechanistic Interpretability in PINNs: Discovering, Diagnosing, and Preventing Optimization Failures
 
 ## Abstract  

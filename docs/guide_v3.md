@@ -1,3 +1,8 @@
+> **HISTORICAL (v3 planning document).** Superseded by the v3.5/v4.1
+> preregistration sections in [preregistration.md](preregistration.md) and
+> the evidence in [RESULTS.md](../RESULTS.md). Retained as the provenance
+> record of the v3 revision's design decisions.
+
 # Guide & Implementation Plan v3
 ## Mechanistic Interpretability for PINN Optimization Failures
 
@@ -127,7 +132,7 @@ A manufactured 2D Poisson prototype is now available at `configs/poisson_2d_boun
 | Monitor suite + run-level CIs | `runs/monitor_report.json` | `--stages 6` |
 | Controller rescue + monitor-source ablation | `runs/controller_demo/controller_comparison.json` | `--stages 7` |
 | PCA causal battery / causal abstraction / operator boundary / operator causal / SOTA / hardening | `runs/pca_causal_results.json`, `runs/causal_abstraction_results.json`, `runs/operator_boundary/`, `runs/operator_causal/`, `runs/sota_baselines/`, `runs/statistical_hardening/` | `run_pipeline --stages 8,9,11,12,13,14` |
-| Full test suite (155 tests) | — | `pytest tests/` |
+| Full test suite (171 tests at the v3 planning time) | — | `pytest tests/` |
 
 ---
 

@@ -1,3 +1,8 @@
+> **HISTORICAL (pre-research implementation plan).** The H1–H4 endpoint
+> design that the campaign executed; outcomes are recorded in
+> [preregistration.md](preregistration.md) and mapped in
+> [experiment_matrix.md](experiment_matrix.md). Retained as provenance.
+
 ﻿# Implementation plan: Mechanistic interpretability for PINN optimization failures
 
 ## 1. Experimental objective

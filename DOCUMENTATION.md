@@ -187,7 +187,7 @@ lambda_pde, lambda_bc, event = controller.step(
 
 ## 7. Master Research Campaign Execution
 
-To run all 15 stages sequentially in a single automated pipeline:
+To run all 15 pipeline stages sequentially in a single automated pipeline:
 
 ```bash
 python -m experiments.run_pipeline
@@ -208,6 +208,23 @@ python -m experiments.run_pipeline --stages 10  # 2D suite + time-dependent geom
 python -m experiments.run_pipeline --stages 11  # FNO operator regime boundary
 python -m experiments.run_pipeline --stages 12  # SOTA baselines vs controller
 python -m experiments.run_pipeline --stages 13  # statistical hardening
+python -m experiments.run_pipeline --stages 14  # operator causal battery (FNO)
+python -m experiments.run_pipeline --stages 15  # NTK conflict ↔ SAE activity bridge
+```
+
+The preregistered v3.5/v4.1 stages run through their dedicated drivers (all
+gated by planted-feature positive controls):
+
+```bash
+python -m experiments.operator_highn    # stage 16 (H16): high-n direction-reversal battery
+python -m experiments.controller_failure_battery  # stage 17 (H17): controller generalization
+python -m experiments.architecture_boundary       # stage 18 (H18): Fourier/depth rank probe
+python -m experiments.monitor_label_audit         # stage 19 (H19): monitor provenance audit
+python -m experiments.r1_physSAE_head_to_head     # R1: PhysSAE reconciliation head-to-head
+python -m experiments.r2_fourier_causal          # R2: causal battery on the Fourier PINN
+python -m experiments.r3_frequency_sweep         # R3: frequency dose-response
+python -m experiments.r4_sae_seed_robustness      # R4: SAE-seed robustness
+python -m experiments.r5_burgers_boundary          # R5: within-PINN boundary on Burgers
 ```
 
 ## 8. Verification

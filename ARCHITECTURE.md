@@ -23,7 +23,7 @@ This document outlines the detailed system architecture, module boundaries, stat
                                          v
 +---------------------------------------------------------------------------------+
 |                            interventions/ Engine Module                         |
-|  - SAEInterventionHook (7 Modes)     - Inference-Time Counterfactuals         |
+|  - SAEInterventionHook (8 Modes)     - Inference-Time Counterfactuals         |
 |  - Detached Weight Autograd Graph    - Causal Scoring (E_T & S_spec)            |
 +---------------------------------------------------------------------------------+
                                          |
@@ -63,37 +63,32 @@ All stochastic ops (collocation sampling, weight initializations, SAE training s
 
 ## 3. Closed-Loop Controller State Transitions
 
-The closed-loop adaptive PINN controller implements a 5-state deterministic state machine:
+The closed-loop adaptive PINN controller implements a 4-state deterministic state machine (`IDLE → WARNING → CONFIRMED → COOLDOWN → IDLE`; the bounded action fires **on entry into CONFIRMED**, when the confirmation count reaches `confirmation_steps` — there is no separate ACTING state):
 
 ```
        ┌───────────┐
        │   IDLE    │ ◄──────────────────────────────────────────────────────┐
        └─────┬─────┘                                                        │
-             │ monitor_score > warning_thresh                               │
+             │ monitor_score >= alarm_threshold                              │
              ▼                                                              │
        ┌───────────┐                                                        │
        │  WARNING  │ ─── (score drops below threshold) ──► Reset Window     │
        └─────┬─────┘                                                        │
-             │ confirmed for N consecutive steps                            │
+             │ confirmed for confirmation_steps consecutive steps           │
+             ▼                                                              │
+       ┌───────────────┐   bounded action applied on CONFIRMED entry        │
+       │  CONFIRMED    │ ── (e.g. λ_bc rebalance, capped at max_lambda_bc)  │
+       └─────┬─────────┘                                                        │
              ▼                                                              │
        ┌───────────┐                                                        │
-       │ CONFIRMED │                                                        │
-       └─────┬─────┘                                                        │
-             │ Select bounded corrective action                             │
-             ▼                                                              │
-       ┌───────────┐                                                        │
-       │  ACTING   │ ─── Apply Action (e.g. BC Reweight / GradNorm)         │
-       └─────┬─────┘                                                        │
-             │ Action applied                                               │
-             ▼                                                              │
-       ┌───────────┐                                                        │
-       │ COOLDOWN  │ ─── (after cooldown_steps) ────────────────────────────┘
-       └───────────┘
+       │ COOLDOWN  │ ── (rollback check: post-action L2 must beat            │
+       └─────┬─────┘     pre-action × tolerance for degradation_patience,   │
+             │            else REAL rollback restores pre-action λs)        │
+             │ (after cooldown_steps) ──────────────────────────────────────┘
 ```
 
-### Bounded Corrective Actions
-1. **`increase_lambda_bc`**: Multiplies boundary weight $\lambda_{\text{bc}}$ by 2.0 (up to a ceiling of $100.0$).
-2. **`gradnorm_rebalance`**: Equalizes PDE and boundary loss gradient magnitudes:
-   $$\lambda_{\text{bc}} \leftarrow \lambda_{\text{pde}} \cdot \frac{\|\nabla_\theta L_{\text{pde}}\|}{\|\nabla_\theta L_{\text{bc}}\|+\epsilon}$$
-3. **`resample_high_residual`**: Resamples collocation points focused in spatial areas exceeding residual percentiles.
-4. **`inject_fourier_features`**: Dynamically enables Fourier feature preprocessing embedding to resolve high-frequency spectral failure.
+### Bounded Corrective Actions (per failure class)
+1. **`increase_lambda_bc`** (boundary starvation, and — via the same bounded rebalance — spectral suppression since the v3.5 preregistration): multiplies $\lambda_{\text{bc}}$ by `bc_rebalance_factor` (4.0, capped at `max_lambda_bc`).
+2. **`gradnorm_rebalance`** (gradient conflict): equalizes the two loss weights toward half their sum.
+3. **`trigger_resample`** (collocation starvation): a TRIGGER event consumed by the training loop through the `PINNTrainer.train(resample_fn=...)` seam (the H3/H4 wiring — not a silent no-op).
+4. **`trigger_fourier_features`**: REMOVED from the action space by the v3.5 preregistration (R2b pre-decision) — a half-wired input-dim-changing warm restart is not carried into generalization tests; implementing it is registered future work.

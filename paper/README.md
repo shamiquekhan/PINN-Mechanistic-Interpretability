@@ -1,9 +1,11 @@
 # `paper/` — Submission Artifact
 
-Full LaTeX manuscript for the NeurIPS/ICML-target paper (v3.3.0: complete
-prose, 9 figures, 7 artifact-generated tables, 12-page compiled PDF).
-The narrative outline lives in [`docs/paper_draft.md`](../docs/paper_draft.md);
-this directory is the compiled-submission artifact.
+Full LaTeX manuscript (v4.1 evidence state: complete prose, 10 figures,
+7 artifact-generated tables, 17-page compiled PDF — H1–H19 + R1–R5,
+PhysSAE reconciliation, the within-PINN architecture boundary as the
+centerpiece). The historical v3 draft skeleton is
+[`docs/paper_draft.md`](../docs/paper_draft.md) (marked HISTORICAL);
+this directory is the current compiled-submission artifact.
 
 ## Layout
 
@@ -11,7 +13,7 @@ this directory is the compiled-submission artifact.
 |---|---|
 | `main.tex` | Full manuscript (all sections in prose; tables `\input`) |
 | `references.bib` | Citation backbone (verify bibliographic details before submission) |
-| `main.pdf` | Reference build (12 pages) |
+| `main.pdf` | Reference build (17 pages) |
 | `tables/*.tex` | **Generated** by `scripts/generate_tables.py` from `runs/` JSONs — do not hand-edit |
 | `figures/` | Copies of `figures/generated/*.png` (refreshed by `scripts/generate_figures.sh`) |
 | `supplementary/` | Appendices (proofs from `docs/theory_activation_rank.md`, full protocol text) |

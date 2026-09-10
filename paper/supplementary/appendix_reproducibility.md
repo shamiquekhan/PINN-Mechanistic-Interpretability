@@ -31,7 +31,7 @@ development: [requirements.txt](../requirements.txt). The
 
 **GPU memory:** the full campaign runs on a 4 GB GPU. Peak observed usage
 is < 2 GB (largest model: 512-wide Poisson; largest SAE input: 65,000×64).
-CPU-only execution works for the entire unit-test suite (155 tests) and all
+CPU-only execution works for the entire unit-test suite (171 tests) and all
 analysis stages; only stage-1 training is slower (see §6).
 
 ## 2. Installation
@@ -82,7 +82,7 @@ pip install -r requirements.txt
 Unit tests first, then the full 15-stage campaign:
 
 ```bash
-python -m pytest tests/ -q                 # 155 tests, ~15 s CPU
+python -m pytest tests/ -q                 # 171 tests, ~15 s CPU
 python -m experiments.run_pipeline          # all 15 stages
 ```
 
@@ -142,7 +142,7 @@ The reproducibility checklist for a fresh environment is maintained at
 
 ## 6. CPU-only execution
 
-All 155 unit tests pass CPU-only (`CUDA_VISIBLE_DEVICES="" python -m
+All 171 unit tests pass CPU-only (`CUDA_VISIBLE_DEVICES="" python -m
 pytest tests/ -q`, ~12 s). Analysis stages (2–13) that only read `runs/`
 artifacts are CPU-only by construction. Stage 1 training and stages 7/10/11
 retraining arms run on CPU at roughly 5–10× slower wall time. The GitHub CI

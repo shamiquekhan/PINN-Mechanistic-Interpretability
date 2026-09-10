@@ -1,7 +1,7 @@
 {
   "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts",
-  "version": "3.4.0",
-  "date": "2026-09-08",
+  "version": "4.0.0",
+  "date": "2026-09-11",
   "license": "CC-BY-4.0",
   "generator": "experiments/run_pipeline.py stages 1-15 (post-external-review-fix re-runs)",
   "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v3.4.0: post-external-review fix campaign \u2014 matched-deletion controls (C3), space-time validation (C2), config-faithful controller protocol (H3), real gradient monitor arm (H1).",
