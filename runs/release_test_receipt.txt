@@ -17,4 +17,4 @@ tests/unit/test_v2_regression.py: 5 warnings
     return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-171 passed, 1 skipped, 23 warnings in 15.16s
+171 passed, 1 skipped, 23 warnings in 13.93s

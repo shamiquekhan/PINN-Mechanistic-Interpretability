@@ -51,11 +51,20 @@ CI fails before the docs land — regenerating tables/figures from
 
 ## Claims discipline (important)
 
-The operator causal battery (Section 6.2 / table_operator_causal) is
-reported as a **suggestive asymmetry, NOT a confirmed causal boundary** —
-the preregistered conjunctive rule fired H14b, and the preregistered H16
-high-n resolution (6/16 Bonferroni survivors, 0/16 direction-reversal
-survivors) closed the causal-asymmetry thread at H16b. The regime
-boundary claim rests on the reconstruction side (PR 6.8, SAE beats
-k-matched PCA 4.7×) alone. Do not strengthen this claim without new
-preregistered evidence.
+- The operator causal battery (Section 6.2 / table_operator_causal) is
+  reported as a **suggestive asymmetry, NOT a confirmed causal
+  boundary** — the preregistered conjunctive rule fired H14b, and H16b
+  closed the causal-asymmetry thread (6/16 Bonferroni, 0/16
+  direction-reversal).
+- The H18 within-PINN boundary is a **compression** boundary: the same
+  TopK SAE beats k-matched PCA 25–56× (1D Poisson) and 31–38× (Burgers,
+  R5a) in the high-rank regime, stable across SAE seeds (R4). The
+  causal battery is null in every regime (stages 5/8; H16b; R2b —
+  E_T −15.9 with 0/45 crossover in the Fourier regime itself).
+  **Superposition is necessary but not sufficient.** Do not conflate
+  the reconstruction advantage with interpretability.
+- The PhysSAE head-to-head (R1) shows their alignment and
+  spatial-concentration evidence is achieved equally by random bases
+  on matched checkpoints; claims of SAE-specific mechanism require
+  effect-magnitude specificity against matched-deletion controls,
+  which no regime tested provides.

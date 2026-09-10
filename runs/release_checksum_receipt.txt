@@ -19,3 +19,8 @@ runs/feature_dictionary/random_baseline_report.json: OK
 runs/controller_failure_battery/controller_failure_battery_report.json: OK
 runs/architecture_boundary/architecture_boundary_report.json: OK
 runs/monitor_audit/monitor_audit_report.json: OK
+runs/r1_physSAE/r1_report.json: OK
+runs/r2_fourier_causal/r2_report.json: OK
+runs/r3_frequency_sweep/r3_report.json: OK
+runs/r4_sae_seed_robustness/r4_report.json: OK
+runs/r5_burgers_boundary/r5_report.json: OK
