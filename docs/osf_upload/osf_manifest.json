@@ -1,20 +1,31 @@
 {
-  "title": "When Superposition Fails \u2014 Preregistration & Campaign Records (OSF bundle)",
+  "title": "When Sparse Features Become Mechanistic \u2014 Preregistration & Campaign Records (OSF bundle)",
   "repo": "shamiquekhan/PINN-Mechanistic-Interpretability",
-  "version": "3.2.0",
-  "prepared": "2026-09-07",
+  "version": "4.1.0",
+  "prepared": "2026-09-11",
   "provenance": {
     "preregistration_committed_before_runs": "in-repo git history (public timestamps)",
-    "stage14_rules_commit": "f6eedf9",
-    "stage14_outcome_commit": "ab54b82",
-    "fresh_campaign_commit": "e9cbf4a"
+    "v3_5_campaign_rules_commit": "0b0df24 (R1-R5 registered BEFORE any R-run)",
+    "h16_rules_commit": "ae8dafd",
+    "h16_outcome_commit": "171ee97",
+    "h17_machinery_fix_commit": "fc77850 (pre-verdict)",
+    "h18_rules_and_fix_commit": "f647dca",
+    "r1_outcome_commit": "b5ea3c1",
+    "r2_outcome_commit": "84e3b0e",
+    "concurrent_work": "PhysSAE arXiv:2609.07061 \u2014 reconciliation committed before any R-run"
   },
   "files": [
     {
       "path": "preregistration.md",
-      "bytes": 17751,
-      "sha256": "b60cac9699d9998ee4bf99fcec241054f1d6f6dc249dade434a0b80da665a24d",
+      "bytes": 40948,
+      "sha256": "677e1dd0b9369fe3ee4dd5e8a7590779c470465f5bbebe9d62b37faa46affd71",
       "source_in_repo": "docs/preregistration.md"
+    },
+    {
+      "path": "physSAE_reconciliation.md",
+      "bytes": 17010,
+      "sha256": "af8ea8245e5580ac7339a1dbd92a44b4d343d8b427599227b79e8325f67e6fb0",
+      "source_in_repo": "docs/physSAE_reconciliation.md"
     },
     {
       "path": "experiment_matrix.md",

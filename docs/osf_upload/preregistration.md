@@ -374,6 +374,25 @@ a real boundary effect from two lucky features. This stage resolves T1.
 the real operator hook must pass at the same n; a gate failure voids the
 run.
 
+**Outcome (recorded after running):** The preregistered conjunctive rule
+fires **H16b** --- condition (ii) failed: the best feature's |ρ| = 0.22
+does not exceed the random-direction 95th percentile (0.34); no feature
+survives the crossover criterion. Condition (i) MET: 6/16 features
+survive Bonferroni; condition (iii) MET. The machinery gate PASSED
+(rho 0.96 raw / 0.98 specific). The 6 Bonferroni survivors do not
+exhibit a consistent amplify-vs-ablate crossover direction.
+
+**Recorded conclusion:** H16b — no operator feature exhibits the
+preregistered causal crossover (amplify-vs-ablate direction reversal)
+even at 2.5× power: 6/16 Bonferroni survivors, 0/16 direction-reversal
+survivors. Condition (ii) failed, so thread T1 (operator causal
+asymmetry) is closed at H16b; the regime-boundary claim rests on the
+reconstruction side (PR 6.8, SAE beats k-matched PCA 4.7×) alone, as
+the pre-written decision rule specifies. Full numbers:
+`runs/operator_highn/operator_highn_report.json`.
+
+---
+
 ## H17 — Controller generalization: the failure battery (Stage 17)
 
 **Motivation.** v3.4's "controller beats NTK-adaptive" rests on ONE
@@ -406,6 +425,49 @@ action is not carried into a generalization test. (Implementing the
 input-dim-changing warm restart is registered as explicit future work,
 not a hidden stub.)
 
+**Machinery incident, recorded (fixed BEFORE any H17 verdict was read):**
+the v3.4.2 stage-17 driver had five implementation defects — NTK/GradNorm
+arms routed through a code path with no NTK/GradNorm logic (silent
+no-action clones), `failure_class` hard-coded to `boundary_starvation`
+(spectral/RD-2D cells would never exercise their action branches), the
+preregistered F1 machinery gate not implemented, aggregation left as a
+"pending" placeholder, and the controller arms hand-rolling a second
+training loop (the H3 anti-pattern). All five were fixed at `fc77850`
+after a smoke test (200 steps, 1 seed), BEFORE the battery ran and
+before any verdict was read. The registered matrix, arms, seeds,
+controller config, and no-oracle protocol were not modified.
+
+**Outcome (recorded after running).** Machinery gate: **PASS** — F1
+controller rescue reproduces the v3.4 result on the reference seed 7
+(0.421 → 0.000162; all three seeds 5.7e-05–1.6e-04, all ≤ 0.01).
+Battery (mean final rel L2, 3 seeds per cell; per-seed values in the
+artifact):
+
+| Failure class | no-action | controller | NTK-adaptive | GradNorm | Winner |
+|---|---|---|---|---|---|
+| Boundary starvation (F1) | 0.221 | **0.000119** | 0.00436 | 3.82 | controller |
+| Spectral suppression (F2) | 0.509 | 0.335 | **0.00363** | 0.635 | NTK-adaptive |
+| RD-2D pilot (F3) | 1.961 | 1.980 | **1.674** | 1.973 | NTK-adaptive |
+
+The preregistered outcome is **H17a**: the controller wins where its
+trigger condition applies (F1, static misweighting — where it also beats
+NTK-adaptive 0.00012 vs 0.0044) and loses to the specialized method
+elsewhere (NTK-adaptive on F2/F3). The controller never loses
+catastrophically to no-action on any class (worst mean delta +0.019,
+RD-2D), but its F2 cell is high-variance (per-seed finals 0.0054 /
+0.995 / 0.0041): the bounded λ_bc rebalance is unreliable on spectral
+suppression. GradNorm actively harms on F1 (3.82 vs no-action 0.221),
+consistent with stage 12. On the RD-2D pilot every method including the
+oracle fails (~1.96 final, best mid-run ≈ 0.70–1.04): the task is
+unlearned at 2500 steps in this regime, so F3 measures that no method
+rescues it, not that any method wins it. Positioning per the
+pre-written H17a language: *robustness across unknown failures, not
+per-failure SOTA* — with the sharpened caveat that "robustness" here
+means never-catastrophic + home-class dominance, not cross-class
+improvement.
+
+Full numbers: `runs/controller_failure_battery/controller_failure_battery_report.json`.
+
 ## H18 — Scope boundary probe: Fourier-feature PINN + depth (Stage 18)
 
 **Motivation.** The strongest reviewer attack on the null: "width-16–512
@@ -432,6 +494,39 @@ side of the boundary; within-PINN architectural variation is missing.
   have moved the geometry; scope is honestly drawn at
   operator/function-space representations.
 
+**Machinery note (pre-run, recorded before any verdict):** the
+`fourier_embed` config field existed in the schema but was dead in the
+training entry point (`experiments/train.py` never passed it to `MLP`)
+— wired through at `f647dca`, BEFORE the run, with the registered
+design otherwise unchanged (width 64, n_freq=32, depths 2–6, seeds
+7/42/123, 2000 steps, PR-move bar 3.0 vs the measured width-scaling
+envelope 1.14–2.51).
+
+**Outcome (recorded after running).** The preregistered rule fires
+**H18a** — the strongest possible form of it:
+
+- **Fourier arm:** activation PR rises to 4.00–5.63 (mean 4.81, PR/W
+  0.075) — above the width-scaling envelope (1.14–2.51) and in the FNO's
+  neighborhood (6.8). Wherever PR moved, the SAE-vs-k-matched-PCA
+  comparison was run: **SAE beats PCA 3/3 seeds by 25–56×** (mean
+  PCA/SAE ratio 40.7; SAE test MSE 1.0e-4–3.5e-4 vs PCA 5.8e-3–8.6e-3).
+  This is a *within-PINN* demonstration of the superposition regime:
+  the same TopK SAE that is null on tanh PINNs becomes strongly
+  advantageous on Fourier-feature PINNs, and the rank diagnostic
+  predicted exactly which runs.
+- **Depth arm:** PR falls monotonically with depth (2.05 at depth 2 →
+  1.15 at depth 6) — depth makes representations *more* degenerate, not
+  less; the "your PINNs are too simple" attack inverts: depth does not
+  rescue superposition, it reduces the effective rank further.
+- **Geometry dissociation recorded:** tangent rank = 1 in every run
+  including Fourier — the 1D input curve stays a 1D manifold; what
+  Fourier features change is the *covariance* rank (energy spread across
+  frequencies), not the manifold dimension. Covariance PR, not tangent
+  rank, is the regime discriminator, exactly as the theory note
+  distinguishes the two.
+
+Full numbers: `runs/architecture_boundary/architecture_boundary_report.json`.
+
 ## H19 — Monitor label provenance audit (Stage 19)
 
 **Design.**
@@ -447,3 +542,218 @@ side of the boundary; within-PINN architectural variation is missing.
 
 **Acceptance:** the monitor section states its label provenance
 explicitly and the floor baseline is no longer a threshold rule alone.
+
+**Outcome (recorded after running).** Both registered parts executed
+(`experiments/monitor_label_audit.py`, artifact
+`runs/monitor_audit/monitor_audit_report.json`):
+
+- **(a) Label provenance audit:** the stage-10 RD2D runs (rel L2
+  1.92–1.94) **never entered monitor training** — they live under
+  `runs/dimensional_boundary_expanded/reaction_diffusion_2d/`, a
+  subdirectory the stage-6 pool does not scan; the registered
+  mislabeling concern is structurally moot for them (recorded, not
+  inferred). The monitor pool itself contained two artifact-labeled
+  runs, both **excluded from re-training** per the registered rule:
+  `reaction_diffusion_baseline` (fs=0 from an init transient, converges
+  to 0.0015) and `gradient_conflict_seed2026` (fs=0, final 0.0006 —
+  recovers to success). Pool 57 → 55 runs. Also recorded:
+  collocation-starvation runs (10/10) derive no failure step under the
+  operational labeler — the monitor never tests collocation failures,
+  consistent with the existing label-reproducibility exclusion.
+- **(b) Loss-only trajectory floor:** a logistic on past-only loss
+  channels (loss, loss_pde, loss_bc — rel_l2 and gradients excluded),
+  same split protocol and run-level CIs, scores **AUROC 0.786
+  [0.615, 0.898]** vs the threshold floor 0.468 and the conventional
+  arm 0.875 — it closes **78.2%** of the threshold→conventional gap.
+  The single-threshold floor was a straw man: most of the conventional
+  arm's apparent value over "loss-only" was the *rule* (threshold vs
+  trajectory), not the *features* (gradients). The conventional arm's
+  remaining marginal value (0.875 vs 0.786, CIs overlapping) is honest
+  but thin; the monitor section is repositioned accordingly.
+
+**Acceptance met:** label provenance is stated explicitly (per-run
+trace in the artifact), and the floor baseline is a trajectory monitor,
+not a threshold rule alone.
+
+---
+
+# v4.1 Preregistration (R1–R5) — PhysSAE reconciliation campaign
+
+*Registered 2026-09-11 per the standing discipline: this section is
+committed BEFORE any R-run. Motivation, confound decomposition, and the
+full comparison table live in `docs/physSAE_reconciliation.md` (read it
+as the scientific prelude to this section). Concurrent work: PhysSAE,
+arXiv:2609.07061v1.*
+
+## R1 — PhysSAE head-to-head on frozen checkpoints
+
+**Design.** Retrain Burgers + Allen–Cahn to the PhysSAE architecture spec
+(5×128 tanh, Adam 8000 + L-BFGS 300, w_BC=w_IC=100, w_F=1, 150/150/3000
+points, 3 PINN seeds) with penultimate-layer activation logging on a
+200×100 (x,t) grid; re-extract penultimate activations from the H18
+checkpoints (tanh depth-3 vs Fourier n_freq=32). On each frozen
+checkpoint: dictionaries = {ReLU+L1 SAE (D=512, λ=0.02, unit-norm
+decoder, 3 SAE seeds), TopK SAE (k=8, exp=4), PCA, ICA (matched count),
+random matched directions}. Evaluations per dictionary: (a)
+PhysSAE-style — concept-field alignment from independent reference
+solutions + permutation null (n=500), ESF80 localization, matched-atom
+negative controls (n=10) with the **pre-registered sign convention:
+advantage = ESF80_random − ESF80_top; positive = top atom more
+concentrated**; (b) ours — matched-deletion E_T battery with
+Bonferroni/BH correction; (c) reconstruction vs k-matched PCA.
+
+**Machinery gates (pre-registered).** The planted-feature positive
+control must pass through every new hook — penultimate-layer extraction,
+the ReLU+L1 SAE trainer, the ESF80 computation — before any verdict is
+read; a gate failure voids the affected sub-run.
+
+**Decision rule (pre-written).** R1a: both metric families succeed on
+matched-architecture checkpoints → the low-rank null is regime-bound;
+merge into the boundary story. R1b: PhysSAE-style metrics replicate but
+the E_T battery is null on the same checkpoints → the two causal
+criteria dissociate; the level ladder becomes the central contribution;
+both papers' claims stand at different levels. R1c: neither replicates
+under matched retraining → training/architectural regime arbitrates; the
+rank diagnostic decides. R1d: PhysSAE-style metrics succeed only on
+high-rank (Fourier) checkpoints → regime-boundary confirmation with
+PhysSAE as the high-rank positive example.
+
+## R2 — Causal battery on the Fourier PINN (the missing third arrow)
+
+**Design.** The preregistered matched-deletion E_T battery + H16
+direction-reversal criterion on the H18 Fourier-PINN dictionaries (both
+ReLU+L1 and TopK), n ≥ 16 candidates × 20 held-out function batches
+(the H16 protocol), planted-feature gate through the Fourier hook.
+
+**Decision rule (pre-written).** Reconstruction advantage accompanied by
+causal specificity → the boundary covers interpretability, not just
+compression. Null specificity despite reconstruction advantage →
+"superposition is necessary but not sufficient" is the recorded
+conclusion, and the reconciliation with PhysSAE is that their evidence
+lives below the specificity bar.
+
+## R3 — Fourier frequency sweep
+
+**Design.** n_freq ∈ {2, 4, 8, 16, 32, 64}, fixed 1D Poisson, width 64,
+3 seeds, per run: PR, PR/W, PCA-95, SAE-vs-PCA reconstruction (both SAE
+families), and the R2 battery wherever PR exceeds the registered
+move-bar (3.0).
+
+**Decision rule (pre-written).** Smooth rise of the SAE/PCA ratio with
+ρ = PR/W → quantitative phase diagram. Threshold behavior → report the
+critical ρ as an empirical constant of this protocol, not a universal
+law. Non-monotone → recorded as-is; geometry insufficient alone.
+
+## R4 — SAE-seed robustness (core Fourier condition)
+
+**Design.** 3 PINN seeds × 3 SAE seeds × {TopK, ReLU+L1} at n_freq=32;
+Hungarian-matched cross-seed cosine (PhysSAE §2.10 protocol) alongside
+reconstruction and (if R2 ran) causal metrics.
+
+**Decision rule (pre-written).** Dictionary non-uniqueness (low cosine)
+with stable regime-level verdicts → dissociation recorded: dictionary
+identity is not the unit of scientific claim; the regime is.
+
+## R5 — One additional PDE for the within-PINN boundary
+
+**Design.** tanh vs Fourier (n_freq=32) on Burgers, 3 seeds, both SAE
+families, rank diagnostic + reconstruction; R2 battery where PR moves.
+
+**Decision rule (pre-written).** Replicates → external validity for the
+within-PINN boundary. Does not → scope drawn at steady tasks + the
+operator regime, recorded honestly.
+
+**Deferred (v4.2+, standing):** wider FNO suite, Darcy/DeepONet, 4×
+causal-battery power upgrade (resolve methodological mismatch first),
+2D/3D domains, human-expert validation, real-physics domain study.
+
+**Outcome (recorded after running, 2026-09-11).** Machinery gates: all
+three PASS pre-verdict (penultimate exactness; ReLU+L1 orthogonal-atom
+recovery mean |cos| 0.977, 64/64 > 0.9; ESF80 sanity 0.084/0.800). Six
+matched-architecture PINNs trained (Burgers 3 seeds converging to
+space-time rel L2 0.010–0.016; Allen-Cahn 3 seeds at 0.257–0.285 —
+note: our family is ε=0.05 vs PhysSAE's ε=10⁻⁴, a milder failure
+regime). Full artifact: `runs/r1_physSAE/r1_report.json`.
+
+The preregistered decision rule fires **R1b** (the causal-criteria
+dissociation), with a sharper structure than pre-written:
+
+1. **Alignment replicates and is generic.** Every dictionary aligns
+   with the physical-concept panel: max |r| 0.77–0.99 with permutation
+   Z > 16 across all runs — INCLUDING random directions (0.85–0.96).
+   PhysSAE-style alignment is a property of the activation geometry
+   (concept fields live in the row space), not of discovered features.
+2. **Spatial concentration replicates AND is generic.** SAE ablation
+   footprints are 2.0–2.5× more ESF80-concentrated than PCA/ICA
+   (replicating their headline 1.2–4.2× pattern) — but equally more
+   concentrated than RANDOM unit directions (SAE/random 2.0–2.3×).
+   Concentration is a property of any selective code at this layer;
+   the random-basis control, which the PhysSAE battery does not run
+   between bases, removes it.
+3. **Effect-magnitude specificity is null for every basis.** Under our
+   matched-deletion E_T battery at the same penultimate layer: random
+   sits at the 0/8 chance floor on all six runs (the battery is
+   calibrated); survivors scatter without basis-specificity (ReLU+L1
+   0–1/8, TopK 0–2/8, PCA 1–2/8, ICA 1–2/8). No basis carries
+   direction-specific effect magnitude.
+4. **Registered honest caveats.** (a) Our matched Burgers converged
+   (0.010–0.016) where PhysSAE's plateaued (0.207) — their
+   partially-converged regime may differ; (b) our Allen-Cahn is the
+   ε=0.05 family, not their ε=10⁻⁴ catastrophic regime; (c) ESF80
+   differences between bases are large and consistent (2.0–2.5×) even
+   where the matched-atom negative controls are near zero, so the
+   within-basis and between-basis controls answer different questions —
+   recorded as a methodological observation for the level ladder.
+
+**Recorded conclusion (R1b).** The two causal criteria dissociate, as
+pre-registered: PhysSAE-style evidence (alignment + spatial
+concentration vs PCA/ICA) replicates on matched checkpoints but is
+achieved equally by random bases — it lives on the geometry rungs of
+the ladder; our effect-magnitude criterion is null for every basis
+including SAEs. Both papers' claims stand at different levels; the
+reconciliation is the level ladder plus the rank regularity both
+programs discovered independently. R2 (causal battery on the
+high-rank Fourier PINN) remains the registered next step — the
+reconstruction advantage there is the one regime where specificity
+could still emerge.
+
+**Outcome (recorded after running, 2026-09-11).** Machinery gate: PASS
+pre-verdict (the established stage-5 planted world through the exact
+measure_intervention_effect path at battery scale: planted cosine
+0.989, 20/20 beats-controls batches). Full artifact:
+`runs/r2_fourier_causal/r2_report.json`.
+
+**Analysis correction (made BEFORE any verdict was recorded anywhere):**
+the first crossover implementation used a two-sided binomial, which
+spuriously certifies never-crossing features (P(0/20) is small);
+corrected to the registered ONE-SIDED rule (>= 15/20 consistent
+amplify-vs-ablate reversals). Raw crossover counts are unchanged by
+the correction and unambiguous: every feature in both arms crosses
+0/20 times.
+
+The preregistered decision rule fires **R2b** on BOTH arms:
+
+- **Fourier arm** (the H18 checkpoints, PR 4.0-5.6, the regime with the
+  25-56x reconstruction advantage): E_T = -15.89 [-17.46, -14.27] —
+  target ablations move the residual LESS than matched-deletion
+  controls, the representational signature; 4/45 Bonferroni survivors,
+  all on the NEGATIVE side; 0/45 crossover survivors (no feature
+  reverses direction under amplification); beats-all-controls 22%.
+- **Tanh control arm** (depth-3 twin, PR 1.39-1.48): the identical
+  null signature at smaller scale (E_T -0.058; 0 crossovers).
+
+**Recorded conclusion (R2b): superposition is necessary but not
+sufficient.** The within-PINN regime boundary is now measured on BOTH
+sides with BOTH criteria: crossing into the high-rank regime
+transfers the SAE's *reconstruction* advantage (25-56x) but NOT
+*effect-magnitude causal specificity* — the third arrow of the chain
+(rank -> reconstruction advantage -> causal specificity) does not
+close. The reconciliation with PhysSAE completes: their evidence
+(alignment + spatial concentration) lives below the specificity bar,
+achieved equally by random bases (R1), and the specificity criterion
+is null in every regime tested — low-rank tanh (stages 5/8), operator
+(H16b), and now the high-rank Fourier PINN (R2b). The chain's first
+two arrows are real and measured; the third is consistently absent.
+Honest scope: one SAE family (TopK k=8), one site (layers.1), 3 seeds;
+R3's frequency sweep and R4's SAE-seed/config robustness remain the
+registered probes of whether ANY configuration closes the third arrow.

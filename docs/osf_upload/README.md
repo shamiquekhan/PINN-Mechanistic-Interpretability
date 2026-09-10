@@ -9,7 +9,8 @@ provenance.
 
 | File | Role |
 |---|---|
-| `preregistration.md` | The full preregistration (H1–H14 with decision rules, machinery gates, and recorded outcomes) |
+| `preregistration.md` | The full preregistration (H1–H19 + R1–R5 with decision rules, machinery gates, and recorded outcomes) |
+| `physSAE_reconciliation.md` | The concurrent-work reconciliation (con-found decomposition, level ladder, registered R1–R5 rationale) |
 | `experiment_matrix.md` | Claim → hypothesis → command → artifact → figure map |
 | `fresh_campaign_record.md` | The drift audit + full-rerun record (evidence of honest reporting) |
 | `osf_manifest.json` | Machine-readable manifest with git SHAs binding each preregistration section to the commit that preceded the run |
@@ -35,7 +36,7 @@ this independently checkable.
 ## Upload steps (OSF)
 
 1. Create an OSF project: title
-   "When Superposition Fails — Preregistration & Campaign Records".
+   "When Sparse Features Become Mechanistic — Preregistration & Campaign Records".
 2. Add a Wiki or README stating: preregistration is in-repo
    (git-committed before each run); this upload is third-party
    timestamping of the same documents.
