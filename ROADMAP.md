@@ -89,9 +89,16 @@ for an established result.
   attack. Tangent rank 1 everywhere (covariance/tangent dissociation).
   Pre-run fix: dead `fourier_embed` wiring repaired at f647dca.
   See docs/preregistration.md §H18, RESULTS.md §5A.10.
-- [ ] **Stage 19 (H19) — Monitor label provenance audit:** RD2D label
-  trace + loss-history trajectory monitor to replace the threshold
-  floor baseline.
+- [x] **Stage 19 (H19) — Monitor label provenance audit (v3.5):**
+  preregistered, executed 2026-09-10, recorded — RD2D stage-10 runs never
+  entered monitor training (structural exclusion traced); 2 artifact-
+  labeled pool runs excluded (57→55); collocation never tested by the
+  operational labeler. The loss-trajectory floor (logistic on past-only
+  loss channels) scores AUROC 0.786 [0.615, 0.898], closing 78.2% of
+  the threshold→conventional gap: the single-threshold floor was a
+  straw man; the conventional arm's marginal value (0.875 vs 0.786,
+  overlapping CIs) is thin but real. See docs/preregistration.md §H19,
+  RESULTS.md §5A.11.
 - [ ] **Wider function-space task suite:** Darcy-flow-style operators,
   DeepONet comparison, wider FNOs (W = 128–512) to map the ρ threshold
   more finely.

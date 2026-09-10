@@ -1,0 +1,90 @@
+{
+  "stage": "monitor_label_audit",
+  "hypotheses": "H19 (docs/preregistration.md \u00a7H19; v3.5)",
+  "audit": {
+    "pool_size_before": 57,
+    "pool_size_after_exclusion": 55,
+    "excluded_runs": [
+      "gradient_conflict_seed2026",
+      "reaction_diffusion_baseline"
+    ],
+    "excluded_details": [
+      {
+        "run": "gradient_conflict_seed2026",
+        "derived_failure_step": 0,
+        "final_rel_l2": 0.0006278937798924744,
+        "best_rel_l2": 0.000378812022972852,
+        "labeled_failure": true,
+        "ends_failed": false,
+        "label_is_artifact": true,
+        "verdict": "EXCLUDE: recovered run labeled failed (init transient / recovery after confirm window)"
+      },
+      {
+        "run": "reaction_diffusion_baseline",
+        "derived_failure_step": 0,
+        "final_rel_l2": 0.0014806705294176936,
+        "best_rel_l2": 0.0014806705294176936,
+        "labeled_failure": true,
+        "ends_failed": false,
+        "label_is_artifact": true,
+        "verdict": "EXCLUDE: recovered run labeled failed (init transient / recovery after confirm window)"
+      }
+    ],
+    "collocation_note": "collocation_starvation runs (10/10) derive no failure step under the operational rel-L2 labeler \u2014 the monitor never tests collocation failures; consistent with the existing label-reproducibility exclusion",
+    "rd2d_stage10_trace": [
+      {
+        "run": "reaction_diffusion_2d_baseline_seed123",
+        "in_monitor_pool": false,
+        "reason": "subdirectory not scanned by the stage-6 pool",
+        "derived_failure_step": 0,
+        "final_rel_l2": 1.925853967666626
+      },
+      {
+        "run": "reaction_diffusion_2d_baseline_seed42",
+        "in_monitor_pool": false,
+        "reason": "subdirectory not scanned by the stage-6 pool",
+        "derived_failure_step": 0,
+        "final_rel_l2": 1.938745141029358
+      },
+      {
+        "run": "reaction_diffusion_2d_baseline_seed7",
+        "in_monitor_pool": false,
+        "reason": "subdirectory not scanned by the stage-6 pool",
+        "derived_failure_step": 0,
+        "final_rel_l2": 1.9188895225524902
+      }
+    ],
+    "rd2d_finding": "The stage-10 RD2D runs (rel L2 ~1.93) never entered monitor training: they live under runs/dimensional_boundary_expanded/reaction_diffusion_2d/, a subdirectory the stage-6 pool does not scan. The registered mislabeling concern is structurally moot for those runs \u2014 recorded, not inferred."
+  },
+  "protocol": {
+    "history_window": 10,
+    "failure_horizon": 5,
+    "split": "stage-6 protocol reproduced (rng seed 0, 70/30) on the cleaned pool",
+    "floor_features": "past-only loss channels (loss, loss_pde, loss_bc); rel_l2 and gradients excluded"
+  },
+  "loss_trajectory_logistic": {
+    "auroc": 0.786445518665393,
+    "auprc": 0.6636085530961267,
+    "recall_at_fpr0.1": 0.5083798882681564,
+    "n_examples": 758,
+    "n_positive": 179,
+    "prevalence": 0.23614775725593667,
+    "auroc_ci": {
+      "ci_lower": 0.6153980997153767,
+      "ci_upper": 0.8977308125521543,
+      "n_boot_valid": 2000
+    }
+  },
+  "reference_arms_published": {
+    "loss_only_threshold_auroc": 0.468,
+    "conventional_logistic_auroc": 0.875,
+    "sae_plus_conventional_auroc": 0.877
+  },
+  "gap_closure": {
+    "threshold_floor": 0.468,
+    "conventional": 0.875,
+    "loss_trajectory_floor_auroc": 0.786445518665393,
+    "fraction_of_gap_closed": 0.7824214217822925,
+    "closes_half_or_more": true
+  }
+}

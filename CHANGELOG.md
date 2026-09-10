@@ -4,6 +4,29 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.5.3] — 2026-09-10 — "H19 Monitor Label Provenance Audit (T3 Closed)"
+
+Stage 19 (H19) executed per v3.5 preregistration. Both registered parts
+answered.
+
+- **(a) Label provenance:** the stage-10 RD2D runs (rel L2 1.92-1.94)
+  never entered monitor training (subdirectory not scanned by the
+  stage-6 pool) — the registered mislabeling concern is structurally
+  moot for them. Two pool runs carried artifact labels and were
+  excluded from re-training (reaction_diffusion_baseline: init
+  transient fs=0, converges 0.0015; gradient_conflict_seed2026: fs=0,
+  final 0.0006). Pool 57 -> 55. Collocation starvation (10/10) derives
+  no failure step — the monitor never tests collocation failures.
+- **(b) Loss-trajectory floor:** logistic on past-only loss channels
+  (rel_l2 and gradients excluded), same split/CIs: AUROC **0.786
+  [0.615, 0.898]** vs threshold floor 0.468 and conventional 0.875 —
+  closes **78.2%** of the gap. The single-threshold floor was a straw
+  man; most of the conventional arm's apparent value was the rule,
+  not the features. No-SAE-advantage conclusion unchanged (P=0.51).
+
+Acceptance met: label provenance stated explicitly (per-run trace in
+the artifact), floor baseline is a trajectory monitor, not a threshold.
+
 ## [3.5.2] — 2026-09-10 — "H18 Architecture Boundary: Superposition Within PINNs (H18a)"
 
 Stage 18 (H18) executed per v3.5 preregistration. Outcome: **H18a** —

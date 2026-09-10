@@ -27,6 +27,7 @@ Each item: what ran → where the output lives.
 | NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 exceeds random p95 0.494 but fails Bonferroni (p=0.56) → no bridge at the registered bar; machinery gate PASS |
 | Controller failure battery (H17) | `python -m experiments.controller_failure_battery` | `runs/controller_failure_battery/controller_failure_battery_report.json` | Machinery gate PASS (F1 seed-7 rescue 0.421 → 0.000162); H17a: controller wins F1 (0.00012), NTK-adaptive wins F2 (0.0036) & F3 (1.67); controller never catastrophic (worst mean Δ vs no-action +0.019); GradNorm harms F1 (3.82) |
 | Architecture boundary probe (H18) | `python -m experiments.architecture_boundary` | `runs/architecture_boundary/architecture_boundary_report.json` | H18a: Fourier PINN PR 4.0–5.6 (PR/W 0.075) → SAE beats k-matched PCA 3/3 by 25–56× (mean 40.7); depth sweep PR falls 2.05 → 1.15; tangent rank 1 everywhere (covariance/tangent dissociation) |
+| Monitor label provenance audit (H19) | `python -m experiments.monitor_label_audit` | `runs/monitor_audit/monitor_audit_report.json` | Label trace: RD2D stage-10 runs never entered training; 2 artifact-labeled pool runs excluded (57→55); loss-trajectory floor AUROC 0.786 [0.615, 0.898] closes 78.2% of the threshold→conventional gap |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
 | Unit tests | `python -m pytest tests/ -q` | — | **171 passed, 1 skipped** (2026-09-10, CPU-only; 155 at the 2026-09-08 fresh campaign, +16 from the v3.4.2 stage-17 framework) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
@@ -78,6 +79,15 @@ Each item: what ran → where the output lives.
   `experiments/train.py` was fixed at `f647dca` before the run. Full
   numbers: `runs/architecture_boundary/architecture_boundary_report.json`;
   RESULTS.md §5A.10.
+- **Stage 19 — monitor label provenance audit (H19):** preregistered
+  (v3.5 section, `docs/preregistration.md` §H19), executed 2026-09-10,
+  recorded — label provenance traced per-run (the stage-10 RD2D runs
+  never entered monitor training; 2 artifact-labeled pool runs excluded,
+  57→55; collocation derives no failure step — never tested), and the
+  loss-trajectory floor (AUROC 0.786 [0.615, 0.898]) closes 78.2% of
+  the threshold→conventional gap: the threshold floor was a straw man,
+  the conventional arm's marginal value is thin but real. Full numbers:
+  `runs/monitor_audit/monitor_audit_report.json`; RESULTS.md §5A.11.
 
 ## Explicitly not yet started (honest backlog)
 

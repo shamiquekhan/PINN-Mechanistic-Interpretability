@@ -542,3 +542,35 @@ Full numbers: `runs/architecture_boundary/architecture_boundary_report.json`.
 
 **Acceptance:** the monitor section states its label provenance
 explicitly and the floor baseline is no longer a threshold rule alone.
+
+**Outcome (recorded after running).** Both registered parts executed
+(`experiments/monitor_label_audit.py`, artifact
+`runs/monitor_audit/monitor_audit_report.json`):
+
+- **(a) Label provenance audit:** the stage-10 RD2D runs (rel L2
+  1.92–1.94) **never entered monitor training** — they live under
+  `runs/dimensional_boundary_expanded/reaction_diffusion_2d/`, a
+  subdirectory the stage-6 pool does not scan; the registered
+  mislabeling concern is structurally moot for them (recorded, not
+  inferred). The monitor pool itself contained two artifact-labeled
+  runs, both **excluded from re-training** per the registered rule:
+  `reaction_diffusion_baseline` (fs=0 from an init transient, converges
+  to 0.0015) and `gradient_conflict_seed2026` (fs=0, final 0.0006 —
+  recovers to success). Pool 57 → 55 runs. Also recorded:
+  collocation-starvation runs (10/10) derive no failure step under the
+  operational labeler — the monitor never tests collocation failures,
+  consistent with the existing label-reproducibility exclusion.
+- **(b) Loss-only trajectory floor:** a logistic on past-only loss
+  channels (loss, loss_pde, loss_bc — rel_l2 and gradients excluded),
+  same split protocol and run-level CIs, scores **AUROC 0.786
+  [0.615, 0.898]** vs the threshold floor 0.468 and the conventional
+  arm 0.875 — it closes **78.2%** of the threshold→conventional gap.
+  The single-threshold floor was a straw man: most of the conventional
+  arm's apparent value over "loss-only" was the *rule* (threshold vs
+  trajectory), not the *features* (gradients). The conventional arm's
+  remaining marginal value (0.875 vs 0.786, CIs overlapping) is honest
+  but thin; the monitor section is repositioned accordingly.
+
+**Acceptance met:** label provenance is stated explicitly (per-run
+trace in the artifact), and the floor baseline is a trajectory monitor,
+not a threshold rule alone.
