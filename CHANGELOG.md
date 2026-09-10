@@ -4,6 +4,50 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.6.0] — 2026-09-11 — "PhysSAE Reconciliation: v4.1 Campaign Registered (No Runs)"
+
+Concurrent work surfaced during release preparation: PhysSAE
+(arXiv:2609.07061v1, submitted 2026-09-07) reports positive SAE-PINN
+alignment and spatially concentrated causal footprints across six
+time-dependent PDE families. Full literature reconciliation added
+(docs/physSAE_reconciliation.md) with the confound decomposition
+(layer / dictionary / causal criterion / PDE regime / SAE-evidence chain)
+and the level ladder mapping their terminology onto ours.
+
+Key reconciliation findings (no experiments run — analysis of both papers):
+- No numerical contradiction exists: the studies ask different causal
+  questions (spatial-concentration ESF80 vs effect-magnitude specificity
+  E_T), on different layers (penultimate vs middle), with different
+  dictionaries (ReLU+L1 D=512 L0≈150 vs TopK k=8), on partially
+  different PDE regimes.
+- CONVERGENCE: PhysSAE §4.8 independently replicates our
+  rank-collapse-with-convergence regularity from the failure side
+  (failed PINNs higher-rank/diffuse; well-trained lower-rank/structured).
+- Recorded factually: three internal-consistency notes on PhysSAE v1
+  (abstract "0.04-0.44" vs Table 4 -0.025..+0.125; §2.8/§4.4 sign-
+  convention contradiction; mean top-5 promised but unreported). Our
+  replication pre-registers its own choices.
+- The linear structure of their penultimate intervention (Δu =
+  α·z_k·(W_out d_k), exactly proportional to the atom's activation
+  field) makes ESF80 an activation-geometry statistic; whether that
+  constitutes direction-specific causality is exactly what R1 measures.
+
+v4.1 campaign registered BEFORE any run (docs/preregistration.md §R1-R5):
+- R1 PhysSAE head-to-head on frozen checkpoints (matched-architecture
+  Burgers/Allen-Cahn + H18 penultimate re-extraction; 5 dictionaries ×
+  both metric families; planted-feature gates through every new hook)
+- R2 causal battery on the Fourier PINN (the missing third arrow)
+- R3 Fourier frequency sweep (phase diagram, pre-written smooth/
+  threshold/non-monotone)
+- R4 SAE-seed robustness (3×3, dictionary non-uniqueness vs regime
+  stability)
+- R5 Burgers within-PINN boundary (external validity)
+
+Also: release receipts recorded (171 tests, grounding OK, 21/21
+checksums, environment pinned) at the v3.5 evidence state (7da7c92);
+ROADMAP restructured (v4.1 campaign / v4.2+ deferred); stage-14
+follow-up superseded by R2.
+
 ## [3.5.3] — 2026-09-10 — "H19 Monitor Label Provenance Audit (T3 Closed)"
 
 Stage 19 (H19) executed per v3.5 preregistration. Both registered parts

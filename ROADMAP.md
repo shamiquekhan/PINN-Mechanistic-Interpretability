@@ -58,10 +58,9 @@ for an established result.
 
 ## Planned (next)
 
-- [ ] **Stage-14 follow-up (preregister next):** replace the mixed-sign
-  condition with a direction-reversal criterion (amplify-vs-ablate asymmetry)
-  and re-run the operator battery; if the asymmetry confirms, upgrade the
-  boundary claim from suggestive to confirmed.
+- [ ] **Stage-14 follow-up (superseded by R2):** the direction-reversal
+  criterion is now the registered H16 machinery and R2 applies it to the
+  Fourier PINN; the standalone operator-battery re-run is deferred.
 - [ ] **Stage-15 redesign (registered in preregistration H8 outcome):**
   continuous conflict-magnitude label (or cross-regime run sampling) for the
   NTK↔SAE bridge — the binary label is structurally low-sensitivity in a
@@ -99,12 +98,51 @@ for an established result.
   straw man; the conventional arm's marginal value (0.875 vs 0.786,
   overlapping CIs) is thin but real. See docs/preregistration.md §H19,
   RESULTS.md §5A.11.
+
+## Planned (v4.1 — PhysSAE reconciliation campaign)
+
+Registered in docs/preregistration.md §R1–R5 (committed 2026-09-11
+BEFORE any run); scientific prelude + confound decomposition:
+docs/physSAE_reconciliation.md. Concurrent work: PhysSAE
+(arXiv:2609.07061). The v3.5 results do not numerically contradict it —
+the campaign measures whether the apparent conflict is regime, layer,
+dictionary, or causal-criterion (see the reconciliation's §4 confound
+table and §5 convergence point: their §4.8 independently replicates our
+rank-collapse-with-convergence regularity from the failure side).
+
+- [ ] **R1 — PhysSAE head-to-head on frozen checkpoints (highest
+  priority):** matched-architecture Burgers/Allen–Cahn retraining
+  (5×128, Adam+L-BFGS, w_BC=w_IC=100, 3 seeds) + H18 penultimate
+  re-extraction; dictionaries {ReLU+L1 D=512 (3 SAE seeds), TopK k=8,
+  PCA, ICA, random matched} × evaluations {alignment + permutation
+  null + ESF80 + negative controls (pre-registered sign convention:
+  advantage = ESF80_random − ESF80_top), E_T matched-deletion battery,
+  reconstruction vs k-matched PCA}. Gates: planted-feature control
+  through every new hook (penultimate extraction, ReLU+L1 trainer,
+  ESF80). Outcomes R1a–R1d all pre-written.
+- [ ] **R2 — causal battery on the Fourier PINN:** the missing third
+  arrow (rank → reconstruction advantage → causal specificity); H16
+  direction-reversal machinery on the H18 Fourier dictionaries.
+  Pre-written both ways: specificity found, or "superposition is
+  necessary but not sufficient" as the reconciliation with PhysSAE.
+- [ ] **R3 — Fourier frequency sweep:** n_freq ∈ {2,4,8,16,32,64},
+  3 seeds, PR/PR-W/PCA-95 + reconstruction (both SAE families) + R2
+  battery where PR moves. Pre-written: smooth / threshold /
+  non-monotone.
+- [ ] **R4 — SAE-seed robustness:** 3 PINN × 3 SAE seeds on the core
+  Fourier condition; Hungarian-matched cross-seed cosine vs
+  regime-verdict stability.
+- [ ] **R5 — Burgers within-PINN boundary:** tanh vs Fourier on one
+  time-dependent family (localized-concept panel available).
+
+## Deferred (v4.2+)
+
 - [ ] **Wider function-space task suite:** Darcy-flow-style operators,
   DeepONet comparison, wider FNOs (W = 128–512) to map the ρ threshold
   more finely.
 - [ ] **Power upgrade for causal batteries:** ~4× checkpoints (44 runs/
-  feature) to bring the detectable sign-agreement below 70%; then re-run
-  stages 5/8/9 on the full matrix.
+  feature) — AFTER R1/R2 resolve the methodological comparison
+  (mismatch is currently the larger threat than power).
 - [ ] **Wider-PINN ensembles** (the remaining scoped-out regime): ensemble
   mean/variance representations may raise effective rank even at narrow
   widths.

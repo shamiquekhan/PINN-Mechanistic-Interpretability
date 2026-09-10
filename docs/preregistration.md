@@ -574,3 +574,95 @@ explicitly and the floor baseline is no longer a threshold rule alone.
 **Acceptance met:** label provenance is stated explicitly (per-run
 trace in the artifact), and the floor baseline is a trajectory monitor,
 not a threshold rule alone.
+
+---
+
+# v4.1 Preregistration (R1–R5) — PhysSAE reconciliation campaign
+
+*Registered 2026-09-11 per the standing discipline: this section is
+committed BEFORE any R-run. Motivation, confound decomposition, and the
+full comparison table live in `docs/physSAE_reconciliation.md` (read it
+as the scientific prelude to this section). Concurrent work: PhysSAE,
+arXiv:2609.07061v1.*
+
+## R1 — PhysSAE head-to-head on frozen checkpoints
+
+**Design.** Retrain Burgers + Allen–Cahn to the PhysSAE architecture spec
+(5×128 tanh, Adam 8000 + L-BFGS 300, w_BC=w_IC=100, w_F=1, 150/150/3000
+points, 3 PINN seeds) with penultimate-layer activation logging on a
+200×100 (x,t) grid; re-extract penultimate activations from the H18
+checkpoints (tanh depth-3 vs Fourier n_freq=32). On each frozen
+checkpoint: dictionaries = {ReLU+L1 SAE (D=512, λ=0.02, unit-norm
+decoder, 3 SAE seeds), TopK SAE (k=8, exp=4), PCA, ICA (matched count),
+random matched directions}. Evaluations per dictionary: (a)
+PhysSAE-style — concept-field alignment from independent reference
+solutions + permutation null (n=500), ESF80 localization, matched-atom
+negative controls (n=10) with the **pre-registered sign convention:
+advantage = ESF80_random − ESF80_top; positive = top atom more
+concentrated**; (b) ours — matched-deletion E_T battery with
+Bonferroni/BH correction; (c) reconstruction vs k-matched PCA.
+
+**Machinery gates (pre-registered).** The planted-feature positive
+control must pass through every new hook — penultimate-layer extraction,
+the ReLU+L1 SAE trainer, the ESF80 computation — before any verdict is
+read; a gate failure voids the affected sub-run.
+
+**Decision rule (pre-written).** R1a: both metric families succeed on
+matched-architecture checkpoints → the low-rank null is regime-bound;
+merge into the boundary story. R1b: PhysSAE-style metrics replicate but
+the E_T battery is null on the same checkpoints → the two causal
+criteria dissociate; the level ladder becomes the central contribution;
+both papers' claims stand at different levels. R1c: neither replicates
+under matched retraining → training/architectural regime arbitrates; the
+rank diagnostic decides. R1d: PhysSAE-style metrics succeed only on
+high-rank (Fourier) checkpoints → regime-boundary confirmation with
+PhysSAE as the high-rank positive example.
+
+## R2 — Causal battery on the Fourier PINN (the missing third arrow)
+
+**Design.** The preregistered matched-deletion E_T battery + H16
+direction-reversal criterion on the H18 Fourier-PINN dictionaries (both
+ReLU+L1 and TopK), n ≥ 16 candidates × 20 held-out function batches
+(the H16 protocol), planted-feature gate through the Fourier hook.
+
+**Decision rule (pre-written).** Reconstruction advantage accompanied by
+causal specificity → the boundary covers interpretability, not just
+compression. Null specificity despite reconstruction advantage →
+"superposition is necessary but not sufficient" is the recorded
+conclusion, and the reconciliation with PhysSAE is that their evidence
+lives below the specificity bar.
+
+## R3 — Fourier frequency sweep
+
+**Design.** n_freq ∈ {2, 4, 8, 16, 32, 64}, fixed 1D Poisson, width 64,
+3 seeds, per run: PR, PR/W, PCA-95, SAE-vs-PCA reconstruction (both SAE
+families), and the R2 battery wherever PR exceeds the registered
+move-bar (3.0).
+
+**Decision rule (pre-written).** Smooth rise of the SAE/PCA ratio with
+ρ = PR/W → quantitative phase diagram. Threshold behavior → report the
+critical ρ as an empirical constant of this protocol, not a universal
+law. Non-monotone → recorded as-is; geometry insufficient alone.
+
+## R4 — SAE-seed robustness (core Fourier condition)
+
+**Design.** 3 PINN seeds × 3 SAE seeds × {TopK, ReLU+L1} at n_freq=32;
+Hungarian-matched cross-seed cosine (PhysSAE §2.10 protocol) alongside
+reconstruction and (if R2 ran) causal metrics.
+
+**Decision rule (pre-written).** Dictionary non-uniqueness (low cosine)
+with stable regime-level verdicts → dissociation recorded: dictionary
+identity is not the unit of scientific claim; the regime is.
+
+## R5 — One additional PDE for the within-PINN boundary
+
+**Design.** tanh vs Fourier (n_freq=32) on Burgers, 3 seeds, both SAE
+families, rank diagnostic + reconstruction; R2 battery where PR moves.
+
+**Decision rule (pre-written).** Replicates → external validity for the
+within-PINN boundary. Does not → scope drawn at steady tasks + the
+operator regime, recorded honestly.
+
+**Deferred (v4.2+, standing):** wider FNO suite, Darcy/DeepONet, 4×
+causal-battery power upgrade (resolve methodological mismatch first),
+2D/3D domains, human-expert validation, real-physics domain study.

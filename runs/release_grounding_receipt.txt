@@ -1,0 +1,1 @@
+RESULTS-INTEGRITY: OK — every registered claim is grounded in a committed artifact; checksums verified.

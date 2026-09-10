@@ -1,0 +1,4 @@
+commit=7da7c9258fdd0d0ec8bf029dcda453c27e7fa1f3
+describe=v3.5-research-freeze-5-g7da7c92
+Python 3.13.9
+torch=2.6.0+cu124

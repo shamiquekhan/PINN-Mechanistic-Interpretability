@@ -1,0 +1,20 @@
+..................s..................................................... [ 41%]
+........................................................................ [ 83%]
+............................                                             [100%]
+=============================== warnings summary ===============================
+tests/unit/test_reproducibility.py: 2 warnings
+tests/unit/test_sota_baselines.py: 3 warnings
+tests/unit/test_v21_hardening.py: 1 warning
+tests/unit/test_v2_regression.py: 6 warnings
+  /home/shamique/anaconda3/lib/python3.13/site-packages/torch/nn/modules/linear.py:125: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+    return F.linear(input, self.weight, self.bias)
+
+tests/unit/test_sae.py: 2 warnings
+tests/unit/test_sota_baselines.py: 3 warnings
+tests/unit/test_v21_hardening.py: 1 warning
+tests/unit/test_v2_regression.py: 5 warnings
+  /home/shamique/anaconda3/lib/python3.13/site-packages/torch/autograd/graph.py:823: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+171 passed, 1 skipped, 23 warnings in 15.16s
