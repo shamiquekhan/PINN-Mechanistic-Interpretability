@@ -31,7 +31,14 @@ def main():
     dtype = getattr(torch, cfg.run.dtype)
 
     pde = make_pde(cfg.pde)
-    model = MLP(cfg.model.input_dim, cfg.model.output_dim, cfg.model.hidden_layers, cfg.model.activation).to(device=device, dtype=dtype)
+    model = MLP(
+        cfg.model.input_dim, cfg.model.output_dim, cfg.model.hidden_layers,
+        cfg.model.activation,
+        fourier_embed=cfg.model.fourier_embed,
+        fourier_n_freq=cfg.model.fourier_n_freq,
+        fourier_scale=cfg.model.fourier_scale,
+        fourier_seed=cfg.run.seed,
+    ).to(device=device, dtype=dtype)
     opt = torch.optim.Adam(model.parameters(), lr=cfg.training.learning_rate)
 
     out = Path(cfg.run.output_dir) / cfg.run.name
