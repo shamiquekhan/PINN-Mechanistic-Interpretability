@@ -78,11 +78,20 @@ for an established result.
   hard-coded failure_class, unimplemented gate, pending aggregation,
   hand-rolled loop) was fixed at fc77850 pre-verdict. Thread T2 closed.
   See docs/preregistration.md §H17, RESULTS.md §5A.9.
-- [ ] **Stage 18 (H18) — Fourier-feature PINN + depth sweep:** scope-boundary
-  probe (PR/W, tangent rank, PCA-95, SAE-vs-PCA reconstruction) to answer the
-  "your PINNs are too simple" attack.
-- [ ] **Stage 19 (H19) — Monitor label provenance audit:** RD2D label trace +
-  loss-history trajectory monitor to replace the threshold floor baseline.
+- [x] **Stage 18 (H18) — Fourier-feature PINN + depth sweep (v3.5):**
+  preregistered, executed 2026-09-10, recorded **H18a** — the
+  Fourier-feature PINN's activation PR rises to 4.0–5.6 (above the
+  width-scaling envelope, FNO neighborhood) and there the same TopK
+  SAE beats k-matched PCA **25–56×** (mean 40.7, 3/3 seeds): the
+  superposition regime demonstrated *within PINNs*, rank diagnostic as
+  predictor. Depth sweep: PR falls monotonically 2.05 → 1.15 — depth
+  makes representations more degenerate, inverting the "too simple"
+  attack. Tangent rank 1 everywhere (covariance/tangent dissociation).
+  Pre-run fix: dead `fourier_embed` wiring repaired at f647dca.
+  See docs/preregistration.md §H18, RESULTS.md §5A.10.
+- [ ] **Stage 19 (H19) — Monitor label provenance audit:** RD2D label
+  trace + loss-history trajectory monitor to replace the threshold
+  floor baseline.
 - [ ] **Wider function-space task suite:** Darcy-flow-style operators,
   DeepONet comparison, wider FNOs (W = 128–512) to map the ρ threshold
   more finely.

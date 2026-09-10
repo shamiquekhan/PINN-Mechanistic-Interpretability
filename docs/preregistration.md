@@ -494,6 +494,39 @@ side of the boundary; within-PINN architectural variation is missing.
   have moved the geometry; scope is honestly drawn at
   operator/function-space representations.
 
+**Machinery note (pre-run, recorded before any verdict):** the
+`fourier_embed` config field existed in the schema but was dead in the
+training entry point (`experiments/train.py` never passed it to `MLP`)
+— wired through at `f647dca`, BEFORE the run, with the registered
+design otherwise unchanged (width 64, n_freq=32, depths 2–6, seeds
+7/42/123, 2000 steps, PR-move bar 3.0 vs the measured width-scaling
+envelope 1.14–2.51).
+
+**Outcome (recorded after running).** The preregistered rule fires
+**H18a** — the strongest possible form of it:
+
+- **Fourier arm:** activation PR rises to 4.00–5.63 (mean 4.81, PR/W
+  0.075) — above the width-scaling envelope (1.14–2.51) and in the FNO's
+  neighborhood (6.8). Wherever PR moved, the SAE-vs-k-matched-PCA
+  comparison was run: **SAE beats PCA 3/3 seeds by 25–56×** (mean
+  PCA/SAE ratio 40.7; SAE test MSE 1.0e-4–3.5e-4 vs PCA 5.8e-3–8.6e-3).
+  This is a *within-PINN* demonstration of the superposition regime:
+  the same TopK SAE that is null on tanh PINNs becomes strongly
+  advantageous on Fourier-feature PINNs, and the rank diagnostic
+  predicted exactly which runs.
+- **Depth arm:** PR falls monotonically with depth (2.05 at depth 2 →
+  1.15 at depth 6) — depth makes representations *more* degenerate, not
+  less; the "your PINNs are too simple" attack inverts: depth does not
+  rescue superposition, it reduces the effective rank further.
+- **Geometry dissociation recorded:** tangent rank = 1 in every run
+  including Fourier — the 1D input curve stays a 1D manifold; what
+  Fourier features change is the *covariance* rank (energy spread across
+  frequencies), not the manifold dimension. Covariance PR, not tangent
+  rank, is the regime discriminator, exactly as the theory note
+  distinguishes the two.
+
+Full numbers: `runs/architecture_boundary/architecture_boundary_report.json`.
+
 ## H19 — Monitor label provenance audit (Stage 19)
 
 **Design.**

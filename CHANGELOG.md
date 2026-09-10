@@ -4,6 +4,30 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.5.2] — 2026-09-10 — "H18 Architecture Boundary: Superposition Within PINNs (H18a)"
+
+Stage 18 (H18) executed per v3.5 preregistration. Outcome: **H18a** —
+the within-PINN demonstration the regime-boundary thesis needed.
+
+- Fourier-feature PINN (width 64, n_freq=32, 3 seeds): activation PR
+  4.00–5.63 (mean 4.81, PR/W 0.075) — above the width-scaling envelope
+  (1.14–2.51), in the FNO's neighborhood (6.8).
+- Wherever PR moved, SAE-vs-k-matched-PCA reconstruction ran:
+  **SAE beats PCA 3/3 by 25–56×** (mean PCA/SAE 40.7) — the same TopK
+  SAE that is null on tanh PINNs. The rank diagnostic predicted exactly
+  which runs would flip.
+- Depth sweep 2–6 (tanh, 3 seeds each): PR falls monotonically
+  2.05 → 1.15 — depth makes representations MORE degenerate; the
+  "your PINNs are too simple" attack inverts.
+- Tangent rank = 1 everywhere including Fourier: Fourier features
+  change covariance rank (energy across frequency channels), not
+  manifold dimension — covariance PR is the regime discriminator,
+  dissociating from tangent rank as the theory note distinguishes them.
+
+Pre-run machinery fix (recorded before any verdict): `fourier_embed`
+existed in the config schema but was dead in `experiments/train.py`
+(never passed to MLP) — wired through at f647dca before the run.
+
 ## [3.5.1] — 2026-09-10 — "H17 Controller Failure Battery (T2 Closed)"
 
 Stage 17 (H17) executed per v3.5 preregistration. Outcome: **H17a** —

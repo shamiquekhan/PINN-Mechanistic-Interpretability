@@ -26,6 +26,7 @@ Each item: what ran → where the output lives.
 | Statistical hardening | `--stages 13` | `runs/statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power; P(SAE monitor better) 0.51 |
 | NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 exceeds random p95 0.494 but fails Bonferroni (p=0.56) → no bridge at the registered bar; machinery gate PASS |
 | Controller failure battery (H17) | `python -m experiments.controller_failure_battery` | `runs/controller_failure_battery/controller_failure_battery_report.json` | Machinery gate PASS (F1 seed-7 rescue 0.421 → 0.000162); H17a: controller wins F1 (0.00012), NTK-adaptive wins F2 (0.0036) & F3 (1.67); controller never catastrophic (worst mean Δ vs no-action +0.019); GradNorm harms F1 (3.82) |
+| Architecture boundary probe (H18) | `python -m experiments.architecture_boundary` | `runs/architecture_boundary/architecture_boundary_report.json` | H18a: Fourier PINN PR 4.0–5.6 (PR/W 0.075) → SAE beats k-matched PCA 3/3 by 25–56× (mean 40.7); depth sweep PR falls 2.05 → 1.15; tangent rank 1 everywhere (covariance/tangent dissociation) |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
 | Unit tests | `python -m pytest tests/ -q` | — | **171 passed, 1 skipped** (2026-09-10, CPU-only; 155 at the 2026-09-08 fresh campaign, +16 from the v3.4.2 stage-17 framework) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
@@ -64,6 +65,19 @@ Each item: what ran → where the output lives.
   the run and before any verdict was read — recorded in §H17 and
   RESULTS.md §5A.9. Full numbers:
   `runs/controller_failure_battery/controller_failure_battery_report.json`.
+- **Stage 18 — architecture boundary probe (H18):** preregistered
+  (v3.5 section, `docs/preregistration.md` §H18), executed 2026-09-10,
+  recorded **H18a** — the Fourier-feature PINN (width 64, n_freq=32)
+  reaches activation PR 4.0–5.6 (above the width-scaling envelope
+  1.14–2.51, FNO neighborhood), and there the same TopK SAE that is
+  null on tanh PINNs beats k-matched PCA **25–56×** (mean 40.7, 3/3
+  seeds). Depth sweep: PR falls monotonically 2.05 → 1.15 (depth does
+  not rescue superposition). Tangent rank = 1 everywhere — covariance
+  PR, not manifold dimension, is the regime discriminator. Pre-run
+  machinery fix: the dead `fourier_embed` wiring in
+  `experiments/train.py` was fixed at `f647dca` before the run. Full
+  numbers: `runs/architecture_boundary/architecture_boundary_report.json`;
+  RESULTS.md §5A.10.
 
 ## Explicitly not yet started (honest backlog)
 
