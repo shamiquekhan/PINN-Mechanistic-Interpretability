@@ -462,3 +462,18 @@ python -m experiments.run_pipeline --stages 14           # operator causal batte
 ```
 
 Key artifacts: `runs/failure_atlas/seed_matrix_stats.json` · `runs/sae_models_v2/sae_stage3_summary.json` · `runs/feature_dictionary/` · `runs/causal_intervention_results.json` (incl. `multiple_comparisons`, `sign_diagnostic`, `probe_control`) · `runs/positive_control.json` · `runs/effective_rank_analysis/effective_rank_report.json` · `runs/monitor_report.json` · `runs/controller_demo/controller_comparison.json` · `runs/pca_causal_results.json` · `runs/causal_abstraction_results.json` · `runs/dimensional_boundary_expanded/dimensional_boundary_expanded_report.json` · `runs/operator_boundary/operator_boundary_report.json` · `runs/sota_baselines/sota_baseline_report.json` · `runs/statistical_hardening/analysis_report.json` · `runs/operator_causal/operator_causal_report.json`.
+### 5A.12 R1 — PhysSAE head-to-head on matched checkpoints (v4.1, R1b)
+
+Concurrent work (PhysSAE, arXiv:2609.07061) reports positive SAE-PINN alignment and spatially concentrated causal footprints. The reconciliation analysis (`docs/physSAE_reconciliation.md`) found no numerical contradiction — different layers, dictionaries, PDE regimes, and causal criteria — and preregistered R1 (v4.1, §R1) to measure which confound explains the apparent conflict. Machinery gates (penultimate extraction exactness; ReLU+L1 orthogonal-atom recovery, mean |cos| 0.977; ESF80 sanity) all passed pre-verdict.
+
+**Design.** Burgers + Allen–Cahn retrained to the PhysSAE spec (5×128 tanh, Adam 8000 + L-BFGS, w_BC=w_IC=100, 3 seeds; converged 0.010–0.016 and 0.257–0.285 space-time rel L2 respectively), penultimate activations on the 200×100 grid, five dictionaries (their ReLU+L1 D=512 × 3 SAE seeds, our TopK, PCA, ICA, random unit directions), both metric families on the same frozen checkpoints (`experiments/r1_physSAE_head_to_head.py`, artifact `runs/r1_physSAE/r1_report.json`):
+
+| Metric family | Finding |
+|---|---|
+| Concept alignment (PhysSAE-style) | max \|r\| 0.77–0.99, Z > 16 — **every basis incl. random (0.85–0.96)** |
+| ESF80 concentration (vs PCA/ICA) | SAE 2.0–2.5× more concentrated — **replicates their headline** |
+| ESF80 concentration (vs random) | SAE 2.0–2.3× more concentrated than random too — **generic** |
+| Matched-atom negative controls | near zero everywhere (pre-registered convention) |
+| E_T effect-magnitude battery | random 0/8 on all 6 runs (calibrated floor); survivors scatter without basis-specificity (ReLU+L1 0–1/8, TopK 0–2/8, PCA 1–2/8, ICA 1–2/8) |
+
+**Preregistered verdict: R1b** — the two causal criteria dissociate. PhysSAE-style evidence replicates on matched checkpoints but is achieved equally by random bases: alignment and spatial concentration live on the geometry rungs of the level ladder (concept fields live in the activation row space; selective codes of any origin have concentrated ablation footprints at this layer). Effect-magnitude specificity is null for every basis. Both papers' claims stand at different ladder levels; the rank-collapse-with-convergence regularity was discovered independently by both programs (their §4.8 from the failure side, our width/depth sweeps from the success side). Registered caveats: our Burgers converged where theirs plateaued; our Allen–Cahn regime is milder (ε=0.05 vs 10⁻⁴). R2 (causal battery on the high-rank Fourier PINN) is the registered next step — the one regime where specificity could still emerge.

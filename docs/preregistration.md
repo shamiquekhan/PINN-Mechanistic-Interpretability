@@ -666,3 +666,53 @@ operator regime, recorded honestly.
 **Deferred (v4.2+, standing):** wider FNO suite, Darcy/DeepONet, 4×
 causal-battery power upgrade (resolve methodological mismatch first),
 2D/3D domains, human-expert validation, real-physics domain study.
+
+**Outcome (recorded after running, 2026-09-11).** Machinery gates: all
+three PASS pre-verdict (penultimate exactness; ReLU+L1 orthogonal-atom
+recovery mean |cos| 0.977, 64/64 > 0.9; ESF80 sanity 0.084/0.800). Six
+matched-architecture PINNs trained (Burgers 3 seeds converging to
+space-time rel L2 0.010–0.016; Allen-Cahn 3 seeds at 0.257–0.285 —
+note: our family is ε=0.05 vs PhysSAE's ε=10⁻⁴, a milder failure
+regime). Full artifact: `runs/r1_physSAE/r1_report.json`.
+
+The preregistered decision rule fires **R1b** (the causal-criteria
+dissociation), with a sharper structure than pre-written:
+
+1. **Alignment replicates and is generic.** Every dictionary aligns
+   with the physical-concept panel: max |r| 0.77–0.99 with permutation
+   Z > 16 across all runs — INCLUDING random directions (0.85–0.96).
+   PhysSAE-style alignment is a property of the activation geometry
+   (concept fields live in the row space), not of discovered features.
+2. **Spatial concentration replicates AND is generic.** SAE ablation
+   footprints are 2.0–2.5× more ESF80-concentrated than PCA/ICA
+   (replicating their headline 1.2–4.2× pattern) — but equally more
+   concentrated than RANDOM unit directions (SAE/random 2.0–2.3×).
+   Concentration is a property of any selective code at this layer;
+   the random-basis control, which the PhysSAE battery does not run
+   between bases, removes it.
+3. **Effect-magnitude specificity is null for every basis.** Under our
+   matched-deletion E_T battery at the same penultimate layer: random
+   sits at the 0/8 chance floor on all six runs (the battery is
+   calibrated); survivors scatter without basis-specificity (ReLU+L1
+   0–1/8, TopK 0–2/8, PCA 1–2/8, ICA 1–2/8). No basis carries
+   direction-specific effect magnitude.
+4. **Registered honest caveats.** (a) Our matched Burgers converged
+   (0.010–0.016) where PhysSAE's plateaued (0.207) — their
+   partially-converged regime may differ; (b) our Allen-Cahn is the
+   ε=0.05 family, not their ε=10⁻⁴ catastrophic regime; (c) ESF80
+   differences between bases are large and consistent (2.0–2.5×) even
+   where the matched-atom negative controls are near zero, so the
+   within-basis and between-basis controls answer different questions —
+   recorded as a methodological observation for the level ladder.
+
+**Recorded conclusion (R1b).** The two causal criteria dissociate, as
+pre-registered: PhysSAE-style evidence (alignment + spatial
+concentration vs PCA/ICA) replicates on matched checkpoints but is
+achieved equally by random bases — it lives on the geometry rungs of
+the ladder; our effect-magnitude criterion is null for every basis
+including SAEs. Both papers' claims stand at different levels; the
+reconciliation is the level ladder plus the rank regularity both
+programs discovered independently. R2 (causal battery on the
+high-rank Fourier PINN) remains the registered next step — the
+reconstruction advantage there is the one regime where specificity
+could still emerge.

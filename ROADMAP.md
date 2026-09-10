@@ -120,11 +120,24 @@ rank-collapse-with-convergence regularity from the failure side).
   reconstruction vs k-matched PCA}. Gates: planted-feature control
   through every new hook (penultimate extraction, ReLU+L1 trainer,
   ESF80). Outcomes R1a–R1d all pre-written.
+- [x] **R1 — PhysSAE head-to-head on frozen checkpoints (v4.1):**
+  preregistered, executed 2026-09-11, recorded **R1b** — machinery gates
+  3/3 PASS; alignment replicates but is generic (random 0.85–0.96);
+  ESF80 spatial concentration replicates (SAE 2.0–2.5× vs PCA/ICA,
+  their headline) but is equally generic (SAE 2.0–2.3× vs random —
+  the between-basis control their battery does not run); E_T
+  effect-magnitude specificity null for every basis (random at the
+  0/8 floor on all 6 runs). The causal criteria dissociate; both
+  programs' claims stand at different level-ladder rungs. See
+  docs/preregistration.md §R1 outcome, RESULTS.md §5A.12,
+  docs/physSAE_reconciliation.md.
 - [ ] **R2 — causal battery on the Fourier PINN:** the missing third
   arrow (rank → reconstruction advantage → causal specificity); H16
   direction-reversal machinery on the H18 Fourier dictionaries.
   Pre-written both ways: specificity found, or "superposition is
   necessary but not sufficient" as the reconciliation with PhysSAE.
+  Sharpened by R1: the Fourier regime is the one place specificity
+  could still emerge (all low-rank substrates are null).
 - [ ] **R3 — Fourier frequency sweep:** n_freq ∈ {2,4,8,16,32,64},
   3 seeds, PR/PR-W/PCA-95 + reconstruction (both SAE families) + R2
   battery where PR moves. Pre-written: smooth / threshold /

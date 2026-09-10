@@ -23,7 +23,7 @@
 \newcommand{\ET}{E_T}
 \newcommand{\PRW}{\rho}
 
-\title{When Superposition Fails:\\ The Limits of Sparse Autoencoders in Scientific Machine Learning}
+\title{When Sparse Features Become Mechanistic:\\ Representation Geometry and Causal Interpretability\\ in Physics-Informed Neural Networks}
 \author{Shamique Khan\\
 \small Code, preregistered protocols, and all artifacts:\\
 \small \url{https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability} (v3.3.0)}
@@ -33,42 +33,41 @@
 \maketitle
 
 \begin{abstract}
-Physics-informed neural networks (PINNs) fail in reproducible,
-configuration-determined ways, and mechanistic-interpretability tools --- above
-all sparse autoencoders (SAEs) --- have been proposed to diagnose those
-failures. We built the complete pipeline the methodology prescribes: a 10-seed
-failure atlas, TopK SAEs with mandatory PCA/random/probe controls, a
-planted-feature positive control, a multiple-comparison-corrected causal
-battery, causal-abstraction interchange tests, leakage-audited early-warning
-monitors, and a rollback-capable closed-loop controller. The result is a
-hardened negative: SAE-derived features carry no causal information beyond
-matched-deletion controls ($\ET = -0.0173$, 95\% CI $[-0.0329, -0.0037]$ ---
-ablating a candidate feature moves the loss \emph{less} than ablating
-another active latent, the representational signature; 0/8 features
-survive Bonferroni \emph{or} BH-FDR), and the failure is
-\emph{basis-independent} --- PCA components fail the identical battery, and no
-candidate alignment satisfies the interchange criterion of causal abstraction.
-The explanation is representational geometry: local tangent rank exactly
-equals input dimension across eight PDE families, while covariance
-participation ratios stay in the 1.14--2.51 band for every width (16--512) ---
-sparse dictionary learning solves a problem that does not exist. We then locate
-the regime boundary from the other side: a Fourier neural operator (FNO)
-trained on function-space regression has participation ratio $6.8$ of $64$,
-needs 19 PCA components for 95\% of energy, and there the same TopK SAE
-\emph{beats} $k$-matched PCA by $4.7\times$ in reconstruction. A
-preregistered causal battery in the operator regime shows a
-\emph{suggestive} asymmetry --- 2/8 features survive multiple-comparison
-correction with a strictly positive effect-size CI where every PINN basis
-had 0/8 --- which we report as suggestive rather than confirmed, per the
-preregistered decision rules. \textbf{Stage 16 (H16) closes the
-causal-asymmetry thread:} a preregistered high-n battery (n=20, top-16
-candidates, direction-reversal criterion) fires H16b --- 6/16 Bonferroni
-survivors but 0/16 direction-reversal survivors; the operator causal
-asymmetry thread T1 is closed. Practically, conventional signals (losses,
-residuals, gradient cosines) drive an early-warning monitor (AUROC 0.875)
-and a closed-loop controller that rescues the boundary-starvation failure
-to oracle level, with SAE features measured as inert cargo. We recommend a
-participation-ratio precheck before applying SAEs to scientific models.
+When should sparse-autoencoder (SAE) interpretability be expected to work on
+scientific neural networks? We answer this for physics-informed neural
+networks (PINNs) with a preregistered, positive-control-validated campaign,
+and locate a regime boundary that runs \emph{inside} the PINN family. In
+conventional tanh PINNs, the activation covariance is low-rank (participation
+ratio 1.14--2.51 across eight PDE families, widths 16--512, and depths
+2--6), and SAE features carry no causal information beyond matched-deletion
+controls ($\ET=-0.0173$, 95\% CI $[-0.0329,-0.0037]$; 0/8 features survive
+Bonferroni \emph{or} BH-FDR) --- a null that is \emph{basis-independent}
+(the identical battery on PCA components: 0/8; no candidate alignment
+satisfies the causal-abstraction interchange criterion). The explanation is
+representational geometry: local tangent rank exactly equals input dimension
+everywhere, and depth \emph{lowers} covariance rank further (2.05 $\to$ 1.15,
+depths 2--6). The failure is not intrinsic to PINNs: a Fourier-feature PINN
+on the same 1D Poisson task crosses into a higher covariance-rank regime
+(PR 4.0--5.6, in the neighborhood of a Fourier neural operator's 6.8), and
+there the \emph{same} TopK SAE that is null on tanh PINNs beats $k$-matched
+PCA by 25--56$\times$ in reconstruction (3/3 seeds) --- superposition
+demonstrated within PINNs, predicted in advance by a preregistered
+participation-ratio diagnostic that dissociates covariance rank from
+manifold dimension (tangent rank stays 1 everywhere). Concurrently with this
+work, PhysSAE reports physically aligned, spatially concentrated SAE
+features in PINNs; we reconcile the findings: the studies ask different
+causal questions (spatial concentration of an exactly-linear ablation
+footprint vs.\ effect-magnitude specificity against matched-deletion
+controls), on different layers and dictionaries --- and a head-to-head
+experiment on matched-architecture checkpoints is preregistered and
+reported. Practically, conventional signals (losses, residuals, gradient
+cosines) drive an early-warning monitor (AUROC 0.875; an honest
+loss-trajectory floor reaches 0.786, so the gradient channels' margin is
+thin but real) and a closed-loop controller that rescues boundary
+starvation to oracle level and never degrades catastrophically across a
+three-failure battery --- with SAE features measured as inert cargo
+throughout. We recommend a participation-ratio precheck before applying
+SAEs to any scientific model.
 \end{abstract}
 
 \section{Introduction}
@@ -87,8 +86,13 @@ failures the way it promises to diagnose deception or sycophancy in language
 models, and early applications to scientific networks are appearing
 \cite{qi2026mechanistic}.
 
-This paper asks the prior question, which that literature skips:
-\emph{does superposition exist in the model class we are applying SAEs to?}
+This paper asks the question that literature skips, in the form that our
+results force:
+\emph{when} does superposition --- and with it, useful sparse
+feature analysis --- exist in the model class we are applying SAEs to,
+and when does it collapse into generic geometry? The answer, measured on
+both sides of a boundary that runs \emph{inside the PINN family itself},
+is a function of representational geometry, not of the model class.
 
 We built the full mechanistic-interpretability pipeline for PINN failure
 diagnosis --- every stage with preregistered decision rules, mandatory
@@ -118,12 +122,23 @@ positive-control-validated, \emph{explained} negative result:
         and SAE alignments. \emph{No feature basis --- linear or sparse ---
         carries direction-specific causal information in these
         activations.}
-  \item \textbf{A representational-geometry explanation.} Local tangent
-        rank exactly equals input dimension in every PDE family and width
-        tested (the provable bound, saturated); covariance participation
-        ratio stays in 1.14--2.51 of 64 dimensions. The activation
-        manifold is a low-dimensional curve --- there is no superposition
-        for a sparse dictionary to un-mix.
+  \item \textbf{A representational-geometry explanation, and its
+        within-PINN inversion.} Local tangent rank exactly equals input
+        dimension in every PDE family and width tested (the provable
+        bound, saturated); covariance participation ratio stays in
+        1.14--2.51 of 64 dimensions, and \emph{depth lowers it further}
+        (2.05 $\to$ 1.15, depths 2--6, preregistered H18). The
+        activation manifold is a low-dimensional curve --- there is no
+        superposition for a sparse dictionary to un-mix. Crucially, the
+        converse holds too: a Fourier-feature PINN on the \emph{same
+        task} crosses into the higher-rank regime (PR 4.0--5.6,
+        FNO-neighborhood) where the same TopK SAE beats $k$-matched PCA
+        by 25--56$\times$ (3/3 seeds) --- the boundary is measured
+        \emph{within} PINNs, and a preregistered rank diagnostic
+        predicted exactly which runs would flip. Fourier features raise
+        covariance rank while tangent rank stays 1: the two geometry
+        measures dissociate, and covariance rank is the regime
+        discriminator.
   \item \textbf{A measured regime boundary, both sides.} A Fourier neural
         operator \cite{li2021fourier} on function-space regression has
         participation ratio 6.8 of 64, and there the same TopK SAE beats
@@ -134,20 +149,31 @@ positive-control-validated, \emph{explained} negative result:
         2/8 MC-corrected survivors where every PINN basis had 0/8 --- a
         suggestive, weakened causal asymmetry we report with its caveats
         (matched-deletion controls throughout).
-  \item \textbf{An engineering alternative that works.} Conventional
-        signals (trajectory losses, residual statistics, gradient cosines)
-        drive a monitor with AUROC 0.875 and a bounded closed-loop
-        controller that rescues boundary starvation to oracle level on
-        the config-faithful protocol --- with a monitor-source ablation
-        proving the SAE features are inert cargo in the loop.
+  \item \textbf{An engineering alternative that works, honestly bounded
+        (H17, H19).} Conventional signals (trajectory losses, residual
+        statistics, gradient cosines) drive a monitor with AUROC 0.875
+        --- though an honest loss-trajectory floor reaches 0.786,
+        showing much of the apparent conventional-monitor margin was the
+        rule, not the features (H19) --- and a bounded closed-loop
+        controller that rescues boundary starvation to oracle level,
+        wins its home failure class (0.00012, beating NTK-adaptive
+        0.0044), never degrades catastrophically across the three-failure
+        battery, but loses to specialized methods elsewhere (H17):
+        robustness, not per-failure SOTA. A monitor-source ablation
+        proves the SAE features are inert cargo in the loop.
 \end{enumerate}
 
 Recent SAE-skepticism (downstream-task failures
 \cite{deepmind2025negative,leask2025sparse,paulo2025sae,korznikov2026saes})
-reports \emph{that} SAEs fail; our contribution is the \emph{mechanistic
-explanation} (geometry), the \emph{basis-independence} (PCA battery), and the
-\emph{measured boundary} (FNO positive control) --- none of which
-downstream-task reports provide. The practical takeaway is a one-line
+reports \emph{that} SAEs fail; concurrent PhysSAE
+\cite{patil2026physSAE} reports \emph{that} SAE features align with
+physical observables and concentrate causally in PINNs. Our contribution
+subsumes and reconciles both: the \emph{mechanistic explanation}
+(geometry), the \emph{basis-independence} (PCA battery), the
+\emph{measured boundary} (within-PINN, not PINN-vs-operator), and the
+\emph{level ladder} separating alignment from effect-magnitude
+specificity --- on which the two literatures' claims live on different
+rungs. The practical takeaway is a one-line
 precheck: estimate the participation ratio $\PRW = \mathrm{PR}/W$ of the
 activation covariance before training any SAE on a scientific model.
 
@@ -542,6 +568,141 @@ boundary's reconstruction side remains strong (PR 6.8, SAE-beats-PCA
 \input{tables/table_operator_causal}
 \end{table}
 
+\subsection{The architecture boundary: superposition arrives \emph{within PINNs} (H18)}
+\label{sec:architecture-boundary}
+
+The strongest reviewer attack on the low-rank null is architectural:
+``width-16--512 tanh MLPs --- of course no superposition.'' The FNO
+demonstrates the positive side of the boundary, but it changes the model
+class, the training signal, and the representation site simultaneously.
+H18 (preregistered, \texttt{docs/preregistration.md} \S H18) isolates the
+representation effect on a fixed task --- 1D Poisson, width 64 --- with two
+within-PINN perturbations: (a) a Fourier-feature embedding
+\cite{tancik2020fourier} ($n_{\mathrm{freq}}{=}32$), known to restructure the NTK
+and activation geometry, and (b) a depth sweep 2--6 hidden layers; three
+seeds each; the rank diagnostic (PR/W, tangent rank, PCA-95\%) on every
+run, and the SAE-vs-$k$-matched-PCA reconstruction comparison wherever PR
+moves above the preregistered bar (3.0, vs.\ the measured width-scaling
+envelope 1.14--2.51).
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/figure_10_architecture_boundary.png}
+  \caption{\textbf{The within-PINN architecture boundary (H18).}
+  (A) Activation participation ratio by architecture: the tanh depth
+  sweep stays inside the width-scaling envelope and \emph{falls} with
+  depth (2.05 $\to$ 1.15); the Fourier-feature PINN rises to 4.0--5.6,
+  the FNO neighborhood. (B) The same TopK SAE across the three regimes:
+  PCA wins on tanh PINNs ($\sim$50$\times$), the SAE wins on the Fourier
+  PINN (25--56$\times$) and the FNO (4.7$\times$). (C) The phase
+  diagram: SAE advantage over $k$-matched PCA vs.\ $\rho = \mathrm{PR}/W$
+  (log--log), with the preregistered move-bar.}
+  \label{fig:architecture-boundary}
+\end{figure}
+
+\paragraph{Result: H18a, in its strongest form.} The Fourier-feature
+PINN's activation PR rises to 4.00--5.63 (mean 4.81, $\rho = 0.075$) ---
+above the width-scaling envelope and in the FNO's neighborhood (6.8) ---
+and wherever PR moved, the \emph{same} TopK SAE that is null on tanh
+PINNs beat $k$-matched PCA by 25--56$\times$ (mean PCA/SAE 40.7; 3/3
+seeds; SAE test MSE $1.0$--$3.5\times10^{-4}$ vs.\ PCA
+$5.8$--$8.6\times10^{-3}$). The superposition regime exists
+\emph{within PINNs}, on the same task, code, and protocol as the null ---
+and the preregistered rank diagnostic predicted exactly which runs would
+flip. The depth arm inverts the attack: PR falls monotonically with
+depth (2.05 at depth 2 $\to$ 1.15 at depth 6; 9 runs), so adding
+parameters makes the representations \emph{more} degenerate on this
+task. ``Too simple'' was never the explanation; the input embedding's
+spectral structure is.
+
+\paragraph{Geometry dissociation.} Tangent rank is 1 in \emph{every}
+run, including Fourier: the input curve remains a 1D manifold. What
+Fourier features change is the \emph{covariance} rank --- energy spreads
+across frequency channels rather than concentrating on a low-dimensional
+curve --- so the two geometry measures dissociate exactly as the theory
+note distinguishes them. Covariance participation ratio, not manifold
+dimension, is the regime discriminator, and we use the term
+\emph{effective covariance dimensionality} throughout rather than
+calling PR a ``manifold dimension.''
+
+\paragraph{Scope.} One task (1D Poisson), one embedding family, one
+width; PR $> 3$ is this protocol's preregistered operational bar, not a
+universal constant. A frequency sweep ($n_{\mathrm{freq}} \in
+\{2,\dots,64\}$), a second PDE, and the causal battery on the Fourier
+dictionaries (does the reconstruction advantage extend to
+\emph{effect-magnitude specificity}?) are preregistered as R2/R3/R5
+(\S\ref{sec:reconciliation}).
+
+\subsection{Concurrent work: PhysSAE, reconciled}
+\label{sec:reconciliation}
+
+PhysSAE \cite{patil2026physSAE} reports, across six time-dependent PDE
+families, that SAE atoms align with independently defined physical
+observables (max $|r|$ up to 0.951), that atom ablation produces spatially
+concentrated output changes (ESF$_{80}$ 1.2--4.2$\times$ more
+concentrated than PCA/ICA interventions), and that top-aligned atoms
+beat matched random-atom controls on localization. Our nulls and their
+positives do not numerically contradict: the studies differ in
+\emph{layer} (their penultimate linear-readout bottleneck vs.\ our
+middle hidden layer), \emph{dictionary} (ReLU+L1, $D{=}512$, L0
+$\approx$ 150 vs.\ TopK, $k{=}8$), \emph{PDE regime} (time-dependent
+1+1D with L-BFGS polish and $w_{\mathrm{BC}}{=}100$ vs.\ our steady and
+short-schedule families), and --- most importantly --- the
+\emph{causal criterion}. Their intervention at the penultimate layer
+obeys $\Delta u = \alpha\, z_k\, (W_{\mathrm{out}} d_k)$ exactly: the
+causal-effect field is proportional to the atom's own activation field,
+so ESF$_{80}$ of the intervention is ESF$_{80}$ of the code --- an
+activation-geometry statistic.
+
+\paragraph{The head-to-head (R1, preregistered and run).} We retrained
+Burgers and Allen--Cahn PINNs to the PhysSAE architecture specification
+(5$\times$128 tanh, Adam + L-BFGS, $w_{\mathrm{BC}}{=}w_{\mathrm{IC}}{=}100$,
+3 seeds; machinery gates passed pre-verdict), extracted
+\emph{penultimate} activations on their 200$\times$100 grid, and ran
+both metric families on the same frozen checkpoints across five
+dictionaries: their ReLU+L1 SAE (3 SAE seeds), our TopK SAE, PCA, ICA,
+and random unit directions. Three findings (full artifact:
+\texttt{runs/r1\_physSAE/r1\_report.json}):
+\begin{enumerate}
+  \item \textbf{Alignment replicates --- and is generic.} Every
+        dictionary aligns with the physical-concept panel: max $|r|$
+        0.77--0.99, permutation $Z > 16$ on all runs ---
+        \emph{including random directions} (0.85--0.96). Concept
+        fields live in the activation row space; alignment is a
+        property of the geometry, not of discovered features.
+  \item \textbf{Spatial concentration replicates --- and is generic.}
+        SAE ablation footprints are 2.0--2.5$\times$ more
+        ESF$_{80}$-concentrated than PCA/ICA interventions,
+        replicating their headline pattern --- but equally more
+        concentrated than \emph{random} unit directions
+        (SAE/random 2.0--2.3$\times$). The between-basis random
+        control, which their battery does not run, removes the
+        SAE-specific reading.
+  \item \textbf{Effect-magnitude specificity is null for every basis.}
+        Under our matched-deletion $E_T$ battery at the same layer,
+        random sits at the 0/8 chance floor on all six runs (the
+        battery is calibrated); survivors scatter without
+        basis-specificity (ReLU+L1 0--1/8, TopK 0--2/8, PCA 1--2/8,
+        ICA 1--2/8).
+\end{enumerate}
+The preregistered verdict is \textbf{R1b}: the two causal criteria
+dissociate. PhysSAE-style evidence (alignment; concentration vs.\
+PCA/ICA) replicates on matched checkpoints but is achieved equally by
+random bases --- it lives on the geometry rungs of the ladder --- while
+our effect-magnitude criterion is null for every basis including SAEs.
+Registered caveats: our matched Burgers converged (0.010--0.016) where
+theirs plateaued (0.207); our Allen--Cahn family is milder
+($\varepsilon{=}0.05$ vs.\ their $10^{-4}$). Two findings reconcile
+the programs independently: their \S4.8 replicates our
+rank-collapse-with-convergence regularity from the failure side
+(failed PINNs higher-rank, well-trained lower-rank --- the same law we
+measured, discovered from two directions), and our level ladder ---
+association $\to$ predictivity $\to$ effect-magnitude specificity $\to$
+spatial localization --- assigns the two studies' evidence to different
+rungs, which is a reconciliation, not a dispute. R2--R5 remain
+preregistered; R2 (the causal battery on the high-rank Fourier PINN)
+is the one regime where specificity could still emerge.
+
 \section{What To Do Instead}
 \label{sec:alternative}
 
@@ -582,6 +743,51 @@ config-faithful protocol the controller (0.0002) beats all three
 baselines. A single-failure comparison is not optimization-SOTA evidence
 in either direction; the interpretability claims are kept structurally
 separate from the engineering claims (Figure~\ref{fig:controller}).
+
+\paragraph{Generalization: the three-failure battery (H17).}
+\label{sec:controller-battery}
+Because a single-failure rescue is exactly the fragility an earlier
+review exposed, H17 (preregistered) ran the controller, no-action,
+oracle, NTK-adaptive, and GradNorm across the three reproducible failure
+classes --- boundary starvation, spectral suppression, and a 2D
+reaction-diffusion pilot --- at three seeds each, behind a machinery gate
+(the controller must reproduce the v3.4 rescue on the reference seed
+before any other cell is read; it did --- 0.421 $\to$ 0.000162). The
+verdict, exactly as preregistered, is \textbf{H17a}: the controller
+\emph{wins its home class} (boundary starvation 0.000119, beating
+NTK-adaptive's 0.0044) and \emph{loses to the specialized method
+elsewhere} (spectral suppression: NTK 0.0036 vs.\ controller 0.335,
+whose per-seed spread 0.005/0.995/0.004 shows the bounded
+$\lambda_{\mathrm{bc}}$ rebalance is unreliable there; RD-2D: NTK 1.67
+vs.\ controller 1.98). It never degrades catastrophically below
+no-action on any class (worst mean $\Delta$ +0.019), and GradNorm
+actively harms on starvation (3.82 vs.\ 0.221). One class requires an
+explicit caveat: on the RD-2D pilot \emph{every} arm, including the
+oracle reweighting, ends near 1.96 relative error --- the task is
+unlearned at 2500 steps in this regime, so that row measures that no
+method rescues it, not that any method wins it. The registered reading:
+the controller's value is never-catastrophic robustness plus home-class
+dominance --- not per-failure SOTA. NTK-adaptive is the best generalist
+across the tested set.
+
+\paragraph{The monitor floor, corrected (H19).}
+\label{sec:monitor-floor}
+The monitor section's published floor --- a single-threshold loss rule at
+AUROC 0.468 --- made the conventional arm look stronger than it is. A
+preregistered audit (H19) replaced it with an honest baseline: a
+logistic on past-only loss channels (loss, $\mathcal{L}_{\mathrm{pde}}$,
+$\mathcal{L}_{\mathrm{bc}}$; no validation-grid $\mathrm{rel}\,L_2$, no
+gradients) reaches \textbf{0.786} [0.615, 0.898] --- closing 78.2\% of
+the threshold$\to$conventional gap. Most of the conventional arm's
+apparent advantage was the \emph{rule} (threshold vs.\ trajectory), not
+the \emph{features} (gradients add 0.786 $\to$ 0.875 with overlapping
+CIs). The same audit traced every monitor-training label to its source:
+the stage-10 RD-2D runs never entered monitor training (a structural
+exclusion, not a mislabeling), two pool runs carrying init-transient
+artifact labels were excluded per the registered rule, and
+collocation-starvation runs derive no failure step under the operational
+labeler --- the monitor never tested that class. The no-SA-advantage
+conclusion (P = 0.51) is unchanged.
 
 \begin{figure}[t]
   \centering
@@ -646,7 +852,28 @@ methodology is appropriate --- demonstrated positively on the FNO.
         the verdict was read.
   \item \textbf{Controller.} Not optimization SOTA (NTK-adaptive wins on
         its target failure); its value is failure-agnosticism, bounded
-        actions, and rollback.
+        actions, and rollback --- and H17 generalizes this honestly:
+        home-class dominance (0.00012, beating NTK 0.0044) and
+        never-catastrophic behavior across the battery, but losses to
+        NTK-adaptive on spectral suppression (0.335 vs.\ 0.0036, with
+        high per-seed variance) and the RD-2D pilot (where every method,
+        including the oracle, fails: the task is unlearned at 2500 steps).
+  \item \textbf{Fourier result scope.} H18 is one task (1D Poisson),
+        one embedding family, one width, three seeds. It demonstrates
+        that the regime boundary \emph{can} occur within PINNs, not
+        that every Fourier-feature PINN crosses it; the frequency dose
+        response (R3), a second PDE (R5), and the causal extension (R2)
+        are preregistered follow-ups.
+  \item \textbf{The PR bar is operational, not universal.} PR $> 3.0$
+        is this protocol's preregistered move-bar, calibrated against
+        the measured width-scaling envelope (1.14--2.51). It is not a
+        universal SAE-suitability cutoff; the continuous
+        $\rho$-response is exactly what R3 measures.
+  \item \textbf{Tangent rank vs.\ covariance rank.} The Fourier runs
+        dissociate the two (PR 4.0--5.6 with tangent rank 1). We call
+        the participation ratio \emph{effective covariance
+        dimensionality}; it is not the manifold dimension, and
+        interpreting it as such would misstate the geometry.
   \item \textbf{Theory.} The tangent-rank bound is exact; predicting the
         covariance participation ratio from task and optimizer remains
         open. The time-dependent PINN PR (1.3--1.9, \emph{below} the
@@ -661,22 +888,34 @@ methodology is appropriate --- demonstrated positively on the FNO.
 \section{Conclusion}
 \label{sec:conclusion}
 
-Check superposition before you sparse-code. We measured, on both sides of
-the boundary, what the SAE literature assumes: the tool works exactly
-where the representation is genuinely high-rank --- and PINN activations
-are curves, not clouds. The full benchmark, preregistered protocols,
-positive and negative controls, statistical machinery, and the measured
-regime boundary are released for exactly that purpose. \textbf{The
-operator causal-asymmetry thread T1 is closed at H16b:} the high-n
-battery (n=20, direction-reversal criterion) fires H16b --- 6/16
-Bonferroni survivors but 0/16 direction-reversal survivors; the
-operator causal asymmetry is not a boundary-crossing signal.
+Sparse-feature mechanistic interpretability is not uniformly appropriate
+across scientific neural networks --- and, symmetrically, not uniformly
+\emph{inappropriate} either. Its usefulness tracks a measurable property
+of the representation. In conventional low-rank tanh PINNs, sparse and
+linear feature bases alike show no direction-specific causal information
+(local tangent rank = input dimension everywhere; covariance PR
+1.14--2.51; depth lowers it further). The failure is not intrinsic to
+PINNs: a Fourier-feature PINN on the same task crosses into the
+higher-rank regime, and the \emph{same} TopK SAE that was null there
+before beats matched PCA by 25--56$\times$ --- a within-PINN boundary,
+predicted in advance by the rank diagnostic, and dissociating
+covariance rank from manifold dimension. Concurrent PhysSAE
+\cite{patil2026physSAE} reports positive alignment and spatial
+concentration in a different layer/dictionary regime; the reconciliation
+--- a level ladder from association to effect-magnitude specificity, a
+convergent rank-collapse regularity discovered from both sides, and a
+preregistered head-to-head on matched checkpoints --- is itself a
+contribution. Separately, failure-aware control rescues some PINN
+optimization failures (home-class dominance, never-catastrophic
+robustness; not per-failure SOTA), and SAE features are not responsible
+for that rescue. \textbf{Check the geometry before you sparse-code:}
+one covariance eigendecomposition tells you which regime you are in.
 
 \paragraph{Reproducibility statement.} All numbers in this paper are
 regenerated from committed JSON artifacts (\texttt{runs/}) by
 \texttt{scripts/generate\_tables.py} and \texttt{generate\_figures.sh}; a
 CI job (\texttt{scripts/check\_results\_grounded.py}) fails the build if
-any results document cites a number ungrounded in an artifact. 155 unit
+any results document cites a number ungrounded in an artifact. 171 unit
 tests; Dockerfile pinned; seeds documented per run; full campaign
 $\approx$ 6 GPU-hours (RTX-class). Preregistrations were committed before
 each stage ran; outcomes are recorded exactly as the decision rules fired.

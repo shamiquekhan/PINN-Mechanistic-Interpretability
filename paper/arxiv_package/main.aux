@@ -12,6 +12,7 @@
 \newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
 \citation{li2021fourier}
 \citation{deepmind2025negative,leask2025sparse,paulo2025sae,korznikov2026saes}
+\citation{patil2026physSAE}
 \citation{wang2020understanding,krishnapriyan2021characterizing}
 \citation{xu2019frequency,rahaman2019spectral}
 \citation{chen2018gradnorm}
@@ -24,76 +25,93 @@
 \citation{cunningham2023sparse,bricken2023towards,gao2025scaling}
 \citation{marks2025sparse,wu2025axbench}
 \citation{geiger2021causal,geiger2022inducing}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Background}{2}{section.2}\protected@file@percent }
-\newlabel{sec:background}{{2}{2}{Background}{section.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{PINN failure modes.}{2}{section*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Superposition and SAEs.}{2}{section*.2}\protected@file@percent }
 \citation{li2021fourier}
 \citation{lu2021learning}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Geometry across the dimensional boundary: tangent rank equals input dimension; covariance participation ratio stays low.}}{3}{table.1}\protected@file@percent }
-\newlabel{tab:geometry}{{1}{3}{Geometry across the dimensional boundary: tangent rank equals input dimension; covariance participation ratio stays low}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background}{3}{section.2}\protected@file@percent }
+\newlabel{sec:background}{{2}{3}{Background}{section.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{PINN failure modes.}{3}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Superposition and SAEs.}{3}{section*.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Causal abstraction.}{3}{section*.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Operator learning.}{3}{section*.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Theory: What Bounds Activation Rank?}{3}{section.3}\protected@file@percent }
 \newlabel{sec:theory}{{3}{3}{Theory: What Bounds Activation Rank?}{section.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}The PINN-MI Pipeline}{3}{section.4}\protected@file@percent }
 \newlabel{sec:method}{{4}{3}{The PINN-MI Pipeline}{section.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Geometry across the dimensional boundary: tangent rank equals input dimension; covariance participation ratio stays low.}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:geometry}{{1}{4}{Geometry across the dimensional boundary: tangent rank equals input dimension; covariance participation ratio stays low}{table.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Empirical Results: PINNs}{4}{section.5}\protected@file@percent }
 \newlabel{sec:results}{{5}{4}{Empirical Results: PINNs}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Failure atlas}{4}{subsection.5.1}\protected@file@percent }
 \newlabel{sec:atlas}{{5.1}{4}{Failure atlas}{subsection.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}The activation manifold is a curve}{4}{subsection.5.2}\protected@file@percent }
-\newlabel{sec:geometry}{{5.2}{4}{The activation manifold is a curve}{subsection.5.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Failure atlas.} Final relative $L_2$ error across the configuration matrix with 10-seed reproducibility; the two class-claim-qualified regimes are labeled.}}{5}{figure.1}\protected@file@percent }
 \newlabel{fig:atlas}{{1}{5}{\textbf {Failure atlas.} Final relative $L_2$ error across the configuration matrix with 10-seed reproducibility; the two class-claim-qualified regimes are labeled}{figure.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {The activation manifold.} Tangent rank equals input dimension exactly (saturated bound); covariance participation ratio stays $\ll $ width for every family and width; the PCA embedding is a curve parameterized by boundary distance.}}{5}{figure.2}\protected@file@percent }
 \newlabel{fig:geometry}{{2}{5}{\textbf {The activation manifold.} Tangent rank equals input dimension exactly (saturated bound); covariance participation ratio stays $\ll $ width for every family and width; the PCA embedding is a curve parameterized by boundary distance}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}SAE reconstruction fails where PCA wins}{5}{subsection.5.3}\protected@file@percent }
-\newlabel{sec:results-sae}{{5.3}{5}{SAE reconstruction fails where PCA wins}{subsection.5.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}The basis-independent causal null}{5}{subsection.5.4}\protected@file@percent }
-\newlabel{sec:results-causal}{{5.4}{5}{The basis-independent causal null}{subsection.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}The activation manifold is a curve}{5}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:geometry}{{5.2}{5}{The activation manifold is a curve}{subsection.5.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {SAE vs.\ mandatory baselines.} $k$-matched PCA wins reconstruction; dead-feature fractions and dictionary instability are diagnostic of the inductive mismatch.}}{6}{figure.3}\protected@file@percent }
 \newlabel{fig:saepca}{{3}{6}{\textbf {SAE vs.\ mandatory baselines.} $k$-matched PCA wins reconstruction; dead-feature fractions and dictionary instability are diagnostic of the inductive mismatch}{figure.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {The causal null, both bases.} Targeted vs.\ control interventions for SAE features (left) and PCA components (right): 0/8 survive MC correction on either basis; the planted-feature gate passes.}}{6}{figure.4}\protected@file@percent }
-\newlabel{fig:causal}{{4}{6}{\textbf {The causal null, both bases.} Targeted vs.\ control interventions for SAE features (left) and PCA components (right): 0/8 survive MC correction on either basis; the planted-feature gate passes}{figure.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The causal batteries: SAE and PCA bases both fail MC correction on PINNs.}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:causal}{{2}{6}{The causal batteries: SAE and PCA bases both fail MC correction on PINNs}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}SAE reconstruction fails where PCA wins}{6}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:results-sae}{{5.3}{6}{SAE reconstruction fails where PCA wins}{subsection.5.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}The basis-independent causal null}{6}{subsection.5.4}\protected@file@percent }
+\newlabel{sec:results-causal}{{5.4}{6}{The basis-independent causal null}{subsection.5.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Causal abstraction: no alignment beats random}{6}{subsection.5.5}\protected@file@percent }
 \newlabel{sec:abstraction}{{5.5}{6}{Causal abstraction: no alignment beats random}{subsection.5.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}The Regime Boundary}{6}{section.6}\protected@file@percent }
-\newlabel{sec:boundary}{{6}{6}{The Regime Boundary}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}FNO: the superposition signature exists}{6}{subsection.6.1}\protected@file@percent }
-\newlabel{sec:fno}{{6.1}{6}{FNO: the superposition signature exists}{subsection.6.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The causal batteries: SAE and PCA bases both fail MC correction on PINNs.}}{7}{table.2}\protected@file@percent }
-\newlabel{tab:causal}{{2}{7}{The causal batteries: SAE and PCA bases both fail MC correction on PINNs}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {The causal null, both bases.} Targeted vs.\ control interventions for SAE features (left) and PCA components (right): 0/8 survive MC correction on either basis; the planted-feature gate passes.}}{7}{figure.4}\protected@file@percent }
+\newlabel{fig:causal}{{4}{7}{\textbf {The causal null, both bases.} Targeted vs.\ control interventions for SAE features (left) and PCA components (right): 0/8 survive MC correction on either basis; the planted-feature gate passes}{figure.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Causal abstraction null.} Interchange movement for PCA/ SAE-aligned subspaces vs.\ random bases: statistically indistinguishable.}}{7}{figure.5}\protected@file@percent }
 \newlabel{fig:abstraction}{{5}{7}{\textbf {Causal abstraction null.} Interchange movement for PCA/ SAE-aligned subspaces vs.\ random bases: statistically indistinguishable}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}The Regime Boundary}{7}{section.6}\protected@file@percent }
+\newlabel{sec:boundary}{{6}{7}{The Regime Boundary}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}FNO: the superposition signature exists}{7}{subsection.6.1}\protected@file@percent }
+\newlabel{sec:fno}{{6.1}{7}{FNO: the superposition signature exists}{subsection.6.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}The operator causal battery: a suggestive asymmetry}{7}{subsection.6.2}\protected@file@percent }
 \newlabel{sec:operator-causal}{{6.2}{7}{The operator causal battery: a suggestive asymmetry}{subsection.6.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {The measured regime boundary.} Reconstruction-advantage ratio (SAE/PCA, $k$-matched) vs.\ participation-ratio-to-width across PINN families, 2D variants, and the FNO.}}{8}{figure.6}\protected@file@percent }
 \newlabel{fig:boundary}{{6}{8}{\textbf {The measured regime boundary.} Reconstruction-advantage ratio (SAE/PCA, $k$-matched) vs.\ participation-ratio-to-width across PINN families, 2D variants, and the FNO}{figure.6}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces The regime boundary: FNO function-space representations are high-rank and SAEs beat PCA there.}}{8}{table.3}\protected@file@percent }
 \newlabel{tab:regime}{{3}{8}{The regime boundary: FNO function-space representations are high-rank and SAEs beat PCA there}{table.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}The operator causal battery at high n: closing the asymmetry thread (H16)}{8}{subsection.6.3}\protected@file@percent }
-\newlabel{sec:operator-causal-highn}{{6.3}{8}{The operator causal battery at high n: closing the asymmetry thread (H16)}{subsection.6.3}{}}
+\citation{tancik2020fourier}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {The operator causal battery.} Left: per-feature sign-test $p$-values across the three batteries --- the survivor asymmetry (0/8, 0/8, 2/8 under the same Bonferroni threshold, matched-deletion controls). Right: target-beats-all-controls rate.}}{9}{figure.7}\protected@file@percent }
+\newlabel{fig:operator-causal}{{7}{9}{\textbf {The operator causal battery.} Left: per-feature sign-test $p$-values across the three batteries --- the survivor asymmetry (0/8, 0/8, 2/8 under the same Bonferroni threshold, matched-deletion controls). Right: target-beats-all-controls rate}{figure.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}The operator causal battery at high n: closing the asymmetry thread (H16)}{9}{subsection.6.3}\protected@file@percent }
+\newlabel{sec:operator-causal-highn}{{6.3}{9}{The operator causal battery at high n: closing the asymmetry thread (H16)}{subsection.6.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Operator causal battery (stage 14): the survivor asymmetry (2/8 vs 0/8 vs 0/8, matched-deletion controls).}}{10}{table.4}\protected@file@percent }
+\newlabel{tab:operator-causal}{{4}{10}{Operator causal battery (stage 14): the survivor asymmetry (2/8 vs 0/8 vs 0/8, matched-deletion controls)}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {The within-PINN architecture boundary (H18).} (A) Activation participation ratio by architecture: the tanh depth sweep stays inside the width-scaling envelope and \emph  {falls} with depth (2.05 $\to $ 1.15); the Fourier-feature PINN rises to 4.0--5.6, the FNO neighborhood. (B) The same TopK SAE across the three regimes: PCA wins on tanh PINNs ($\sim $50$\times $), the SAE wins on the Fourier PINN (25--56$\times $) and the FNO (4.7$\times $). (C) The phase diagram: SAE advantage over $k$-matched PCA vs.\ $\rho = \mathrm  {PR}/W$ (log--log), with the preregistered move-bar.}}{10}{figure.8}\protected@file@percent }
+\newlabel{fig:architecture-boundary}{{8}{10}{\textbf {The within-PINN architecture boundary (H18).} (A) Activation participation ratio by architecture: the tanh depth sweep stays inside the width-scaling envelope and \emph {falls} with depth (2.05 $\to $ 1.15); the Fourier-feature PINN rises to 4.0--5.6, the FNO neighborhood. (B) The same TopK SAE across the three regimes: PCA wins on tanh PINNs ($\sim $50$\times $), the SAE wins on the Fourier PINN (25--56$\times $) and the FNO (4.7$\times $). (C) The phase diagram: SAE advantage over $k$-matched PCA vs.\ $\rho = \mathrm {PR}/W$ (log--log), with the preregistered move-bar}{figure.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}The architecture boundary: superposition arrives \emph  {within PINNs} (H18)}{10}{subsection.6.4}\protected@file@percent }
+\newlabel{sec:architecture-boundary}{{6.4}{10}{The architecture boundary: superposition arrives \emph {within PINNs} (H18)}{subsection.6.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Result: H18a, in its strongest form.}{10}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Geometry dissociation.}{10}{section*.6}\protected@file@percent }
+\citation{patil2026physSAE}
+\@writefile{toc}{\contentsline {paragraph}{Scope.}{11}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Concurrent work: PhysSAE, reconciled}{11}{subsection.6.5}\protected@file@percent }
+\newlabel{sec:reconciliation}{{6.5}{11}{Concurrent work: PhysSAE, reconciled}{subsection.6.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{The head-to-head (R1, preregistered and run).}{11}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}What To Do Instead}{11}{section.7}\protected@file@percent }
+\newlabel{sec:alternative}{{7}{11}{What To Do Instead}{section.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Monitors.}{11}{section*.9}\protected@file@percent }
 \citation{wang2021learning}
 \citation{chen2018gradnorm}
 \citation{anagnostopoulos2024residual}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {The operator causal battery.} Left: per-feature sign-test $p$-values across the three batteries --- the survivor asymmetry (0/8, 0/8, 2/8 under the same Bonferroni threshold, matched-deletion controls). Right: target-beats-all-controls rate.}}{9}{figure.7}\protected@file@percent }
-\newlabel{fig:operator-causal}{{7}{9}{\textbf {The operator causal battery.} Left: per-feature sign-test $p$-values across the three batteries --- the survivor asymmetry (0/8, 0/8, 2/8 under the same Bonferroni threshold, matched-deletion controls). Right: target-beats-all-controls rate}{figure.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Operator causal battery (stage 14): the survivor asymmetry (2/8 vs 0/8 vs 0/8, matched-deletion controls).}}{9}{table.4}\protected@file@percent }
-\newlabel{tab:operator-causal}{{4}{9}{Operator causal battery (stage 14): the survivor asymmetry (2/8 vs 0/8 vs 0/8, matched-deletion controls)}{table.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}What To Do Instead}{9}{section.7}\protected@file@percent }
-\newlabel{sec:alternative}{{7}{9}{What To Do Instead}{section.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{Monitors.}{9}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Controller.}{9}{section*.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {Early-warning monitors.} Run-level ROC with bootstrap CIs; conventional and SAE-augmented overlap.}}{10}{figure.8}\protected@file@percent }
-\newlabel{fig:monitor}{{8}{10}{\textbf {Early-warning monitors.} Run-level ROC with bootstrap CIs; conventional and SAE-augmented overlap}{figure.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Controller rescue + SOTA comparison.} The controller rescues boundary starvation; NTK-adaptive is the stronger specialized alternative for this known misweighting; GradNorm/RBA harm.}}{10}{figure.9}\protected@file@percent }
-\newlabel{fig:controller}{{9}{10}{\textbf {Controller rescue + SOTA comparison.} The controller rescues boundary starvation; NTK-adaptive is the stronger specialized alternative for this known misweighting; GradNorm/RBA harm}{figure.9}{}}
-\newlabel{sec:sota}{{7}{10}{SOTA baselines}{section*.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{SOTA baselines.}{10}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The precheck.}{11}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion and Limitations}{11}{section.8}\protected@file@percent }
-\newlabel{sec:discussion}{{8}{11}{Discussion and Limitations}{section.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Early-warning monitors.} Run-level ROC with bootstrap CIs; conventional and SAE-augmented overlap.}}{12}{figure.9}\protected@file@percent }
+\newlabel{fig:monitor}{{9}{12}{\textbf {Early-warning monitors.} Run-level ROC with bootstrap CIs; conventional and SAE-augmented overlap}{figure.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Controller.}{12}{section*.10}\protected@file@percent }
+\newlabel{sec:sota}{{7}{12}{SOTA baselines}{section*.11}{}}
+\@writefile{toc}{\contentsline {paragraph}{SOTA baselines.}{12}{section*.11}\protected@file@percent }
+\newlabel{sec:controller-battery}{{7}{12}{Generalization: the three-failure battery (H17)}{section*.12}{}}
+\@writefile{toc}{\contentsline {paragraph}{Generalization: the three-failure battery (H17).}{12}{section*.12}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces \textbf  {Controller rescue + SOTA comparison.} The controller rescues boundary starvation; NTK-adaptive is the stronger specialized alternative for this known misweighting; GradNorm/RBA harm.}}{13}{figure.10}\protected@file@percent }
+\newlabel{fig:controller}{{10}{13}{\textbf {Controller rescue + SOTA comparison.} The controller rescues boundary starvation; NTK-adaptive is the stronger specialized alternative for this known misweighting; GradNorm/RBA harm}{figure.10}{}}
+\newlabel{sec:monitor-floor}{{7}{13}{The monitor floor, corrected (H19)}{section*.13}{}}
+\@writefile{toc}{\contentsline {paragraph}{The monitor floor, corrected (H19).}{13}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The precheck.}{13}{section*.14}\protected@file@percent }
+\citation{patil2026physSAE}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion and Limitations}{14}{section.8}\protected@file@percent }
+\newlabel{sec:discussion}{{8}{14}{Discussion and Limitations}{section.8}{}}
 \bibstyle{unsrtnat}
 \bibdata{references}
 \bibcite{raissi2019physics}{{1}{2019}{{Raissi et~al.}}{{Raissi, Perdikaris, and Karniadakis}}}
@@ -107,23 +125,25 @@
 \bibcite{geiger2022inducing}{{9}{2022}{{Geiger et~al.}}{{Geiger, Wu, Potts, Icard, and Goodman}}}
 \bibcite{qi2026mechanistic}{{10}{2026}{{Qi and Earls}}{{}}}
 \bibcite{li2021fourier}{{11}{2021}{{Li et~al.}}{{Li, Kovachki, Azizzadenesheli, et~al.}}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{15}{section.9}\protected@file@percent }
+\newlabel{sec:conclusion}{{9}{15}{Conclusion}{section.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Reproducibility statement.}{15}{section*.15}\protected@file@percent }
 \bibcite{deepmind2025negative}{{12}{2025}{{DeepMind Mechanistic Interpretability Team}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
-\newlabel{sec:conclusion}{{9}{12}{Conclusion}{section.9}{}}
-\@writefile{toc}{\contentsline {paragraph}{Reproducibility statement.}{12}{section*.9}\protected@file@percent }
 \bibcite{leask2025sparse}{{13}{2025}{{Leask et~al.}}{{}}}
 \bibcite{paulo2025sae}{{14}{2025}{{Paulo and Belrose}}{{}}}
 \bibcite{korznikov2026saes}{{15}{2026}{{Korznikov et~al.}}{{}}}
-\bibcite{xu2019frequency}{{16}{2020}{{Xu et~al.}}{{Xu, Zhang, Luo, Xiao, and Zheng}}}
-\bibcite{rahaman2019spectral}{{17}{2019}{{Rahaman et~al.}}{{Rahaman, Barber, G{\"o}kmen, Arpit, Trischler, and Bengio}}}
-\bibcite{chen2018gradnorm}{{18}{2018}{{Chen et~al.}}{{Chen, Badrinarayanan, Lee, and Rabinovich}}}
-\bibcite{wang2021learning}{{19}{2022}{{Wang et~al.}}{{Wang, Yu, and Perdikaris}}}
-\bibcite{mccclenny2023self}{{20}{2023}{{McClenny and Braga-Neto}}{{}}}
-\bibcite{wang2024respecting}{{21}{2024}{{Wang et~al.}}{{Wang, Sankaran, and Perdikaris}}}
-\bibcite{anagnostopoulos2024residual}{{22}{2024}{{Anagnostopoulos et~al.}}{{}}}
-\bibcite{kim2022fast}{{23}{2022}{{Kim et~al.}}{{Kim, Choi, Widemann, and Zohdi}}}
-\bibcite{chen2023toy}{{24}{2023}{{Chen et~al.}}{{}}}
-\bibcite{wu2025axbench}{{25}{2025}{{Wu et~al.}}{{}}}
-\bibcite{geiger2021causal}{{26}{2021}{{Geiger et~al.}}{{Geiger, Potts, Icard, et~al.}}}
-\bibcite{lu2021learning}{{27}{2021}{{Lu et~al.}}{{Lu, Jin, Pang, et~al.}}}
-\gdef \@abspage@last{13}
+\bibcite{patil2026physSAE}{{16}{2026}{{Patil et~al.}}{{Patil, Eshwar, and Honnavar}}}
+\bibcite{xu2019frequency}{{17}{2020}{{Xu et~al.}}{{Xu, Zhang, Luo, Xiao, and Zheng}}}
+\bibcite{rahaman2019spectral}{{18}{2019}{{Rahaman et~al.}}{{Rahaman, Barber, G{\"o}kmen, Arpit, Trischler, and Bengio}}}
+\bibcite{chen2018gradnorm}{{19}{2018}{{Chen et~al.}}{{Chen, Badrinarayanan, Lee, and Rabinovich}}}
+\bibcite{wang2021learning}{{20}{2022}{{Wang et~al.}}{{Wang, Yu, and Perdikaris}}}
+\bibcite{mccclenny2023self}{{21}{2023}{{McClenny and Braga-Neto}}{{}}}
+\bibcite{wang2024respecting}{{22}{2024}{{Wang et~al.}}{{Wang, Sankaran, and Perdikaris}}}
+\bibcite{anagnostopoulos2024residual}{{23}{2024}{{Anagnostopoulos et~al.}}{{}}}
+\bibcite{kim2022fast}{{24}{2022}{{Kim et~al.}}{{Kim, Choi, Widemann, and Zohdi}}}
+\bibcite{chen2023toy}{{25}{2023}{{Chen et~al.}}{{}}}
+\bibcite{wu2025axbench}{{26}{2025}{{Wu et~al.}}{{}}}
+\bibcite{geiger2021causal}{{27}{2021}{{Geiger et~al.}}{{Geiger, Potts, Icard, et~al.}}}
+\bibcite{lu2021learning}{{28}{2021}{{Lu et~al.}}{{Lu, Jin, Pang, et~al.}}}
+\bibcite{tancik2020fourier}{{29}{2020}{{Tancik et~al.}}{{Tancik, Srinivasan, Mildenhall, Fridovich-Keil, Raghavan, Singhal, Ramamoorthi, Barron, and Ng}}}
+\gdef \@abspage@last{16}

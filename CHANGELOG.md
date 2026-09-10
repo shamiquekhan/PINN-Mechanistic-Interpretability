@@ -4,6 +4,50 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [4.1.0] — 2026-09-11 — "R1 Head-to-Head Run: R1b (Criteria Dissociate) + v4.0 Paper Rebuild"
+
+### R1 — PhysSAE head-to-head (preregistered, gates passed, run, recorded R1b)
+
+Matched-architecture Burgers/Allen–Cahn PINNs (5×128 tanh, Adam+L-BFGS,
+w_BC=w_IC=100, 3 seeds each), penultimate activations, five dictionaries
+(their ReLU+L1 D=512 × 3 seeds, our TopK, PCA, ICA, random), both metric
+families on the same frozen checkpoints:
+
+- Alignment replicates and is GENERIC: every basis incl. random
+  directions aligns with physical concepts (max |r| 0.77-0.99, random
+  0.85-0.96, Z>16 all runs)
+- Spatial concentration replicates and is GENERIC: SAE ablation
+  footprints 2.0-2.5× more ESF80-concentrated than PCA/ICA (their
+  headline pattern) — but equally more concentrated than RANDOM
+  directions (2.0-2.3×); the between-basis random control (not in
+  their battery) removes the SAE-specific reading
+- Effect-magnitude specificity NULL for every basis: random at the
+  0/8 chance floor on all 6 runs (battery calibrated); survivors
+  scatter without basis-specificity
+- Verdict R1b as pre-written: the causal criteria dissociate; both
+  papers' claims stand at different level-ladder rungs; the
+  rank-collapse regularity was discovered independently by both
+  programs
+
+### Paper rebuilt around the geometry thesis (v4.0)
+
+- New title: "When Sparse Features Become Mechanistic: Representation
+  Geometry and Causal Interpretability in PINNs"
+- Abstract rewritten: the "when" thesis; H18 within-PINN boundary as the
+  centerpiece; PhysSAE reconciliation; H17/H19 as bounded secondary
+  findings
+- New sections: architecture boundary (H18, centerpiece figure 10 —
+  three-panel phase diagram), PhysSAE reconciliation with the R1
+  outcome, controller battery (H17), monitor floor (H19)
+- Limitations extended: Fourier scope, PR bar operational not
+  universal, covariance-vs-tangent wording
+- 16 pages, 0 errors, 0 undefined citations; figure 10 generated
+  from committed artifacts
+
+Also: PhysSAE cited (patil2026physSAE) + Tancik Fourier cite added;
+RESULTS.md §5A.12; preregistration §R1 outcome recorded; checksums 22/22;
+171 tests; grounding OK.
+
 ## [3.6.0] — 2026-09-11 — "PhysSAE Reconciliation: v4.1 Campaign Registered (No Runs)"
 
 Concurrent work surfaced during release preparation: PhysSAE

@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{29}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -101,6 +101,14 @@ Alexander Korznikov et~al.
 \newblock Sparse autoencoders discard information relevant to target concepts.
 \newblock \emph{arXiv preprint}, 2026.
 
+\bibitem[Patil et~al.(2026)Patil, Eshwar, and Honnavar]{patil2026physSAE}
+Nandita~N. Patil, R.~A. Eshwar, and Gajanan~V. Honnavar.
+\newblock Physsae: Mechanistic interpretability with sparse autoencoders.
+\newblock \emph{arXiv preprint arXiv:2609.07061}, 2026.
+\newblock Concurrent work; penultimate-layer SAEs on six time-dependent PDE
+  families reporting physical-observable alignment and spatially concentrated
+  causal footprints.
+
 \bibitem[Xu et~al.(2020)Xu, Zhang, Luo, Xiao, and Zheng]{xu2019frequency}
 Zhi-Qin~John Xu, Yaoyu Zhang, Tao Luo, Yao Xiao, and ZhengMa Zheng.
 \newblock Frequency principle: Fourier analysis sheds light on deep neural
@@ -174,5 +182,13 @@ Lu~Lu, Pengzhan Jin, Guofei Pang, et~al.
 \newblock Learning nonlinear operators via {DeepONet} based on the universal
   approximation theorem of operators.
 \newblock \emph{Nature Machine Intelligence}, 3:\penalty0 218--229, 2021.
+
+\bibitem[Tancik et~al.(2020)Tancik, Srinivasan, Mildenhall, Fridovich-Keil,
+  Raghavan, Singhal, Ramamoorthi, Barron, and Ng]{tancik2020fourier}
+Matthew Tancik, Pratul Srinivasan, Ben Mildenhall, Sara Fridovich-Keil, Nithin
+  Raghavan, Utkarsh Singhal, Ravi Ramamoorthi, Jonathan~T. Barron, and Ren Ng.
+\newblock Fourier features let networks learn high frequency functions in low
+  dimensional domains.
+\newblock In \emph{NeurIPS}, 2020.
 
 \end{thebibliography}
