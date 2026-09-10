@@ -25,6 +25,7 @@ Each item: what ran → where the output lives.
 | SOTA baselines | `--stages 12` | `runs/sota_baselines/sota_baseline_report.json` | Config-faithful: controller 0.0002 < NTK 0.0064 (NTK beat the pre-fix controller 0.0166 — see drift record); GradNorm 2.01 / RBA 2.19 (harm) |
 | Statistical hardening | `--stages 13` | `runs/statistical_hardening/analysis_report.json` | MDE 85.7% @ 80% power; P(SAE monitor better) 0.51 |
 | NTK conflict↔SAE bridge | `--stages 15` | `runs/ntk_bridge/ntk_bridge_report.json` | H15b: 0/8 survive; best \|ρ\| 0.578 exceeds random p95 0.494 but fails Bonferroni (p=0.56) → no bridge at the registered bar; machinery gate PASS |
+| Controller failure battery (H17) | `python -m experiments.controller_failure_battery` | `runs/controller_failure_battery/controller_failure_battery_report.json` | Machinery gate PASS (F1 seed-7 rescue 0.421 → 0.000162); H17a: controller wins F1 (0.00012), NTK-adaptive wins F2 (0.0036) & F3 (1.67); controller never catastrophic (worst mean Δ vs no-action +0.019); GradNorm harms F1 (3.82) |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
 | Unit tests | `python -m pytest tests/ -q` | — | **171 passed, 1 skipped** (2026-09-10, CPU-only; 155 at the 2026-09-08 fresh campaign, +16 from the v3.4.2 stage-17 framework) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
@@ -45,6 +46,24 @@ Each item: what ran → where the output lives.
   Reported as a **suggestive, weakened asymmetry** (2/8 vs 0/8 on PINNs),
   NOT a confirmed boundary. Thread now pending the H16 high-n resolution
   (docs/preregistration.md §H8/H16). Full record: RESULTS.md §5A.7.
+
+## Completed since last verification (stages 16–17 — preregistered, run, recorded)
+
+- **Stage 16 — operator causal asymmetry high-n resolution (H16):** see
+  RESULTS.md claim 5; preregistered (H16a/H16b at `ae8dafd`), executed,
+  recorded H16b — 6/16 Bonferroni survivors, 0/16 direction-reversal;
+  thread T1 closed; the boundary claim rests on the reconstruction side.
+- **Stage 17 — controller failure battery (H17):** preregistered (v3.5
+  section, `docs/preregistration.md` §H17), executed 2026-09-10,
+  recorded **H17a** — the controller wins its home class (boundary
+  starvation 0.00012, beats NTK 0.0044) and loses to NTK-adaptive on
+  spectral suppression (0.335 vs 0.0036) and RD-2D (1.98 vs 1.67),
+  never catastrophically below no-action. Machinery gate PASS. A
+  v3.4.2-driver machinery incident (5 defects, incl. fake NTK/GradNorm
+  arms and a hard-coded failure_class) was fixed at `fc77850` BEFORE
+  the run and before any verdict was read — recorded in §H17 and
+  RESULTS.md §5A.9. Full numbers:
+  `runs/controller_failure_battery/controller_failure_battery_report.json`.
 
 ## Explicitly not yet started (honest backlog)
 

@@ -67,10 +67,17 @@ for an established result.
   NTK↔SAE bridge — the binary label is structurally low-sensitivity in a
   chronically-conflicted regime; also Option B (SAE on
   NTK-eigenmode-projected activations).
-- [ ] **Stage 17 (H17) — Controller generalization failure battery:** framework
-  landed (`experiments/controller_failure_battery.py`, v3.4.2); run the
-  preregistered {controller, NTK, GradNorm, no-action} × {boundary starvation,
-  spectral suppression, RD-2D} × 3-seed matrix and record H17a/H17b.
+- [x] **Stage 17 (H17) — Controller generalization failure battery (v3.5):**
+  preregistered, executed 2026-09-10, recorded **H17a** — machinery gate
+  PASS (F1 rescue reproduced, 0.421 → 0.000162); the controller wins its
+  home class (0.00012, beating NTK-adaptive 0.0044) and loses to
+  NTK-adaptive on spectral suppression (0.335 vs 0.0036) and the RD-2D
+  pilot (1.98 vs 1.67); never catastrophic vs no-action (worst mean
+  Δ +0.019); GradNorm harms F1 (3.82). Positioning: robustness, not
+  per-failure SOTA. A v3.4.2 machinery incident (fake NTK/GradNorm arms,
+  hard-coded failure_class, unimplemented gate, pending aggregation,
+  hand-rolled loop) was fixed at fc77850 pre-verdict. Thread T2 closed.
+  See docs/preregistration.md §H17, RESULTS.md §5A.9.
 - [ ] **Stage 18 (H18) — Fourier-feature PINN + depth sweep:** scope-boundary
   probe (PR/W, tangent rank, PCA-95, SAE-vs-PCA reconstruction) to answer the
   "your PINNs are too simple" attack.

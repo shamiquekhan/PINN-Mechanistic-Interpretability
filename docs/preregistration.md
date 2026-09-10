@@ -425,6 +425,49 @@ action is not carried into a generalization test. (Implementing the
 input-dim-changing warm restart is registered as explicit future work,
 not a hidden stub.)
 
+**Machinery incident, recorded (fixed BEFORE any H17 verdict was read):**
+the v3.4.2 stage-17 driver had five implementation defects — NTK/GradNorm
+arms routed through a code path with no NTK/GradNorm logic (silent
+no-action clones), `failure_class` hard-coded to `boundary_starvation`
+(spectral/RD-2D cells would never exercise their action branches), the
+preregistered F1 machinery gate not implemented, aggregation left as a
+"pending" placeholder, and the controller arms hand-rolling a second
+training loop (the H3 anti-pattern). All five were fixed at `fc77850`
+after a smoke test (200 steps, 1 seed), BEFORE the battery ran and
+before any verdict was read. The registered matrix, arms, seeds,
+controller config, and no-oracle protocol were not modified.
+
+**Outcome (recorded after running).** Machinery gate: **PASS** — F1
+controller rescue reproduces the v3.4 result on the reference seed 7
+(0.421 → 0.000162; all three seeds 5.7e-05–1.6e-04, all ≤ 0.01).
+Battery (mean final rel L2, 3 seeds per cell; per-seed values in the
+artifact):
+
+| Failure class | no-action | controller | NTK-adaptive | GradNorm | Winner |
+|---|---|---|---|---|---|
+| Boundary starvation (F1) | 0.221 | **0.000119** | 0.00436 | 3.82 | controller |
+| Spectral suppression (F2) | 0.509 | 0.335 | **0.00363** | 0.635 | NTK-adaptive |
+| RD-2D pilot (F3) | 1.961 | 1.980 | **1.674** | 1.973 | NTK-adaptive |
+
+The preregistered outcome is **H17a**: the controller wins where its
+trigger condition applies (F1, static misweighting — where it also beats
+NTK-adaptive 0.00012 vs 0.0044) and loses to the specialized method
+elsewhere (NTK-adaptive on F2/F3). The controller never loses
+catastrophically to no-action on any class (worst mean delta +0.019,
+RD-2D), but its F2 cell is high-variance (per-seed finals 0.0054 /
+0.995 / 0.0041): the bounded λ_bc rebalance is unreliable on spectral
+suppression. GradNorm actively harms on F1 (3.82 vs no-action 0.221),
+consistent with stage 12. On the RD-2D pilot every method including the
+oracle fails (~1.96 final, best mid-run ≈ 0.70–1.04): the task is
+unlearned at 2500 steps in this regime, so F3 measures that no method
+rescues it, not that any method wins it. Positioning per the
+pre-written H17a language: *robustness across unknown failures, not
+per-failure SOTA* — with the sharpened caveat that "robustness" here
+means never-catastrophic + home-class dominance, not cross-class
+improvement.
+
+Full numbers: `runs/controller_failure_battery/controller_failure_battery_report.json`.
+
 ## H18 — Scope boundary probe: Fourier-feature PINN + depth (Stage 18)
 
 **Motivation.** The strongest reviewer attack on the null: "width-16–512

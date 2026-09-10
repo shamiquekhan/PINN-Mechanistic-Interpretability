@@ -4,6 +4,39 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [3.5.1] — 2026-09-10 — "H17 Controller Failure Battery (T2 Closed)"
+
+Stage 17 (H17) executed per v3.5 preregistration. Outcome: **H17a** —
+the controller wins its home class, specialized methods win elsewhere.
+
+- Machinery gate: PASS — F1 controller rescue reproduces v3.4 on the
+  reference seed 7 (0.421 → 0.000162; all 3 seeds 5.7e-05–1.6e-04).
+- F1 boundary starvation: **controller 0.000119** (NTK 0.0044,
+  no-action 0.221, GradNorm 3.82 — GradNorm actively harms).
+- F2 spectral suppression: **NTK-adaptive 0.00363** (controller 0.335
+  with high per-seed variance 0.005/0.995/0.004; no-action 0.509).
+- F3 RD-2D pilot: **NTK-adaptive 1.674** — but every arm including the
+  oracle ends ~1.96 (best mid-run ≈ 0.70–1.04): the task is unlearned
+  at 2500 steps in this regime; no method rescues it.
+- The controller never loses catastrophically to no-action on any
+  class (worst mean Δ +0.019). Positioning per the pre-written H17a
+  language: robustness across unknown failures, not per-failure SOTA.
+
+Machinery incident (fixed BEFORE any verdict was read, `fc77850`): the
+v3.4.2 stage-17 driver routed NTK/GradNorm arms through a code path with
+no NTK/GradNorm logic (silent no-action clones), hard-coded
+failure_class to boundary_starvation, left the preregistered machinery
+gate and the aggregation unimplemented, and hand-rolled a second
+training loop (the H3 anti-pattern). All five defects fixed pre-run,
+smoke-tested; the registered design was not modified.
+
+Also in this release (v3.5 docs sync, `722ef3d`): the H15 direction
+error corrected everywhere (best |ρ| 0.578 EXCEEDS random p95 0.494 but
+fails Bonferroni p=0.56); the H16 outcome record de-contaminated from
+copy-pasted H15 text; ROADMAP restructured (stages 14–17 completed,
+H18/H19 planned); paper/main.tex float bug fixed; arXiv package
+regenerated (13 pp, H16-complete).
+
 ## [3.4.2] — 2026-09-08 — "H16 Operator Causal Asymmetry High-N Resolution (T1 Closed)"
 
 Stage 16 (H16) executed per v3.5 preregistration (committed at ae8dafd
