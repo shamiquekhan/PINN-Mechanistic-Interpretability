@@ -757,3 +757,97 @@ two arrows are real and measured; the third is consistently absent.
 Honest scope: one SAE family (TopK k=8), one site (layers.1), 3 seeds;
 R3's frequency sweep and R4's SAE-seed/config robustness remain the
 registered probes of whether ANY configuration closes the third arrow.
+
+**Outcome (recorded after running, 2026-09-11).** Machinery gate: PASS
+(the R2 planted-world control; cosine 0.989, 20/20). Full artifact:
+`runs/r3_frequency_sweep/r3_report.json` (18 runs, n_freq
+{2,4,8,16,32,64} x 3 seeds, 2000 steps).
+
+| n_freq | mean PR | rho | PCA-95 | tangent | TopK PCA/SAE | ReLU+L1 PCA/SAE |
+|---|---|---|---|---|---|---|
+| 2 | 2.05 | 0.032 | 3.0 | 1 | 1.2x | 3.3x |
+| 4 | 1.95 | 0.031 | 3.0 | 1 | 1.7x | 6.3x |
+| 8 | 4.04 | 0.063 | 6.0 | 1 | 6.0x | 23.7x |
+| 16 | 4.78 | 0.075 | 6.7 | 1 | 21.0x | 63.1x |
+| 32 | 4.81 | 0.075 | 7.0 | 1 | 40.7x | 125.1x |
+| 64 | 4.79 | 0.075 | 7.3 | 1 | 37.1x | 136.9x |
+
+**Shape: as-scored "non-monotone" (Spearman +0.87/+0.88); as-read, a
+saturating dose-response with two regimes.** The registered classifier
+demands strict non-decrease in the mean ratio sequence; nf64's mean
+TopK ratio (37.1) dips below nf32's (40.7) within seed noise, firing
+"non-monotone". The measured structure is sharper than either
+pre-written extreme:
+
+1. **Rank saturates at the width's representable ceiling.** PR rises
+   2.05 -> 4.04 (nf 2 -> 8) then plateaus at ~4.8 (rho ~0.075) for
+   n_freq >= 16: at width 64 on this task, the activation covariance
+   rank caps out — the Fourier embedding can raise it only to the
+   ceiling, not beyond (more frequencies than the layer can express
+   add no rank).
+2. **The SAE advantage keeps climbing past the rank plateau.** The
+   TopK ratio climbs 6x -> 21x -> 41x and ReLU+L1 24x -> 63x -> 125x
+   -> 137x across the plateau — dictionary selectivity improves with
+   richer frequency structure even when covariance rank stops moving.
+   The ratio is NOT a function of rho alone: at fixed rho ~0.075 the
+   advantage varies 6x-137x.
+3. **Per-run coherence is strong:** Spearman rho-vs-ratio +0.87 (TopK)
+   / +0.88 (ReLU+L1) across all 18 runs; the one inverted run (nf2
+   seed 123, ratio 0.2) sits at the degenerate low-rank end.
+4. **Tangent rank 1 at every frequency** — the covariance/tangent
+   dissociation holds across the entire sweep.
+
+**Recorded conclusion.** The boundary is a function of effective
+covariance rank AND the structure the dictionary can exploit: rho is
+the gate (below ~0.05 the SAE is ~PCA), but above the ceiling the
+advantage tracks embedding richness, not rank. Combined with R2b
+(causality absent at every point of the curve), the phase diagram's
+y-axis is a compression axis, not an interpretability axis. This is
+the honest refinement of the pre-written "smooth/threshold/
+non-monotone" trichotomy: measured as a saturating rank response with
+a continuously-improving compression ratio, with the R3 pre-written
+"non-monotone" reading triggered by a noise-scale dip at the ceiling.
+
+**Outcome (recorded after running, 2026-09-11).** Full artifact:
+`runs/r4_sae_seed_robustness/r4_report.json` (3 PINN seeds x 3 SAE
+seeds x 2 families on the H18 n_freq=32 checkpoints; Hungarian
+matching, the PhysSAE §2.10 protocol).
+
+| Family | ratio per PINN seed (mean of 3 SAE seeds) | cross-SAE-seed cosine | verdict stable |
+|---|---|---|---|
+| TopK (k=8) | 28.7x / 28.7x / 47.1x | 0.410 | 18/18 seed-combos SAE > PCA |
+| ReLU+L1 (D=512) | 79.1x–167.2x | 0.406 | 18/18 seed-combos SAE > PCA |
+
+**Recorded conclusion (the pre-written rule fires): dictionary
+non-uniqueness WITH stable regime-level verdicts — the dissociation is
+measured.** Cross-SAE-seed matched cosine ~0.41 for both families
+(dictionaries are genuinely non-unique — independently replicating
+PhysSAE's §4.7 value of ~0.35 on our substrates), yet the
+reconstruction verdict is stable across every seed combination (SAE
+beats PCA 18/18; ratio range 29–47x TopK, 79–167x ReLU+L1). Dictionary
+identity is not the unit of scientific claim; the regime is. This also
+removes the last SAE-configuration confound from the H18/R3
+reconstruction result: the advantage is not an artifact of one lucky
+dictionary.
+
+**Outcome (recorded after running, 2026-09-11).** Full artifact:
+`runs/r5_burgers_boundary/r5_report.json` (Burgers (t,x), width 64,
+depth 3, 3 seeds per arm, 2000 steps).
+
+| Arm | PR (per seed) | rho | PCA-95 | tangent | PCA/SAE | rel L2 |
+|---|---|---|---|---|---|---|
+| Fourier (n_freq=32, 2-d input) | 15.77 / 13.99 / 15.34 | 0.22-0.25 | 22-24 | 1 | 32.7 / 30.5 / 37.8 | 0.42-0.52 |
+| tanh (twin) | 1.62 / 1.92 / 1.97 | 0.025-0.031 | 2 | 1 | 3.7 / 4.0 / 2.1 | 0.33-0.39 |
+
+**Recorded verdict: R5a** — the within-PINN boundary replicates on a
+time-dependent family. The Fourier (t,x) PINN crosses into the
+high-rank regime at PR 14.0-15.8 (rho 0.22-0.25 — an order of
+magnitude above the tanh twin's ~0.03 and well above the 1D-Poisson
+Fourier ceiling of ~4.8 from R3: the 2-d input through 64 frequency
+channels raises the representable-rank ceiling far higher), and there
+the SAE beats k-matched PCA 31-38x on every seed. Tangent rank 1 in
+all runs; rel L2 comparable across arms (0.33-0.52), so the contrast
+is architectural, not convergence-driven. Notable honest observation:
+the tanh-Burgers arm shows a mild SAE advantage (2-4x) at PR ~1.8 —
+the (t,x) input structure gives even the tanh regime slightly more
+exploitable structure than 1D Poisson did; recorded as-is.

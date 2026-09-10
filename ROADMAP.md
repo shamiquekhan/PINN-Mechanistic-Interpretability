@@ -143,10 +143,27 @@ rank-collapse-with-convergence regularity from the failure side).
   correction pre-verdict: crossover rule applied one-sided (>=15/20)
   as registered. See docs/preregistration.md §R2 outcome, RESULTS.md
   §5A.13.
-- [ ] **R3 — Fourier frequency sweep:** n_freq ∈ {2,4,8,16,32,64},
-  3 seeds, PR/PR-W/PCA-95 + reconstruction (both SAE families) + R2
-  battery where PR moves. Pre-written: smooth / threshold /
-  non-monotone.
+- [x] **R3 — Fourier frequency sweep (v4.1):** preregistered,
+  executed 2026-09-11 — 18 runs; PR saturates at the width ceiling
+  (~4.8, rho 0.075) for n_freq >= 16 while the SAE/PCA ratio keeps
+  climbing (TopK 6->41x, ReLU+L1 24->137x) past the plateau: geometry
+  gates, embedding richness drives compression; the as-scored shape
+  fired "non-monotone" (a noise-scale dip at the ceiling), the
+  structure is a saturating rank response; Spearman +0.87/+0.88;
+  tangent 1 at every frequency. See docs/preregistration.md §R3
+  outcome, RESULTS.md 5A.14.
+- [x] **R4 — SAE-seed robustness (v4.1):** preregistered, executed
+  2026-09-11 — cross-SAE-seed matched cosine 0.41 (dictionaries
+  non-unique, replicating PhysSAE 4.7) with 18/18 stable SAE>PCA
+  verdicts (TopK 29-47x, ReLU+L1 79-167x): the dissociation is
+  measured — the regime, not the dictionary, is the unit of claim.
+  See RESULTS.md 5A.15.
+- [x] **R5 — Burgers within-PINN boundary (v4.1):** preregistered,
+  executed 2026-09-11 — **R5a**: replicates on a time-dependent family
+  and more strongly than Poisson: Fourier (t,x) PR 14.0-15.8 (rho
+  0.25, above the FNO's 6.8), SAE beats PCA 31-38x all seeds; tanh
+  twin stays low-rank (~1.8, mild 2-4x advantage recorded honestly);
+  tangent 1; rel L2 comparable. See RESULTS.md 5A.16.
 - [ ] **R4 — SAE-seed robustness:** 3 PINN × 3 SAE seeds on the core
   Fourier condition; Hungarian-matched cross-seed cosine vs
   regime-verdict stability.

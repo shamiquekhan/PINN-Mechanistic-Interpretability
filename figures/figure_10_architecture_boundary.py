@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from _common import C, load_artifact, save_fig, start_fig
+from _common import C, RUNS, load_artifact, save_fig, start_fig
 
 
 def main():
@@ -89,6 +89,34 @@ def main():
                  / eff["summary"]["dim"]],
                 [pinn_ratio], s=90, color=C["grey"], marker="o",
                 zorder=4, label="tanh PINNs (all widths/depths)")
+    # R3 frequency sweep: the measured dose-response curve
+    r3_path = RUNS / "r3_frequency_sweep" / "r3_report.json"
+    if r3_path.exists():
+        import json
+        r3 = json.loads(r3_path.read_text())
+        xs = [c["mean_rho"] for c in r3["curve_by_n_freq"].values()]
+        ys = [c["topk_pca_over_sae_mean"]
+              for c in r3["curve_by_n_freq"].values()]
+        order = sorted(range(len(xs)), key=lambda i: xs[i])
+        axC.plot([xs[i] for i in order], [ys[i] for i in order],
+                 "-", color=C["alt"], lw=1.6, alpha=0.8, zorder=3,
+                 label="R3 frequency sweep (mean of 3 seeds)")
+        axC.scatter(xs, ys, s=30, color=C["alt"], marker="o",
+                    zorder=4, alpha=0.8)
+    # R5 Burgers: the time-dependent replication
+    r5_path = RUNS / "r5_burgers_boundary" / "r5_report.json"
+    if r5_path.exists():
+        import json
+        r5 = json.loads(r5_path.read_text())
+        agg = r5["aggregate"]
+        axC.scatter([agg["fourier_mean_pr"] / 64],
+                    [agg["fourier_mean_pca_over_sae"]],
+                    s=110, color=C["third"], marker="^", zorder=6,
+                    label="Burgers Fourier (t,x), R5a")
+        axC.scatter([agg["tanh_mean_pr"] / 64],
+                    [agg["tanh_mean_pca_over_sae"]],
+                    s=80, color=C["fourth"], marker="v", zorder=6,
+                    label="Burgers tanh (t,x)")
     # Fourier seeds
     for r in fourier_runs:
         if "reconstruction" in r:

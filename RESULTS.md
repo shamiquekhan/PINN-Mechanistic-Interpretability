@@ -488,3 +488,40 @@ The H18 chain measured rank → SAE-reconstruction advantage (25–56×); the th
 | Tanh control (depth-3 twin) | 1.39–1.48 | −0.058 [−0.063, −0.052] | 4/32, negative-side | 0/32 | R2b |
 
 **The boundary is now measured on both sides with both criteria.** Crossing into the high-rank regime transfers the SAE's *reconstruction* advantage (H18a: 25–56×) but NOT *causal specificity* (R2b: target ablations move the residual less than matched-deletion controls; no feature reverses direction under amplification; the planted-feature gate proves the machinery detects real specificity at the same n). The chain rank → reconstruction → causality has its first two arrows measured and the third consistently absent — in every regime tested: low-rank tanh (stages 5/8: 0/8), operator (H16b: 0/16 crossover), and the high-rank Fourier PINN (R2b: 0/45 crossover). **Superposition is necessary but not sufficient.** The PhysSAE reconciliation completes: their evidence lives below the specificity bar (R1: achieved equally by random bases; R2: the specificity criterion is null even where reconstruction succeeds). Honest scope: one SAE family (TopK k=8), one site, 3 seeds; R3/R4 probe whether any configuration closes the third arrow.
+
+### 5A.14 R3 — the Fourier frequency sweep: a saturating rank response with a continuously-improving compression ratio (v4.1)
+
+R3 (preregistered §R3) ran n_freq ∈ {2,4,8,16,32,64} × 3 seeds on the fixed 1D Poisson / width-64 protocol, with PR/PCA-95/tangent per run and reconstruction vs k-matched PCA(k=8) under **both** SAE families (`experiments/r3_frequency_sweep.py`, artifact `runs/r3_frequency_sweep/r3_report.json`). Gate: PASS.
+
+| n_freq | mean PR | ρ | PCA-95 | tangent | TopK PCA/SAE | ReLU+L1 PCA/SAE |
+|---|---:|---:|---:|---:|---:|---:|
+| 2 | 2.05 | 0.032 | 3.0 | 1 | 1.2× | 3.3× |
+| 4 | 1.95 | 0.031 | 3.0 | 1 | 1.7× | 6.3× |
+| 8 | 4.04 | 0.063 | 6.0 | 1 | 6.0× | 23.7× |
+| 16 | 4.78 | 0.075 | 6.7 | 1 | 21.0× | 63.1× |
+| 32 | 4.81 | 0.075 | 7.0 | 1 | 40.7× | 125.1× |
+| 64 | 4.79 | 0.075 | 7.3 | 1 | 37.1× | 136.9× |
+
+**Reading (recorded exactly as measured).** The shape classifier fired the pre-written "non-monotone" branch (nf64's mean TopK ratio 37.1 dips below nf32's 40.7 within seed noise), but the measured structure is sharper than any pre-written extreme: (1) **rank saturates** at the width's representable ceiling — PR plateaus at ~4.8 (ρ ≈ 0.075) for n_freq ≥ 16; more frequencies than the layer can express add no covariance rank; (2) **the SAE advantage keeps climbing past the plateau** — the ratio rises 6→21→41→37× (TopK) and 24→63→125→137× (ReLU+L1) at fixed ρ, so the advantage is not a function of ρ alone: geometry is the gate, embedding richness drives the compression; (3) per-run coherence is strong (Spearman +0.87/+0.88, 18 runs); (4) tangent rank 1 at every frequency — the covariance/tangent dissociation holds across the whole sweep. Combined with R2b (causality absent at every point of the curve): the phase diagram's y-axis is a *compression* axis, not an interpretability axis.
+
+### 5A.15 R4 — SAE-seed robustness: dictionary non-uniqueness, regime-verdict stability (v4.1)
+
+R4 (preregistered §R4): 3 PINN seeds × 3 SAE seeds × {TopK, ReLU+L1} on the H18 n_freq=32 Fourier checkpoints, Hungarian-matched cross-seed cosine (`experiments/r4_sae_seed_robustness.py`, artifact `runs/r4_sae_seed_robustness/r4_report.json`):
+
+| Family | PCA/SAE ratio (per PINN seed) | cross-SAE-seed cosine | verdict |
+|---|---|---|---|
+| TopK (k=8) | 28.7 / 28.7 / 47.1 | **0.410** | SAE > PCA in 18/18 seed-combos |
+| ReLU+L1 (D=512) | 79.1 / 114.7 / 167.2 | **0.406** | SAE > PCA in 18/18 seed-combos |
+
+**The registered dissociation is measured:** dictionaries are genuinely non-unique (matched cosine ~0.41, independently replicating PhysSAE's §4.7 ≈ 0.35 on our substrates) while the regime-level verdict is completely stable. Dictionary identity is not the unit of scientific claim; the regime is — and the H18/R3 reconstruction advantage is not a one-dictionary artifact.
+
+### 5A.16 R5 — the within-PINN boundary replicates on Burgers (R5a, v4.1)
+
+R5 (preregistered §R5): tanh vs Fourier (n_freq=32) on the time-dependent Burgers family, width 64/depth 3, 3 seeds, spectral-reference validation (`experiments/r5_burgers_boundary.py`, artifact `runs/r5_burgers_boundary/r5_report.json`):
+
+| Arm | PR (per seed) | ρ | PCA-95 | tangent | PCA/SAE | rel L2 |
+|---|---|---:|---:|---:|---:|---:|
+| Fourier (t,x) | 15.77 / 13.99 / 15.34 | 0.22–0.25 | 22–24 | 1 | 32.7 / 30.5 / 37.8 | 0.42–0.52 |
+| tanh twin | 1.62 / 1.92 / 1.97 | ~0.03 | 2 | 1 | 3.7 / 4.0 / 2.1 | 0.33–0.39 |
+
+**R5a:** the boundary replicates on a second PDE family — and more strongly than on Poisson: the 2-d-input Fourier embedding raises the rank ceiling to PR ~15 (ρ 0.25, above the FNO's 6.8/0.106 and the 1D Fourier ceiling of ~4.8 from R3), with the SAE beating PCA 31–38× on every seed while the tanh twin stays in the low-rank envelope. Tangent rank 1 everywhere; rel L2 comparable across arms — the contrast is architectural. Honest observation recorded: the tanh-Burgers arm shows a mild advantage (2–4×) at PR ~1.8, the (t,x) structure giving even the tanh regime more exploitable structure than 1D Poisson.

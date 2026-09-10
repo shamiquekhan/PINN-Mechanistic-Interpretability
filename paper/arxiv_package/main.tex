@@ -629,13 +629,35 @@ dimension, is the regime discriminator, and we use the term
 \emph{effective covariance dimensionality} throughout rather than
 calling PR a ``manifold dimension.''
 
-\paragraph{Scope.} One task (1D Poisson), one embedding family, one
-width; PR $> 3$ is this protocol's preregistered operational bar, not a
-universal constant. A frequency sweep ($n_{\mathrm{freq}} \in
-\{2,\dots,64\}$), a second PDE, and the causal battery on the Fourier
-dictionaries (does the reconstruction advantage extend to
-\emph{effect-magnitude specificity}?) are preregistered as R2/R3/R5
-(\S\ref{sec:reconciliation}).
+\paragraph{The dose-response and the external replication (R3, R5).}
+The preregistered frequency sweep ($n_{\mathrm{freq}} \in
+\{2,4,8,16,32,64\}$, 3 seeds) converts the binary contrast into a
+curve with two regimes: PR rises 2.05 $\to$ 4.04 (nf 2 $\to$ 8) then
+\emph{saturates} at $\approx$4.8 ($\rho \approx 0.075$) for
+$n_{\mathrm{freq}} \ge 16$ --- covariance rank caps at what the
+width-64 layer can express --- while the SAE/PCA ratio \emph{keeps
+climbing past the plateau} (TopK 6$\times$ $\to$ 21$\times$ $\to$
+41$\times$; ReLU+L1 24$\times$ $\to$ 63$\times$ $\to$ 125$\times$
+$\to$ 137$\times$): geometry gates the regime, embedding richness
+drives the compression advantage (Spearman $\rho$-vs-ratio $+0.87$;
+tangent rank 1 at every frequency). On Burgers --- a time-dependent
+family with a localized shock concept --- the boundary replicates and
+strengthens (R5a): the Fourier $(t,x)$ PINN reaches PR 14.0--15.8
+($\rho$ 0.25, \emph{above} the FNO's 6.8) with the SAE beating PCA
+31--38$\times$ on every seed, while its tanh twin stays at PR
+$\approx$1.8; validation error is comparable across arms, so the
+contrast is architectural. A preregistered seed-robustness check (R4:
+3 PINN $\times$ 3 SAE seeds, both families) separates dictionary
+identity from regime conclusions: cross-SAE-seed Hungarian cosine is
+$\approx$0.41 (dictionaries genuinely non-unique, independently
+replicating PhysSAE's \S4.7) while the SAE-beats-PCA verdict is
+stable in 18/18 seed combinations --- the unit of scientific claim is
+the regime, not the dictionary.
+
+\paragraph{Scope.} The dose-response is one task/embedding family;
+PR $> 3$ is this protocol's preregistered operational bar, not a
+universal constant. The R2 battery above tests the causal extension;
+R3's curve and R5's replication are measured on the compression axis.
 
 \paragraph{The causal arrow does not close (R2, preregistered and
 run).} The H18 chain measures rank $\to$ reconstruction advantage; the

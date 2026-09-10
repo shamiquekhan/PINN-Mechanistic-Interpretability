@@ -1,0 +1,307 @@
+{
+  "stage": "r4_sae_seed_robustness",
+  "hypotheses": "R4 (docs/preregistration.md \u00a7R4; v4.1)",
+  "protocol": {
+    "pinn_seeds": [
+      7,
+      42,
+      123
+    ],
+    "sae_seeds": [
+      0,
+      1,
+      2
+    ],
+    "families": [
+      "topk_k8_exp4",
+      "relul1_D512"
+    ],
+    "condition": "H18 Fourier n_freq=32 checkpoints",
+    "matching": "Hungarian (PhysSAE \u00a72.10)"
+  },
+  "results": {
+    "topk": {
+      "7": {
+        "pca_k_mse": 0.005780266597867012,
+        "per_sae_seed_recon": {
+          "0": {
+            "test_recon_mse": 0.00010418150486657396
+          },
+          "1": {
+            "test_recon_mse": 0.00016291040810756385
+          },
+          "2": {
+            "test_recon_mse": 0.00011477719817776233
+          }
+        },
+        "per_sae_seed_pca_over_sae_ratio": [
+          55.48,
+          35.48,
+          50.36
+        ],
+        "sae_beats_pca_all_seeds": true,
+        "ratio_mean": 47.108224476423096,
+        "ratio_std": 8.483245600021608,
+        "cross_seed_cosine": [
+          {
+            "mean_matched_cosine": 0.404610276222229,
+            "median_matched_cosine": 0.36995381116867065,
+            "frac_gt_0.7": 0.03515625,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.41079869866371155,
+            "median_matched_cosine": 0.3728880286216736,
+            "frac_gt_0.7": 0.06640625,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.40655016899108887,
+            "median_matched_cosine": 0.37212246656417847,
+            "frac_gt_0.7": 0.05859375,
+            "frac_gt_0.9": 0.0
+          }
+        ],
+        "cross_seed_cosine_mean": 0.40731971462567645
+      },
+      "42": {
+        "pca_k_mse": 0.00653861602768302,
+        "per_sae_seed_recon": {
+          "0": {
+            "test_recon_mse": 0.00023834157036617398
+          },
+          "1": {
+            "test_recon_mse": 0.00017453220789320767
+          },
+          "2": {
+            "test_recon_mse": 0.000307136942865327
+          }
+        },
+        "per_sae_seed_pca_over_sae_ratio": [
+          27.43,
+          37.46,
+          21.29
+        ],
+        "sae_beats_pca_all_seeds": true,
+        "ratio_mean": 28.728798617960333,
+        "ratio_std": 6.666497651399247,
+        "cross_seed_cosine": [
+          {
+            "mean_matched_cosine": 0.4075719118118286,
+            "median_matched_cosine": 0.3710259795188904,
+            "frac_gt_0.7": 0.05859375,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.41618895530700684,
+            "median_matched_cosine": 0.3723042607307434,
+            "frac_gt_0.7": 0.08203125,
+            "frac_gt_0.9": 0.00390625
+          },
+          {
+            "mean_matched_cosine": 0.4165162444114685,
+            "median_matched_cosine": 0.3755802512168884,
+            "frac_gt_0.7": 0.08984375,
+            "frac_gt_0.9": 0.00390625
+          }
+        ],
+        "cross_seed_cosine_mean": 0.41342570384343463
+      },
+      "123": {
+        "pca_k_mse": 0.008561680093407631,
+        "per_sae_seed_recon": {
+          "0": {
+            "test_recon_mse": 0.0002822975511662662
+          },
+          "1": {
+            "test_recon_mse": 0.000313195982016623
+          },
+          "2": {
+            "test_recon_mse": 0.00030227797105908394
+          }
+        },
+        "per_sae_seed_pca_over_sae_ratio": [
+          30.33,
+          27.34,
+          28.32
+        ],
+        "sae_beats_pca_all_seeds": true,
+        "ratio_mean": 28.66297483738697,
+        "ratio_std": 1.2448217617057389,
+        "cross_seed_cosine": [
+          {
+            "mean_matched_cosine": 0.41265934705734253,
+            "median_matched_cosine": 0.37264251708984375,
+            "frac_gt_0.7": 0.0546875,
+            "frac_gt_0.9": 0.00390625
+          },
+          {
+            "mean_matched_cosine": 0.417081356048584,
+            "median_matched_cosine": 0.3748207092285156,
+            "frac_gt_0.7": 0.078125,
+            "frac_gt_0.9": 0.00390625
+          },
+          {
+            "mean_matched_cosine": 0.4000357985496521,
+            "median_matched_cosine": 0.3627783954143524,
+            "frac_gt_0.7": 0.0234375,
+            "frac_gt_0.9": 0.0
+          }
+        ],
+        "cross_seed_cosine_mean": 0.40992550055185956
+      }
+    },
+    "relul1": {
+      "7": {
+        "pca_k_mse": 0.005780266597867012,
+        "per_sae_seed_recon": {
+          "0": {
+            "test_recon_mse": 3.2487740099895746e-05
+          },
+          "1": {
+            "test_recon_mse": 3.5842982470057905e-05
+          },
+          "2": {
+            "test_recon_mse": 3.5599579859990627e-05
+          }
+        },
+        "per_sae_seed_pca_over_sae_ratio": [
+          177.92,
+          161.27,
+          162.37
+        ],
+        "sae_beats_pca_all_seeds": true,
+        "ratio_mean": 167.1855897549598,
+        "ratio_std": 7.604750459868002,
+        "cross_seed_cosine": [
+          {
+            "mean_matched_cosine": 0.41047435998916626,
+            "median_matched_cosine": 0.3941415548324585,
+            "frac_gt_0.7": 0.0078125,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.4063938856124878,
+            "median_matched_cosine": 0.39540791511535645,
+            "frac_gt_0.7": 0.009765625,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.4051193594932556,
+            "median_matched_cosine": 0.3892937898635864,
+            "frac_gt_0.7": 0.0078125,
+            "frac_gt_0.9": 0.0
+          }
+        ],
+        "cross_seed_cosine_mean": 0.4073292016983032
+      },
+      "42": {
+        "pca_k_mse": 0.00653861602768302,
+        "per_sae_seed_recon": {
+          "0": {
+            "test_recon_mse": 5.819894067826681e-05
+          },
+          "1": {
+            "test_recon_mse": 5.8618996263248846e-05
+          },
+          "2": {
+            "test_recon_mse": 5.439168307930231e-05
+          }
+        },
+        "per_sae_seed_pca_over_sae_ratio": [
+          112.35,
+          111.54,
+          120.21
+        ],
+        "sae_beats_pca_all_seeds": true,
+        "ratio_mean": 114.70241495323779,
+        "ratio_std": 3.910779993922968,
+        "cross_seed_cosine": [
+          {
+            "mean_matched_cosine": 0.4073505401611328,
+            "median_matched_cosine": 0.3903869092464447,
+            "frac_gt_0.7": 0.017578125,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.4040689170360565,
+            "median_matched_cosine": 0.39115116000175476,
+            "frac_gt_0.7": 0.013671875,
+            "frac_gt_0.9": 0.001953125
+          },
+          {
+            "mean_matched_cosine": 0.4034430980682373,
+            "median_matched_cosine": 0.38989847898483276,
+            "frac_gt_0.7": 0.013671875,
+            "frac_gt_0.9": 0.0
+          }
+        ],
+        "cross_seed_cosine_mean": 0.4049541850884755
+      },
+      "123": {
+        "pca_k_mse": 0.008561680093407631,
+        "per_sae_seed_recon": {
+          "0": {
+            "test_recon_mse": 0.00011696865840349346
+          },
+          "1": {
+            "test_recon_mse": 0.00010435113654239103
+          },
+          "2": {
+            "test_recon_mse": 0.0001042840231093578
+          }
+        },
+        "per_sae_seed_pca_over_sae_ratio": [
+          73.2,
+          82.05,
+          82.1
+        ],
+        "sae_beats_pca_all_seeds": true,
+        "ratio_mean": 79.11427516028981,
+        "ratio_std": 4.1846530748094,
+        "cross_seed_cosine": [
+          {
+            "mean_matched_cosine": 0.4078223705291748,
+            "median_matched_cosine": 0.3936316668987274,
+            "frac_gt_0.7": 0.015625,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.40570366382598877,
+            "median_matched_cosine": 0.3875967562198639,
+            "frac_gt_0.7": 0.01171875,
+            "frac_gt_0.9": 0.0
+          },
+          {
+            "mean_matched_cosine": 0.4040295481681824,
+            "median_matched_cosine": 0.3823636770248413,
+            "frac_gt_0.7": 0.015625,
+            "frac_gt_0.9": 0.0
+          }
+        ],
+        "cross_seed_cosine_mean": 0.4058518608411153
+      }
+    }
+  },
+  "summary": {
+    "topk": {
+      "n_pinn_seeds": 3,
+      "ratio_mean_across_pinn": 34.83333264392346,
+      "ratio_min": 28.66297483738697,
+      "ratio_max": 47.108224476423096,
+      "mean_cross_sae_seed_cosine": 0.4102236396736569,
+      "reconstruction_verdict_stable": true,
+      "dictionary_non_uniqueness_dissociation": true
+    },
+    "relul1": {
+      "n_pinn_seeds": 3,
+      "ratio_mean_across_pinn": 120.33409328949581,
+      "ratio_min": 79.11427516028981,
+      "ratio_max": 167.1855897549598,
+      "mean_cross_sae_seed_cosine": 0.40604508254263133,
+      "reconstruction_verdict_stable": true,
+      "dictionary_non_uniqueness_dissociation": true
+    }
+  },
+  "prewritten_rule_note": "dictionary non-uniqueness (low cross-seed cosine) WITH stable regime-level verdicts => the dissociation is recorded: dictionary identity is not the unit of scientific claim; the regime is"
+}

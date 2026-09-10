@@ -1,0 +1,56 @@
+run:
+  name: r5_fourier_seed123
+  output_dir: /home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/r5_burgers_boundary
+  seed: 123
+  deterministic: true
+  device: cuda
+  dtype: float32
+  failure_label: unlabeled
+pde:
+  name: burgers_1d
+  domain:
+  - -1.0
+  - 1.0
+  time_domain:
+  - 0.0
+  - 1.0
+  source: 1.0
+  forcing: 0.0
+  diffusion: 0.01
+  boundary_values:
+  - 0.0
+  - 0.0
+  validation_points: 400
+model:
+  input_dim: 2
+  output_dim: 1
+  hidden_layers:
+  - 64
+  - 64
+  - 64
+  activation: tanh
+  init: xavier
+  fourier_embed: true
+  fourier_n_freq: 32
+  fourier_scale: 1.0
+training:
+  optimizer: adam
+  learning_rate: 0.001
+  steps: 2000
+  interior_points: 256
+  boundary_points: 66
+  log_every: 100
+  checkpoint_every: 2000
+  lambda_pde: 1.0
+  lambda_bc: 100.0
+  resample_every: 0
+  spatial_bias: 0.0
+logging:
+  save_activations: true
+  activation_layers:
+  - 1
+  save_pointwise_residuals: true
+  log_gradients: false
+  grad_log_every: 100
+  log_diagnostics: false
+  diag_log_every: 100
