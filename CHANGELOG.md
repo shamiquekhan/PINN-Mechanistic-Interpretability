@@ -10,6 +10,76 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## [4.2.0] — 2026-09-12 — "R6 Dose-Response + the R1 Reconciliation Table"
+
+### Added
+- **R6 — intervention dose-response** (`experiments/r6_dose_response.py`,
+  preregistered §R6 BEFORE implementation): the two-point causal criteria
+  (ablate α=0 / amplify α=1.5) become full curves — α ∈ {−2, −1, 0, 0.5,
+  1.5, 2} including feature inversion, with dose-matched matched-deletion
+  controls, on the R2 frozen checkpoints (Fourier + tanh twins, both
+  bases) and the FNO stage-14 substrate. Verdict classes R6a (signed
+  channel) / R6b-ctrl-flat (quadratic channel) / R6b-ctrl-matched
+  (reconstructive) / R6c (null), registered with two pre-written outcome
+  readings.
+- **`dose_matched_control` engine mode** (additive; no existing mode's
+  semantics change): the same α-scaled operator on a matched-activity
+  non-target atom — dose- and kind-matched controls.
+- **`control_idx` parameter** through the three intervention hooks
+  (SAE / PCA / operator): explicitly designated control targets, enabling
+  the closest-mean-activity control construction; default sampled
+  behavior unchanged.
+- **R1 side-by-side reconciliation table**
+  (`scripts/r1_reconciliation_table.py` →
+  `runs/r1_physSAE/reconciliation_table.json`, checksummed): the basis ×
+  criteria matrix from the committed R1 artifact — the watertight
+  PhysSAE comparison the reconciliation required.
+- 18 unit tests for the R6 machinery (`tests/unit/test_r6_dose_response.py`).
+
+### Changed
+- **Claim-wording standardization** (the binding rule added to
+  `docs/final_claim_ladder_v4.md`): negative causal results are stated as
+  "no tested feature satisfied the preregistered direction-specific
+  causal criterion," never as "no causal effect exists"; the README,
+  paper abstract, and section titles updated accordingly.
+- `docs/reproducibility.md` + `paper/supplementary/appendix_reproducibility.md`
+  expected-output tables corrected to the post-fix artifact values (the
+  pre-C3 SAE E_T "+0.0020 spans 0" → "−0.0173 [−0.0329, −0.0037]"; monitor
+  0.875; controller 0.0002 config-faithful; stage-14 survivors 2).
+
+### Fixed (pre-verdict, the R2/C3 precedent — machinery, not results)
+- **R6 gate criterion:** the planted readout is a QUADRATIC channel — a
+  causal-by-construction feature has same-sign endpoints at α=0/α=2 — so
+  the sign-flip subcriterion tested a property of signed-linear readouts,
+  not causality; corrected pre-verdict to anchor-dose sensitivity (the
+  planted effect clears 2× the control floor at both anchors). The
+  corrected gate PASSES (cosine 0.989, anchors 2.0×/2.1× the floor).
+- **R6 control-matching:** uniform control sampling degenerated on the
+  low-rank PCA spectrum (near-inert comps 4–7 drawn 6/7 of the time →
+  inflated 46–2187× margins); corrected to closest-mean-activity controls
+  (the R1/PhysSAE §2.8 convention) before any verdict was read.
+- **R6 inert-curve guard:** signed-zero rounding (0.0 vs −0.0) on
+  all-zero curves mimicked a sign flip; an explicit inert guard
+  (max |Δ| < 1e-9) classifies them R6c before the shape rules.
+
+### Results (R6, recorded as-measured)
+- **0 R6a in every high-rank regime**: Fourier SAE 0/24, Fourier PCA
+  0/24, FNO 0/8 — no signed causal channel anywhere the reconstruction
+  advantage lives; the response is dose-symmetric (same-sign 1.00), the
+  reconstructive signature, with controls matching it.
+- The R2b/H16b two-point nulls are confirmed at curve level, and the
+  reason the crossover criterion returned null is now measured: the
+  curve has no signed shape to detect.
+- Convergent observation: the FNO's quadratic-channel features {173,
+  225} are the same two that survived the stage-14 Bonferroni battery —
+  the criteria agree on which features separate; the curves add that
+  their channel is dose-symmetric, consistent with their H16b
+  direction-reversal failure.
+- Scope annotation (as-measured): two shape-only R6a verdicts exist on
+  inert-scale tanh-PCA components (max |Δ| ≈ 1e-6 vs the arm's O(1)
+  effects — linear small-signal response); nowhere, at any magnitude,
+  does a signed channel co-occur with the high-rank regime.
+
 ## [4.1.3] — 2026-09-11 — "R3/R4/R5 Complete: The v4.1 Campaign Closes"
 
 ### R3 — frequency sweep (18 runs): saturating rank response

@@ -148,6 +148,19 @@ CLAIMS = [
     ("RESULTS.md", "runs/operator_causal/operator_causal_report.json",
      lambda d: d["positive_control"]["pipeline_pass"],
      lambda v: r"PASS \(targeted" if v else r"FAIL"),
+    # R6 (dose-response): the headline null — 0 R6a in the Fourier SAE
+    # arm — must stay grounded in the committed report.
+    ("RESULTS.md", "runs/r6_dose_response/r6_report.json",
+     lambda d: d["arms"]["fourier_sae"]["verdict_counts"]["R6a"],
+     lambda v: rf"Fourier SAE \(PR 4\.0–5\.6\) \| \*\*{v}/24\*\*" if v == 0
+     else rf"Fourier SAE \(PR 4\.0–5\.6\) \| {v}/24\*?"),
+    ("RESULTS.md", "runs/r6_dose_response/r6_report.json",
+     lambda d: d["arms"]["fno_sae"]["verdict_counts"]["R6a"],
+     lambda v: rf"FNO SAE \(PR 6\.8\) \| \*\*{v}/8\*\*" if v == 0
+     else rf"FNO SAE \(PR 6\.8\) \| {v}/8\*?"),
+    ("RESULTS.md", "runs/r6_dose_response/r6_report.json",
+     lambda d: d["gate"]["pipeline_pass"],
+     lambda v: r"[Mm]achinery gate.*?\bPASS\b" if v else r"machinery gate FAILS"),
 ]
 
 

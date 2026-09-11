@@ -742,8 +742,12 @@ The preregistered decision rule fires **R2b** on BOTH arms:
 - **Tanh control arm** (depth-3 twin, PR 1.39-1.48): the identical
   null signature at smaller scale (E_T -0.058; 0 crossovers).
 
-**Recorded conclusion (R2b): superposition is necessary but not
-sufficient.** The within-PINN regime boundary is now measured on BOTH
+**Recorded conclusion (R2b): in the tested models, entering the
+higher-effective-rank regime was necessary for the observed
+SAE-over-PCA reconstruction advantage, but that advantage was not
+sufficient for direction-specific causal interpretability** (the
+preregistered rule's shorthand for this was "superposition is
+necessary but not sufficient"). The within-PINN regime boundary is now measured on BOTH
 sides with BOTH criteria: crossing into the high-rank regime
 transfers the SAE's *reconstruction* advantage (25-56x) but NOT
 *effect-magnitude causal specificity* — the third arrow of the chain
@@ -840,14 +844,249 @@ depth 3, 3 seeds per arm, 2000 steps).
 | tanh (twin) | 1.62 / 1.92 / 1.97 | 0.025-0.031 | 2 | 1 | 3.7 / 4.0 / 2.1 | 0.33-0.39 |
 
 **Recorded verdict: R5a** — the within-PINN boundary replicates on a
-time-dependent family. The Fourier (t,x) PINN crosses into the
-high-rank regime at PR 14.0-15.8 (rho 0.22-0.25 — an order of
-magnitude above the tanh twin's ~0.03 and well above the 1D-Poisson
-Fourier ceiling of ~4.8 from R3: the 2-d input through 64 frequency
-channels raises the representable-rank ceiling far higher), and there
-the SAE beats k-matched PCA 31-38x on every seed. Tangent rank 1 in
-all runs; rel L2 comparable across arms (0.33-0.52), so the contrast
-is architectural, not convergence-driven. Notable honest observation:
-the tanh-Burgers arm shows a mild SAE advantage (2-4x) at PR ~1.8 —
-the (t,x) input structure gives even the tanh regime slightly more
-exploitable structure than 1D Poisson did; recorded as-is.
+time-dependent family. The Fourier (t,x) PINN crosses into the high-rank
+regime at PR 14.0-15.8 (rho 0.22-0.25 — an order of magnitude above
+the tanh twin's ~0.03 and well above the 1D-Poisson Fourier ceiling of
+~4.8 from R3: the 2-d input through 64 frequency channels raises the
+representable-rank ceiling far higher), and there the SAE beats
+k-matched PCA 31-38x on every seed. Tangent rank 1 in all runs; rel L2
+comparable across arms (0.33-0.52), so the contrast is architectural,
+not convergence-driven. Notable honest observation: the tanh-Burgers
+arm shows a mild SAE advantage (2-4x) at PR ~1.8 — the (t,x) input
+structure gives even the tanh regime slightly more exploitable
+structure than 1D Poisson did; recorded as-is.
+
+## R6 — Intervention dose-response on frozen checkpoints (registered 2026-09-11, pre-run)
+
+*Registered after R1–R5, before any R6 implementation or run. Motivation:
+the existing causal evidence is two-point (ablate α=0 vs amplify α=1.5,
+the H16/R2 crossover criterion). A two-point test cannot distinguish a
+signed mechanistic response from an energetic one: any perturbation that
+degrades reconstruction raises the loss, so a positive ablation delta at
+α=0 and a negative amplification delta at α=1.5 are compatible both with
+"the feature is causal for the readout" (Δ(α) monotone, sign flip through
+the natural point α=1) and with "the intervention damages the decode"
+(Δ(α) ≈ c·(α−1)², the energy removed either way). The dose-response curve
+resolves this: the registered design sweeps the FULL grid including
+negative doses (feature inversion) and does so for the CONTROLS at the
+same doses, so the target curve and the control curves are compared as
+curves, not as points.*
+
+**Design (registered).**
+
+- **Substrates (frozen, no retraining):** the R2 checkpoints — the H18
+  Fourier-feature PINNs (width 64, n_freq=32, seeds 7/42/123; PR 4.0–5.6,
+  the 25–56× reconstruction regime) and the tanh depth-3 twins (seeds
+  7/42/123; PR 1.39–1.48, the low-rank control) — plus the FNO
+  stage-14 substrate (PR 6.8, the operator regime) where the causal
+  asymmetry thread (H16b) is weakest: 2/8→6/16 Bonferroni, 0/16
+  direction-reversal. All interventions at the same measurement sites as
+  the parent stages (layers.1 for PINNs, the final spectral block state
+  for the FNO).
+- **Dictionaries (frozen, per substrate):** the parent-stage SAE family
+  (TopK k=8, expansion 4 for the PINNs; the stage-14 TopK for the FNO) and
+  k-matched PCA (k=8) — the linear-basis control; both bases go through
+  their established hook machinery (SAEInterventionHook /
+  PCAInterventionHook / OperatorSAEHook).
+- **Dose grid (registered):** α ∈ {−2, −1, 0, 0.5, 1.5, 2} — the
+  intervention operator is z_k ← α·z_k (α=0 ablation; α=1 natural;
+  α<0 feature inversion; α>1 amplification). The natural point α=1 is the
+  identity and is not re-measured (recorded as Δ=0 by construction).
+- **Candidates and replication:** top-8 features by activity for the
+  SAE; leading 8 PCA components; n = 10 held-out collocation batches
+  (PINNs) / held-out function batches (FNO) per feature per dose, the
+  R2 protocol at reduced n (the dose grid multiplies the battery by 6×;
+  power is registered as adequate for curve SHAPE, not per-dose
+  significance — see the analysis section).
+- **Controls at every dose (registered):** for each candidate k, dose α:
+  the matched-deletion control ablates a matched-activity non-target
+  atom at the SAME dose (the C3b operator, applied dose-matched). The
+  probe arm is dropped from R6 (it is a two-point criterion; its
+  dose-response is not the registered question).
+- **Readout:** the parent-stage target readout (PDE residual loss for
+  the PINNs; function-space regression loss for the FNO).
+
+**Machinery gate (registered).** The planted-feature positive control
+must pass IN ITS DOSE-RESPONSE FORM before any verdict is read: the
+planted world (stage-5 world through the real hook machinery), the
+planted target feature swept across the SAME α grid, and the gate
+criterion is that (i) the planted feature's |Δ| curve is monotone in
+|α−1| and exceeds the matched-deletion control curve at every dose, and
+(ii) the crossover bar: Δ(α=2) and Δ(α=0) are opposite in sign with
+|Δ(α=0)| > 0 beyond noise. A gate failure voids R6.
+
+**Pre-run gate correction (recorded 2026-09-11, BEFORE any
+real-substrate verdict was read — the R2 precedent).** The first gate
+execution FAILED on subcriterion (ii) and the diagnosis is a
+mis-specification of the GATE, not of the intervention machinery:
+planted cosine 0.989, |Δ_target| monotone in |α−1| (0.045 → 0.043 →
+0.020 → 0.005 across the displacement grid), target above the
+matched-deletion control at every dose (control flat at ~4e-4) — but
+Δ(0) and Δ(2) are SAME-signed (+0.020 / +0.020). Cause: the planted
+readout L = mean((1 − relu(a·d_t))²) is a QUADRATIC channel —
+displacing the causal feature in either direction (removing its energy
+at α=0, or overshooting rows past proj=1 at α=2) moves the readout
+away from its optimum. A sign flip is a property of signed-linear
+readouts, not of causality as such; the canonical causal-by-construction
+feature exhibits same-sign endpoints. Corrected gate criterion
+(replacing (ii)): (ii') DOSE SENSITIVITY AT THE ANCHORS —
+|Δ_target(α=0)| and |Δ_target(α=2)| each exceed 2× the maximum
+|Δ_control| over the grid (the planted effect must clear the control
+floor at both anchor doses). Criterion (i) is unchanged and passed
+as-registered.
+
+**Classification semantics amendment (same pre-verdict record).** The
+planted control's own curve calibrates the R6b class: a V-shaped
+(same-sign-endpoint) target curve with a FLAT control curve is the
+signature of a genuinely causal feature read through a quadratic
+channel (the planted case), NOT of reconstructive damage. The
+registered R6b class is therefore split BY THE CONTROL CURVE'S SHAPE:
+
+- **R6b-ctrl-flat (quadratic causal channel):** target V-shaped
+  (same-sign endpoints at α=0 and α=2), control curve flat — the
+  control's range over the grid is < 50% of the target's range. The
+  planted control's calibration: ratio ≈ 0.02.
+- **R6b-ctrl-matched (reconstructive):** target V-shaped AND control
+  V-shaped with control range ≥ 50% of target range — any active
+  atom's displacement damages the decode comparably: the R2
+  representational signature, now measured as a curve.
+
+R6a (signed channel: zero crossing in (0, 1.5) with target above
+control at every dose) and R6c (paired-diff CIs span zero at every
+dose) are unchanged. Precedence: R6c → R6a → R6b (split by control
+shape).
+
+**Pre-registered curve classification (the decision rule).** For each
+candidate feature, fit the per-dose mean Δ(α) curve (target and matched
+control) and classify:
+
+- **R6a (mechanistic dose-response):** the target curve is monotone
+  with a sign flip through α=1 — Δ(α)·Δ(2−α)... formally: Δ crosses zero
+  between α=0 and α=1.5 with Δ(0) and Δ(1.5) opposite-signed, AND the
+  target curve exceeds the matched-deletion control curve at every dose
+  in the same direction. Then the feature is a signed causal variable
+  and the third arrow closes FOR THAT FEATURE.
+- **R6b (energetic/reconstructive dose-response):** the target curve is
+  non-monotone in the registered sense — Δ(α) has the same sign at
+  α=0 and α=2 (the two most-separated doses with equal |α−1|=1 energy
+  displacement... recorded: at α=0 and α=2 the displacement magnitude
+  ‖(α−1)z_k‖ is equal), or Δ does not cross zero in (0, 1.5) — the
+  intervention shifts the readout in one direction regardless of dose
+  direction, the reconstructive signature. The control curve is
+  expected to show the same shape (any active atom damages the decode
+  when displaced).
+- **R6c (null/noise):** the target curve is indistinguishable from the
+  control curve at every dose (paired bootstrap over batches, 95% CI on
+  the per-dose target−control difference spans zero at every dose).
+
+Per-feature verdicts are recorded as-is; the stage verdict is the
+distribution over {R6a, R6b, R6c} per arm and per basis, with
+MC-correction NOT applied (R6 is a curve-shape classification at
+reduced n, registered as descriptive evidence that sharpens or
+tempers the R2/H16 two-point criteria — NOT as an independent
+confirmatory test; the registered confirmatory criteria remain R2's).
+
+**Pre-written readings (all publishable, none preferred).**
+
+1. R6a anywhere in the Fourier/FNO arms → the two-point crossover
+   criterion UNDERESTIMATED causal structure: a signed dose-response
+   exists where the crossover test returned null; the third arrow
+   re-opens as a per-feature claim and the R2b "necessary but not
+   sufficient" wording is correspondingly WEAKENED to "necessary but
+   not sufficient at the two-point criterion".
+2. R6b dominant (with control curves matching) → the sharpened null:
+   the intervention response is ENERGETIC (dose-symmetric loss
+   increase), not mechanistic — every displacement of an active atom
+   damages the decode equally in either direction. This converts the
+   R2b conclusion from "no direction-specific effect" into the stronger
+   statement that the dose-response curve itself has no mechanistic
+   signature, and explains why the two-point crossover criterion
+   returned null (it tests a property the curve doesn't have).
+3. R6c dominant → the null extends to the curve level; nothing new.
+
+**Machinery note (pre-registered):** the SAE engine's control modes
+currently hard-code deletion (z←0); R6 requires dose-matched controls
+(z_j ← α·z_j for the same α). The fix is an additive control mode
+("dose_matched_control") in the SAE hook, mirroring the operator
+battery's alpha-scaled control modes, and is to be implemented and
+unit-tested BEFORE the R6 run. No existing mode's semantics change.
+
+**Pre-verdict control-matching correction (recorded 2026-09-11, BEFORE
+any R6 verdict — the R2/C3 precedent).** The first full R6 execution
+exposed a control-calibration defect in the driver's implementation of
+the registered "matched-activity non-target atom" control: the control
+atom/component was sampled UNIFORMLY among active atoms (SAE) or all
+non-target components (PCA). On the tanh manifold — where the PCA
+spectrum is degenerate by measurement (PCA-95 = 2; comps 4–7 carry
+~zero variance) — a uniform draw lands on a near-inert component 6/7 of
+the time, producing degenerate flat control curves and inflated
+target/control margins (46–2187×) for the two real components: a
+sampling artifact with the outward shape of the planted signature, not
+causal specificity (its tell: targets on comps 4–7 are exactly zero —
+the same degeneracy from the other side). The corrected
+implementation, matching the R1 negative-control construction and
+PhysSAE §2.8 (closest mean activation), which this repository already
+established as its convention: the control is the non-target
+atom/component with the CLOSEST MEAN ACTIVITY to the target's (SAE:
+mean latent code over the training bank; PCA: mean |coefficient| over
+the training bank), applied at the same dose. Implemented as an
+additive `control_idx` parameter through the three hooks (SAE / PCA /
+operator); default behavior (sampled control) is unchanged for all
+prior stages. All arms re-run under the corrected control before the
+verdict; both the defective-first-execution observation and the
+corrected numbers are recorded.
+
+**Pre-verdict inert-curve guard (recorded 2026-09-11, BEFORE any R6
+verdict).** The corrected re-run's tanh-PCA arm produced two apparent
+R6a verdicts on inert components whose target curves are all-zero to
+float precision: signed-zero rounding (0.0 vs −0.0) makes the product
+at the anchor doses negative, mimicking a sign flip. An all-but-zero
+curve (max |Δ| < 1e-9 — three orders below the smallest genuine effect
+in any arm, the FNO's ~1e-5 scale) has no dose response by definition
+and is classified R6c (inert) before the shape rules. The corrected
+classifier carries an explicit `inert_curve` diagnostic; no genuine
+(e.g. FNO-scale) effect is anywhere near the guard threshold.
+
+**Outcome (recorded after running, 2026-09-12).** Machinery gate: PASS
+with the corrected criterion — planted cosine 0.989, |Δ| monotone in
+|α−1| (0.0453 → 0.0431 → 0.0197 → 0.0050 → 0.0051 → 0.0202), target
+above the corrected control at every dose, anchor-dose sensitivity
+2.0×/2.1× the control floor at α=0/α=2 (the corrected control is a
+genuinely active atom, so this is the honest harder margin). Full
+artifact: `runs/r6_dose_response/r6_report.json` (3 seeds × 2 arms ×
+8 candidates × 2 bases × 6 doses × 10 batches + the FNO arm).
+
+| Arm / basis | R6a | R6b-ctrl-flat | R6b-ctrl-matched | R6c | same-sign(0 vs 2) |
+|---|---:|---:|---:|---:|---:|
+| Fourier SAE (PR 4.0–5.6) | 0/24 | 6 | 18 | 0 | 1.00 |
+| Fourier PCA | 0/24 | 6 | 18 | 0 | 1.00 |
+| Tanh control SAE (PR ~1.4) | 0/24 | 2 | 22 | 0 | 1.00 |
+| Tanh control PCA | 2/24 | 11 | 11 | 0 | 0.75 |
+| FNO SAE (PR 6.8) | 0/8 | 3 | 5 | 0 | 1.00 |
+
+**Recorded conclusion (the pre-written reading 2 fires, with one
+registered scope annotation).** No feature in any high-rank regime
+(Fourier SAE/PCA, FNO) shows a signed causal channel: R6a = 0
+everywhere the reconstruction advantage lives; same-sign fraction
+1.00 — the intervention response is dose-symmetric, the reconstructive
+signature, and the control curves match it (ctrl-matched dominates
+where the spectra are non-degenerate). The two-point criteria's null
+(R2b, H16b) is now confirmed at curve level. **Scope annotation
+(recorded as-measured, not corrected):** the two R6a verdicts in
+tanh-PCA are real *shape* classifications on inert-scale components —
+max |Δ| ≈ 1e-6 against the arm's O(1) leading effects (six orders
+below), a linear small-signal response Δ ∝ (α−1) that any nonzero
+component exhibits in the Taylor regime; the R6a *class* is
+shape-only by registration and does not scale-test magnitude. The
+dose-response thus refines rather than overturns the two-point null:
+the signed shape is achievable at negligible magnitude, and nowhere —
+at any magnitude — does a signed channel co-occur with the
+high-rank/Superposition regime. **Convergent observation:** the FNO's
+ctrl-flat (quadratic-channel) features are 173 and 225 — the same two
+features that survived the stage-14 Bonferroni battery (2/8) — plus
+feature 40; the two criteria agree on which operator features carry
+the strongest target-vs-control separation, and the curves show their
+channel is quadratic (dose-symmetric), not signed, consistent with
+their H16b direction-reversal failure. The activity-rank confound
+check is null (Spearman(rank, margin) = −0.01, p = 0.96 — the
+ctrl-flat pattern is not an energy-size artifact).

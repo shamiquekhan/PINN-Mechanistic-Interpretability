@@ -86,6 +86,7 @@ class OperatorSAEHook:
         alpha: float = 1.5,
         random_seed: int = 0,
         probe_direction: Optional[torch.Tensor] = None,
+        control_idx: Optional[int] = None,
     ):
         if mode not in self._MODES:
             raise ValueError(f"Unknown mode {mode!r}; choose from {sorted(self._MODES)}")
@@ -96,6 +97,9 @@ class OperatorSAEHook:
         self.feature_idx = feature_idx
         self.alpha = alpha
         self.random_seed = random_seed
+        # R6 control-matching correction: explicitly designated control
+        # atom; None keeps the sampled behavior.
+        self.control_idx = control_idx
         self.last_control_was_noop = False
         if probe_direction is not None:
             d = probe_direction.detach().to("cpu")
@@ -103,6 +107,24 @@ class OperatorSAEHook:
         else:
             self.probe_direction = None
         self._hook = None
+
+    def _pick_control(self, z: torch.Tensor, k: int) -> int:
+        """Control atom: the explicitly designated one (R6 correction)
+        or a uniform draw among ACTIVE non-target atoms (C3a fix)."""
+        ctrl_idx = getattr(self, "control_idx", None)
+        if ctrl_idx is not None and ctrl_idx != k:
+            self.last_control_was_noop = False
+            return ctrl_idx
+        rng = torch.Generator(device=z.device)
+        rng.manual_seed(self.random_seed)
+        active = (z > 0).any(dim=0)
+        choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
+        if not choices:
+            self.last_control_was_noop = True
+            return -1
+        self.last_control_was_noop = False
+        return choices[torch.randint(len(choices), (1,), generator=rng,
+                                      device=z.device).item()]
 
     def _intervene(self, z: torch.Tensor) -> torch.Tensor:
         mode = self.mode
@@ -118,16 +140,9 @@ class OperatorSAEHook:
             # features ACTIVE in >=1 row so the control is never a silent
             # no-op on the ~79%-dead operator dictionary.
             z = z.clone()
-            rng = torch.Generator(device=z.device)
-            rng.manual_seed(self.random_seed)
-            active = (z > 0).any(dim=0)
-            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
-            if not choices:
-                self.last_control_was_noop = True
+            ctrl = self._pick_control(z, k)
+            if ctrl < 0:
                 return z
-            self.last_control_was_noop = False
-            ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
-                                          device=z.device).item()]
             z[:, ctrl] = z[:, ctrl] * self.alpha
             return z
         if mode == "random_direction":
@@ -135,16 +150,9 @@ class OperatorSAEHook:
             # feature) instead of noise injection — the target ablates, so
             # the control must perturb the same way.
             z = z.clone()
-            rng = torch.Generator(device=z.device)
-            rng.manual_seed(self.random_seed)
-            active = (z > 0).any(dim=0)
-            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
-            if not choices:
-                self.last_control_was_noop = True
+            ctrl = self._pick_control(z, k)
+            if ctrl < 0:
                 return z
-            self.last_control_was_noop = False
-            ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
-                                          device=z.device).item()]
             z[:, ctrl] = z[:, ctrl] * self.alpha
             return z
         if mode == "probe_direction":
@@ -257,11 +265,13 @@ def measure_operator_intervention(
     alpha: float = 0.0,
     random_seed: int = 0,
     probe_direction: Optional[torch.Tensor] = None,
+    control_idx: Optional[int] = None,
 ) -> Dict:
     """Frozen-model readout deltas for one intervention.
 
     Baseline = natural (SAE bypassed); intervened = hooked pass; the batch
     is FIXED so deltas are purely the intervention's footprint.
+    control_idx: R6 correction — explicitly designated control atom.
     """
     model.eval()
     sae.eval()
@@ -272,6 +282,7 @@ def measure_operator_intervention(
     hook = OperatorSAEHook(
         sae, mode=mode, feature_idx=feature_idx, alpha=alpha,
         random_seed=random_seed, probe_direction=probe_direction,
+        control_idx=control_idx,
     )
     hook.register(model, layer_index)
     try:

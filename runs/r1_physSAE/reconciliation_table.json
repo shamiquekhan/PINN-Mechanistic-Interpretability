@@ -1,0 +1,238 @@
+{
+  "stage": "r1_reconciliation_table",
+  "source_artifact": "runs/r1_physSAE/r1_report.json",
+  "n_runs_per_basis": {
+    "relul1_sae_s0": 6,
+    "relul1_sae_s1": 6,
+    "relul1_sae_s2": 6,
+    "topk_sae": 6,
+    "pca": 6,
+    "ica": 6,
+    "random": 6
+  },
+  "criteria": {
+    "L1_alignment": "max |r| with the physical-concept panel (permutation-null calibrated)",
+    "L4_esf80": "spatial concentration of the ablation footprint; footprint = mean ESF80 of the top atom's effect field; concentration ratios >1 mean the numerator basis is more concentrated",
+    "L3_et": "matched-deletion effect-magnitude battery, Bonferroni/BH survivors out of 8 candidates per run",
+    "L0_recon": "held-out reconstruction MSE (descriptive)"
+  },
+  "table": {
+    "relul1_sae_s0": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.877941323813492,
+        "min": 0.8334661866359379,
+        "max": 0.9274902989399071
+      },
+      "L1_permutation_z_min": 24.93437136251967,
+      "L4_esf80_footprint_mean": 0.23069502314814816,
+      "L4_concentration_vs_pca": 2.3596467064268762,
+      "L4_concentration_vs_random": 2.264665364140875,
+      "L4_matched_atom_advantage_mean": -0.026543576388888893,
+      "L3_et_bonferroni_survivors_per_run": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "L3_et_total_survivors": 3,
+      "L0_reconstruction_mse_mean": 0.0003317806258564815
+    },
+    "relul1_sae_s1": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.8926079411017716,
+        "min": 0.8729868847082685,
+        "max": 0.9108459784332625
+      },
+      "L1_permutation_z_min": 21.85189684970139,
+      "L4_esf80_footprint_mean": 0.24704398148148146,
+      "L4_concentration_vs_pca": 2.194864917223333,
+      "L4_concentration_vs_random": 2.1047355964737493,
+      "L4_matched_atom_advantage_mean": -0.03486603009259259,
+      "L3_et_bonferroni_survivors_per_run": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "L3_et_total_survivors": 1,
+      "L0_reconstruction_mse_mean": 0.00033287721453234553
+    },
+    "relul1_sae_s2": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.8919206904792191,
+        "min": 0.8689872199992162,
+        "max": 0.9204926361419195
+      },
+      "L1_permutation_z_min": 23.897492751227578,
+      "L4_esf80_footprint_mean": 0.25128530092592594,
+      "L4_concentration_vs_pca": 2.1595536760016154,
+      "L4_concentration_vs_random": 2.0759245419480568,
+      "L4_matched_atom_advantage_mean": -0.049341724537037036,
+      "L3_et_bonferroni_survivors_per_run": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "L3_et_total_survivors": 4,
+      "L0_reconstruction_mse_mean": 0.0003333376031757022
+    },
+    "topk_sae": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.8561321037762618,
+        "min": 0.7665646152909212,
+        "max": 0.9525473714702427
+      },
+      "L1_permutation_z_min": 16.03456354253206,
+      "L4_esf80_footprint_mean": 0.17145659722222226,
+      "L4_concentration_vs_pca": 3.484952060502854,
+      "L4_concentration_vs_random": 3.358033190358153,
+      "L4_matched_atom_advantage_mean": -0.03443645833333333,
+      "L3_et_bonferroni_survivors_per_run": [
+        0,
+        2,
+        2,
+        0,
+        1,
+        0
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        0,
+        2,
+        2,
+        0,
+        1,
+        0
+      ],
+      "L3_et_total_survivors": 5,
+      "L0_reconstruction_mse_mean": 0.0028642690546500185
+    },
+    "pca": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.9229093514653025,
+        "min": 0.824355791277376,
+        "max": 0.9750891035339412
+      },
+      "L1_permutation_z_min": 39.495105520883605,
+      "L4_esf80_footprint_mean": 0.5398715277777778,
+      "L4_concentration_vs_pca": 1.0,
+      "L4_concentration_vs_random": 0.9607778007470195,
+      "L4_matched_atom_advantage_mean": -0.049532986111111114,
+      "L3_et_bonferroni_survivors_per_run": [
+        2,
+        1,
+        2,
+        0,
+        1,
+        1
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        2,
+        1,
+        2,
+        0,
+        1,
+        1
+      ],
+      "L3_et_total_survivors": 7,
+      "L0_reconstruction_mse_mean": 0.016302445748200018
+    },
+    "ica": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.9663267951308568,
+        "min": 0.934603212912186,
+        "max": 0.9866548079001389
+      },
+      "L1_permutation_z_min": 62.126611513686335,
+      "L4_esf80_footprint_mean": 0.5494913194444444,
+      "L4_concentration_vs_pca": 0.9829966429720431,
+      "L4_concentration_vs_random": 0.943661717250697,
+      "L4_matched_atom_advantage_mean": 0.009005671296296314,
+      "L3_et_bonferroni_survivors_per_run": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "L3_et_total_survivors": 7,
+      "L0_reconstruction_mse_mean": 9.390071630477905
+    },
+    "random": {
+      "n_runs": 6,
+      "L1_alignment_max_abs_r": {
+        "mean": 0.9102537654812662,
+        "min": 0.8533898024324166,
+        "max": 0.9546837249957579
+      },
+      "L1_permutation_z_min": 78.04152051735545,
+      "L4_esf80_footprint_mean": 0.5187534722222221,
+      "L4_concentration_vs_pca": 1.042913562188624,
+      "L4_concentration_vs_random": 1.0,
+      "L4_matched_atom_advantage_mean": 0.010072337962962972,
+      "L3_et_bonferroni_survivors_per_run": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "L3_et_bh_fdr_survivors_per_run": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "L3_et_total_survivors": 0,
+      "L0_reconstruction_mse_mean": 0.8989458878835043
+    }
+  }
+}

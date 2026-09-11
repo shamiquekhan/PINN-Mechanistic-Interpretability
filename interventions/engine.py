@@ -44,6 +44,7 @@ class SAEInterventionHook:
         reference_value: Optional[float] = None,
         random_seed: int = 0,
         probe_direction: Optional[torch.Tensor] = None,
+        control_idx: Optional[int] = None,
     ):
         self._validate_mode(mode)
         self.sae = sae
@@ -52,6 +53,11 @@ class SAEInterventionHook:
         self.alpha = alpha
         self.reference_value = reference_value
         self.random_seed = random_seed
+        # R6 control-matching correction: explicitly designated control
+        # target (the closest-mean-activity non-target atom, chosen by
+        # the caller); when set, the control modes apply the operator to
+        # THIS atom instead of sampling.
+        self.control_idx = control_idx
         if mode == "probe_direction":
             if probe_direction is None:
                 raise ValueError("probe_direction mode requires a probe_direction tensor")
@@ -65,10 +71,32 @@ class SAEInterventionHook:
         valid = {
             "natural", "ablate", "amplify", "replace",
             "unrelated_control", "random_direction", "reconstruction_only",
-            "probe_direction",
+            "probe_direction", "dose_matched_control",
         }
         if mode not in valid:
             raise ValueError(f"Unknown mode '{mode}'. Choose from {valid}")
+
+    def _sample_active_non_target(self, z: torch.Tensor, k) -> int:
+        """Sample a matched-deletion control target: an ACTIVE non-target
+        feature (the C3a fix — uniform sampling is a no-op ~1-k/D of the
+        time on TopK codes). Shared by random_direction and
+        dose_matched_control. If self.control_idx is set (the R6
+        closest-mean-activity correction), it is used directly."""
+        if self.control_idx is not None and self.control_idx != k:
+            self.last_control_was_noop = False
+            return self.control_idx
+        rng = torch.Generator(device=z.device)
+        rng.manual_seed(self.random_seed)
+        active = (z > 0).any(dim=0)
+        choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
+        if not choices:
+            # Degenerate fallback: nothing but the target is active;
+            # record it so the caller can report control_was_noop.
+            self.last_control_was_noop = True
+            return -1
+        self.last_control_was_noop = False
+        return choices[torch.randint(len(choices), (1,), generator=rng,
+                                     device=z.device).item()]
 
     def _intervene(self, z: torch.Tensor) -> torch.Tensor:
         """Modify latent code z according to the current mode."""
@@ -102,17 +130,9 @@ class SAEInterventionHook:
             # features that are ACTIVE in at least one row (excluding the
             # target), so the control is a real perturbation.
             z = z.clone()
-            rng = torch.Generator(device=z.device)
-            rng.manual_seed(self.random_seed)
-            active = (z > 0).any(dim=0)
-            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
-            if not choices:
-                # Degenerate fallback: nothing but the target is active;
-                # record it so the caller can report control_was_noop.
-                self.last_control_was_noop = True
+            ctrl_feat = self._sample_active_non_target(z, k)
+            if ctrl_feat < 0:
                 return z
-            self.last_control_was_noop = False
-            ctrl_feat = choices[torch.randint(len(choices), (1,), generator=rng, device=z.device).item()]
             z[:, ctrl_feat] = 0.0
             return z
 
@@ -125,16 +145,24 @@ class SAEInterventionHook:
             # control ablates a random ACTIVE non-target feature instead,
             # so both arms perturb the same way.
             z = z.clone()
-            rng = torch.Generator(device=z.device)
-            rng.manual_seed(self.random_seed)
-            active = (z > 0).any(dim=0)
-            choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
-            if not choices:
-                self.last_control_was_noop = True
+            ctrl_feat = self._sample_active_non_target(z, k)
+            if ctrl_feat < 0:
                 return z
-            self.last_control_was_noop = False
-            ctrl_feat = choices[torch.randint(len(choices), (1,), generator=rng, device=z.device).item()]
             z[:, ctrl_feat] = 0.0
+            return z
+
+        if mode == "dose_matched_control":
+            # R6 dose-response control: the same operator as the target's
+            # amplify-family intervention (z_j <- alpha * z_j) applied to a
+            # matched-activity ACTIVE non-target atom, at the SAME dose
+            # alpha — dose- and kind-matched (the registered R6 protocol,
+            # docs/preregistration.md §R6).  Mirrors the alpha-scaled
+            # control modes of the operator battery.
+            z = z.clone()
+            ctrl_feat = self._sample_active_non_target(z, k)
+            if ctrl_feat < 0:
+                return z
+            z[:, ctrl_feat] = z[:, ctrl_feat] * self.alpha
             return z
 
         if mode == "probe_direction":
@@ -211,16 +239,19 @@ def measure_intervention_effect(
     layer_index: int = 1,
     baseline_mode: str = "natural",
     random_seed: int = 0,
+    control_idx: Optional[int] = None,
 ) -> Dict:
     """Freeze model weights and measure how an intervention changes each loss.
 
     baseline_mode:
       "natural"              — raw activations, SAE bypassed (original v2 protocol).
       "reconstruction_only" — SAE inserted, no intervention.  This isolates the
-                               intervention effect from SAE-insertion error and is
-                               the correct baseline for the planted positive control
-                               (and for any insertion-sensitive PINN).
+                                intervention effect from SAE-insertion error and is
+                                the correct baseline for the planted positive control
+                                (and for any insertion-sensitive PINN).
     random_seed: seed for the random_direction / unrelated_control draws.
+    control_idx: R6 correction — explicitly designated control atom (the
+      closest-mean-activity non-target); None keeps the sampled behavior.
     """
     model.eval()
     sae.eval()
@@ -241,7 +272,7 @@ def measure_intervention_effect(
     hook_int = SAEInterventionHook(
         sae, mode=mode, feature_idx=feature_idx,
         alpha=alpha, reference_value=reference_value,
-        random_seed=random_seed,
+        random_seed=random_seed, control_idx=control_idx,
     )
     hook_int.register(model, layer_index)
     with torch.enable_grad():

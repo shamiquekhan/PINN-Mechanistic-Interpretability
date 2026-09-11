@@ -1,10 +1,10 @@
 {
   "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts",
-  "version": "4.0.0",
-  "date": "2026-09-11",
+  "version": "4.2.0",
+  "date": "2026-09-12",
   "license": "CC-BY-4.0",
   "generator": "experiments/run_pipeline.py stages 1-15 (post-external-review-fix re-runs)",
-  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v3.4.0: post-external-review fix campaign \u2014 matched-deletion controls (C3), space-time validation (C2), config-faithful controller protocol (H3), real gradient monitor arm (H1).",
+  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v4.2.0: adds the R6 dose-response report and the R1 side-by-side reconciliation table (the basis x criteria matrix).",
   "files": [
     {
       "path": "runs/causal_intervention_results.json",
@@ -95,6 +95,16 @@
       "path": "runs/feature_dictionary/random_baseline_report.json",
       "bytes": 1045,
       "sha256": "139c4b6ee1460f2d9b099e2fb0e1cdc9ec553d55e3da6057141cd018a8abdae7"
+    },
+    {
+      "path": "runs/r6_dose_response/r6_report.json",
+      "bytes": 219822,
+      "sha256": "5a1552d52553c4a463259112391c12e530d01c48e3586b77c368324d9ec4d95c"
+    },
+    {
+      "path": "runs/r1_physSAE/reconciliation_table.json",
+      "bytes": 6272,
+      "sha256": "65714222a6052b27a60388c5552a26d4fbadf0c27a82061372d1e045435f0689"
     }
   ],
   "note": "All datasets are GENERATED in-repo by the stage scripts; no external data. v3.4.1: checksums refreshed after the full clean-clone reproduction pass (scripts/reproduce_main_results.sh) \u2014 all verdicts reproduced exactly."

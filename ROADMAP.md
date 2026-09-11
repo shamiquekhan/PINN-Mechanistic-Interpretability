@@ -139,7 +139,10 @@ rank-collapse-with-convergence regularity from the failure side).
   crossover survivors; the tanh control shows the same null at smaller
   scale. The chain rank -> reconstruction -> causality: first two
   arrows measured, the third consistently absent (stages 5/8, H16b,
-  R2b). Superposition is necessary but not sufficient. Analysis
+  R2b). In the tested models, entering the higher-effective-rank regime
+  was necessary for the observed SAE-over-PCA reconstruction advantage,
+  but that advantage was not sufficient for direction-specific causal
+  interpretability. Analysis
   correction pre-verdict: crossover rule applied one-sided (>=15/20)
   as registered. See docs/preregistration.md §R2 outcome, RESULTS.md
   §5A.13.

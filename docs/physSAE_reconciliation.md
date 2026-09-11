@@ -170,6 +170,25 @@ These do not diminish the work's value; they make the head-to-head
 experiment *more* necessary, and our replication will state every such
 choice in advance.
 
+## 7.5 The side-by-side reconciliation table (v4.2)
+
+The R1 artifact is now exposed as the watertight basis × criteria
+matrix the head-to-head requires (`scripts/r1_reconciliation_table.py`
+→ `runs/r1_physSAE/reconciliation_table.json`, checksummed): every
+dictionary family (ReLU+L1 × 3 SAE seeds, TopK, PCA, ICA, random
+directions) × every criterion level (L1 alignment, L4 ESF80
+concentration vs PCA *and* vs random — the between-basis control the
+PhysSAE battery does not run, L3 E_T survivors, L0 reconstruction) on
+the same six frozen matched-architecture checkpoints. One-line
+reading: alignment and concentration columns show no basis-specific
+physics (random aligns at 0.85–0.96 and SAE concentration over random
+tracks its concentration over PCA), while the specificity column
+scatters at chance with random at the 0 floor — the R1b dissociation
+as a single table. An honest recorded nuance: PCA/ICA survivors
+(1–2/8 per run) slightly exceed the random floor without reaching
+basis-specificity; recorded as-is, consistent with the stage-8/9
+basis-independence result under matched controls.
+
 ## 8. Registered follow-up (v4.1 — R1–R5, pre-written, not yet run)
 
 All outcomes below are publishable; none is preferred. Registered in

@@ -21,6 +21,23 @@ must not be strengthened beyond this wording.
 
 Evidence at a level does not imply the levels above it.
 
+## Binding wording rule (all docs, paper, and release communication)
+
+The negative causal results are stated as:
+
+> **"No tested feature satisfied the preregistered direction-specific
+> causal criterion."**
+
+Never as "no causal effect exists" or "features have no causal
+effect": the intervention batteries measure *nonzero* effects (all
+ablation deltas are positive; E_T CIs exclude zero on the negative
+side — the representational signature); what is absent is the
+**specific causal signature the preregistered criteria define**
+(target-above-matched-deletion, direction reversal, dose-response
+shape). The shorthand "causal null" is permitted ONLY where the full
+sentence (or its citation) appears in the same document, and never in
+an abstract, title, or claim of record.
+
 ## Claim 1 — Geometry of conventional PINNs (strong)
 
 The tested tanh PINNs (widths 16–512, depths 2–6, eight PDE families,
@@ -71,19 +88,43 @@ is this protocol's operational bar, not a universal constant.
 Evidence: H18 (`runs/architecture_boundary/architecture_boundary_report.json`);
 figure 10; R3 (dose-response, in flight).
 
-## Claim 5 — The causal arrow does not close (strong; completes the chain)
+## Claim 5 — The causal arrow does not close (strong; completes the chain — now at curve level, R6)
 
 Even in the high-rank Fourier regime — with the 25–56× reconstruction
-advantage — the L3 criterion is null: E_T = −15.89 [−17.46, −14.27]
+advantage — no tested feature satisfied the preregistered
+L3/L5 criteria: E_T = −15.89 [−17.46, −14.27]
 (target ablations move the residual LESS than matched-deletion
 controls); 4/45 Bonferroni survivors, all negative-side; 0/45 satisfy
 the L5 crossover criterion; the planted control passes at the same n.
 The chain rank → reconstruction advantage → causal specificity has its
 first two arrows measured and the third consistently absent across
-every regime tested (stages 5/8; H16b operators; R2b Fourier).
-**Superposition is necessary but not sufficient.**
+every regime evaluated (stages 5/8; H16b operators; R2b Fourier).
 
-Evidence: R2 (`runs/r2_fourier_causal/r2_report.json`).
+**R6 (dose-response) closes the shape question the two-point criteria
+could not ask:** across α ∈ {−2, −1, 0, 0.5, 1.5, 2} with
+dose-matched closest-activity controls, 0 features in any high-rank
+regime (Fourier SAE/PCA 0/24+0/24; FNO 0/8) show a signed causal
+channel; the response is dose-symmetric (the reconstructive
+signature) at same-sign fraction 1.00, and the control curves match
+it. The machinery gate's own correction is part of the finding: the
+planted readout is a *quadratic* channel — a causal-by-construction
+feature has same-sign endpoints — so same-sign endpoints alone are
+not reconstructive evidence; the control-matched curve is the
+discriminator, and nowhere in the tested regimes does a target curve
+separate from its control the way the planted curve does (Fourier
+ctrl-flat margins 1.5–3.6× vs the planted 67×). Scope annotation: two
+shape-only R6a verdicts exist on inert-scale tanh-PCA components
+(max |Δ| ≈ 1e-6 vs the arm's O(1) effects) — the class is shape-only
+by registration; no signed channel co-occurs with the high-rank regime
+at any magnitude.
+
+**In the tested models, entering the higher-effective-rank regime was
+necessary for the observed SAE-over-PCA reconstruction advantage, but
+that advantage was not sufficient for direction-specific causal
+interpretability.**
+
+Evidence: R2 (`runs/r2_fourier_causal/r2_report.json`);
+R6 (`runs/r6_dose_response/r6_report.json`).
 
 ## Claim 6 — PhysSAE reconciliation (strong; measured head-to-head)
 
@@ -96,7 +137,7 @@ concentrated than random unit directions (2.0–2.3×). The L4 statistic
 is a property of any selective code at the penultimate layer (their
 Δu = α·z_k·(W_out d_k) is exactly proportional to the code), not of
 discovered physics; the between-basis random control is the missing
-arm. Our L3 criterion is null for every basis on the same checkpoints.
+arm. No basis satisfied our L3 criterion on the same checkpoints (random sits at the 0/8 chance floor, so the battery is calibrated).
 Both programs independently discovered the rank-collapse regularity
 (their §4.8: failed PINNs higher-rank; our sweeps: converged PINNs
 lower-rank). Their v1 internal tensions (abstract vs Table 4 numbers;

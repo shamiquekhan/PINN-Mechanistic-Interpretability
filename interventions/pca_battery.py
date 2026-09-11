@@ -72,6 +72,7 @@ class PCAInterventionHook:
         alpha: float = 0.0,
         random_seed: int = 0,
         probe_direction: Optional[torch.Tensor] = None,
+        control_idx: Optional[int] = None,
     ):
         if mode not in self._MODES:
             raise ValueError(f"Unknown mode '{mode}'. Choose from {sorted(self._MODES)}")
@@ -82,9 +83,24 @@ class PCAInterventionHook:
         self.component_idx = component_idx
         self.alpha = alpha
         self.random_seed = random_seed
+        # R6 control-matching correction: explicitly designated control
+        # component (closest mean |coefficient|); None keeps sampled
+        # behavior.
+        self.control_idx = control_idx
         d = probe_direction.detach().cpu() if probe_direction is not None else None
         self.probe_direction = d / d.norm().clamp(min=1e-8) if d is not None else None
         self._hook = None
+
+    def _pick_control(self, coeffs: torch.Tensor, k: int) -> int:
+        """Control component for the control modes: the explicitly
+        designated one (R6 correction) or a uniform non-target draw."""
+        if self.control_idx is not None and self.control_idx != k:
+            return self.control_idx
+        rng = torch.Generator(device=coeffs.device)
+        rng.manual_seed(self.random_seed)
+        choices = [i for i in range(coeffs.shape[1]) if i != k]
+        return choices[torch.randint(len(choices), (1,), generator=rng,
+                                      device=coeffs.device).item()]
 
     def _intervene(self, coeffs: torch.Tensor) -> torch.Tensor:
         mode = self.mode
@@ -99,11 +115,7 @@ class PCAInterventionHook:
 
         if mode == "unrelated_component":
             coeffs = coeffs.clone()
-            rng = torch.Generator(device=coeffs.device)
-            rng.manual_seed(self.random_seed)
-            choices = [i for i in range(coeffs.shape[1]) if i != k]
-            ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
-                                          device=coeffs.device).item()]
+            ctrl = self._pick_control(coeffs, k)
             coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
             return coeffs
 
@@ -113,11 +125,7 @@ class PCAInterventionHook:
             # in kind. On a dense PCA basis every coefficient is "active",
             # so the matched-deletion control scales a random non-target
             # component by the same alpha the target arm uses.
-            rng = torch.Generator(device=coeffs.device)
-            rng.manual_seed(self.random_seed)
-            choices = [i for i in range(coeffs.shape[1]) if i != k]
-            ctrl = choices[torch.randint(len(choices), (1,), generator=rng,
-                                          device=coeffs.device).item()]
+            ctrl = self._pick_control(coeffs, k)
             coeffs = coeffs.clone()
             coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
             return coeffs
@@ -181,11 +189,14 @@ def measure_pca_intervention_effect(
     alpha: float = 0.0,
     layer_index: int = 1,
     seed: Optional[int] = None,
+    control_idx: Optional[int] = None,
 ) -> Dict:
     """Frozen-weight loss deltas for one PCA-component intervention.
 
     Mirrors `measure_intervention_effect` in interventions/engine.py:
     baseline = natural pass (PCA bypassed), intervened = hooked pass.
+    control_idx: R6 correction — explicitly designated control
+    component; None keeps the sampled behavior.
     """
     if seed is None:
         seed = 0
@@ -208,7 +219,7 @@ def measure_pca_intervention_effect(
     lp_base, lb_base = _losses(None)
     hook = PCAInterventionHook(
         basis, mode=mode, component_idx=component_idx,
-        alpha=alpha, random_seed=seed,
+        alpha=alpha, random_seed=seed, control_idx=control_idx,
     )
     lp_int, lb_int = _losses(hook)
 

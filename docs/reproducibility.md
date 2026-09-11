@@ -129,17 +129,17 @@ After the campaign completes, these JSON fields must match RESULTS.md
 |---|---|---|---|
 | Failure atlas reproduces | `runs/failure_atlas/seed_matrix_stats.json` | `boundary_starvation.label_counts` | 10/10 boundary_starvation |
 | Positive control passes | `runs/positive_control.json` | `pipeline_pass` | `true` |
-| SAE causal null | `runs/causal_intervention_results.json` | `causal_strength_ci` | mean ≈ +0.0020, CI spans 0 |
+| SAE causal null | `runs/causal_intervention_results.json` | `causal_strength_ci` | mean ≈ −0.0173, CI [−0.0329, −0.0037] (excludes 0, negative side — matched-deletion controls) |
 | SAE MC correction | `runs/causal_intervention_results.json` | `multiple_comparisons.bonferroni_n_survivors` | 0 |
 | PCA causal null | `runs/pca_causal_results.json` | `multiple_comparisons.bonferroni_n_survivors` | 0 |
 | Causal abstraction null | `runs/causal_abstraction_results.json` | `verdict.pca.beats_random_every_run` | `false` |
 | Geometry | `runs/effective_rank_analysis/effective_rank_report.json` | `summary.mean_participation_ratio` | ≈ 1.78 (fresh pool; see fresh_campaign_record §3) |
 | FNO regime boundary | `runs/operator_boundary/operator_boundary_report.json` | `verdict.sae_beats_k_matched_pca` | `true` |
-| Monitor | `runs/monitor_report.json` | `conventional_logistic.auroc` | ≈ 0.859 |
-| Controller rescue | `runs/controller_demo/controller_comparison.json` | `verdict.controller_final` | ≈ 0.0166 |
-| SOTA: NTK beats controller | `runs/sota_baselines/sota_baseline_report.json` | `baselines.NTK-adaptive.final_rel_l2` | ≈ 0.0064 |
+| Monitor | `runs/monitor_report.json` | `conventional_logistic.auroc` | ≈ 0.875 |
+| Controller rescue | `runs/controller_demo/controller_comparison.json` | `verdict.controller_final` | ≈ 0.0002 (config-faithful protocol; the v3.3-era 0.0166 was the non-faithful loop — H3 fix) |
+| SOTA: controller beats NTK | `runs/sota_baselines/sota_baseline_report.json` | `baselines.NTK-adaptive.final_rel_l2` | ≈ 0.0064 (controller 0.0002 on the config-faithful protocol) |
 | Stage-14 machinery gate | `runs/operator_causal/operator_causal_report.json` | `positive_control.pipeline_pass` | `true` |
-| Stage-14 survivors | `runs/operator_causal/operator_causal_report.json` | `battery_summary.multiple_comparisons.bonferroni_n_survivors` | ≈ 6 (PINN batteries: 0) |
+| Stage-14 survivors | `runs/operator_causal/operator_causal_report.json` | `battery_summary.multiple_comparisons.bonferroni_n_survivors` | ≈ 2 (matched-deletion controls; was 6 pre-C3 — PINN batteries: 0) |
 | Stage-15 verdict | `runs/ntk_bridge/ntk_bridge_report.json` | `decision_rule.recorded` | `H15b` |
 | Stage-15 survivors | `runs/ntk_bridge/ntk_bridge_report.json` | per-feature `bonferroni_survivor` | all `false` (0/8) |
 

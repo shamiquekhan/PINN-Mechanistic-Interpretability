@@ -39,7 +39,8 @@ networks (PINNs) with a preregistered, positive-control-validated campaign,
 and locate a regime boundary that runs \emph{inside} the PINN family. In
 conventional tanh PINNs, the activation covariance is low-rank (participation
 ratio 1.14--2.51 across eight PDE families, widths 16--512, and depths
-2--6), and SAE features carry no causal information beyond matched-deletion
+2--6), and no tested SAE feature satisfies the preregistered
+direction-specific causal criterion under matched-deletion
 controls ($\ET=-0.0173$, 95\% CI $[-0.0329,-0.0037]$; 0/8 features survive
 Bonferroni \emph{or} BH-FDR) --- a null that is \emph{basis-independent}
 (the identical battery on PCA components: 0/8; no candidate alignment
@@ -375,7 +376,7 @@ prediction (i) and (ii).
 
 \input{tables/table_reconstruction}
 
-\subsection{The basis-independent causal null}
+\subsection{The basis-independent failure of the causal criterion}
 \label{sec:results-causal}
 
 The core evidence (Figure~\ref{fig:causal}; Table~\ref{tab:causal}): for
@@ -401,7 +402,7 @@ the monitor comparison gives P(SAE better)$\,=0.53$.
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.9\linewidth]{figures/figure_04_causal_null.png}
-  \caption{\textbf{The causal null, both bases.} Targeted vs.\ control
+  \caption{\textbf{The causal-criterion null, both bases.} Targeted vs.\ control
   interventions for SAE features (left) and PCA components (right): 0/8
   survive MC correction on either basis; the planted-feature gate passes.}
   \label{fig:causal}
@@ -467,7 +468,7 @@ regime (Figure~\ref{fig:boundary}, Table~\ref{tab:regime}).
 The FNO reconstruction advantage would be hollow if it were not accompanied
 by causal specificity, so we preregistered (committed before the run, in
 \texttt{docs/preregistration.md} \S H7) a conjunctive decision rule: H14a
-(the operator features are causally specific) requires (i) $\ge$1
+(the operator features satisfy the causal criterion) requires (i) $\ge$1
 Bonferroni survivor, (ii) $\ET$ CI excluding zero on the positive side,
 (iii) a \emph{mixed} sign diagnostic. The battery --- 8 candidate features,
 8 held-out function batches, the same three controls as the PINN battery,
@@ -518,7 +519,7 @@ The FNO reconstruction advantage would be hollow if it were not
 accompanied by causal specificity, so we preregistered (committed before
 the run, in \texttt{docs/preregistration.md} \S H16) a conjunctive
 decision rule for a high-n battery on the same FNO: H16a (the operator
-features are causally specific at high n) requires (i) $\ge$1 Bonferroni
+features satisfy the causal criterion at high n) requires (i) $\ge$1 Bonferroni
 survivor, (ii) $E_T$ CI excluding zero on the positive side, (iii) a
 consistent \emph{amplify-vs-ablate crossover} direction. The battery ---
 16 candidate features, 20 held-out function batches, the same three
