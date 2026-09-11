@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 171/171 Passed](https://img.shields.io/badge/Tests-171%2F171%20Passed-brightgreen.svg)](tests/)
+[![Tests: 195/195 Passed](https://img.shields.io/badge/Tests-195%2F195%20Passed-brightgreen.svg)](tests/)
 [![CI](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml/badge.svg)](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
@@ -37,6 +37,36 @@ The thesis: **when** sparse feature representations support mechanistic interpre
 9. **Engineering, honestly bounded (stages 6/7/12 + H17/H19):** conventional monitor AUROC 0.875 — but the honest loss-trajectory floor reaches 0.786 (H19: much of the apparent margin was the rule, not the features); controller rescues boundary starvation to oracle level, **wins its home class** (0.00012 vs NTK 0.0044), never degrades catastrophically across the three-failure battery, and loses to NTK-adaptive elsewhere (H17: robustness, not per-failure SOTA). SAE features are inert cargo throughout.
 
 See [RESULTS.md](RESULTS.md) for the complete evidence, preregistered hypotheses (`docs/preregistration.md`), and limitations. For what is *verified end-to-end right now* versus in-flight, see [PROJECT_STATUS.md](PROJECT_STATUS.md). For the executed 29-issue external review — every fix, re-run, and the errata for numbers that moved — see [REVIEW_RESPONSE.md](REVIEW_RESPONSE.md).
+
+### The whole project in two minutes
+
+```
+PINNs
+  ↓  RQ1: What geometry do their hidden representations develop?
+Low-rank tanh: PR 1.14–2.51, tangent rank = input dim, depth lowers PR
+High-rank Fourier: PR 4.0–5.6 within the same task (H18); Burgers 14–16 (R5)
+  ↓  RQ2: When does sparse decomposition beat linear baselines?
+Low-rank → SAE ≈ PCA (≈1×; the SAE loses ~50× at the tanh extreme)
+High-rank → SAE ≫ PCA (25–56× on Fourier PINNs; 31–38× on Burgers; 4.7× on FNO)
+  ↓  RQ3: Does better sparse decomposition imply a causal mechanism?
+No: matched-deletion E_T batteries are null in every regime (stages 5/8,
+H16b, R2b) — 0 features pass Bonferroni + direction-reversal anywhere
+  ↓  RQ4: What happens when the causal hypothesis fails? (R6)
+Dose-response curves α ∈ {−2..2}: the response is dose-symmetric
+(energetic/reconstructive), controls match it, no signed channel exists
+in any regime at any magnitude — the null's *shape* is now measured
+  ↓
+CONCLUSION: representation geometry gates sparse COMPRESSION (rank →
+SAE-over-PCA), but compression and physical alignment do not by
+themselves establish direction-specific causal mechanisms under the
+preregistered criteria. "When sparse features become mechanistic"
+remains an open boundary — mapped on both sides, closed nowhere.
+```
+
+The supporting cast (H17 controller robustness, H19 monitoring floor)
+demonstrates the engineering payoff of failure-aware control while
+keeping the SAE-feature claims structurally separate — they are
+secondary contributions, not part of the causal chain above.
 
 ---
 
@@ -107,7 +137,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 171 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 195 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -150,6 +180,7 @@ This automatically executes:
 23. **R4 — SAE-seed robustness** — dictionaries non-unique (cosine 0.41), verdicts stable 18/18 (`runs/r4_sae_seed_robustness/`).
 24. **R5 — Burgers boundary** — R5a: the boundary replicates on a time-dependent family (`runs/r5_burgers_boundary/`).
 25. **R6 — intervention dose-response** — the causal criteria at curve level: no signed channel in any regime; dose-symmetric reconstructive signature, controls matched (`runs/r6_dose_response/`).
+26. **R7 — equivalence test** — preregistered TOST on the SAE−PCA head-to-head: inconclusive at δ=0.01 (point estimate inside the margin, CI straddling; equivalence formally *not* established at this n — recorded so "no difference detected" is never conflated with "equivalence shown") (`runs/equivalence_test/`).
 
 Stages 1–15 run through `experiments/run_pipeline.py`; stages 16–19 and R1–R5 have dedicated preregistered drivers (see the experiments tree below).
 
@@ -217,7 +248,7 @@ Stages 1–15 run through `experiments/run_pipeline.py`; stages 16–19 and R1�
 │   ├── r4_sae_seed_robustness.py # SAE-seed robustness, Hungarian matching (R4)
 │   ├── r5_burgers_boundary.py # Within-PINN boundary on Burgers (R5)
 │   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–15)
-├── tests/                    # Comprehensive Unit Test Suite (171 tests)
+├── tests/                    # Comprehensive Unit Test Suite (195 tests)
 │   └── unit/
 ├── docs/
 │   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion

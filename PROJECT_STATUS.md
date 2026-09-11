@@ -34,13 +34,14 @@ Each item: what ran → where the output lives.
 | R5 Burgers within-PINN boundary (v4.1) | `python -m experiments.r5_burgers_boundary` | `runs/r5_burgers_boundary/r5_report.json` | **R5a** — the boundary replicates on a time-dependent family: Fourier (t,x) PR 14.0–15.8 (ρ 0.25, above FNO's 6.8), SAE beats PCA 31–38× all seeds; tanh twin stays at PR ~1.8; tangent 1; rel L2 comparable (architectural, not convergence) |
 | R2 causal battery on the Fourier PINN (v4.1) | `python -m experiments.r2_fourier_causal` | `runs/r2_fourier_causal/r2_report.json` | Gate PASS (planted cosine 0.989, 20/20); **R2b both arms**: Fourier E_T −15.89 [−17.46, −14.27] (4/45 Bonf negative-side, 0/45 crossover) despite PR 4.0–5.6 and 25–56× reconstruction; tanh control same null at −0.058. Superposition necessary but not sufficient |
 | R6 intervention dose-response (v4.2) | `python -m experiments.r6_dose_response` | `runs/r6_dose_response/r6_report.json` | Gate PASS (planted cosine 0.989, monotone-in-\|α−1\|, anchors 2.0×/2.1× the corrected control floor; gate criterion corrected pre-verdict — planted readout is a quadratic channel). **0 R6a in every high-rank regime** (Fourier SAE/PCA 0/24 each; FNO 0/8); dose-symmetric reconstructive signature at same-sign 1.00, ctrl-matched controls; two pre-verdict corrections recorded (control-matching, inert guard); two shape-only R6a on inert-scale tanh-PCA components (max \|Δ\| ≈ 1e-6) recorded as-measured with scope annotation |
+| R7 equivalence test (v4.2) | `python scripts/equivalence_test.py` | `runs/equivalence_test/equivalence_report.json` | Preregistered TOST (δ=0.01, 88 checkpoint-matched pairs): **R7b inconclusive** — point difference +0.0042 inside the margin, 90% CI [−0.0124, +0.0209] straddling the boundary; formal equivalence NOT established at this n (underpowered; ~4× checkpoints would close it). Secondary: neither basis equivalent to zero (same negative representational signature). Classification rule corrected pre-verdict (CI-vs-margin trichotomy) |
 | R1 side-by-side reconciliation table (v4.2) | `python scripts/r1_reconciliation_table.py` | `runs/r1_physSAE/reconciliation_table.json` | The basis × criteria matrix from the committed R1 artifact: L1 alignment generic (all bases 0.77–0.99 incl. random), L4 concentration SAE-specific (2.1–3.5× vs PCA AND random), L3 survivors scatter without basis-specificity (SAE 1–5, PCA/ICA 1–2/run, random 0 floor), L0 recon SAE-best — the R1b dissociation in one table |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
-| Unit tests | `python -m pytest tests/ -q` | — | **171 passed, 1 skipped** (2026-09-10, CPU-only; 155 at the 2026-09-08 fresh campaign, +16 from the v3.4.2 stage-17 framework) |
+| Unit tests | `python -m pytest tests/ -q` | — | **195 passed, 1 skipped** (2026-09-12, CPU-only; 189 after the R6 framework, +6 from the v4.2.1 R7 equivalence tests) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
 | Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
 | Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |
-| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v3.4.0) | 18/18 OK |
+| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v4.2.0) | 28/28 OK |
 | Results-doc grounding | `python scripts/check_results_grounded.py` | — | OK (exit 0) |
 
 ## Completed since last verification (stage 14 — preregistered, run, recorded)
@@ -129,7 +130,7 @@ Each item: what ran → where the output lives.
 ```bash
 git clone https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability
 cd PINN-Mechanistic-Interpretability
-python -m pytest tests/ -q                              # 171 tests
+python -m pytest tests/ -q                              # 195 tests
 python scripts/check_results_grounded.py                # doc/artifact grounding
 sha256sum -c data/checksums.sha256                      # artifact integrity
 python -m experiments.run_pipeline --stages 5           # re-run any stage

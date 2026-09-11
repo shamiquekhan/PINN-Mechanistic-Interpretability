@@ -10,6 +10,67 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
+## Versioning scheme (clarified 2026-09-12)
+
+The commit history interleaves `v4.1.x`-numbered work *before* the
+`v4.0.0` release tag, which reads as a chronology inversion to anyone
+browsing the log. The explanation: **v4.1.x was the working-branch
+numbering of the v4.1 research campaign (the R1–R5 PhysSAE
+reconciliation), which was developed and recorded *before* the v4.0.0
+paper/release freeze absorbed it.** The v4.0.0 tag is the
+paper-release freeze (title, abstract, arXiv package, OSF bundle) —
+a release boundary, not a research-state boundary; the research
+chronology is CHANGELOG-section order (bottom = earliest), not tag
+order. From v4.2.0 onward the two are unified: research campaign,
+docs, and release carry the same number, and no future release will
+carry a number lower than a preceding research campaign. The tags are:
+v3.4.0 → v3.4.2 (external-review fix campaign), v3.5-research-freeze
+(pre-v4 hypothesis freeze), v4.0.0 (paper release), and v4.2.0
+(R6 dose-response + reconciliation table + claim standardization;
+there is no v4.1.0/v4.1.1 *tag* — those numbers exist only as
+CHANGELOG research sections).
+
+## [4.2.1] — 2026-09-12 — "R7 Equivalence Test + Review-Response Fixes"
+
+### Added
+- **R7 — preregistered TOST equivalence test**
+  (`scripts/equivalence_test.py`, §R7 registered before implementation):
+  the statistical gap two independent reviews flagged — "not
+  significant" ≠ "equivalent" — closed with the standard remedy on the
+  committed stage-5/8 artifacts (88 checkpoint-matched pairs, no new
+  training). **Recorded outcome R7b (inconclusive):** the paired
+  SAE−PCA causal-strength difference is +0.0042 (inside the
+  preregistered δ=0.01 margin) but the 90% CI [−0.0124, +0.0209]
+  straddles the boundary — formal equivalence is NOT established at
+  this n (~4× checkpoints would close δ; consistent with stage-13
+  power analysis). Secondary: neither basis is equivalent to zero
+  (both show the recorded negative representational signature).
+  The claim is now worded at its honest strength everywhere:
+  *statistically indistinguishable; formal equivalence undemonstrated*.
+  Classification-rule correction recorded pre-verdict (the first
+  execution used a backwards CI-vs-margin rule; numbers unchanged).
+- **6 unit tests** for the TOST classifier
+  (`tests/unit/test_r7_equivalence.py`).
+
+### Changed (external-review response)
+- **Test-count sync:** 171 → 195 across the README badge/prose/tree,
+  PROJECT_STATUS, reproducibility docs, and the paper appendix (171 at
+  the last verification + 18 R6 + 6 R7 tests).
+- **Version-reference sync:** paper URL v3.3.0 → v4.2.0 (both main.tex
+  copies); CITATION.cff 4.0.0 → 4.2.0; PROJECT_STATUS manifest row
+  v3.4.0/18-checksums → v4.2.0/29.
+- **Versioning-scheme clarification** added to CHANGELOG: why v4.1.x
+  commits precede the v4.0.0 tag (working-branch research numbering vs
+  paper-release freeze) and the unification from v4.2.0 onward.
+- **R1 match matrix** added to `docs/physSAE_reconciliation.md` §7.6:
+  every methodological dial (checkpoint, layer, normalization, SAE
+  spec, split, concept fields, metric, intervention, controls,
+  correction) is matched, extended, or a pre-registered divergence —
+  with the residual mismatches recorded rather than hidden.
+- **Two-minute story** added to the README (the RQ1→RQ4 chain ending in
+  the regime-boundary conclusion), making the project legible in one
+  screen; H17/H19 positioned explicitly as supporting cast.
+
 ## [4.2.0] — 2026-09-12 — "R6 Dose-Response + the R1 Reconciliation Table"
 
 ### Added

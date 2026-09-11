@@ -4,7 +4,7 @@
   "date": "2026-09-12",
   "license": "CC-BY-4.0",
   "generator": "experiments/run_pipeline.py stages 1-15 (post-external-review-fix re-runs)",
-  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v4.2.0: adds the R6 dose-response report and the R1 side-by-side reconciliation table (the basis x criteria matrix).",
+  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v4.2.0: adds the R6 dose-response report, the R1 side-by-side reconciliation table, and the R7 equivalence-test report.",
   "files": [
     {
       "path": "runs/causal_intervention_results.json",
@@ -105,6 +105,11 @@
       "path": "runs/r1_physSAE/reconciliation_table.json",
       "bytes": 6272,
       "sha256": "65714222a6052b27a60388c5552a26d4fbadf0c27a82061372d1e045435f0689"
+    },
+    {
+      "path": "runs/equivalence_test/equivalence_report.json",
+      "bytes": 1920,
+      "sha256": "3881637312ae571d49b2691643679c22f40ab1430921a5fed80999290cd8dcde"
     }
   ],
   "note": "All datasets are GENERATED in-repo by the stage scripts; no external data. v3.4.1: checksums refreshed after the full clean-clone reproduction pass (scripts/reproduce_main_results.sh) \u2014 all verdicts reproduced exactly."

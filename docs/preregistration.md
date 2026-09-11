@@ -1090,3 +1090,155 @@ channel is quadratic (dose-symmetric), not signed, consistent with
 their H16b direction-reversal failure. The activity-rank confound
 check is null (Spearman(rank, margin) = −0.01, p = 0.96 — the
 ctrl-flat pattern is not an energy-size artifact).
+
+## R7 — Equivalence testing of the basis-independence null (registered 2026-09-12, pre-run)
+
+*Registered after the R6 record, before any implementation or run.
+Motivation: two independent reviews (the v4.2 external review and the
+subsequent assessment) both identified the same statistical gap — "not
+statistically significant" is not evidence of equivalence. The
+stage-8 head-to-head records the paired PCA−SAE E_T difference as
+"+0.0042 [−0.0139, +0.0232] (spans zero)" — a failure to detect, not a
+demonstration of practical equivalence. The standard remedy is the
+two-one-sided-tests (TOST) procedure: specify a margin δ of practical
+equivalence in advance, then reject the null of
+|Δ| ≥ δ in favor of equivalence only if both one-sided tests pass.*
+
+**Design (registered).**
+
+- **Data:** the committed stage-5 and stage-8 artifacts
+  (`runs/causal_intervention_results.json`,
+  `runs/pca_causal_results.json`) — 88 paired evaluations each
+  (8 candidates × 11 held-out boundary-starvation checkpoints), the
+  same checkpoints through the same battery. No new training; no new
+  interventions; the paired per-evaluation rows are already committed.
+- **Primary endpoint:** the per-pair difference of causal strengths
+  d_i = E_T^PCA_i − E_T^SAE_i over the 88 (feature, checkpoint) pairs.
+- **Equivalence margin (preregistered before computing):** δ = 0.01 in
+  E_T units — the magnitude below which a basis difference is
+  scientifically immaterial for this battery. Calibration for the
+  choice (stated before the test, not fitted to it): the planted
+  positive control's target-vs-control separation is +0.026 — the
+  smallest effect the machinery has demonstrated it can detect and
+  that anyone would call mechanistic — so δ = 0.01 is ~2.6× smaller
+  than the smallest effect the pipeline treats as real, i.e., a
+  conservative bar for "no basis-specific difference."
+- **Procedure:** TOST via the paired t-distribution — equivalence at
+  α = 0.05 iff the 90% CI of the mean difference lies entirely within
+  (−δ, +δ). Report the TOST p-value (max of the two one-sided p's),
+  the mean difference, the 90% and 95% CIs, and — as the design-honest
+  supplement — the CI-width vs margin comparison (if the 95% CI is
+  wider than 2δ the test is underpowered for the margin and that is
+  recorded, not hidden).
+- **Secondary (same artifact, pre-specified):** equivalence of each
+  basis against the *zero* criterion (|E_T| < δ for each basis
+  separately) — testing whether each basis is not only equivalent to
+  the other but individually indistinguishable from no
+  direction-specific effect at the δ bar.
+
+**Pre-written outcomes (all publishable, none preferred).**
+
+1. **Equivalence confirmed (TOST p ≤ 0.05):** the basis-independence
+   claim upgrades from "difference spans zero" to "the SAE−PCA
+   difference is statistically equivalent to zero at the preregistered
+   margin" — the strongest available form of the null.
+2. **Equivalence inconclusive (TOST p > 0.05 AND the 90% CI overlaps
+   the margin ±δ — i.e., the CI is neither inside the margin nor
+   entirely outside it):** the data cannot distinguish equivalence from
+   a small difference; recorded as such with the explicit power note
+   (the CI width vs the margin is the design-honest measure of how
+   much n would be needed).
+3. **Equivalence rejected (the 90% CI lies ENTIRELY outside ±δ):** the
+   bases differ by at least δ in one direction — the basis-independence
+   claim weakens to "direction-specificity is absent for both bases
+   (0/8 survivors each)" and the recorded wording is updated everywhere
+   it appears.
+
+**Pre-verdict classification-rule correction (recorded 2026-09-12,
+BEFORE the R7 verdict was treated as such — the R2 precedent).** The
+first execution mis-classified the measured result as outcome 3
+("rejected") via a backwards rule: it tested "the CI extends beyond
+the margin" instead of "the CI lies entirely outside the margin." The
+standard TOST trichotomy is: equivalent iff the 90% CI ⊂ (−δ, +δ);
+a difference ≥ δ is established iff the CI lies entirely outside the
+margin; everything else — CI overlapping the margin boundary — is
+inconclusive at this n. The measured result (mean +0.0042 inside the
+margin; 90% CI [−0.0124, +0.0209] straddling both boundaries) is
+therefore outcome 2, **inconclusive**, by the corrected rule. The
+measured numbers are unchanged; only the classification of the shape
+is corrected. The secondary tests are read the same way: neither basis
+is equivalent to zero (each 90% CI excludes zero on the negative
+side) — both show the same nonzero negative signature, which is the
+already-recorded representational effect, not a new finding.
+
+**Machinery note:** this is an analysis-only stage over committed
+artifacts (no seeds, no GPU, no intervention machinery) — the
+machinery gate is the artifact checksums themselves; a checksum
+failure voids the analysis.
+
+**Outcome (recorded after running, 2026-09-12).** Checksum gate: PASS
+(28/28). Full artifact:
+`runs/equivalence_test/equivalence_report.json` (88 checkpoint-matched
+pairs — the stage-8 committed `head_to_head_vs_sae` pairing).
+
+| Test | mean | 90% CI | TOST p (δ=0.01) | Verdict |
+|---|---:|---|---:|---|
+| **Primary: PCA−SAE E_T difference** | +0.0042 | [−0.0124, +0.0209] | 0.283 | **R7b — inconclusive** |
+| Secondary: SAE vs zero | −0.0173 | [−0.0300, −0.0047] | 0.831 | not equivalent to zero |
+| Secondary: PCA vs zero | −0.0131 | [−0.0244, −0.0018] | 0.676 | not equivalent to zero |
+
+**Recorded conclusion (R7b, by the corrected pre-verdict rule).** The
+paired SAE−PCA causal-strength difference (mean +0.0042, well inside
+the preregistered δ=0.01 margin) is **neither established as
+equivalent nor as different** at this n: the 90% CI straddles the
+margin boundary and the test is underpowered for δ (the design-honest
+note: closing ±0.01 at this variance would need roughly 4× the
+checkpoints — consistent with the stage-13 power analysis). The
+scientific claim is therefore recorded at its honest strength: *the
+bases are statistically indistinguishable (0/8 survivors each,
+paired-difference CI spanning zero, point estimate inside the margin),
+and formal equivalence at δ=0.01 is not established at this sample
+size.* The secondary results sharpen the picture: **neither basis is
+equivalent to zero** — each shows the same nonzero negative signature
+(both 90% CIs exclude zero), which is the already-recorded
+representational effect (matched-deletion controls: ablating any
+active direction moves the loss less than ablating another — the
+stage-5/8 negative-side CIs). No prior claim changes strength; the
+TOST record exists so the paper cannot be accused of conflating
+"failure to detect" with "equivalence demonstrated" — and it honestly
+reports that we currently have neither.
+
+| Arm / basis | R6a | R6b-ctrl-flat | R6b-ctrl-matched | R6c | same-sign(0 vs 2) |
+|---|---:|---:|---:|---:|---:|
+| Fourier SAE (PR 4.0–5.6) | 0/24 | 6 | 18 | 0 | 1.00 |
+| Fourier PCA | 0/24 | 6 | 18 | 0 | 1.00 |
+| Tanh control SAE (PR ~1.4) | 0/24 | 2 | 22 | 0 | 1.00 |
+| Tanh control PCA | 2/24 | 11 | 11 | 0 | 0.75 |
+| FNO SAE (PR 6.8) | 0/8 | 3 | 5 | 0 | 1.00 |
+
+**Recorded conclusion (the pre-written reading 2 fires, with one
+registered scope annotation).** No feature in any high-rank regime
+(Fourier SAE/PCA, FNO) shows a signed causal channel: R6a = 0
+everywhere the reconstruction advantage lives; same-sign fraction
+1.00 — the intervention response is dose-symmetric, the reconstructive
+signature, and the control curves match it (ctrl-matched dominates
+where the spectra are non-degenerate). The two-point criteria's null
+(R2b, H16b) is now confirmed at curve level. **Scope annotation
+(recorded as-measured, not corrected):** the two R6a verdicts in
+tanh-PCA are real *shape* classifications on inert-scale components —
+max |Δ| ≈ 1e-6 against the arm's O(1) leading effects (six orders
+below), a linear small-signal response Δ ∝ (α−1) that any nonzero
+component exhibits in the Taylor regime; the R6a *class* is
+shape-only by registration and does not scale-test magnitude. The
+dose-response thus refines rather than overturns the two-point null:
+the signed shape is achievable at negligible magnitude, and nowhere —
+at any magnitude — does a signed channel co-occur with the
+high-rank/Superposition regime. **Convergent observation:** the FNO's
+ctrl-flat (quadratic-channel) features are 173 and 225 — the same two
+features that survived the stage-14 Bonferroni battery (2/8) — plus
+feature 40; the two criteria agree on which operator features carry
+the strongest target-vs-control separation, and the curves show their
+channel is quadratic (dose-symmetric), not signed, consistent with
+their H16b direction-reversal failure. The activity-rank confound
+check is null (Spearman(rank, margin) = −0.01, p = 0.96 — the
+ctrl-flat pattern is not an energy-size artifact).

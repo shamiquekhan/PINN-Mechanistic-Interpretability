@@ -189,7 +189,51 @@ as a single table. An honest recorded nuance: PCA/ICA survivors
 basis-specificity; recorded as-is, consistent with the stage-8/9
 basis-independence result under matched controls.
 
-## 8. Registered follow-up (v4.1 — R1–R5, pre-written, not yet run)
+## 7.6 The match matrix (the forensic protocol table)
+
+The head-to-head claim requires that every methodological dial is either
+IDENTICAL between PhysSAE and R1, or explicitly controlled. The full
+matrix (recorded once, binding for the paper's comparison section):
+
+| Dial | PhysSAE v1 | R1 (this repo) | Status |
+|---|---|---|---|
+| Checkpoints | 5×128 tanh, Adam 8000 + L-BFGS 300, w_BC=w_IC=100, 3 seeds | **identical spec** (retrained to it; Burgers 0.010–0.016, Allen-Cahn 0.257–0.285) | matched |
+| Hidden layer | penultimate | penultimate (gate 1: exactness verified) | matched |
+| Normalization | z-scored | z-scored | matched |
+| SAE architecture | ReLU+L1, D=512 (4×), unit-norm decoder | **identical spec** (+ their λ=0.02), 3 SAE seeds | matched |
+| Evaluation split | held-out 20% grid | held-out 20% grid | matched |
+| Concept fields | independent reference solutions, never the PINN | same sources (stage-2/10 reference solvers) | matched |
+| Alignment statistic | max top-1 \|r\| per PDE + permutation null | identical + permutation null (n=500) | matched |
+| Spatial metric | ESF80 | ESF80 (gate 3: sanity verified) | matched |
+| Intervention | Δu = α·z_k·(W_out d_k), α=1 | identical (their Eq. 18–20) | matched |
+| Random control | matched-activation random atoms (within dictionary) | **both**: their within-dictionary control AND our between-basis random-direction control | **extended** |
+| Bases compared | SAE vs PCA vs ICA | SAE (×3 seeds) vs PCA vs ICA vs random directions | extended |
+| Causal success criterion | ESF80 advantage > 0 (their §2.8 vs §4.4 conventions) | preregistered sign convention (positive = top more concentrated) + our E_T matched-deletion battery with MC correction | **pre-registered divergence** |
+| Candidate count | their per-PDE panel | 8 candidates per battery | near-matched (ours smaller, corrected for) |
+| Statistical correction | none reported beyond permutation | Bonferroni + BH-FDR across 8 candidates | extended (ours stricter) |
+| Success bar | alignment Z + ESF80 advantage | same, plus L3 specificity on the SAME deltas | extended |
+
+**Reading.** Every dial PhysSAE turns is matched or extended; the single
+pre-registered divergence is the *causal success criterion itself* — which
+is the scientific point: their evidence family and ours are computed on
+the same objects (identical checkpoints, identical interventions), scored
+by different criteria, and the reconciliation table
+(`runs/r1_physSAE/reconciliation_table.json`) shows the criteria
+dissociate. A reviewer cannot dismiss the difference as methodological
+mismatch: the methodology is matched by construction; only the bar
+differs, deliberately, and both bars are reported side by side.
+
+**Known residual mismatches (recorded, not hidden):** (i) PDE regimes —
+our Burgers converged (0.010–0.016) where theirs plateaued (0.207); our
+Allen-Cahn is ε=0.05 vs their ε=10⁻⁴ catastrophic regime; (ii) their
+L-BFGS polish ran 300 steps vs our retrain's identical schedule but
+their published checkpoints are not bit-reproducible from their preprint
+alone — we retrained to the spec rather than perturbing their artifacts;
+(iii) the H18 within-task contrast (tanh vs Fourier on 1D Poisson) has
+no PhysSAE analogue — it is our addition, and its concept panel is the
+manufactured solution profile (noted in the artifact).
+
+## 8. Registered follow-up (v4.1 — R1–R5; registered 2026-09-11 pre-run, outcomes recorded below and in docs/preregistration.md §R1–R5)
 
 All outcomes below are publishable; none is preferred. Registered in
 `docs/preregistration.md` §R1–R5 at the commit that first carries this

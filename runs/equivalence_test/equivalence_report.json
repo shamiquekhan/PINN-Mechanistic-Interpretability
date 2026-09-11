@@ -1,0 +1,64 @@
+{
+  "stage": "r7_equivalence_test",
+  "preregistration": "docs/preregistration.md \u00a7R7 (registered 2026-09-12 before run)",
+  "delta": 0.01,
+  "alpha": 0.05,
+  "delta_calibration": "planted positive control's demonstrated minimum detectable effect = +0.026; delta = 0.01 is ~2.6x smaller (conservative)",
+  "n_pairs": 88,
+  "pairing": "checkpoint-matched (the stage-8 committed head_to_head_vs_sae.pairs)",
+  "primary_pca_minus_sae": {
+    "n": 88,
+    "mean": 0.004225110127167268,
+    "se": 0.010023376143763316,
+    "ci90": [
+      -0.01243932754618145,
+      0.020889547800515985
+    ],
+    "ci95": [
+      -0.01569743530565902,
+      0.024147655559993556
+    ],
+    "p_tost": 0.2830032882473448,
+    "equivalent": false,
+    "ci90_within_margin": false,
+    "underpowered_for_margin": true
+  },
+  "secondary_vs_zero": {
+    "sae": {
+      "n": 88,
+      "mean": -0.01733323559165001,
+      "se": 0.007619096930213963,
+      "ci90": [
+        -0.03000042118856631,
+        -0.004666049994733707
+      ],
+      "ci95": [
+        -0.032477015748373146,
+        -0.002189455434926874
+      ],
+      "p_tost": 0.8307621835341141,
+      "equivalent": false,
+      "ci90_within_margin": false,
+      "underpowered_for_margin": true
+    },
+    "pca": {
+      "n": 88,
+      "mean": -0.01310812546448274,
+      "se": 0.006791183196970465,
+      "ci90": [
+        -0.024398856999547813,
+        -0.0018173939294176683
+      ],
+      "ci95": [
+        -0.026606337428569778,
+        0.000390086499604295
+      ],
+      "p_tost": 0.6758349946379154,
+      "equivalent": false,
+      "ci90_within_margin": false,
+      "underpowered_for_margin": true
+    }
+  },
+  "outcome": "R7b",
+  "outcome_note": "Inconclusive: the 90% CI overlaps the equivalence margin (point estimate inside, CI straddling the boundary) \u2014 the data cannot distinguish equivalence from a small difference at this n; recorded with the power note."
+}

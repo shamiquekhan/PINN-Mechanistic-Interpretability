@@ -173,6 +173,19 @@ The identical 3-control causal protocol (unrelated-component, random-coefficient
 
 **Interpretation.** The guide's Phase-10 hypothesis ("PCA components are the causal features; SAEs merely fragmented them") is **falsified**. Under matched-deletion controls both bases sit at 0/8 survivors with all-positive target deltas, and the paired PCA−SAE $E_T$ difference now **spans zero** (+0.0042 [−0.0139, +0.0232]) — the two bases are statistically indistinguishable under honest controls. **No feature basis — linear or sparse — provides direction-specific causal interpretability for these PINN activations.** The positive control still passes, so this is attributable to the activations, not the machinery. Preregistered as H8a vs H8b in `docs/preregistration.md`; H8a confirmed.
 
+> **R7 equivalence record (v4.2, analysis-only):** a preregistered TOST
+> equivalence test (§R7, δ=0.01 in $E_T$ units, 88 checkpoint-matched
+> pairs) on this head-to-head records **R7b — inconclusive**: the
+> point difference (+0.0042) lies inside the margin but the 90% CI
+> [−0.0124, +0.0209] straddles the boundary, so formal equivalence is
+> *not established* at this n (underpowered for δ; ~4× the checkpoints
+> would close it — consistent with the stage-13 power analysis). The
+> claim is recorded at its honest strength: statistically
+> indistinguishable, formal equivalence undemonstrated — neither
+> conflating "no difference detected" with "equivalence shown," nor
+> over-reading a sub-margin point estimate (`runs/equivalence_test/
+> equivalence_report.json`).
+
 ### 5A.2 Causal abstraction — no candidate alignment satisfies the interchange criterion (Stage 9)
 
 Region-level **partial interchange interventions** (Geiger et al. 2021/2022 formalism) test whether an aligned subspace causally abstracts the high-level model $H_{\text{boundary}}$: *{region ∈ interior, boundary-proximal} → PDE loss*. Swapping the aligned-subspace coefficients of an interior batch with a boundary-proximal batch's region-mean should move the source loss toward the donor loss if the alignment carries region identity. Movement fraction = $(\log L_{\text{swap}} - \log L_{\text{src}})/(\log L_{\text{don}} - \log L_{\text{src}})$; the gate is *beating the random orthonormal basis on every run* (`experiments/causal_abstraction.py`, artifact `runs/causal_abstraction_results.json`):

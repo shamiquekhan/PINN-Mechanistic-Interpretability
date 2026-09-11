@@ -161,6 +161,11 @@ CLAIMS = [
     ("RESULTS.md", "runs/r6_dose_response/r6_report.json",
      lambda d: d["gate"]["pipeline_pass"],
      lambda v: r"[Mm]achinery gate.*?\bPASS\b" if v else r"machinery gate FAILS"),
+    # R7 (equivalence): the outcome letter must match the artifact.
+    ("RESULTS.md", "runs/equivalence_test/equivalence_report.json",
+     lambda d: d["outcome"],
+     lambda v: rf"\*\*R7b — inconclusive\*\*" if v == "R7b"
+     else rf"\*\*R7{v[-1].lower()}\b"),
 ]
 
 
