@@ -7,14 +7,8 @@
   "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v4.3.0: adds the R8 hierarchical-analysis report, the R9 reaction-diffusion boundary report, and the R10 geometry-predictors report.",
   "files": [
     {
-      "path": "runs/causal_intervention_results.json",
-      "bytes": 232031,
-      "sha256": "be329aadfb93ed73569af5329351f56ea9ed7ded58ac76c059c671f02fd577d6"
-    },
-    {
-      "path": "runs/pca_causal_results.json",
-      "bytes": 266562,
-      "sha256": "98229e029062303731f0d1ab3e2b811ef42e6cad43db26693cb0b45c66b041e5"
+      "path": "runs/architecture_boundary/architecture_boundary_report.json",
+      "description": ""
     },
     {
       "path": "runs/causal_abstraction_results.json",
@@ -22,14 +16,9 @@
       "sha256": "c84e1bed6091f73a0c22d232ce5f94960125ad35856a183e5fd767b4151e080c"
     },
     {
-      "path": "runs/monitor_report.json",
-      "bytes": 1069,
-      "sha256": "470ccd7b8aebfd23598841cc0a60b0c21f0b39bb2dc56b1f706462e828c6ba5a"
-    },
-    {
-      "path": "runs/positive_control.json",
-      "bytes": 1006,
-      "sha256": "ba2b25a89a949e0d779dfacf846a589cc824b35cee6fd9b0620b75d2ad753905"
+      "path": "runs/causal_intervention_results.json",
+      "bytes": 232031,
+      "sha256": "be329aadfb93ed73569af5329351f56ea9ed7ded58ac76c059c671f02fd577d6"
     },
     {
       "path": "runs/controller_demo/controller_comparison.json",
@@ -37,44 +26,8 @@
       "sha256": "e45d5a18f8ad328678a6185a5e76fe4a246bc70ed71fe906cf0f9277fb343e74"
     },
     {
-      "path": "runs/operator_boundary/operator_boundary_report.json",
-      "bytes": 1410,
-      "sha256": "5454bc215de5fb8015972d54d7e888e7ef4e44ed8788bafd248aef14ea1ffc0e"
-    },
-    {
-      "path": "runs/operator_causal/operator_causal_report.json",
-      "bytes": 132272,
-      "sha256": "84c74772a8b7cb624646b0e4a2c780540cf67e932a874d0ebd2cf743a0ceb479"
-    },
-    {
-      "path": "runs/ntk_bridge/ntk_bridge_report.json",
-      "bytes": 8492,
-      "sha256": "85535c26f721ef151a7633aa49ae3b825a26075807f9a5cbb93f4cdd00b51ca1"
-    },
-    {
-      "path": "runs/sota_baselines/sota_baseline_report.json",
-      "bytes": 21924,
-      "sha256": "b591ff2cf786a1b529f38e310ae641a6ee8bef48e5ebe916c2587a8b85f3f172"
-    },
-    {
-      "path": "runs/statistical_hardening/analysis_report.json",
-      "bytes": 7162,
-      "sha256": "2b9fd36697e29f8a218edd5325614adbe7346d96f1d3d22d8dd8472a7c256a40"
-    },
-    {
-      "path": "runs/effective_rank_analysis/effective_rank_report.json",
-      "bytes": 12751,
-      "sha256": "536af9fc58f983d745c872866707ed354d1e82d51b53db342e6b9e4eda616f8c"
-    },
-    {
-      "path": "runs/failure_atlas/seed_matrix_stats.json",
-      "bytes": 1895,
-      "sha256": "4fc4f5dc9e7d6dfde81614842e19ec183cbcd6e942c8db61cbc6ae114493baa7"
-    },
-    {
-      "path": "runs/width_scaling/width_scaling_report.json",
-      "bytes": 2022,
-      "sha256": "01d4de8021d471d2e0417d5d9f902dd44c2186ef4632fe740dbfa73a77b0427c"
+      "path": "runs/controller_failure_battery/controller_failure_battery_report.json",
+      "description": ""
     },
     {
       "path": "runs/dimensional_boundary_2d/dimensional_boundary_report.json",
@@ -87,24 +40,9 @@
       "sha256": "55c5dbad4026f36c4a3f1bebde553703f4331eb4ddefc2936a91c8d278cb233e"
     },
     {
-      "path": "runs/sae_models_v2/sae_stage3_summary.json",
-      "bytes": 5283,
-      "sha256": "7b9246a9232e1fb6ceb3802efa35f5fcf458e48520c581192788cd6569a85bfe"
-    },
-    {
-      "path": "runs/feature_dictionary/random_baseline_report.json",
-      "bytes": 1045,
-      "sha256": "139c4b6ee1460f2d9b099e2fb0e1cdc9ec553d55e3da6057141cd018a8abdae7"
-    },
-    {
-      "path": "runs/r6_dose_response/r6_report.json",
-      "bytes": 219822,
-      "sha256": "5a1552d52553c4a463259112391c12e530d01c48e3586b77c368324d9ec4d95c"
-    },
-    {
-      "path": "runs/r1_physSAE/reconciliation_table.json",
-      "bytes": 6272,
-      "sha256": "65714222a6052b27a60388c5552a26d4fbadf0c27a82061372d1e045435f0689"
+      "path": "runs/effective_rank_analysis/effective_rank_report.json",
+      "bytes": 12751,
+      "sha256": "536af9fc58f983d745c872866707ed354d1e82d51b53db342e6b9e4eda616f8c"
     },
     {
       "path": "runs/equivalence_test/equivalence_report.json",
@@ -112,14 +50,14 @@
       "sha256": "3881637312ae571d49b2691643679c22f40ab1430921a5fed80999290cd8dcde"
     },
     {
-      "path": "runs/hierarchical_analysis/hierarchical_report.json",
-      "bytes": 1848,
-      "sha256": "cd253f76d8641ba7569d31cf1cc5ba061a58db8fdd201916139a457f8586d3f3"
+      "path": "runs/failure_atlas/seed_matrix_stats.json",
+      "bytes": 1895,
+      "sha256": "4fc4f5dc9e7d6dfde81614842e19ec183cbcd6e942c8db61cbc6ae114493baa7"
     },
     {
-      "path": "runs/r9_rd_boundary/r9_report.json",
-      "bytes": 5695,
-      "sha256": "cfcc5edc033b19f68fd72e99868b7c783da95684653c06d6fffd3eacbf4839c1"
+      "path": "runs/feature_dictionary/random_baseline_report.json",
+      "bytes": 1045,
+      "sha256": "139c4b6ee1460f2d9b099e2fb0e1cdc9ec553d55e3da6057141cd018a8abdae7"
     },
     {
       "path": "runs/geometry_predictors/geometry_predictors_report.json",
@@ -127,9 +65,103 @@
       "sha256": "c205d8b88181727e33d33830f18ea7a3e5e81e80abde3851aa4a671e44fddc16"
     },
     {
+      "path": "runs/hierarchical_analysis/hierarchical_report.json",
+      "bytes": 1848,
+      "sha256": "cd253f76d8641ba7569d31cf1cc5ba061a58db8fdd201916139a457f8586d3f3"
+    },
+    {
+      "path": "runs/monitor_audit/monitor_audit_report.json",
+      "description": ""
+    },
+    {
+      "path": "runs/monitor_report.json",
+      "bytes": 1069,
+      "sha256": "470ccd7b8aebfd23598841cc0a60b0c21f0b39bb2dc56b1f706462e828c6ba5a"
+    },
+    {
+      "path": "runs/ntk_bridge/ntk_bridge_report.json",
+      "bytes": 8492,
+      "sha256": "85535c26f721ef151a7633aa49ae3b825a26075807f9a5cbb93f4cdd00b51ca1"
+    },
+    {
+      "path": "runs/operator_boundary/operator_boundary_report.json",
+      "bytes": 1410,
+      "sha256": "5454bc215de5fb8015972d54d7e888e7ef4e44ed8788bafd248aef14ea1ffc0e"
+    },
+    {
+      "path": "runs/operator_causal/operator_causal_report.json",
+      "bytes": 132272,
+      "sha256": "84c74772a8b7cb624646b0e4a2c780540cf67e932a874d0ebd2cf743a0ceb479"
+    },
+    {
+      "path": "runs/pca_causal_results.json",
+      "bytes": 266562,
+      "sha256": "98229e029062303731f0d1ab3e2b811ef42e6cad43db26693cb0b45c66b041e5"
+    },
+    {
+      "path": "runs/positive_control.json",
+      "bytes": 1006,
+      "sha256": "ba2b25a89a949e0d779dfacf846a589cc824b35cee6fd9b0620b75d2ad753905"
+    },
+    {
+      "path": "runs/r1_physSAE/r1_report.json",
+      "description": ""
+    },
+    {
+      "path": "runs/r1_physSAE/reconciliation_table.json",
+      "bytes": 6272,
+      "sha256": "65714222a6052b27a60388c5552a26d4fbadf0c27a82061372d1e045435f0689"
+    },
+    {
+      "path": "runs/r2_fourier_causal/r2_report.json",
+      "description": ""
+    },
+    {
+      "path": "runs/r3_frequency_sweep/r3_report.json",
+      "description": ""
+    },
+    {
+      "path": "runs/r4_sae_seed_robustness/r4_report.json",
+      "description": ""
+    },
+    {
+      "path": "runs/r5_burgers_boundary/r5_report.json",
+      "description": ""
+    },
+    {
+      "path": "runs/r6_dose_response/r6_report.json",
+      "bytes": 219822,
+      "sha256": "5a1552d52553c4a463259112391c12e530d01c48e3586b77c368324d9ec4d95c"
+    },
+    {
       "path": "runs/r7plus_equivalence/r7plus_report.json",
       "bytes": 2986,
       "sha256": "1f369ac60085c9b7c44351b46552bb1b72be35227c89045a901434361f0158b8"
+    },
+    {
+      "path": "runs/r9_rd_boundary/r9_report.json",
+      "bytes": 5695,
+      "sha256": "cfcc5edc033b19f68fd72e99868b7c783da95684653c06d6fffd3eacbf4839c1"
+    },
+    {
+      "path": "runs/sae_models_v2/sae_stage3_summary.json",
+      "bytes": 5283,
+      "sha256": "7b9246a9232e1fb6ceb3802efa35f5fcf458e48520c581192788cd6569a85bfe"
+    },
+    {
+      "path": "runs/sota_baselines/sota_baseline_report.json",
+      "bytes": 21924,
+      "sha256": "b591ff2cf786a1b529f38e310ae641a6ee8bef48e5ebe916c2587a8b85f3f172"
+    },
+    {
+      "path": "runs/statistical_hardening/analysis_report.json",
+      "bytes": 7162,
+      "sha256": "2b9fd36697e29f8a218edd5325614adbe7346d96f1d3d22d8dd8472a7c256a40"
+    },
+    {
+      "path": "runs/width_scaling/width_scaling_report.json",
+      "bytes": 2022,
+      "sha256": "01d4de8021d471d2e0417d5d9f902dd44c2186ef4632fe740dbfa73a77b0427c"
     }
   ],
   "note": "All datasets are GENERATED in-repo by the stage scripts; no external data. v3.4.1: checksums refreshed after the full clean-clone reproduction pass (scripts/reproduce_main_results.sh) \u2014 all verdicts reproduced exactly."

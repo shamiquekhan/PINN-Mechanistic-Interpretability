@@ -47,7 +47,7 @@ def run_experiment(config_path: str, seed: int, steps: int, output_dir: str, ext
 
     env = os.environ.copy()
     env['PYTHONPATH'] = '.'
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd='/home/shamique/projects/Pinn research/pinn_mechanistic_starter', env=env)
+    result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(Path(__file__).resolve().parent.parent), env=env)
     return result.returncode == 0, result.stdout, result.stderr
 
 
@@ -180,7 +180,7 @@ def main():
                 subprocess.run(
                     [sys.executable, '-m', 'analysis.evaluate', '--run-dir', str(run_dir)],
                     capture_output=True, text=True,
-                    cwd='/home/shamique/projects/Pinn research/pinn_mechanistic_starter',
+                    cwd=str(Path(__file__).resolve().parent.parent),
                     env=eval_env
                 )
 

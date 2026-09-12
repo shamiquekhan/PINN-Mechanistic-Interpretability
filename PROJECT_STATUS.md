@@ -45,7 +45,7 @@ Each item: what ran → where the output lives.
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
 | Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
 | Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |
-| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v4.2.0) | 28/28 OK |
+| Artifact integrity | `sha256sum -c data/checksums.sha256` | `data/manifest.json` (v4.3.0) | 33/33 OK |
 | Results-doc grounding | `python scripts/check_results_grounded.py` | — | OK (exit 0) |
 
 ## Completed since last verification (stage 14 — preregistered, run, recorded)

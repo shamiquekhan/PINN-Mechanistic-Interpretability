@@ -183,8 +183,7 @@ The identical 3-control causal protocol (unrelated-component, random-coefficient
 > claim is recorded at its honest strength: statistically
 > indistinguishable, formal equivalence undemonstrated — neither
 > conflating "no difference detected" with "equivalence shown," nor
-> over-reading a sub-margin point estimate (`runs/equivalence_test/
-> equivalence_report.json`).
+> over-reading a sub-margin point estimate (`runs/equivalence_test/equivalence_report.json`).
 
 ### 5A.2 Causal abstraction — no candidate alignment satisfies the interchange criterion (Stage 9)
 
