@@ -1,0 +1,85 @@
+{
+  "stage": "r7plus_equivalence_replication",
+  "preregistration": "docs/preregistration.md \u00a7R7+ (registered 2026-09-12 after R8's power calculation)",
+  "new_seeds": [
+    11,
+    22,
+    33,
+    44,
+    55,
+    66,
+    88,
+    99,
+    111,
+    222,
+    333,
+    444,
+    5555,
+    6666,
+    7777,
+    8888,
+    9999,
+    1234,
+    2345,
+    3456
+  ],
+  "n_checkpoints_combined": 31,
+  "power_context": {
+    "full_power_target_80pct": 163,
+    "fraction_of_target_reached": 0.1901840490797546,
+    "achieved_power_at_delta": 0.37780549613557346
+  },
+  "per_checkpoint_mean_diff": {
+    "boundary_starvation_seed11": 0.02780788391828537,
+    "boundary_starvation_seed111": -0.021465107798576355,
+    "boundary_starvation_seed1234": 0.028610989451408386,
+    "boundary_starvation_seed22": 0.00022210925817489624,
+    "boundary_starvation_seed222": 0.003360927104949951,
+    "boundary_starvation_seed2345": 0.005866609513759613,
+    "boundary_starvation_seed33": 0.03851553052663803,
+    "boundary_starvation_seed333": -0.026986807584762573,
+    "boundary_starvation_seed3456": -0.016819633543491364,
+    "boundary_starvation_seed44": 0.004620663821697235,
+    "boundary_starvation_seed444": 0.0006878823041915894,
+    "boundary_starvation_seed55": -0.037178896367549896,
+    "boundary_starvation_seed5555": -0.13305586576461792,
+    "boundary_starvation_seed66": -0.007937900722026825,
+    "boundary_starvation_seed6666": -0.046699754893779755,
+    "boundary_starvation_seed7777": -0.014436155557632446,
+    "boundary_starvation_seed88": -0.010185480117797852,
+    "boundary_starvation_seed8888": -0.016164958477020264,
+    "boundary_starvation_seed99": 0.007008440792560577,
+    "boundary_starvation_seed9999": 0.016547799110412598,
+    "boundary_starvation_seed123": 0.007255837321281433,
+    "boundary_starvation_seed2024": 0.03918011486530304,
+    "boundary_starvation_seed2025": -0.04210460186004639,
+    "boundary_starvation_seed2026": 0.04001222550868988,
+    "boundary_starvation_seed42": 0.03343600034713745,
+    "boundary_starvation_seed555": 0.012165013700723648,
+    "boundary_starvation_seed7": 0.005350738763809204,
+    "boundary_starvation_seed777": 0.07770708948373795,
+    "boundary_starvation_seed888": 0.004877306520938873,
+    "boundary_starvation_seed999": -0.013127513229846954,
+    "failure_boundary_starvation": -0.11827600002288818
+  },
+  "combined": {
+    "grand_mean": -0.004877597213752808,
+    "cluster_sd": 0.04186627195617233,
+    "cluster_ci90": [
+      -0.01743156197330644,
+      0.006184922759571384
+    ],
+    "cluster_ci95": [
+      -0.020505886618047954,
+      0.008246700937348984
+    ],
+    "tost_p": 0.2504772524017087,
+    "equivalent": false
+  },
+  "new_battery_rows": {
+    "n_sae_rows": 160,
+    "n_pca_rows": 160
+  },
+  "outcome": "R7+b",
+  "outcome_note": "Inconclusive at the combined n: the cluster 90% CI still overlaps the margin \u2014 recorded as the honest terminal state at this resource level, with achieved power stated."
+}

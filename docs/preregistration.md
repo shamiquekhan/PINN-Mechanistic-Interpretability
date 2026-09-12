@@ -1208,6 +1208,315 @@ TOST record exists so the paper cannot be accused of conflating
 "failure to detect" with "equivalence demonstrated" — and it honestly
 reports that we currently have neither.
 
+## R8 — Hierarchical statistical analysis of the causal nulls (registered 2026-09-12, pre-run)
+
+*Registered after R7, before any implementation or run. Motivation:
+the review's pseudoreplication concern — the stage-5/8 batteries
+treat 88 (feature × checkpoint) evaluations as if independent, but
+they nest: 8 candidate features within each of 11 trained
+boundary-starvation models, each model one seed. If evaluations
+within a checkpoint correlate, the effective sample size is smaller
+than 88 and every naive CI is too narrow. R8 measures the nesting,
+reports the hierarchy-explicit uncertainty, and tests whether the
+negative-side E_T conclusion survives it.*
+
+**Design (registered).**
+
+- **Data:** the committed stage-5 and stage-8 evaluation rows (88
+  each) — analysis only, no new training. Primary endpoint: the SAE
+  per-evaluation causal strength (E_T) and the paired PCA−SAE
+  difference, both already committed.
+- **Hierarchy (explicit):** L1 trained PINN (11 models, the primary
+  independent unit) → L2 candidate feature within model (8) → L3
+  intervention batch (fixed collocation draws within evaluation).
+  The registered analyses treat the TRAINED MODEL as the primary
+  unit.
+- **Registered statistics:**
+  1. One-way random-effects decomposition of the paired differences:
+     between-checkpoint vs within-checkpoint variance; the intraclass
+     correlation (ICC) and the design effect
+     DEFF = 1 + (k−1)·ICC with k = 8 features per checkpoint; the
+     effective sample size n_eff = 88/DEFF.
+  2. Cluster bootstrap: resample the 11 CHECKPOINTS with replacement
+     (5,000 draws), recompute the grand mean and the 90/95% CIs for
+     (a) the paired PCA−SAE difference and (b) each basis's mean E_T;
+     compare against the naive (row-level) CIs.
+  3. Mixed-effects model (statsmodels MixedLM): difference ~ 1 + (1 |
+     checkpoint); report the fixed-intercept estimate, its SE, and
+     the 90% CI; the mixed-model SE vs the naive SE is the
+     recorded inflation factor.
+  4. **Power preregistration for R7+ (the A1 deliverable):** from the
+     cluster-level SD s_c of the per-checkpoint mean differences,
+     the TOST sample size at δ = 0.01, α = 0.05, power 0.80 and 0.90:
+     n_ckpt = (z_{1−α} + z_{power})² · s_c² / δ², reported with the
+     assumption that new checkpoints are drawn from the same
+     regime as the current 11 (the seed-level exchangeability
+     assumption — recorded as the binding scope).
+
+**Pre-written outcomes (all publishable, none preferred).**
+
+1. **The null survives the hierarchy** (cluster CI remains on the same
+   side / straddles zero the same way as the naive CI for the
+   difference, and the negative-side per-basis CIs remain
+   negative-side): the recorded conclusions upgrade to
+   hierarchy-explicit wording; the naive CIs are annotated with the
+   inflation factor.
+2. **The hierarchy changes the reading** (a cluster CI crosses into
+   the opposite reading, e.g. the paired difference's cluster CI
+   moves fully outside ±δ, or a per-basis CI crosses zero): the
+   affected claim is reworded at its new strength everywhere — no
+   silent absorption.
+3. **The power estimate is infeasible at current resources** (n_ckpt
+   for 80% power exceeds what the registered R7+ replication can
+   train): R7+ is scoped to a preregistered intermediate n with the
+   achieved power computed and reported honestly (a power-upgraded
+   but still incomplete equivalence test — better than nothing, never
+   read as equivalence).
+
+## R9 — Cross-PDE replication of the within-PINN boundary: reaction–diffusion (registered 2026-09-12, pre-run)
+
+*Registered after R8's power analysis, before any implementation or
+run. Motivation: the review's Track B — one qualitatively different
+PDE family beyond Poisson (the R3 frequency sweep) and Burgers (R5,
+time-dependent). The chosen family is steady 1D reaction–diffusion
+(RD1D, −ε u'' + μ u = f with ε = 0.01, μ = 1 — the stiff
+spatial-vs-reaction-scale regime), because it adds a different
+spatial/physical structure than Burgers' temporal/nonlinear one while
+reusing the established steady-1D pipeline end-to-end.*
+
+**Design (registered).** The exact R5 protocol transplanted to RD1D:
+tanh vs Fourier (n_freq=32) arms, width 64 / depth 3, 3 seeds each,
+2,000 steps (the H18/R3/R5 control regime); per run: PR, ρ, PCA-95,
+tangent rank, rel L2 (manufactured-solution reference), and the
+TopK-vs-k-matched-PCA(k=8) reconstruction comparison. The R2-style
+causal battery is registered to run ONLY where PR crosses the
+registered move-bar (3.0) — as in R3.
+
+**Machinery gate:** the planted-feature positive control through the
+RD1D hook path must pass before any verdict (the R2 gate logic).
+
+**Pre-run machinery fix (recorded 2026-09-12, before any R9 verdict —
+the fresh-campaign §3 precedent, same bug class).** The first smoke
+execution produced rel L2 ~10^10: the driver's initial config set
+`source: 1.0, forcing: 0.0`, which under the config semantics maps
+to μ=1, f=0 with homogeneous Dirichlet BCs — exact ≡ 0, the
+degenerate reaction-diffusion baseline the fresh campaign already
+fixed once (its §3: the trivial-zero solution). The corrected
+non-degenerate spec: `reaction_rate: 1.0, forcing: 1.0` (u_p = f/μ =
+1 with stiff boundary layers, ε = 0.01). Fixed before any full run;
+the smoke was re-executed and the exact solution verified non-zero
+(max |u| ≈ 1) before the verdict battery ran.
+
+**Outcome (recorded after running, 2026-09-12).** Full artifact:
+`runs/r9_rd_boundary/r9_report.json` (6 runs, 3 seeds × 2 arms,
+2,000 steps).
+
+| Arm | PR (per seed) | ρ | PCA-95 | tangent | PCA/SAE | rel L2 |
+|---|---|---|---:|---:|---:|---:|
+| Fourier (n_freq=32) | 6.01 / 4.26 / 5.04 | 0.067–0.094 | 8 | 1 | 32.8 / 28.5 / 32.8 | ≤0.001 |
+| tanh twin | 2.03 / 1.80 / 1.71 | 0.027–0.032 | 2 | 1 | 0.9 / 0.7 / 0.5 | 0.001–0.002 |
+
+**Recorded verdict: R9a — the boundary replicates on the steady-stiff
+family, completing three-family external validity** (steady-linear
+Poisson: R3/H18; time-dependent-nonlinear Burgers: R5; steady-stiff
+reaction–diffusion: R9). The Fourier arm crosses the registered
+move-bar (mean PR 5.10 > 3.0) above the tanh twin (1.85), and the
+TopK SAE beats k-matched PCA on every seed (28.5–32.8×) while the
+tanh twin stays in the low-rank envelope with PCA ahead (0.5–0.9×).
+Tangent rank 1 in all runs — the covariance/tangent dissociation
+holds on the third family. The tanh-RD arm converges well (rel L2
+~0.001–0.002), so the contrast is architectural, not
+convergence-driven.
+
+## R10 — Geometry predictors of the sparse-compression advantage (registered 2026-09-12, pre-run)
+
+*Registered before any implementation or run. Motivation: the review's
+P1 item — is the participation ratio a genuinely PREDICTIVE variable
+for the SAE-over-PCA advantage, or merely descriptive? The R3 record
+already shows the ratio keeps climbing past PR saturation (at fixed
+ρ ≈ 0.075 the ratio spans 6–137×), so PR alone cannot fully explain
+the advantage; the registered question is which committed geometry
+statistic predicts it best, and how much residual structure remains.*
+
+**Design (registered).** Analysis-only over committed artifacts —
+per-run rows carrying BOTH geometry statistics and the TopK
+k-matched-PCA reconstruction ratio: the H18 runs (tanh depths 2–6,
+Fourier n_freq=32; `runs/architecture_boundary/`), the R3 frequency
+sweep (18 runs), R5 Burgers (6 runs), and R9 reaction–diffusion
+(6 runs). No new training; the machinery gate is the artifact
+checksums.
+
+**Registered predictors (per run):** participation ratio (PR), stable
+rank, PCA-95 component count, and PR/width (ρ). **Registered
+response:** log10 of the PCA/SAE reconstruction ratio (the ratio is
+heavily right-skewed; the log is the scale on which additivity is
+plausible).
+
+**Registered analyses:**
+1. Spearman correlation of each predictor with the response, with
+   bootstrap CIs clustered by EXPERIMENT ARM (the independent
+   design units); cross-predictor comparison recorded as-is.
+2. Univariate OLS on the log-ratio for each predictor, with
+   leave-one-ARM-out cross-validated R² (the arm — not the run — is
+   the held-out unit, since runs within an arm share task/architecture).
+3. The preregistered model-comparison verdict: which single predictor
+   maximizes held-out explanatory power, and the honest statement of
+   the residual (R3's plateau already implies PR cannot be the whole
+   story).
+
+**Pre-written outcomes (all publishable, none preferred).**
+1. **PR wins decisively** (cross-validated R² clearly above the other
+   predictors): the rank diagnostic is validated as predictive, and
+   the paper's ρ-gate language stands.
+2. **A competitor wins or ties** (stable rank / PCA-95 ≥ PR): the
+   geometry gate is better described by that statistic; the paper's
+   "PR > 3" operational bar is reworded to the winning statistic's
+   equivalent bar, recorded with both.
+3. **All predictors weak** (cross-validated R² low for every
+   predictor): the compression advantage is not well explained by ANY
+   single second-moment statistic — recorded as the strongest version
+   of the R3 residual finding (embedding richness beyond covariance
+   structure), motivating the registered future-work item on
+   non-second-moment geometry.
+
+**Outcome (recorded after running, 2026-09-12).** Checksum gate:
+PASS. Full artifact:
+`runs/geometry_predictors/geometry_predictors_report.json` (33 runs
+across 11 arms: H18 Fourier, R3 nf{2,4,8,16,32,64}, R5 both arms, R9
+both arms; the H18 depth arms carry no reconstruction comparison and
+are correctly absent).
+
+| Statistic | Spearman ρ (arm-clustered 95% CI) | OLS R² in-sample | leave-one-arm-out |
+|---|---|---:|---:|
+| Participation ratio | **+0.826 [+0.531, +0.906]** | 0.353 | −2.60 |
+| Stable rank | +0.656 [+0.368, +0.789] | 0.333 | **−0.17** |
+| PCA-95 components | +0.820 [+0.446, +0.889] | 0.347 | −2.64 |
+| PR/width (ρ) | +0.826 [+0.549, +0.903] | 0.353 | −2.60 |
+
+**Recorded verdict: R10c — with the gate-vs-predictor refinement.**
+Every rank-family statistic correlates strongly with the compression
+advantage (ρ 0.66–0.83, all cluster CIs excluding zero) — the
+geometry association is real and not an artifact of any one
+statistic. But NO single second-moment statistic predicts the
+advantage *continuously*: every univariate model fails
+leave-one-arm-out cross-validation (best CV R² = −0.17), because the
+R3 plateau means the ratio spans 6–137× at fixed ρ. The honest
+synthesis, refining the R3 record: **the PR family is a validated
+GATE (the binary low/high-rank boundary predicts WHERE the SAE
+advantage appears) but not a sufficient CONTINUOUS predictor of its
+magnitude — the residual is embedding structure beyond the covariance
+spectrum.** The paper's ρ > 3 operational bar stands as a regime
+gate; any claim that the advantage is a continuous function of PR
+alone is not supported and is not made.
+
+**Pre-written outcomes (all publishable, none preferred).**
+
+1. **R9a — the boundary replicates** (Fourier arm's mean PR ≥ 3.0 and
+   above the tanh arm's, with the SAE beating PCA where PR moves):
+   the within-PINN boundary is now measured on three PDE families
+   spanning steady-linear (Poisson), time-dependent-nonlinear
+   (Burgers), and steady-stiff (RD1D).
+2. **R9b — the boundary does not replicate** (Fourier PR stays below
+   the bar or the reconstruction advantage fails to appear): the
+   scope of the boundary claim is drawn honestly at the two families
+   where it holds, and the geometry-vs-compression link is recorded
+   as task-dependent — itself a scientific finding about which task
+   structures enrich the covariance spectrum.
+3. **R9c — partial** (PR moves but the advantage is inconsistent
+   across seeds): recorded as-is with per-seed numbers.
+
+## R7+ — Power-complete SAE/PCA equivalence replication (registered 2026-09-12, pre-run; n depends on R8's registered power calculation)
+
+*Registered after R8's preregistered power analysis, before any
+training. Design: new boundary-starvation checkpoints at the
+registered n (the next seeds in the established block
+[7, 42, 123, 555, 777, 888, 999, 2024, 2025, 2026] → then
+[11, 22, 33, 44, 55, 66, 88, 99, 111, 222] etc.), trained with the
+stage-2 configuration, evaluated through the identical stage-5 and
+stage-8 batteries (same SAE, same probe protocol, same controls),
+then the R7 TOST re-run on the COMBINED pair set (committed 88 +
+new), with the cluster bootstrap from R8 as the primary interval.*
+
+**Pre-written outcomes.** Equivalence established (TOST p ≤ 0.05 at
+δ=0.01 on the combined set) → the basis-independence claim upgrades
+to formal equivalence. Non-equivalence established (CI entirely
+outside ±δ) → the claim rewords per the R7 outcome-3 rule.
+Inconclusive again → recorded as the honest terminal state at this
+resource level, with the achieved power stated.
+
+**Outcome (recorded after running, 2026-09-12).** Full artifact:
+`runs/r7plus_equivalence/r7plus_report.json` (20 new seeds trained
+through the identical batteries; combined 31 checkpoints, 248 pairs).
+
+| Quantity | Committed 11 (R7) | Combined 31 (R7+) |
+|---|---:|---:|
+| Grand mean paired difference | +0.0042 | **−0.0049** |
+| Cluster SD | 0.0513 | **0.0419** |
+| Cluster 90% CI | [−0.0124, +0.0209] | **[−0.0174, +0.0062]** |
+| TOST p (δ=0.01) | 0.283 | 0.251 |
+| Achieved power | 0.29 | **0.38** |
+| Fraction of the 163-checkpoint target | — | 19% |
+
+**Recorded verdict: R7+b (inconclusive, at higher power).** The
+intermediate-n replication ran as registered: the point estimate
+moved toward and past zero (now −0.0049, the PCA side), the cluster
+SD shrank ~19%, and the CI narrowed — but the 90% CI still overlaps
+the ±δ margin, so formal equivalence at δ=0.01 remains unestablished
+(achieved power 0.38 of the 0.80 target at the 163-checkpoint n).
+The honest terminal state at this resource level: the SAE−PCA
+difference is statistically indistinguishable from zero at every n
+tested, its sign is not stable across replication (committed set:
+SAE side; combined set: PCA side — both sub-margin), and formal
+equivalence would require the full 163-checkpoint battery. No claim
+changes strength; the record prevents both the "equivalence shown"
+over-reading and any sub-margin sign interpretation.
+
+**Resource-scope honesty (preregistered):** the current machine
+(GTX 1650, 4 GB) trains a 5,000-step width-64 PINN in ~5 minutes;
+n_ckpt for 80% power (per R8's calculation, to be filled at R8
+record time) may be up to ~160 models ≈ 13 GPU-hours for training
+plus the battery wall-time. If the full n is infeasible in one
+session, the registered fallback is an intermediate n (a multiple of
+the current 11 chosen from available time), with achieved power
+reported — never silently read as equivalence.
+
+**Outcome (recorded after running, 2026-09-12).** Checksum gate: PASS.
+Full artifact: `runs/hierarchical_analysis/hierarchical_report.json`.
+
+| Statistic | Value |
+|---|---|
+| ICC (within-checkpoint, paired diff) | 0.192 |
+| Design effect DEFF | 2.34 → n_eff = 37.6 of 88 rows |
+| Paired diff, cluster 95% CI | [−0.0261, +0.0309] (naive [−0.0154, +0.0239]) |
+| SE inflation factor (cluster/naive) | 1.46 |
+| SAE mean E_T, cluster 95% CI | **[−0.0342, −0.0031] — negative-side survives** |
+| PCA mean E_T, cluster 95% CI | **[−0.0393, +0.0080] — spans zero** |
+| MixedLM intercept (95% CI) | +0.0042 [−0.0261, +0.0345] |
+| R7+ power: 80% / 90% at δ=0.01 | **163 / 226 checkpoints** (s_c = 0.0513) |
+
+**Recorded conclusion: R8b — the hierarchy changes ONE recorded
+reading, and it is reworded everywhere per the pre-written rule.**
+The core nulls are hierarchy-robust: the paired SAE−PCA difference
+remains indistinguishable from zero under checkpoint-clustered
+resampling (and the mixed-model CI agrees), and the SAE basis's
+negative-side E_T signature survives clustering. What does NOT
+survive: **the PCA battery's negative-side CI** — the row-level CI
+[−0.0268, −0.0006] excludes zero, but the checkpoint-clustered CI
+[−0.0393, +0.0080] spans it. The recorded wording "the E_T CIs
+exclude zero on the negative side for both bases" is therefore
+downgraded to: *the SAE negative-side exclusion is cluster-robust;
+the PCA negative-side exclusion is a row-level reading that does not
+survive hierarchy-explicit uncertainty* (the two bases' E_T
+signatures are also thereby not formally distinguishable from each
+other at the cluster level — consistent with R7b). The primary
+endpoint (0/8 MC-corrected survivors on both bases, the
+basis-independence null) is unaffected: survivor counts are
+per-feature sign tests, not mean-CI readings. The R7+ power
+preregistration is now exact: **δ=0.01 at 80% power needs 163
+checkpoints (1,304 pairs)** — infeasible in one session on this
+hardware, so the registered intermediate-n fallback applies, with
+achieved power reported.
+
 | Arm / basis | R6a | R6b-ctrl-flat | R6b-ctrl-matched | R6c | same-sign(0 vs 2) |
 |---|---:|---:|---:|---:|---:|
 | Fourier SAE (PR 4.0–5.6) | 0/24 | 6 | 18 | 0 | 1.00 |

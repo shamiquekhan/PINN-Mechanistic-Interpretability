@@ -166,6 +166,24 @@ CLAIMS = [
      lambda d: d["outcome"],
      lambda v: rf"\*\*R7b — inconclusive\*\*" if v == "R7b"
      else rf"\*\*R7{v[-1].lower()}\b"),
+    # R8 (hierarchical): the cluster-CI readings must stay grounded.
+    ("RESULTS.md", "runs/hierarchical_analysis/hierarchical_report.json",
+     lambda d: d["outcome"],
+     lambda v: rf"\*\*Recorded verdict: R8{v[-1]}\*\*"),
+    # R9 (reaction-diffusion boundary): the replication verdict.
+    ("RESULTS.md", "runs/r9_rd_boundary/r9_report.json",
+     lambda d: d["verdict"],
+     lambda v: rf"\*\*R9{v[-1]}:\*\*"),
+    # R10 (geometry predictors): the outcome letter.
+    ("RESULTS.md", "runs/geometry_predictors/geometry_predictors_report.json",
+     lambda d: d["outcome"],
+     lambda v: rf"\*\*R10c, refined:\*\*" if v == "R10c"
+     else rf"\*\*R10{v[-1]}, "),
+    # R7+ (power replication): the outcome letter.
+    ("RESULTS.md", "runs/r7plus_equivalence/r7plus_report.json",
+     lambda d: d["outcome"],
+     lambda v: rf"\*\*R7\+b \(inconclusive, at higher power\):\*\*"
+     if v == "R7+b" else rf"\*\*R7\+{v[-1]}"),
 ]
 
 

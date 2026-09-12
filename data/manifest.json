@@ -1,10 +1,10 @@
 {
   "name": "PINN Mechanistic-Interpretability Benchmark \u2014 authoritative aggregate artifacts",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "date": "2026-09-12",
   "license": "CC-BY-4.0",
   "generator": "experiments/run_pipeline.py stages 1-15 (post-external-review-fix re-runs)",
-  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v4.2.0: adds the R6 dose-response report, the R1 side-by-side reconciliation table, and the R7 equivalence-test report.",
+  "description": "SHA256 checksums for the JSON artifacts backing every headline claim in RESULTS.md. v4.3.0: adds the R8 hierarchical-analysis report, the R9 reaction-diffusion boundary report, and the R10 geometry-predictors report.",
   "files": [
     {
       "path": "runs/causal_intervention_results.json",
@@ -110,6 +110,26 @@
       "path": "runs/equivalence_test/equivalence_report.json",
       "bytes": 1920,
       "sha256": "3881637312ae571d49b2691643679c22f40ab1430921a5fed80999290cd8dcde"
+    },
+    {
+      "path": "runs/hierarchical_analysis/hierarchical_report.json",
+      "bytes": 1848,
+      "sha256": "cd253f76d8641ba7569d31cf1cc5ba061a58db8fdd201916139a457f8586d3f3"
+    },
+    {
+      "path": "runs/r9_rd_boundary/r9_report.json",
+      "bytes": 5695,
+      "sha256": "cfcc5edc033b19f68fd72e99868b7c783da95684653c06d6fffd3eacbf4839c1"
+    },
+    {
+      "path": "runs/geometry_predictors/geometry_predictors_report.json",
+      "bytes": 10902,
+      "sha256": "c205d8b88181727e33d33830f18ea7a3e5e81e80abde3851aa4a671e44fddc16"
+    },
+    {
+      "path": "runs/r7plus_equivalence/r7plus_report.json",
+      "bytes": 2986,
+      "sha256": "1f369ac60085c9b7c44351b46552bb1b72be35227c89045a901434361f0158b8"
     }
   ],
   "note": "All datasets are GENERATED in-repo by the stage scripts; no external data. v3.4.1: checksums refreshed after the full clean-clone reproduction pass (scripts/reproduce_main_results.sh) \u2014 all verdicts reproduced exactly."

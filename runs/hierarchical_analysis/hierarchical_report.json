@@ -1,0 +1,69 @@
+{
+  "stage": "r8_hierarchical_analysis",
+  "preregistration": "docs/preregistration.md \u00a7R8 (registered 2026-09-12 before run)",
+  "hierarchy": {
+    "n_checkpoints": 11,
+    "k_features_per_ckpt": 8,
+    "n_rows": 88,
+    "primary_unit": "trained model (checkpoint)"
+  },
+  "icc": 0.19165679841752434,
+  "design_effect": 2.3415975889226703,
+  "n_effective": 37.58117979634892,
+  "paired_difference": {
+    "mean": 0.004225110127167268,
+    "cluster_ci95": [
+      -0.02610532777722586,
+      0.03088714991780843
+    ],
+    "naive_ci95": [
+      -0.015420707114608832,
+      0.023870927368943366
+    ],
+    "se_inflation_factor": 1.4581424601622313
+  },
+  "sae_mean_et": {
+    "cluster_ci95": [
+      -0.03416849581355398,
+      -0.0031042651611972957
+    ]
+  },
+  "pca_mean_et": {
+    "cluster_ci95": [
+      -0.039265752431343906,
+      0.008014255237172948
+    ]
+  },
+  "mixed_model": {
+    "available": true,
+    "fixed_intercept": 0.0042251101271672704,
+    "se": 0.015457686003187051,
+    "ci90": [
+      -0.02120278334807543,
+      0.02965300360240997
+    ],
+    "ci95": [
+      -0.02607195443907935,
+      0.03452217469341389
+    ],
+    "group_var": 0.0017210093132999876,
+    "resid_var": 0.007258650472035079
+  },
+  "r7plus_power_preregistration": {
+    "delta": 0.01,
+    "cluster_sd": 0.05126738231605639,
+    "targets": {
+      "80": {
+        "n_checkpoints": 163,
+        "n_pairs_at_k8": 1304
+      },
+      "90": {
+        "n_checkpoints": 226,
+        "n_pairs_at_k8": 1808
+      }
+    },
+    "scope": "new checkpoints drawn from the same boundary-starvation regime (seed-level exchangeability); checkpoint = the unit"
+  },
+  "outcome": "R8b",
+  "outcome_note": "The hierarchy CHANGES the reading of: PCA negative-side reading \u2014 the affected claims are reworded at their new strength everywhere (no silent absorption)."
+}

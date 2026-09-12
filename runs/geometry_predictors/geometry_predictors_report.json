@@ -1,0 +1,374 @@
+{
+  "stage": "r10_geometry_predictors",
+  "preregistration": "docs/preregistration.md \u00a7R10 (registered 2026-09-12 before run)",
+  "n_runs": 33,
+  "n_arms": 11,
+  "arms": [
+    "h18:fourier",
+    "r3:nf16",
+    "r3:nf2",
+    "r3:nf32",
+    "r3:nf4",
+    "r3:nf64",
+    "r3:nf8",
+    "r5:fourier",
+    "r5:tanh",
+    "r9:fourier",
+    "r9:tanh"
+  ],
+  "response": "log10(PCA/SAE k-matched reconstruction ratio)",
+  "spearman": {
+    "participation_ratio": {
+      "rho": 0.8258689839572193,
+      "ci95": [
+        0.5314171122994652,
+        0.9060912433155079
+      ],
+      "ci_excludes_zero": true
+    },
+    "stable_rank": {
+      "rho": 0.6557486631016043,
+      "ci95": [
+        0.3679395053475937,
+        0.78944685828877
+      ],
+      "ci_excludes_zero": true
+    },
+    "n_components_95pct": {
+      "rho": 0.8198529411764707,
+      "ci95": [
+        0.44583054812834233,
+        0.8890457887700534
+      ],
+      "ci_excludes_zero": true
+    },
+    "pr_over_width": {
+      "rho": 0.8258689839572193,
+      "ci95": [
+        0.548788435828877,
+        0.903409090909091
+      ],
+      "ci_excludes_zero": true
+    }
+  },
+  "ols": {
+    "participation_ratio": {
+      "r2_in_sample": 0.35333750961436405,
+      "r2_leave_one_arm_out": -2.60205760330228
+    },
+    "stable_rank": {
+      "r2_in_sample": 0.3330474673379926,
+      "r2_leave_one_arm_out": -0.16670238246764058
+    },
+    "n_components_95pct": {
+      "r2_in_sample": 0.3472888796297917,
+      "r2_leave_one_arm_out": -2.64284529673109
+    },
+    "pr_over_width": {
+      "r2_in_sample": 0.35333750961436405,
+      "r2_leave_one_arm_out": -2.602057603302279
+    }
+  },
+  "best_predictor": "stable_rank",
+  "outcome": "R10c",
+  "outcome_note": "All single second-moment predictors are weak (best CV R2 = -0.17, 'stable_rank') \u2014 the compression advantage is not well explained by any single covariance statistic, the strongest version of the R3 residual finding",
+  "rows": [
+    {
+      "run": "fourier_w64_seed7",
+      "arm": "h18:fourier",
+      "participation_ratio": 5.62508204629198,
+      "stable_rank": 2.3025639772522464,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.08789190697331219,
+      "ratio": 55.60062476654715
+    },
+    {
+      "run": "fourier_w64_seed42",
+      "arm": "h18:fourier",
+      "participation_ratio": 4.003699758608593,
+      "stable_rank": 1.2959210426061167,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.06255780872825926,
+      "ratio": 41.750530394856476
+    },
+    {
+      "run": "fourier_w64_seed123",
+      "arm": "h18:fourier",
+      "participation_ratio": 4.806335258156416,
+      "stable_rank": 1.770824425066908,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.075098988408694,
+      "ratio": 24.69292087291825
+    },
+    {
+      "run": "r3_fourier_nf2_seed7",
+      "arm": "r3:nf2",
+      "participation_ratio": 2.806778694157723,
+      "stable_rank": 1.5045150432134822,
+      "n_components_95pct": 3,
+      "pr_over_width": 0.04385591709621442,
+      "ratio": 1.3099107275815853
+    },
+    {
+      "run": "r3_fourier_nf2_seed42",
+      "arm": "r3:nf2",
+      "participation_ratio": 1.3646134950020283,
+      "stable_rank": 1.0277474557525024,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.021322085859406693,
+      "ratio": 1.953294540821538
+    },
+    {
+      "run": "r3_fourier_nf2_seed123",
+      "arm": "r3:nf2",
+      "participation_ratio": 1.9849558223564923,
+      "stable_rank": 1.1039287735812267,
+      "n_components_95pct": 4,
+      "pr_over_width": 0.03101493472432019,
+      "ratio": 0.22765026924527132
+    },
+    {
+      "run": "r3_fourier_nf4_seed7",
+      "arm": "r3:nf4",
+      "participation_ratio": 3.1421293554824823,
+      "stable_rank": 1.4651099194943276,
+      "n_components_95pct": 5,
+      "pr_over_width": 0.049095771179413786,
+      "ratio": 3.687748998142899
+    },
+    {
+      "run": "r3_fourier_nf4_seed42",
+      "arm": "r3:nf4",
+      "participation_ratio": 1.2661313518078234,
+      "stable_rank": 1.013596499441877,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.01978330237199724,
+      "ratio": 0.6974463508578861
+    },
+    {
+      "run": "r3_fourier_nf4_seed123",
+      "arm": "r3:nf4",
+      "participation_ratio": 1.4533098947378178,
+      "stable_rank": 1.0416396574688025,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.022707967105278403,
+      "ratio": 0.7690589302582187
+    },
+    {
+      "run": "r3_fourier_nf8_seed7",
+      "arm": "r3:nf8",
+      "participation_ratio": 5.006916419462262,
+      "stable_rank": 2.041752322691436,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.07823306905409784,
+      "ratio": 8.455544476072445
+    },
+    {
+      "run": "r3_fourier_nf8_seed42",
+      "arm": "r3:nf8",
+      "participation_ratio": 3.632536453658493,
+      "stable_rank": 1.319837232676705,
+      "n_components_95pct": 6,
+      "pr_over_width": 0.05675838208841395,
+      "ratio": 5.815979377025012
+    },
+    {
+      "run": "r3_fourier_nf8_seed123",
+      "arm": "r3:nf8",
+      "participation_ratio": 3.488147977028904,
+      "stable_rank": 1.4008472348304715,
+      "n_components_95pct": 5,
+      "pr_over_width": 0.05450231214107663,
+      "ratio": 3.861006609487096
+    },
+    {
+      "run": "r3_fourier_nf16_seed7",
+      "arm": "r3:nf16",
+      "participation_ratio": 4.342832683532189,
+      "stable_rank": 2.214409067841233,
+      "n_components_95pct": 5,
+      "pr_over_width": 0.06785676068019045,
+      "ratio": 13.660407787036625
+    },
+    {
+      "run": "r3_fourier_nf16_seed42",
+      "arm": "r3:nf16",
+      "participation_ratio": 6.433294670549694,
+      "stable_rank": 2.376840756275309,
+      "n_components_95pct": 8,
+      "pr_over_width": 0.10052022922733897,
+      "ratio": 39.48726024102572
+    },
+    {
+      "run": "r3_fourier_nf16_seed123",
+      "arm": "r3:nf16",
+      "participation_ratio": 3.5669465251869776,
+      "stable_rank": 1.3575054813506164,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.055733539456046526,
+      "ratio": 9.82159595725853
+    },
+    {
+      "run": "r3_fourier_nf32_seed7",
+      "arm": "r3:nf32",
+      "participation_ratio": 5.62508204629198,
+      "stable_rank": 2.3025639772522464,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.08789190697331219,
+      "ratio": 55.60062476654715
+    },
+    {
+      "run": "r3_fourier_nf32_seed42",
+      "arm": "r3:nf32",
+      "participation_ratio": 4.003699758608593,
+      "stable_rank": 1.2959210426061167,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.06255780872825926,
+      "ratio": 41.750530394856476
+    },
+    {
+      "run": "r3_fourier_nf32_seed123",
+      "arm": "r3:nf32",
+      "participation_ratio": 4.806335258156416,
+      "stable_rank": 1.770824425066908,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.075098988408694,
+      "ratio": 24.69292087291825
+    },
+    {
+      "run": "r3_fourier_nf64_seed7",
+      "arm": "r3:nf64",
+      "participation_ratio": 4.826639094573403,
+      "stable_rank": 1.540067519404726,
+      "n_components_95pct": 8,
+      "pr_over_width": 0.07541623585270942,
+      "ratio": 56.04059283693695
+    },
+    {
+      "run": "r3_fourier_nf64_seed42",
+      "arm": "r3:nf64",
+      "participation_ratio": 5.358266433669675,
+      "stable_rank": 1.8832219058380395,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.08372291302608867,
+      "ratio": 35.141662596877886
+    },
+    {
+      "run": "r3_fourier_nf64_seed123",
+      "arm": "r3:nf64",
+      "participation_ratio": 4.18349963502003,
+      "stable_rank": 1.3310680831340787,
+      "n_components_95pct": 7,
+      "pr_over_width": 0.06536718179718796,
+      "ratio": 20.23959797363026
+    },
+    {
+      "run": "r5_fourier_seed7",
+      "arm": "r5:fourier",
+      "participation_ratio": 15.770162682463967,
+      "stable_rank": 3.9308558274361554,
+      "n_components_95pct": 23,
+      "pr_over_width": 0.2464087919134995,
+      "ratio": 32.68969963991455
+    },
+    {
+      "run": "r5_fourier_seed42",
+      "arm": "r5:fourier",
+      "participation_ratio": 13.993429538908835,
+      "stable_rank": 3.225074174707847,
+      "n_components_95pct": 22,
+      "pr_over_width": 0.21864733654545054,
+      "ratio": 30.54434908486303
+    },
+    {
+      "run": "r5_fourier_seed123",
+      "arm": "r5:fourier",
+      "participation_ratio": 15.33640080527696,
+      "stable_rank": 3.45209635530014,
+      "n_components_95pct": 24,
+      "pr_over_width": 0.2396312625824525,
+      "ratio": 37.814322620896
+    },
+    {
+      "run": "r5_tanh_seed7",
+      "arm": "r5:tanh",
+      "participation_ratio": 1.6231529718602573,
+      "stable_rank": 1.084796480114662,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.02536176518531652,
+      "ratio": 3.6792081646319033
+    },
+    {
+      "run": "r5_tanh_seed42",
+      "arm": "r5:tanh",
+      "participation_ratio": 1.922285660538496,
+      "stable_rank": 1.2038988416289755,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.030035713445914,
+      "ratio": 4.044333987759899
+    },
+    {
+      "run": "r5_tanh_seed123",
+      "arm": "r5:tanh",
+      "participation_ratio": 1.9711761505091199,
+      "stable_rank": 1.3492598674125813,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.030799627351704998,
+      "ratio": 2.071660783397524
+    },
+    {
+      "run": "r9_fourier_seed7",
+      "arm": "r9:fourier",
+      "participation_ratio": 6.005619774643106,
+      "stable_rank": 2.3211647155139583,
+      "n_components_95pct": 8,
+      "pr_over_width": 0.09383780897879854,
+      "ratio": 32.81223825941668
+    },
+    {
+      "run": "r9_fourier_seed42",
+      "arm": "r9:fourier",
+      "participation_ratio": 4.262339805500976,
+      "stable_rank": 1.4076997922627061,
+      "n_components_95pct": 8,
+      "pr_over_width": 0.06659905946095275,
+      "ratio": 28.523612279010255
+    },
+    {
+      "run": "r9_fourier_seed123",
+      "arm": "r9:fourier",
+      "participation_ratio": 5.035625785714217,
+      "stable_rank": 2.073559772167351,
+      "n_components_95pct": 8,
+      "pr_over_width": 0.07868165290178464,
+      "ratio": 32.836882105371124
+    },
+    {
+      "run": "r9_tanh_seed7",
+      "arm": "r9:tanh",
+      "participation_ratio": 2.033548849393063,
+      "stable_rank": 1.7037087642638011,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.03177420077176661,
+      "ratio": 0.8586360967692479
+    },
+    {
+      "run": "r9_tanh_seed42",
+      "arm": "r9:tanh",
+      "participation_ratio": 1.8039192056489017,
+      "stable_rank": 1.2247102036944868,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.02818623758826409,
+      "ratio": 0.7254555440379887
+    },
+    {
+      "run": "r9_tanh_seed123",
+      "arm": "r9:tanh",
+      "participation_ratio": 1.7082641894359838,
+      "stable_rank": 1.1499020631941799,
+      "n_components_95pct": 2,
+      "pr_over_width": 0.026691627959937247,
+      "ratio": 0.4517299835808516
+    }
+  ]
+}

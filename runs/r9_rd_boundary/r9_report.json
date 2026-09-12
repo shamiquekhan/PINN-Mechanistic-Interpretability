@@ -1,0 +1,179 @@
+{
+  "stage": "r9_rd_boundary",
+  "hypotheses": "R9 (docs/preregistration.md \u00a7R9; v4.2)",
+  "protocol": {
+    "seeds": [
+      7,
+      42,
+      123
+    ],
+    "steps": 2000,
+    "width": 64,
+    "depth": 3,
+    "pde": "reaction_diffusion_1d (eps=0.01, mu=1, manufactured reference)",
+    "move_bar": 3.0
+  },
+  "per_run": [
+    {
+      "n_samples": 1300,
+      "dim": 64,
+      "participation_ratio": 6.005619774643106,
+      "stable_rank": 2.3211647155139583,
+      "n_components_95pct": 8,
+      "n_components_99pct": 12,
+      "n_components_999pct": 24,
+      "local_tangent_rank": 1,
+      "pr_over_width": 0.09383780897879854,
+      "run": "r9_fourier_seed7",
+      "arm": "fourier",
+      "seed": 7,
+      "fourier_embed": true,
+      "rel_l2": 0.00016286238678731024,
+      "pr_moved": true,
+      "reconstruction": {
+        "sae_test_recon_mse": 0.0003016955452039838,
+        "pca_k_matched_test_recon_mse": 0.009899306111037731,
+        "pca_over_sae_ratio": 32.81223825941668,
+        "sae_beats_pca": true,
+        "dead_feature_fraction": 0.796875,
+        "mean_l0": 7.9576921463012695
+      }
+    },
+    {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 4.262339805500976,
+      "stable_rank": 1.4076997922627061,
+      "n_components_95pct": 8,
+      "n_components_99pct": 11,
+      "n_components_999pct": 21,
+      "local_tangent_rank": 1,
+      "pr_over_width": 0.06659905946095275,
+      "run": "r9_fourier_seed42",
+      "arm": "fourier",
+      "seed": 42,
+      "fourier_embed": true,
+      "rel_l2": 0.0002448841987643391,
+      "pr_moved": true,
+      "reconstruction": {
+        "sae_test_recon_mse": 0.00026349243125878274,
+        "pca_k_matched_test_recon_mse": 0.007515755947679281,
+        "pca_over_sae_ratio": 28.523612279010255,
+        "sae_beats_pca": true,
+        "dead_feature_fraction": 0.80078125,
+        "mean_l0": 7.799999713897705
+      }
+    },
+    {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 5.035625785714217,
+      "stable_rank": 2.073559772167351,
+      "n_components_95pct": 8,
+      "n_components_99pct": 11,
+      "n_components_999pct": 20,
+      "local_tangent_rank": 1,
+      "pr_over_width": 0.07868165290178464,
+      "run": "r9_fourier_seed123",
+      "arm": "fourier",
+      "seed": 123,
+      "fourier_embed": true,
+      "rel_l2": 0.0003224278043489903,
+      "pr_moved": true,
+      "reconstruction": {
+        "sae_test_recon_mse": 0.00030134254484437406,
+        "pca_k_matched_test_recon_mse": 0.009895149618387222,
+        "pca_over_sae_ratio": 32.836882105371124,
+        "sae_beats_pca": true,
+        "dead_feature_fraction": 0.8046875,
+        "mean_l0": 7.884999752044678
+      }
+    },
+    {
+      "n_samples": 1300,
+      "dim": 64,
+      "participation_ratio": 2.033548849393063,
+      "stable_rank": 1.7037087642638011,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6,
+      "local_tangent_rank": 1,
+      "pr_over_width": 0.03177420077176661,
+      "run": "r9_tanh_seed7",
+      "arm": "tanh",
+      "seed": 7,
+      "fourier_embed": false,
+      "rel_l2": 0.0017304331995546818,
+      "pr_moved": false,
+      "reconstruction": {
+        "sae_test_recon_mse": 9.29218513192609e-05,
+        "pca_k_matched_test_recon_mse": 7.978605572134256e-05,
+        "pca_over_sae_ratio": 0.8586360967692479,
+        "sae_beats_pca": false,
+        "dead_feature_fraction": 0.91015625,
+        "mean_l0": 7.111538410186768
+      }
+    },
+    {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.8039192056489017,
+      "stable_rank": 1.2247102036944868,
+      "n_components_95pct": 2,
+      "n_components_99pct": 2,
+      "n_components_999pct": 5,
+      "local_tangent_rank": 1,
+      "pr_over_width": 0.02818623758826409,
+      "run": "r9_tanh_seed42",
+      "arm": "tanh",
+      "seed": 42,
+      "fourier_embed": false,
+      "rel_l2": 0.0013927833642810583,
+      "pr_moved": false,
+      "reconstruction": {
+        "sae_test_recon_mse": 7.927471597213298e-05,
+        "pca_k_matched_test_recon_mse": 5.751028220402077e-05,
+        "pca_over_sae_ratio": 0.7254555440379887,
+        "sae_beats_pca": false,
+        "dead_feature_fraction": 0.90234375,
+        "mean_l0": 7.59499979019165
+      }
+    },
+    {
+      "n_samples": 1000,
+      "dim": 64,
+      "participation_ratio": 1.7082641894359838,
+      "stable_rank": 1.1499020631941799,
+      "n_components_95pct": 2,
+      "n_components_99pct": 3,
+      "n_components_999pct": 6,
+      "local_tangent_rank": 1,
+      "pr_over_width": 0.026691627959937247,
+      "run": "r9_tanh_seed123",
+      "arm": "tanh",
+      "seed": 123,
+      "fourier_embed": false,
+      "rel_l2": 0.0006639480125159025,
+      "pr_moved": false,
+      "reconstruction": {
+        "sae_test_recon_mse": 7.723018643446267e-05,
+        "pca_k_matched_test_recon_mse": 3.488719084998593e-05,
+        "pca_over_sae_ratio": 0.4517299835808516,
+        "sae_beats_pca": false,
+        "dead_feature_fraction": 0.91015625,
+        "mean_l0": 7.484999656677246
+      }
+    }
+  ],
+  "aggregate": {
+    "fourier_mean_pr": 5.101195121952767,
+    "tanh_mean_pr": 1.848577414825983,
+    "fourier_mean_pca_over_sae": 31.390910881266024,
+    "tanh_mean_pca_over_sae": 0.6786072081293627,
+    "fourier_crosses": true,
+    "fourier_above_tanh": true,
+    "sae_wins_fourier": true
+  },
+  "verdict": "R9a",
+  "verdict_note": "the within-PINN boundary replicates on the steady-stiff family: the Fourier arm crosses into the high-rank regime above the tanh twin and the SAE beats k-matched PCA there \u2014 three-family external validity (steady-linear, time-dependent-nonlinear, steady-stiff)"
+}

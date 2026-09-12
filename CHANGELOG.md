@@ -30,6 +30,62 @@ v3.4.0 → v3.4.2 (external-review fix campaign), v3.5-research-freeze
 there is no v4.1.0/v4.1.1 *tag* — those numbers exist only as
 CHANGELOG research sections).
 
+## [4.3.0] — 2026-09-12 — "Statistical Closure + Third-Family Replication (R8/R9/R10/R7+)"
+
+### Added
+- **R8 — hierarchical statistical analysis**
+  (`scripts/hierarchical_analysis.py`, preregistered §R8 before
+  implementation): the pseudoreplication question answered with
+  measurement — ICC 0.192, design effect 2.34 (effective n 37.6 of 88
+  rows), cluster-bootstrap SE inflation 1.46×, MixedLM corroboration.
+  **Recorded R8b:** the core nulls are cluster-robust (paired
+  SAE−PCA difference still indistinguishable; SAE negative-side CI
+  survives clustering) but the **PCA negative-side CI does not survive**
+  (cluster CI spans zero) — reworded everywhere per the pre-written
+  no-silent-absorption rule. The R7+ power calculation is preregistered
+  from the cluster SD: **163 checkpoints for 80% power at δ=0.01** (the
+  earlier "~4×" note was optimistic — it used naive variance).
+- **R9 — reaction–diffusion boundary replication**
+  (`experiments/r9_rd_boundary.py`, preregistered §R9 before
+  implementation): the R5 protocol on the steady-stiff family.
+  **Recorded R9a:** Fourier PR 4.3–6.0 (mean 5.10 > bar) vs tanh twin
+  1.7–2.0; SAE beats k-matched PCA 28.5–32.8× on every seed while the
+  twin stays low-rank — **three-family external validity** (Poisson,
+  Burgers, reaction–diffusion). One pre-run machinery fix recorded
+  (degenerate exact≡0 configuration, the fresh-campaign §3 bug class;
+  corrected to forcing=1 before any full run).
+- **R10 — geometry-predictor analysis**
+  (`scripts/geometry_predictors.py`, preregistered §R10 before
+  implementation; analysis-only over committed artifacts, 33 runs /
+  11 arms): **recorded R10c-with-refinement** — every rank statistic
+  correlates with the compression advantage (Spearman 0.66–0.83,
+  arm-clustered CIs exclude zero) but none predicts it continuously
+  (leave-one-arm-out CV R² all negative): **the PR family is a
+  validated GATE, not a continuous predictor** — the residual is
+  embedding structure beyond the covariance spectrum. Refines R3's
+  plateau record into the paper's honest geometry language. One
+  pre-run machinery fix recorded (R3's nested reconstruction field
+  dropped from the first collection; corrected before analysis).
+- **R7+ — power-upgraded equivalence replication**
+  (`experiments/r7plus_equivalence.py`, preregistered §R7+ after R8's
+  power calculation): 20 registered new boundary-starvation seeds
+  through the IDENTICAL stage-5/8 batteries (frozen SAE, same
+  candidates/probes; discovery pool excludes new seeds to preserve
+  pairing identity), combined cluster-bootstrap TOST with achieved
+  power reported. **Recorded R7+b (inconclusive at higher power):**
+  combined 31 checkpoints — mean −0.0049 (sign moved past zero; not
+  stable across replication), cluster SD −19%, 90% CI
+  [−0.0174, +0.0062] still overlapping δ=0.01; achieved power 0.38
+  of the 0.80 target. The honest terminal state at this resource
+  level: statistically indistinguishable at every n tested; formal
+  equivalence requires the full 163-checkpoint battery.
+
+### Changed
+- RESULTS.md §8 claim 2 and PROJECT_STATUS now carry the R8 hierarchy
+  note (SAE negative-side exclusion cluster-robust; PCA exclusion a
+  row-level reading) — the review's pseudoreplication objection is
+  answered with measurement.
+
 ## [4.2.1] — 2026-09-12 — "R7 Equivalence Test + Review-Response Fixes"
 
 ### Added
