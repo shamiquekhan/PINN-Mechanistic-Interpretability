@@ -107,7 +107,32 @@ for doc_name, doc_text in [
         check(f"No stale R7+ IN FLIGHT in {doc_name}", True)
 print()
 
-# --- 4. Missing artifact references ---
+# --- 3b. R8/R9/R10 wording consistency ---
+print("[R8/R9/R10 wording]")
+results_text = (ROOT / "RESULTS.md").read_text()
+ps_text = (ROOT / "PROJECT_STATUS.md").read_text()
+
+# R8: PCA negative-side must be described as not surviving clustering
+r8_pca_fail = bool(re.search(
+    r"PCA.*negative.*(?:survive|cluster.robust|CI.*excludes.*zero)",
+    ps_text + results_text, re.I
+))
+check("R8: PCA negative-side described as not surviving clustering", not r8_pca_fail,
+      "FOUND: PCA negative-side described as surviving" if r8_pca_fail else "")
+
+# R9: three-family must mean exactly Poisson/Burgers/reaction-diffusion
+r9_families = re.findall(r"three.family.external.validity", ps_text + results_text, re.I)
+check("R9: 'three-family external validity' appears", len(r9_families) > 0,
+      f"found: {len(r9_families)} occurrences")
+
+# R10: must be described as gate, not predictor
+r10_gate = bool(re.search(
+    r"PR.*(?:family|is).*(?:validated\s+)?gate.*not.*(?:continuous|sufficient).*predictor",
+    ps_text + results_text, re.I
+))
+check("R10: PR described as gate, not predictor", r10_gate)
+
+print()
 print("[Artifact references]")
 missing_total = 0
 for doc_name in ["README.md", "PROJECT_STATUS.md", "RESULTS.md"]:
@@ -186,7 +211,7 @@ private_hits = []
 for d in code_dirs:
     dpath = ROOT / d
     if dpath.exists():
-        hits = run(f"grep -rnE '/home/|/mnt/' {dpath} --include='*.py' --exclude-dir=__pycache__ || true")
+        hits = run(f"grep -rnE '/home/|/mnt/' {dpath} --include='*.py' --exclude-dir=__pycache__ --exclude=final_repo_audit.py || true")
         if hits:
             private_hits.extend(hits.split("\n"))
 check("No hard-coded private paths in code", len(private_hits) == 0, f"found: {len(private_hits)}" if private_hits else "")

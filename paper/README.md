@@ -1,6 +1,6 @@
 # `paper/` — Submission Artifact
 
-Full LaTeX manuscript (v4.1 evidence state: complete prose, 10 figures,
+Full LaTeX manuscript (v4.3 evidence state: complete prose, 10 figures,
 7 artifact-generated tables, 17-page compiled PDF — H1–H19 + R1–R5,
 PhysSAE reconciliation, the within-PINN architecture boundary as the
 centerpiece). The historical v3 draft skeleton is

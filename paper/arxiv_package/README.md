@@ -2,7 +2,7 @@
 
 **Paper:** *When Sparse Features Become Mechanistic: Representation
 Geometry and Causal Interpretability in Physics-Informed Neural Networks*
-**Version:** v4.1 (H16–H19 + R1 complete; matches current `main` evidence state)
+**Version:** v4.3 (H16–H19 + R1–R10 complete; matches current `main` evidence state)
 **Built:** 2026-09-11 (rebuilt: H18 architecture-boundary section +
 figure 10, PhysSAE reconciliation with the R1 head-to-head outcome, H17
 controller battery, H19 monitor floor, title change, all

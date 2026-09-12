@@ -66,8 +66,9 @@ Each item: what ran → where the output lives.
   controls — see docs/external_review_response.md §2), each at 8/8 batch
   consistency; E_T CI [+5.6e-6, +1.6e-5] positive; beats-all 66%.
   Reported as a **suggestive, weakened asymmetry** (2/8 vs 0/8 on PINNs),
-  NOT a confirmed boundary. Thread now pending the H16 high-n resolution
-  (docs/preregistration.md §H8/H16). Full record: RESULTS.md §5A.7.
+  NOT a confirmed boundary. Thread resolved by H16b (6/16 Bonferroni,
+  0/16 direction-reversal; boundary claim rests on reconstruction side).
+  Full record: RESULTS.md §5A.7.
 
 ## Completed since last verification (stages 16–17 — preregistered, run, recorded)
 
