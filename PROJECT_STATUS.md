@@ -1,6 +1,14 @@
 # Project Status
 
-**Last verified:** 2026-09-10 (post-external-review-fix campaign v3.4 + v3.5 docs/paper sync; every item below re-verified)
+**Current release:** v4.3.2 (commit `be51b5a`)
+**Experimental campaign:** frozen (no new experiments)
+**R7+ intermediate replication:** complete, R7+b inconclusive
+**Full-power R7+ target (163 checkpoints):** registered extension, not part of the core frozen claim set
+**Verification:** 196 tests · grounding PASS · 33/33 checksums
+
+---
+
+**Last verified:** 2026-09-12 (v4.3.2 audit pass; every item below re-verified)
 **Verification method:** commands executed end-to-end on this machine; every
 "verified" item lists the exact command and the artifact it produced. A
 machine check (`scripts/check_results_grounded.py`, wired into CI via
