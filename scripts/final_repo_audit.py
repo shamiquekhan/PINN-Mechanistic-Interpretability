@@ -112,13 +112,13 @@ print("[R8/R9/R10 wording]")
 results_text = (ROOT / "RESULTS.md").read_text()
 ps_text = (ROOT / "PROJECT_STATUS.md").read_text()
 
-# R8: PCA negative-side must be described as not surviving clustering
-r8_pca_fail = bool(re.search(
-    r"PCA.*negative.*(?:survive|cluster.robust|CI.*excludes.*zero)",
-    ps_text + results_text, re.I
-))
-check("R8: PCA negative-side described as not surviving clustering", not r8_pca_fail,
-      "FOUND: PCA negative-side described as surviving" if r8_pca_fail else "")
+# R8: PCA negative-side must be described as NOT surviving clustering
+# Check that the phrase "PCA negative" appears with a negation before "surviv"
+r8_all_pca = re.findall(r"PCA.*negative.*surviv\w*", ps_text + results_text, re.I)
+r8_negated = re.findall(r"PCA.*negative.*(?:does not|doesn't|do not|not).*surviv\w*", ps_text + results_text, re.I)
+check("R8: PCA negative-side described as not surviving clustering",
+      len(r8_negated) > 0 and len(r8_negated) == len(r8_all_pca),
+      f"total={len(r8_all_pca)} negated={len(r8_negated)}" if r8_all_pca else "no PCA negative mentions found")
 
 # R9: three-family must mean exactly Poisson/Burgers/reaction-diffusion
 r9_families = re.findall(r"three.family.external.validity", ps_text + results_text, re.I)
