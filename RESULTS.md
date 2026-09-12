@@ -1,4 +1,4 @@
-# Comprehensive Research Results & Benchmark Report (v3.4)
+# Comprehensive Research Results & Benchmark Report (v4.3)
 
 > **External-review fix campaign (2026-09-08):** a 29-issue external review
 > (`GUIDE.md`) was executed end-to-end; the three critical issues (stale

@@ -1,6 +1,6 @@
-# Final Claim Ladder (v4.1 evidence state)
+# Final Claim Ladder (v4.3 evidence state)
 
-**Written:** 2026-09-11, after H16–H19 + R1–R2 (R3 in flight). The
+**Written:** 2026-09-11, after H16–H19 + R1–R2 (R3 complete). The
 binding wording of every major claim, each with its evidence chain
 (artifact → checksum → registered protocol). This document is the
 reference for the paper, README, and any release communication: claims
@@ -86,7 +86,7 @@ Scope: one task, one embedding family, one width, three seeds. PR > 3
 is this protocol's operational bar, not a universal constant.
 
 Evidence: H18 (`runs/architecture_boundary/architecture_boundary_report.json`);
-figure 10; R3 (dose-response, in flight).
+figure 10; R3 (dose-response, complete).
 
 ## Claim 5 — The causal arrow does not close (strong; completes the chain — now at curve level, R6)
 

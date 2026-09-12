@@ -4,12 +4,6 @@ All notable changes to the PINN Mechanistic Interpretability framework.
 Format: keep-a-changelog style; research-status entries track the evidence
 state separately from code changes.
 
-# Changelog
-
-All notable changes to the PINN Mechanistic Interpretability framework.
-Format: keep-a-changelog style; research-status entries track the evidence
-state separately from code changes.
-
 ## Versioning scheme (clarified 2026-09-12)
 
 The commit history interleaves `v4.1.x`-numbered work *before* the
