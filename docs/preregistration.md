@@ -1177,7 +1177,7 @@ machinery gate is the artifact checksums themselves; a checksum
 failure voids the analysis.
 
 **Outcome (recorded after running, 2026-09-12).** Checksum gate: PASS
-(28/28). Full artifact:
+(33/33). Full artifact:
 `runs/equivalence_test/equivalence_report.json` (88 checkpoint-matched
 pairs — the stage-8 committed `head_to_head_vs_sae` pairing).
 

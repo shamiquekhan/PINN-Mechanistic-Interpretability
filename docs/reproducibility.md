@@ -31,7 +31,7 @@ development: [requirements.txt](../requirements.txt). The
 
 **GPU memory:** the full campaign runs on a 4 GB GPU. Peak observed usage
 is < 2 GB (largest model: 512-wide Poisson; largest SAE input: 65,000×64).
-CPU-only execution works for the entire unit-test suite (195 tests) and all
+CPU-only execution works for the entire unit-test suite (196 tests) and all
 analysis stages; only stage-1 training is slower (see §6).
 
 ## 2. Installation
@@ -82,7 +82,7 @@ pip install -r requirements.txt
 Unit tests first, then the full 15-stage campaign:
 
 ```bash
-python -m pytest tests/ -q                 # 195 tests, ~90 s CPU
+python -m pytest tests/ -q                 # 196 tests, ~90 s CPU
 python -m experiments.run_pipeline          # all 15 stages
 ```
 

@@ -84,7 +84,7 @@ secondary contributions, not part of the causal chain above.
 5. SAE–PCA causal-strength equivalence is formally unestablished at the current sample size; the observed difference is statistically indistinguishable from zero and changes sign across replication.
 6. The principal causal null survives checkpoint-clustered resampling; the PCA negative-side exclusion does not — reworded per pre-written rule.
 
-**Verification:** 195 tests passed · 33/33 checksums · grounding check passed
+**Verification:** 196 tests passed · 33/33 checksums · grounding check passed
 
 ---
 
@@ -155,7 +155,7 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
-*(The suite currently contains 195 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
+*(The suite currently contains 196 tests. CUDA determinism warnings may appear on systems without the documented cuBLAS workspace setting.)*
 
 ### 3. Launch End-to-End Master Research Pipeline
 
@@ -266,7 +266,7 @@ Stages 1–15 run through `experiments/run_pipeline.py`; stages 16–19 and R1�
 │   ├── r4_sae_seed_robustness.py # SAE-seed robustness, Hungarian matching (R4)
 │   ├── r5_burgers_boundary.py # Within-PINN boundary on Burgers (R5)
 │   └── run_pipeline.py       # Master end-to-end research campaign (stages 1–15)
-├── tests/                    # Comprehensive Unit Test Suite (195 tests)
+├── tests/                    # Comprehensive Unit Test Suite (196 tests)
 │   └── unit/
 ├── docs/
 │   ├── theory_activation_rank.md # Tangent-rank bound + corrected covariance discussion

@@ -49,7 +49,7 @@ Each item: what ran → where the output lives.
 | R7+ equivalence replication (v4.3) | `python -m experiments.r7plus_equivalence` | `runs/r7plus_equivalence/r7plus_report.json` | **R7+b (inconclusive at higher power) — complete at intermediate n.** 20 new seeds through the identical batteries; combined 31 ckpts: mean −0.0049 (sign moved past zero — not stable), cluster SD 0.0419 (−19%), 90% CI [−0.0174, +0.0062] still overlapping δ=0.01; TOST p 0.251; achieved power 0.38/0.80. **Registered full-power extension (163 checkpoints) remains optional future work — does not block the paper.** |
 | R1 side-by-side reconciliation table (v4.2) | `python scripts/r1_reconciliation_table.py` | `runs/r1_physSAE/reconciliation_table.json` | The basis × criteria matrix from the committed R1 artifact: L1 alignment generic (all bases 0.77–0.99 incl. random), L4 concentration SAE-specific (2.1–3.5× vs PCA AND random), L3 survivors scatter without basis-specificity (SAE 1–5, PCA/ICA 1–2/run, random 0 floor), L0 recon SAE-best — the R1b dissociation in one table |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
-| Unit tests | `python -m pytest tests/ -q` | — | **195 passed, 1 skipped** (2026-09-12, CPU-only; 189 after the R6 framework, +6 from the v4.2.1 R7 equivalence tests) |
+| Unit tests | `python -m pytest tests/ -q` | — | **196 passed, 1 skipped** (2026-09-12, CPU-only; 189 after the R6 framework, +7 from the v4.2.1 R7 equivalence tests) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
 | Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
 | Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |
@@ -142,7 +142,7 @@ Each item: what ran → where the output lives.
 ```bash
 git clone https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability
 cd PINN-Mechanistic-Interpretability
-python -m pytest tests/ -q                              # 195 tests
+python -m pytest tests/ -q                              # 196 tests
 python scripts/check_results_grounded.py                # doc/artifact grounding
 sha256sum -c data/checksums.sha256                      # artifact integrity
 python -m experiments.run_pipeline --stages 5           # re-run any stage
