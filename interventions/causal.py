@@ -18,6 +18,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import torch
 
+from analysis.activation_protocol import ActivationStandardizer
 from pinn.model import MLP
 from pinn.pdes import BasePDE
 from sae.model import SparseAutoencoder
@@ -219,6 +220,7 @@ def run_inference_interventions(
     baseline_mode: str = "natural",
     evaluation_points: Optional[torch.Tensor] = None,
     sample_seed: Optional[int] = None,
+    activation_standardizer: Optional[ActivationStandardizer] = None,
 ) -> List[Dict]:
     """Run targeted and 3-control interventions for each candidate feature.
 
@@ -227,6 +229,8 @@ def run_inference_interventions(
     `train_failure_probe()` (supervised logistic probe on run-type labels).
     If absent, the probe control falls back to a random direction (and the
     entry is flagged `probe_control_valid=False`).
+    ``activation_standardizer`` is shared by all SAE encode/decode paths when
+    the dictionary was fit on a train-split-standardized activation bank.
     """
     results: List[Dict] = []
 
@@ -242,6 +246,7 @@ def run_inference_interventions(
             lambda_pde=lambda_pde, lambda_bc=lambda_bc,
             baseline_mode=baseline_mode,
             evaluation_points=evaluation_points, sample_seed=sample_seed,
+            activation_standardizer=activation_standardizer,
         )
 
         # 2. Targeted amplification
@@ -252,6 +257,7 @@ def run_inference_interventions(
             layer_index=layer_index,
             baseline_mode=baseline_mode,
             evaluation_points=evaluation_points, sample_seed=sample_seed,
+            activation_standardizer=activation_standardizer,
         )
 
         # 3. Control 1: Unrelated feature
@@ -262,6 +268,7 @@ def run_inference_interventions(
             layer_index=layer_index,
             baseline_mode=baseline_mode,
             evaluation_points=evaluation_points, sample_seed=sample_seed,
+            activation_standardizer=activation_standardizer,
         )
 
         # 4. Control 2: Random direction
@@ -272,6 +279,7 @@ def run_inference_interventions(
             layer_index=layer_index,
             baseline_mode=baseline_mode,
             evaluation_points=evaluation_points, sample_seed=sample_seed,
+            activation_standardizer=activation_standardizer,
         )
 
         # 5. Control 3: Linear Probe direction (real supervised probe, not a proxy)
@@ -284,6 +292,7 @@ def run_inference_interventions(
             alpha=alpha,
             baseline_mode=baseline_mode,
             evaluation_points=evaluation_points, sample_seed=sample_seed,
+            activation_standardizer=activation_standardizer,
         )
 
         # Target vs non-target delta selection

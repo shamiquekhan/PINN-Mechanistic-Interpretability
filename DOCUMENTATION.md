@@ -166,6 +166,105 @@ scores = run_inference_interventions(
 print("Causal scores:", scores)
 ```
 
+### Prospective alignment-to-specificity protocol
+
+The next confirmatory phase is registered in
+[`docs/preregistration_alignment_specificity_2026-10-25.md`](docs/preregistration_alignment_specificity_2026-10-25.md).
+Use the deterministic split and checkpoint-level analysis helpers before
+starting new model runs:
+
+```python
+from analysis.activation_protocol import (
+    ActivationStandardizer,
+    load_activation_protocol_manifest,
+    make_activation_split,
+    write_activation_protocol_manifest,
+)
+from analysis.prospective_protocol import checkpoint_level_summary
+
+split = make_activation_split(
+    n_rows=20000,
+    split_key="burgers:pin_seed_7:space_time_grid",
+)
+stats = ActivationStandardizer.fit(activations[split.train_idx])
+write_activation_protocol_manifest(
+    "runs/alignment_specificity_preregistered/manifest.json",
+    split,
+    standardizer=stats,
+    activation_bank=activations,
+    metadata={"pde_family": "burgers", "pinn_seed": 7},
+)
+_, split, stats = load_activation_protocol_manifest(
+    "runs/alignment_specificity_preregistered/manifest.json"
+)
+checkpoint_summary = checkpoint_level_summary(checkpoint_rows)
+```
+
+After the pilot has produced exactly three independent checkpoint rows per
+PDE family, build the preregistered power artifact without inspecting
+confirmatory outcomes:
+
+```bash
+python scripts/build_prospective_power_plan.py \
+  --pilot-json runs/alignment_specificity_preregistered/pilot_rows.json \
+  --output runs/alignment_specificity_preregistered/power_plan.json
+```
+
+The pilot JSON must contain rows with `checkpoint_id`, `pde_family`, and
+checkpoint-level `rho`. The script selects the smallest registered `N` per
+PDE family reaching 80% simulated power, or the maximum registered `N=12`
+with the achieved power reported when the target is not reached.
+
+The raw pilot aggregation boundary accepts one JSON checkpoint row per
+independent PINN seed. Each row must contain all 16 fixed candidate slots and
+named `matched`, `random`, and `probe` control effects for every confirmatory
+batch:
+
+```json
+{
+  "checkpoint_id": "burgers_seed_7",
+  "pde_family": "burgers",
+  "intervention_arm": "direct_hidden_state",
+  "candidates": [
+    {
+      "candidate_idx": 0,
+      "alignment": 0.42,
+      "batches": [
+        {
+          "batch_id": "confirm_0",
+          "target_effect": 0.12,
+          "control_effects": {
+            "matched": 0.04,
+            "random": 0.02,
+            "probe": 0.03
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+Aggregate these raw rows before building the power plan:
+
+```bash
+python scripts/aggregate_prospective_pilot.py \
+  --raw-json runs/alignment_specificity_preregistered/raw_pilot_rows.json \
+  --output runs/alignment_specificity_preregistered/pilot_rows.json \
+  --expected-candidates 16
+```
+
+The aggregator does not select candidates or checkpoints. It computes
+`D_bar`, the secondary signed diagnostic, and checkpoint-level Spearman `rho`
+while preserving the named control arms and raw batch-level contrasts.
+
+The direct penultimate-layer operator is
+`interventions.prospective.DirectHiddenStateInterventionHook`; the existing
+`SAEInterventionHook` accepts `activation_standardizer=` for the separate
+decoder-mediated arm.  These paths keep train-split standardization, raw
+hidden-state coordinates, provenance, and checkpoint-level replication
+explicit.  Do not use the new helpers to re-score frozen publication artifacts.
+
 ---
 
 ## 6. Closed-Loop Adaptive PINN Controller

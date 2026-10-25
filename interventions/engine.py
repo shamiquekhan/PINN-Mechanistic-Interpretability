@@ -22,6 +22,7 @@ import torch.nn.functional as F
 
 from pinn.model import MLP
 from sae.model import SparseAutoencoder
+from analysis.activation_protocol import ActivationStandardizer
 from analysis.intervention_audit import make_intervention_audit
 
 
@@ -34,6 +35,10 @@ class SAEInterventionHook:
        1. Encodes the activation through the frozen SAE
        2. Optionally modifies the latent code
        3. Decodes back and replaces the layer output
+
+       ``activation_standardizer`` makes the encode/decode path operate in
+       train-split-standardized coordinates while returning raw hidden-state
+       units to the model.  With no standardizer, legacy behavior is kept.
     """
 
     def __init__(
@@ -46,6 +51,7 @@ class SAEInterventionHook:
         random_seed: int = 0,
         probe_direction: Optional[torch.Tensor] = None,
         control_idx: Optional[int] = None,
+        activation_standardizer: Optional[ActivationStandardizer] = None,
     ):
         self._validate_mode(mode)
         self.sae = sae
@@ -62,6 +68,7 @@ class SAEInterventionHook:
         # the caller); when set, the control modes apply the operator to
         # THIS atom instead of sampling.
         self.control_idx = control_idx
+        self.activation_standardizer = activation_standardizer
         if mode == "probe_direction":
             if probe_direction is None:
                 raise ValueError("probe_direction mode requires a probe_direction tensor")
@@ -236,15 +243,20 @@ class SAEInterventionHook:
         b_d = self.sae.W_d.bias.detach()
 
         # Encode exactly as the SAE was trained (ReLU, then TopK if topk mode).
-        # The previous implementation skipped the TopK step, so intervened
-        # latents did not match the SAE's true latent space.
-        z = F.relu(F.linear(output - b_a, w_e, b_e))
+        # Prospective runs may fit the SAE on train-split-standardized
+        # activations; decode back into the model's raw hidden-state units.
+        sae_input = output
+        if self.activation_standardizer is not None:
+            sae_input = self.activation_standardizer.transform(output)
+        z = F.relu(F.linear(sae_input - b_a, w_e, b_e))
         if self.sae.activation_mode == "topk":
             from sae.model import apply_topk
             z = apply_topk(z, k=self.sae.topk)
         z_mod = self._intervene(z)
         # Decode: a_hat = W_d z + b_d
         reconstructed = F.linear(z_mod, w_d, b_d)
+        if self.activation_standardizer is not None:
+            reconstructed = self.activation_standardizer.inverse(reconstructed)
         return reconstructed
 
     def register(self, model: MLP, layer_index: int):
@@ -287,6 +299,7 @@ def measure_intervention_effect(
     evaluation_points: Optional[torch.Tensor] = None,
     sample_seed: Optional[int] = None,
     probe_direction: Optional[torch.Tensor] = None,
+    activation_standardizer: Optional[ActivationStandardizer] = None,
 ) -> Dict:
     """Freeze model weights and measure how an intervention changes each loss.
 
@@ -303,6 +316,8 @@ def measure_intervention_effect(
       lets SAE and PCA measurements use exactly the same physical points.
     sample_seed: seed used only when evaluation_points is not supplied.
     probe_direction: optional supervised direction used by probe_direction.
+    activation_standardizer: optional train-split standardizer shared by the
+      reconstruction and intervention hooks.
     """
     if baseline_mode not in {"natural", "reconstruction_only"}:
         raise ValueError(
@@ -338,13 +353,18 @@ def measure_intervention_effect(
     try:
         lp_natural, lb_natural = _losses(None)
         lp_reconstruction, lb_reconstruction = _losses(
-            SAEInterventionHook(sae, mode="reconstruction_only")
+            SAEInterventionHook(
+                sae,
+                mode="reconstruction_only",
+                activation_standardizer=activation_standardizer,
+            )
         )
         intervention_hook = SAEInterventionHook(
             sae, mode=mode, feature_idx=feature_idx,
             alpha=alpha, reference_value=reference_value,
             random_seed=random_seed, probe_direction=probe_direction,
             control_idx=control_idx,
+            activation_standardizer=activation_standardizer,
         )
         lp_int, lb_int = _losses(intervention_hook)
         control_was_noop = bool(intervention_hook.last_control_was_noop)
@@ -396,6 +416,7 @@ def measure_probe_direction_effect(
     baseline_mode: str = "natural",
     evaluation_points: Optional[torch.Tensor] = None,
     sample_seed: Optional[int] = None,
+    activation_standardizer: Optional[ActivationStandardizer] = None,
 ) -> Dict:
     """Measure loss shift when perturbing along a supervised linear-probe direction.
 
@@ -412,6 +433,7 @@ def measure_probe_direction_effect(
             n_interior=n_interior, alpha=1.0, layer_index=layer_index,
             baseline_mode=baseline_mode,
             evaluation_points=evaluation_points, sample_seed=sample_seed,
+            activation_standardizer=activation_standardizer,
         )
     return measure_intervention_effect(
         model, sae, pde, device, dtype,
@@ -419,4 +441,5 @@ def measure_probe_direction_effect(
         n_interior=n_interior, alpha=alpha, layer_index=layer_index,
         baseline_mode=baseline_mode, probe_direction=probe_direction,
         evaluation_points=evaluation_points, sample_seed=sample_seed,
+        activation_standardizer=activation_standardizer,
     )
