@@ -130,7 +130,12 @@ render_feature_dictionary_markdown(dictionary, Path("runs/feature_dictionary/phy
 
 ## 5. Causal Interventions & Counterfactual Evaluation
 
-Run inference-time causal interventions (`ablate`, `amplify`, `unrelated_control`, `random_direction`, and supervised `probe_direction` controls):
+Run inference-time causal interventions (`ablate`, `amplify`, deterministic
+activity-matched `unrelated_control`, explicit `matched_deletion`, random
+latent-direction, and supervised `probe_direction` controls). Measurements
+can use `baseline_mode="reconstruction_only"` to separate representation
+reconstruction from the incremental intervention effect, and can receive a
+shared `evaluation_points` tensor for paired SAE/PCA comparisons:
 
 ```python
 from interventions.causal import run_inference_interventions
@@ -152,7 +157,9 @@ scores = run_inference_interventions(
     dtype=torch.float32,
     candidate_features=[0, 1, 2, 3],
     target_loss="pde",
-    layer_index=1
+    layer_index=1,
+    baseline_mode="reconstruction_only",
+    sample_seed=0,
 )
 print("Causal scores:", scores)
 ```

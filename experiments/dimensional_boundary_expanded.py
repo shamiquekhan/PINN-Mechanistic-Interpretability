@@ -32,7 +32,7 @@ import yaml
 
 from analysis.activation_manifold import local_tangent_rank
 from analysis.effective_rank import analyze_run_activations
-from experiments.run_pipeline import PROJECT_ROOT, RUNS
+from experiments.run_pipeline import DEVICE, PROJECT_ROOT, RUNS
 from pinn_logging.io import load_jsonl
 
 import subprocess
@@ -44,7 +44,7 @@ def train_and_analyze(
     seeds: List[int],
     steps: int,
     output_root: Path,
-    device: str = "cuda",
+    device: str = str(DEVICE),
 ) -> List[Dict]:
     output_root = Path(output_root)
     output_root.mkdir(parents=True, exist_ok=True)

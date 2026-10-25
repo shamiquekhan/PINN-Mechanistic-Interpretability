@@ -3,7 +3,7 @@ run:
   output_dir: runs
   seed: 88
   deterministic: true
-  device: cuda
+  device: cpu
   dtype: float32
 pde:
   name: poisson_1d

@@ -1,16 +1,16 @@
 {
   "pipeline_pass": true,
   "matched_feature": 144,
-  "decoder_cosine_to_planted": 0.9894713759422302,
+  "decoder_cosine_to_planted": 0.9894711375236511,
   "targeted_delta": 0.026091396808624268,
-  "ctrl_unrelated_delta": 0.002839982509613037,
-  "ctrl_random_delta": 0.002839982509613037,
+  "ctrl_unrelated_delta": -0.004201114177703857,
+  "ctrl_random_delta": -0.00017189979553222656,
   "ctrl_random_delta_trials": [
-    0.002839982509613037,
-    0.004648268222808838,
-    0.0030301809310913086,
-    0.0008241534233093262,
-    -0.0007602572441101074
+    -0.00037276744842529297,
+    -0.00029033422470092773,
+    -0.00017189979553222656,
+    0.002113938331604004,
+    -3.7610530853271484e-05
   ],
   "ctrl_probe_delta": 0.014805138111114502,
   "delta_bc_non_target": 0.0030379295349121094,
@@ -19,8 +19,8 @@
     "specificity": 8.588517483241851,
     "target_effect": 0.026091396808624268,
     "max_control_effect": 0.014805138111114502,
-    "control_unrelated_effect": 0.002839982509613037,
-    "control_random_effect": 0.002839982509613037,
+    "control_unrelated_effect": -0.004201114177703857,
+    "control_random_effect": -0.00017189979553222656,
     "control_probe_effect": 0.014805138111114502
   },
   "config": {

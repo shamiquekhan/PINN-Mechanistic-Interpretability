@@ -335,7 +335,7 @@ def dose_curve_pca(model, pde, basis, acts, component_idx: int,
     """Per-dose target + dose-matched-control deltas on a PCA component.
 
     Control (R6-corrected): the closest mean-|coefficient| non-target
-    component at the same dose (the random_direction mode with
+    component at the same dose (the matched_deletion mode with
     control_idx set — matched deletion, dose-matched).
     """
     with torch.no_grad():
@@ -355,7 +355,7 @@ def dose_curve_pca(model, pde, basis, acts, component_idx: int,
             )
             c = measure_pca_intervention_effect(
                 model, basis, pde, DEVICE, torch.float32,
-                component_idx=component_idx, mode="random_direction",
+                component_idx=component_idx, mode="matched_deletion",
                 n_interior=256, alpha=alpha, layer_index=layer_index,
                 seed=b, control_idx=ctrl_j,
             )

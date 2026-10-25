@@ -15,6 +15,8 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--config', required=True)
     p.add_argument('--steps', type=int)
+    p.add_argument('--device', choices=('cpu', 'cuda'),
+                   help='explicit device override for reproducible local runs')
     p.add_argument('--resume')
     p.add_argument('--log-gradients', action='store_true', default=False)
     p.add_argument('--grad-log-every', type=int, default=100)
@@ -26,6 +28,8 @@ def main():
     args = p.parse_args()
 
     cfg = load_config(args.config)
+    if args.device is not None:
+        cfg.run.device = args.device
     set_seed(cfg.run.seed, cfg.run.deterministic)
     device = torch.device(cfg.run.device)
     dtype = getattr(torch, cfg.run.dtype)

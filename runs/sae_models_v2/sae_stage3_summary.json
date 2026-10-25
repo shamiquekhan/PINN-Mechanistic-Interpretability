@@ -5,37 +5,37 @@
       "expansion": 4,
       "topk": 8,
       "activation_mode": "topk",
-      "test_recon_mse": 2.1682461798712613,
+      "test_recon_mse": 0.7215446685254574,
       "dead_feature_frac": 0.12109375,
       "history": [
         {
           "step": 600,
-          "recon_loss": 0.0077086277306079865,
+          "recon_loss": 0.013075297698378563,
           "sparsity_loss": 0.0,
-          "total_loss": 0.0077086277306079865,
+          "total_loss": 0.013075297698378563,
           "mean_l0": 8.0,
-          "mean_l1": 0.04342925548553467,
-          "val_recon": 0.004388788664713502,
+          "mean_l1": 0.03484000638127327,
+          "val_recon": 1.1167752170935272,
           "dead_feature_frac": 1.0
         },
         {
           "step": 700,
-          "recon_loss": 0.007417300716042519,
+          "recon_loss": 0.01159582193940878,
           "sparsity_loss": 0.0,
-          "total_loss": 0.007417300716042519,
+          "total_loss": 0.01159582193940878,
           "mean_l0": 8.0,
-          "mean_l1": 0.04921485856175423,
-          "val_recon": 0.004280620796605945,
-          "dead_feature_frac": 0.19921875
+          "mean_l1": 0.034708280116319656,
+          "val_recon": 1.1362191221788525,
+          "dead_feature_frac": 0.23828125
         },
         {
           "step": 799,
-          "recon_loss": 0.006489712744951248,
+          "recon_loss": 0.01100485771894455,
           "sparsity_loss": 0.0,
-          "total_loss": 0.006489712744951248,
+          "total_loss": 0.01100485771894455,
           "mean_l0": 8.0,
-          "mean_l1": 0.04842144623398781,
-          "val_recon": 0.004150563389062881,
+          "mean_l1": 0.03329429030418396,
+          "val_recon": 1.1520700205415488,
           "dead_feature_frac": 0.12109375
         }
       ]
@@ -45,38 +45,38 @@
       "expansion": 4,
       "topk": 8,
       "activation_mode": "topk",
-      "test_recon_mse": 2.3395222205109896,
-      "dead_feature_frac": 0.15625,
+      "test_recon_mse": 0.6007104929271672,
+      "dead_feature_frac": 0.11328125,
       "history": [
         {
           "step": 600,
-          "recon_loss": 0.010687030851840973,
+          "recon_loss": 0.015439476817846298,
           "sparsity_loss": 0.0,
-          "total_loss": 0.010687030851840973,
+          "total_loss": 0.015439476817846298,
           "mean_l0": 8.0,
-          "mean_l1": 0.05227465182542801,
-          "val_recon": 0.004642647258316477,
+          "mean_l1": 0.038839638233184814,
+          "val_recon": 1.146683458360533,
           "dead_feature_frac": 1.0
         },
         {
           "step": 700,
-          "recon_loss": 0.008171791210770607,
+          "recon_loss": 0.009716968983411789,
           "sparsity_loss": 0.0,
-          "total_loss": 0.008171791210770607,
+          "total_loss": 0.009716968983411789,
           "mean_l0": 8.0,
-          "mean_l1": 0.04604053124785423,
-          "val_recon": 0.004319555740493039,
-          "dead_feature_frac": 0.25390625
+          "mean_l1": 0.03666304051876068,
+          "val_recon": 1.061135529478391,
+          "dead_feature_frac": 0.23046875
         },
         {
           "step": 799,
-          "recon_loss": 0.00801190547645092,
+          "recon_loss": 0.007124689407646656,
           "sparsity_loss": 0.0,
-          "total_loss": 0.00801190547645092,
+          "total_loss": 0.007124689407646656,
           "mean_l0": 8.0,
-          "mean_l1": 0.04968726634979248,
-          "val_recon": 0.00422179543102781,
-          "dead_feature_frac": 0.15625
+          "mean_l1": 0.03977290168404579,
+          "val_recon": 1.0472703999827306,
+          "dead_feature_frac": 0.11328125
         }
       ]
     },
@@ -85,67 +85,73 @@
       "expansion": 4,
       "topk": 8,
       "activation_mode": "topk",
-      "test_recon_mse": 2.6415311371088026,
-      "dead_feature_frac": 0.09765625,
+      "test_recon_mse": 0.7052965254725682,
+      "dead_feature_frac": 0.10546875,
       "history": [
         {
           "step": 600,
-          "recon_loss": 0.00745983375236392,
+          "recon_loss": 0.01293470524251461,
           "sparsity_loss": 0.0,
-          "total_loss": 0.00745983375236392,
+          "total_loss": 0.01293470524251461,
           "mean_l0": 8.0,
-          "mean_l1": 0.04593414440751076,
-          "val_recon": 0.004323603532277048,
+          "mean_l1": 0.040055565536022186,
+          "val_recon": 1.4077315173049767,
           "dead_feature_frac": 1.0
         },
         {
           "step": 700,
-          "recon_loss": 0.006181838922202587,
+          "recon_loss": 0.007933026179671288,
           "sparsity_loss": 0.0,
-          "total_loss": 0.006181838922202587,
+          "total_loss": 0.007933026179671288,
           "mean_l0": 8.0,
-          "mean_l1": 0.05361517146229744,
-          "val_recon": 0.0037456598201145727,
-          "dead_feature_frac": 0.16796875
+          "mean_l1": 0.03873860836029053,
+          "val_recon": 1.4093623372564714,
+          "dead_feature_frac": 0.1796875
         },
         {
           "step": 799,
-          "recon_loss": 0.005167179740965366,
+          "recon_loss": 0.004918089136481285,
           "sparsity_loss": 0.0,
-          "total_loss": 0.005167179740965366,
+          "total_loss": 0.004918089136481285,
           "mean_l0": 8.0,
-          "mean_l1": 0.04587762802839279,
-          "val_recon": 0.0036745032584294675,
-          "dead_feature_frac": 0.09765625
+          "mean_l1": 0.030997995287179947,
+          "val_recon": 1.3956632267832756,
+          "dead_feature_frac": 0.10546875
         }
       ]
     }
   ],
   "baselines": {
     "pca_full_n_components": 64,
-    "pca_full_train_mse": 3.3116578923575446e-11,
+    "pca_full_train_mse": 6.221341801102009e-13,
     "pca_k_matched_components": 8,
-    "pca_k_matched_train_mse": 0.0437193401157856,
-    "random_sae_test_mse": 2.75458453142643
+    "pca_k_matched_train_mse": 0.061846498399972916,
+    "random_sae_test_mse": 0.979627183003558
   },
   "sae_beats_random": true,
   "sae_beats_pca_k_matched": false,
   "test_dirs": [
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed999",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed42",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed2026",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed555",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed555",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed999",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed42",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed777"
+    "runs/boundary_starvation_seed2024",
+    "runs/gradient_conflict_seed555",
+    "runs/success_seed2024",
+    "runs/boundary_starvation_seed42",
+    "runs/success_seed888",
+    "runs/success_seed2026",
+    "runs/poisson_baseline",
+    "runs/boundary_starvation_seed999",
+    "runs/failure_boundary_starvation",
+    "runs/success_seed123",
+    "runs/collocation_starvation_seed2025"
   ],
   "val_dirs": [
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed888",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed2024",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed2025",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed2025",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed2024",
-    "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed7"
+    "runs/success_seed555",
+    "runs/collocation_starvation_seed999",
+    "runs/gradient_conflict_seed42",
+    "runs/boundary_starvation_seed3456",
+    "runs/boundary_starvation_seed333",
+    "runs/boundary_starvation_seed2026",
+    "runs/gradient_conflict_seed2024",
+    "runs/collocation_starvation_seed888",
+    "runs/collocation_starvation_seed123"
   ]
 }

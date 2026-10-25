@@ -21,6 +21,8 @@
     ],
     "source": 1.0,
     "forcing": 0.0,
+    "speed": null,
+    "reaction_rate": null,
     "diffusion": 0.01,
     "boundary_values": [
       0.0,

@@ -5,7 +5,8 @@ Protocol (mirrors the SAE battery of `interventions.causal` exactly):
   For each candidate PCA component k and each held-out boundary-starvation
   checkpoint:
     1. Targeted ablation     — set PCA coefficient c_k <- alpha * c_k
-    2. Unrelated control     — same ablation on a different component
+    2. Unrelated control     — activity-matched ablation on a different
+                               component
     3. Random-direction ctrl — matched-norm perturbation of a random
                                direction in the PCA coefficient space
     4. Probe control         — supervised logistic-probe direction
@@ -53,15 +54,18 @@ class PCAInterventionHook:
     -----
     ablate_component    : c_k <- alpha * c_k      (alpha=0 → full ablation)
     amplify_component   : c_k <- alpha * c_k      (alpha>1 → amplification)
-    unrelated_component : same ablation on a different (seed-chosen) component
-    random_direction    : add a random unit perturbation in coefficient
-                          space with per-row magnitude matched to |c_k|
-    natural             : identity (baseline)
+    unrelated_component : activity-matched ablation on a different component
+    matched_deletion    : random non-target component ablation
+    random_direction    : random coefficient-space perturbation with per-row
+                          magnitude matched to |c_k|
+    reconstruction_only : PCA encode→decode without coefficient modification
+    natural             : bypass PCA (raw baseline)
     """
 
     _MODES = {
         "natural", "ablate_component", "amplify_component",
-        "unrelated_component", "random_direction", "probe_direction",
+        "unrelated_component", "matched_deletion", "random_direction",
+        "probe_direction", "reconstruction_only",
     }
 
     def __init__(
@@ -87,25 +91,47 @@ class PCAInterventionHook:
         # component (closest mean |coefficient|); None keeps sampled
         # behavior.
         self.control_idx = control_idx
+        self.last_control_was_noop = False
+        self.last_control_idx = None
         d = probe_direction.detach().cpu() if probe_direction is not None else None
         self.probe_direction = d / d.norm().clamp(min=1e-8) if d is not None else None
         self._hook = None
 
     def _pick_control(self, coeffs: torch.Tensor, k: int) -> int:
-        """Control component for the control modes: the explicitly
-        designated one (R6 correction) or a uniform non-target draw."""
+        """Pick a random non-target component for matched deletion."""
         if self.control_idx is not None and self.control_idx != k:
+            self.last_control_idx = self.control_idx
             return self.control_idx
         rng = torch.Generator(device=coeffs.device)
         rng.manual_seed(self.random_seed)
         choices = [i for i in range(coeffs.shape[1]) if i != k]
-        return choices[torch.randint(len(choices), (1,), generator=rng,
-                                      device=coeffs.device).item()]
+        if not choices:
+            self.last_control_was_noop = True
+            return -1
+        self.last_control_idx = choices[torch.randint(
+            len(choices), (1,), generator=rng, device=coeffs.device
+        ).item()]
+        return self.last_control_idx
+
+    def _pick_closest_control(self, coeffs: torch.Tensor, k: int) -> int:
+        """Pick the active-by-magnitude non-target closest to the target."""
+        if self.control_idx is not None and self.control_idx != k:
+            self.last_control_idx = self.control_idx
+            return self.control_idx
+        activity = coeffs.abs().mean(dim=0)
+        choices = [i for i in range(coeffs.shape[1]) if i != k]
+        if not choices:
+            self.last_control_was_noop = True
+            return -1
+        self.last_control_idx = min(
+            choices, key=lambda i: (float((activity[i] - activity[k]).abs()), i)
+        )
+        return self.last_control_idx
 
     def _intervene(self, coeffs: torch.Tensor) -> torch.Tensor:
         mode = self.mode
         k = self.component_idx
-        if mode == "natural":
+        if mode in ("natural", "reconstruction_only"):
             return coeffs
 
         if mode in ("ablate_component", "amplify_component"):
@@ -115,20 +141,38 @@ class PCAInterventionHook:
 
         if mode == "unrelated_component":
             coeffs = coeffs.clone()
+            ctrl = self._pick_closest_control(coeffs, k)
+            if ctrl < 0:
+                return coeffs
+            coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
+            return coeffs
+
+        if mode == "matched_deletion":
             ctrl = self._pick_control(coeffs, k)
+            coeffs = coeffs.clone()
+            if ctrl < 0:
+                return coeffs
             coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
             return coeffs
 
         if mode == "random_direction":
-            # C3b fix (external review): the previous control INJECTED a
-            # random direction while the target ABLATED — arms not matched
-            # in kind. On a dense PCA basis every coefficient is "active",
-            # so the matched-deletion control scales a random non-target
-            # component by the same alpha the target arm uses.
-            ctrl = self._pick_control(coeffs, k)
-            coeffs = coeffs.clone()
-            coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
-            return coeffs
+            generator = torch.Generator(device=coeffs.device)
+            generator.manual_seed(self.random_seed)
+            direction = torch.randn(
+                coeffs.shape[1], device=coeffs.device,
+                dtype=coeffs.dtype, generator=generator
+            )
+            if k is not None:
+                direction[k] = 0.0
+            norm = direction.norm()
+            if float(norm) <= 1e-8:
+                self.last_control_was_noop = True
+                return coeffs
+            direction = direction / norm
+            per_row_mag = coeffs[:, k].abs() if k is not None else \
+                coeffs.abs().mean(dim=1)
+            self.last_control_was_noop = bool(float(per_row_mag.max()) <= 1e-8)
+            return coeffs + self.alpha * direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
 
         if mode == "probe_direction":
             # Supervised probe direction, per-row magnitude matched to |c_k|
@@ -190,19 +234,35 @@ def measure_pca_intervention_effect(
     layer_index: int = 1,
     seed: Optional[int] = None,
     control_idx: Optional[int] = None,
+    baseline_mode: str = "natural",
+    evaluation_points: Optional[torch.Tensor] = None,
+    probe_direction: Optional[torch.Tensor] = None,
 ) -> Dict:
     """Frozen-weight loss deltas for one PCA-component intervention.
 
-    Mirrors `measure_intervention_effect` in interventions/engine.py:
-    baseline = natural pass (PCA bypassed), intervened = hooked pass.
-    control_idx: R6 correction — explicitly designated control
-    component; None keeps the sampled behavior.
+    The returned decomposition contains the raw model pass, PCA
+    reconstruction-only pass, and intervention pass.  ``delta_pde`` and
+    ``delta_bc`` are measured against ``baseline_mode``; the explicit
+    ``delta_projection_*``, ``delta_intervention_*``, and ``delta_total_*``
+    fields make the three-way decomposition auditable.
+
+    ``evaluation_points`` can be shared with the SAE battery so matched
+    method comparisons do not introduce avoidable collocation noise.
     """
     if seed is None:
         seed = 0
+    if baseline_mode not in {"natural", "reconstruction_only"}:
+        raise ValueError(
+            "baseline_mode must be 'natural' or 'reconstruction_only'"
+        )
+
+    model_was_training = model.training
     model.eval()
 
-    x = pde.sample_interior(n_interior, device, dtype, seed=seed)
+    if evaluation_points is None:
+        x = pde.sample_interior(n_interior, device, dtype, seed=seed)
+    else:
+        x = evaluation_points.detach().clone().to(device=device, dtype=dtype)
 
     def _losses(hook: Optional[PCAInterventionHook]):
         if hook is not None:
@@ -216,24 +276,47 @@ def measure_pca_intervention_effect(
                 hook.remove()
         return lp, lb
 
-    lp_base, lb_base = _losses(None)
-    hook = PCAInterventionHook(
-        basis, mode=mode, component_idx=component_idx,
-        alpha=alpha, random_seed=seed, control_idx=control_idx,
-    )
-    lp_int, lb_int = _losses(hook)
+    try:
+        lp_natural, lb_natural = _losses(None)
+        lp_reconstruction, lb_reconstruction = _losses(
+            PCAInterventionHook(basis, mode="reconstruction_only")
+        )
+        hook = PCAInterventionHook(
+            basis, mode=mode, component_idx=component_idx,
+            alpha=alpha, random_seed=seed, control_idx=control_idx,
+            probe_direction=probe_direction,
+        )
+        lp_int, lb_int = _losses(hook)
+        control_was_noop = bool(hook.last_control_was_noop)
+        control_idx_used = hook.last_control_idx
+    finally:
+        model.train(model_was_training)
 
-    model.train()
+    lp_base = lp_reconstruction if baseline_mode == "reconstruction_only" else lp_natural
+    lb_base = lb_reconstruction if baseline_mode == "reconstruction_only" else lb_natural
     return {
         "component_idx": component_idx,
         "mode": mode,
         "layer_index": layer_index,
         "delta_pde": lp_int - lp_base,
         "delta_bc": lb_int - lb_base,
+        "delta_total_pde": lp_int - lp_natural,
+        "delta_total_bc": lb_int - lb_natural,
+        "delta_projection_pde": lp_reconstruction - lp_natural,
+        "delta_projection_bc": lb_reconstruction - lb_natural,
+        "delta_intervention_pde": lp_int - lp_reconstruction,
+        "delta_intervention_bc": lb_int - lb_reconstruction,
         "baseline_pde": lp_base,
         "baseline_bc": lb_base,
+        "natural_pde": lp_natural,
+        "natural_bc": lb_natural,
+        "reconstruction_pde": lp_reconstruction,
+        "reconstruction_bc": lb_reconstruction,
+        "baseline_mode": baseline_mode,
         "intervened_pde": lp_int,
         "intervened_bc": lb_int,
+        "control_was_noop": control_was_noop,
+        "control_idx": control_idx_used,
     }
 
 
@@ -272,49 +355,26 @@ def measure_pca_probe_effect(
     n_interior: int = 256,
     layer_index: int = 1,
     seed: Optional[int] = None,
+    baseline_mode: str = "natural",
+    evaluation_points: Optional[torch.Tensor] = None,
 ) -> Dict:
     """Perturb PCA coefficients along the supervised probe direction.
 
     Magnitude is matched per-row to |c_k| so the control is norm-matched to
     the targeted ablation, exactly like the SAE probe control.
     """
-    if seed is None:
-        seed = 0
-    model.eval()
-
-    x = pde.sample_interior(n_interior, device, dtype, seed=seed)
-
-    def _losses(hook: Optional[PCAInterventionHook]):
-        if hook is not None:
-            hook.register(model, layer_index)
-        try:
-            r = pde.residual(model, x)
-            lp = float((r ** 2).mean())
-            lb = float(pde.boundary_residual(model).mean())
-        finally:
-            if hook is not None:
-                hook.remove()
-        return lp, lb
-
-    lp_base, lb_base = _losses(None)
-    hook = PCAInterventionHook(
-        basis, mode="probe_direction", component_idx=component_idx,
+    return measure_pca_intervention_effect(
+        model, basis, pde, device, dtype,
+        component_idx=component_idx,
+        mode="probe_direction",
+        n_interior=n_interior,
+        alpha=1.0,
+        layer_index=layer_index,
+        seed=seed,
+        baseline_mode=baseline_mode,
+        evaluation_points=evaluation_points,
         probe_direction=probe_direction,
     )
-    lp_int, lb_int = _losses(hook)
-    model.train()
-
-    return {
-        "component_idx": component_idx,
-        "mode": "probe_direction",
-        "layer_index": layer_index,
-        "delta_pde": lp_int - lp_base,
-        "delta_bc": lb_int - lb_base,
-        "baseline_pde": lp_base,
-        "baseline_bc": lb_base,
-        "intervened_pde": lp_int,
-        "intervened_bc": lb_int,
-    }
 
 
 # ---------------------------------------------------------------------------
@@ -334,37 +394,55 @@ def run_pca_causal_battery(
     n_interior: int = 256,
     alpha: float = 0.0,
     seed: int = 0,
+    amplify_alpha: float = 1.5,
+    baseline_mode: str = "natural",
+    evaluation_points: Optional[torch.Tensor] = None,
 ) -> List[Dict]:
-    """Run targeted + 3-control interventions for each candidate component."""
+    """Run targeted + 3-control interventions for each candidate component.
+
+    ``candidate_slot`` is recorded explicitly so head-to-head comparisons can
+    join SAE and PCA rows by a stable method-level slot instead of relying on
+    list ordering.  ``evaluation_points`` is passed to every arm so all
+    controls and both representation methods can share one collocation set.
+    """
     results: List[Dict] = []
-    for comp in candidate_components:
+    for candidate_slot, comp in enumerate(candidate_components):
         targeted = measure_pca_intervention_effect(
             model, basis, pde, device, dtype,
             component_idx=comp, mode="ablate_component",
             n_interior=n_interior, alpha=alpha, layer_index=layer_index,
-            seed=seed,
+            seed=seed, baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points,
         )
         amplified = measure_pca_intervention_effect(
             model, basis, pde, device, dtype,
             component_idx=comp, mode="amplify_component",
-            n_interior=n_interior, alpha=1.5 if alpha == 0.0 else 1.5,
+            n_interior=n_interior, alpha=amplify_alpha,
             layer_index=layer_index, seed=seed,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points,
         )
         ctrl_unrelated = measure_pca_intervention_effect(
             model, basis, pde, device, dtype,
             component_idx=comp, mode="unrelated_component",
             n_interior=n_interior, alpha=alpha, layer_index=layer_index,
-            seed=seed,
+            seed=seed, baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points,
         )
         ctrl_random = measure_pca_intervention_effect(
             model, basis, pde, device, dtype,
             component_idx=comp, mode="random_direction",
-            n_interior=n_interior, layer_index=layer_index, seed=seed,
+            n_interior=n_interior, alpha=1.0,
+            layer_index=layer_index, seed=seed,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points,
         )
         ctrl_probe = measure_pca_probe_effect(
             model, basis, probe_direction, pde, device, dtype,
             component_idx=comp, n_interior=n_interior,
             layer_index=layer_index, seed=seed,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points,
         )
 
         if target_loss == "pde":
@@ -388,6 +466,7 @@ def run_pca_causal_battery(
             non_target_effects=nontarget,
         )
         results.append({
+            "candidate_slot": candidate_slot,
             "feature_idx": comp,   # same key as SAE rows for shared scoring
             "component_idx": comp,
             "target_loss": target_loss,
@@ -453,23 +532,50 @@ def summarize_battery(all_results: List[Dict]) -> Dict:
 
 
 def compare_pca_vs_sae(pca_rows: List[Dict], sae_rows: List[Dict]) -> Dict:
-    """Head-to-head causal comparison matched on (feature-slot, run).
+    """Head-to-head causal comparison joined by explicit experiment keys.
 
-    Both row lists must contain a "run" key and a feature index
-    ("feature_idx").  Rows are paired on (run, slot position); the SAE
-    feature identity within a slot may differ from the PCA component
-    identity — the comparison is at the method level (top-8 candidates).
+    Both row lists must contain ``run`` and ``candidate_slot``.  The slot is
+    the method-level candidate position assigned by each battery; it is not
+    inferred from list order.  Missing keys, duplicate keys, or asymmetric
+    key sets raise ``ValueError`` instead of silently comparing unrelated
+    experiments.
     """
     if not pca_rows or not sae_rows:
         return {"error": "empty battery"}
-    # Pair by (run, slot position): both batteries iterate runs outer and
-    # 8 candidates inner, so positional pairing aligns method-level slots.
-    n = min(len(pca_rows), len(sae_rows))
+
+    def _index(rows: List[Dict], label: str) -> Dict[tuple, Dict]:
+        indexed: Dict[tuple, Dict] = {}
+        for row in rows:
+            run = row.get("run")
+            slot = row.get("candidate_slot")
+            if run is None or slot is None:
+                raise ValueError(
+                    f"{label} rows require explicit 'run' and 'candidate_slot' keys"
+                )
+            key = (str(run), int(slot))
+            if key in indexed:
+                raise ValueError(f"duplicate {label} pairing key {key!r}")
+            indexed[key] = row
+        return indexed
+
+    pca_by_key = _index(pca_rows, "PCA")
+    sae_by_key = _index(sae_rows, "SAE")
+    if set(pca_by_key) != set(sae_by_key):
+        missing_in_sae = sorted(set(pca_by_key) - set(sae_by_key))
+        missing_in_pca = sorted(set(sae_by_key) - set(pca_by_key))
+        raise ValueError(
+            "PCA/SAE experiment keys do not match: "
+            f"missing_in_sae={missing_in_sae}, missing_in_pca={missing_in_pca}"
+        )
+
     pairs = []
-    for i in range(n):
-        p, s = pca_rows[i], sae_rows[i]
+    for key in sorted(pca_by_key):
+        p, s = pca_by_key[key], sae_by_key[key]
         pairs.append({
-            "run": p.get("run", s.get("run", "?")),
+            "run": key[0],
+            "candidate_slot": key[1],
+            "pca_feature_idx": p.get("component_idx", p.get("feature_idx")),
+            "sae_feature_idx": s.get("feature_idx"),
             "pca_causal_strength": p["causal_score"]["causal_strength"],
             "sae_causal_strength": s["causal_score"]["causal_strength"],
             "pca_specificity": p["causal_score"]["specificity"],

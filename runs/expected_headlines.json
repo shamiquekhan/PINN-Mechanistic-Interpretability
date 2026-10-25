@@ -1,14 +1,14 @@
 {
   "_generator": "scripts/generate_expected_headlines.py \u2014 derive from artifacts, never hand-edit",
   "monitor_conventional_auroc": {
-    "expected": 0.875,
+    "expected": 0.844,
     "range": [
-      0.804,
-      0.97
+      0.709,
+      0.945
     ]
   },
   "sae_et_ci_spans_zero": {
-    "expected": false
+    "expected": true
   },
   "sae_bonferroni_survivors": {
     "expected": 0
@@ -27,20 +27,20 @@
     ]
   },
   "controller_final": {
-    "expected": 0.0002,
+    "expected": 0.0001,
     "range": [
       0.0,
       0.1
     ]
   },
   "no_action_final": {
-    "expected": 0.4208
+    "expected": 0.028
   },
   "ntk_adaptive_final": {
-    "expected": 0.0064
+    "expected": 0.0268
   },
   "stage14_bonferroni_survivors": {
-    "expected": 2
+    "expected": 3
   },
   "stage14_recorded": {
     "expected": "H14b"

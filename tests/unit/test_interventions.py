@@ -1,4 +1,5 @@
-"""Tests for the intervention engine: no-intervention path within tolerance, all modes run."""
+"""Tests for the intervention engine and its measurement protocol."""
+import pytest
 import torch
 from pinn.model import MLP
 from pinn.pdes import Poisson1D
@@ -48,7 +49,8 @@ def test_natural_mode_unchanged():
 def test_all_modes_run_without_error():
     pde, model, sae = _setup()
     modes = ["natural", "ablate", "amplify", "replace",
-             "unrelated_control", "random_direction", "reconstruction_only"]
+             "unrelated_control", "matched_deletion", "random_direction",
+             "reconstruction_only"]
     x = pde.sample_interior(8, DEVICE, DTYPE)
     for mode in modes:
         hook = SAEInterventionHook(sae, mode=mode, feature_idx=0)
@@ -67,3 +69,33 @@ def test_measure_intervention_returns_expected_keys():
     )
     for key in ["feature_idx", "mode", "delta_pde", "delta_bc", "baseline_pde", "baseline_bc"]:
         assert key in result
+
+
+def test_measure_intervention_reports_reconstruction_decomposition():
+    pde, model, sae = _setup()
+    points = pde.sample_interior(32, DEVICE, DTYPE, seed=17)
+    result = measure_intervention_effect(
+        model, sae, pde, DEVICE, DTYPE,
+        feature_idx=0, mode="ablate", n_interior=32, layer_index=0,
+        baseline_mode="reconstruction_only", evaluation_points=points,
+    )
+    assert result["baseline_mode"] == "reconstruction_only"
+    assert result["delta_pde"] == result["delta_intervention_pde"]
+    assert result["delta_total_pde"] == pytest.approx(
+        result["delta_projection_pde"] + result["delta_intervention_pde"]
+    )
+
+
+def test_control_modes_are_not_identical():
+    z = torch.zeros(8, 16)
+    z[:, 3] = 1.0
+    z[:, 7] = 0.5
+    z[:, 10] = 0.25
+    unrelated = SAEInterventionHook(
+        None, mode="unrelated_control", feature_idx=3, random_seed=0
+    )._intervene(z)
+    random_direction = SAEInterventionHook(
+        None, mode="random_direction", feature_idx=3,
+        random_seed=0, alpha=1.0,
+    )._intervene(z)
+    assert not torch.equal(unrelated, random_direction)

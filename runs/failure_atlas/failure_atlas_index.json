@@ -1,6 +1,6 @@
 [
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed123",
+    "run_dir": "runs/boundary_starvation_seed123",
     "run_name": "boundary_starvation_seed123",
     "seed": 123,
     "operational_label": "boundary_starvation",
@@ -57,7 +57,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed2024",
+    "run_dir": "runs/boundary_starvation_seed2024",
     "run_name": "boundary_starvation_seed2024",
     "seed": 2024,
     "operational_label": "boundary_starvation",
@@ -123,7 +123,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed2025",
+    "run_dir": "runs/boundary_starvation_seed2025",
     "run_name": "boundary_starvation_seed2025",
     "seed": 2025,
     "operational_label": "boundary_starvation",
@@ -189,7 +189,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed2026",
+    "run_dir": "runs/boundary_starvation_seed2026",
     "run_name": "boundary_starvation_seed2026",
     "seed": 2026,
     "operational_label": "boundary_starvation",
@@ -255,7 +255,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed42",
+    "run_dir": "runs/boundary_starvation_seed42",
     "run_name": "boundary_starvation_seed42",
     "seed": 42,
     "operational_label": "boundary_starvation",
@@ -312,7 +312,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed555",
+    "run_dir": "runs/boundary_starvation_seed555",
     "run_name": "boundary_starvation_seed555",
     "seed": 555,
     "operational_label": "boundary_starvation",
@@ -378,7 +378,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed7",
+    "run_dir": "runs/boundary_starvation_seed7",
     "run_name": "boundary_starvation_seed7",
     "seed": 7,
     "operational_label": "boundary_starvation",
@@ -435,7 +435,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed777",
+    "run_dir": "runs/boundary_starvation_seed777",
     "run_name": "boundary_starvation_seed777",
     "seed": 777,
     "operational_label": "boundary_starvation",
@@ -501,7 +501,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed888",
+    "run_dir": "runs/boundary_starvation_seed888",
     "run_name": "boundary_starvation_seed888",
     "seed": 888,
     "operational_label": "boundary_starvation",
@@ -567,7 +567,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/boundary_starvation_seed999",
+    "run_dir": "runs/boundary_starvation_seed999",
     "run_name": "boundary_starvation_seed999",
     "seed": 999,
     "operational_label": "boundary_starvation",
@@ -633,7 +633,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed123",
+    "run_dir": "runs/collocation_starvation_seed123",
     "run_name": "collocation_starvation_seed123",
     "seed": 123,
     "operational_label": "unlabeled",
@@ -690,7 +690,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed2024",
+    "run_dir": "runs/collocation_starvation_seed2024",
     "run_name": "collocation_starvation_seed2024",
     "seed": 2024,
     "operational_label": "success",
@@ -756,7 +756,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed2025",
+    "run_dir": "runs/collocation_starvation_seed2025",
     "run_name": "collocation_starvation_seed2025",
     "seed": 2025,
     "operational_label": "success",
@@ -822,7 +822,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed2026",
+    "run_dir": "runs/collocation_starvation_seed2026",
     "run_name": "collocation_starvation_seed2026",
     "seed": 2026,
     "operational_label": "success",
@@ -888,7 +888,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed42",
+    "run_dir": "runs/collocation_starvation_seed42",
     "run_name": "collocation_starvation_seed42",
     "seed": 42,
     "operational_label": "unlabeled",
@@ -945,7 +945,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed555",
+    "run_dir": "runs/collocation_starvation_seed555",
     "run_name": "collocation_starvation_seed555",
     "seed": 555,
     "operational_label": "success",
@@ -1011,7 +1011,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed7",
+    "run_dir": "runs/collocation_starvation_seed7",
     "run_name": "collocation_starvation_seed7",
     "seed": 7,
     "operational_label": "unlabeled",
@@ -1068,7 +1068,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed777",
+    "run_dir": "runs/collocation_starvation_seed777",
     "run_name": "collocation_starvation_seed777",
     "seed": 777,
     "operational_label": "success",
@@ -1134,7 +1134,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed888",
+    "run_dir": "runs/collocation_starvation_seed888",
     "run_name": "collocation_starvation_seed888",
     "seed": 888,
     "operational_label": "success",
@@ -1200,7 +1200,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/collocation_starvation_seed999",
+    "run_dir": "runs/collocation_starvation_seed999",
     "run_name": "collocation_starvation_seed999",
     "seed": 999,
     "operational_label": "success",
@@ -1266,7 +1266,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed123",
+    "run_dir": "runs/gradient_conflict_seed123",
     "run_name": "gradient_conflict_seed123",
     "seed": 123,
     "operational_label": "spectral_suppression",
@@ -1323,7 +1323,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed2024",
+    "run_dir": "runs/gradient_conflict_seed2024",
     "run_name": "gradient_conflict_seed2024",
     "seed": 2024,
     "operational_label": "spectral_suppression",
@@ -1389,7 +1389,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed2025",
+    "run_dir": "runs/gradient_conflict_seed2025",
     "run_name": "gradient_conflict_seed2025",
     "seed": 2025,
     "operational_label": "unlabeled",
@@ -1455,7 +1455,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed2026",
+    "run_dir": "runs/gradient_conflict_seed2026",
     "run_name": "gradient_conflict_seed2026",
     "seed": 2026,
     "operational_label": "success",
@@ -1521,7 +1521,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed42",
+    "run_dir": "runs/gradient_conflict_seed42",
     "run_name": "gradient_conflict_seed42",
     "seed": 42,
     "operational_label": "spectral_suppression",
@@ -1578,7 +1578,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed555",
+    "run_dir": "runs/gradient_conflict_seed555",
     "run_name": "gradient_conflict_seed555",
     "seed": 555,
     "operational_label": "spectral_suppression",
@@ -1644,7 +1644,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed7",
+    "run_dir": "runs/gradient_conflict_seed7",
     "run_name": "gradient_conflict_seed7",
     "seed": 7,
     "operational_label": "spectral_suppression",
@@ -1701,7 +1701,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed777",
+    "run_dir": "runs/gradient_conflict_seed777",
     "run_name": "gradient_conflict_seed777",
     "seed": 777,
     "operational_label": "spectral_suppression",
@@ -1767,7 +1767,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed888",
+    "run_dir": "runs/gradient_conflict_seed888",
     "run_name": "gradient_conflict_seed888",
     "seed": 888,
     "operational_label": "spectral_suppression",
@@ -1833,7 +1833,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/gradient_conflict_seed999",
+    "run_dir": "runs/gradient_conflict_seed999",
     "run_name": "gradient_conflict_seed999",
     "seed": 999,
     "operational_label": "spectral_suppression",
@@ -1899,7 +1899,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed123",
+    "run_dir": "runs/spectral_suppression_seed123",
     "run_name": "spectral_suppression_seed123",
     "seed": 123,
     "operational_label": "spectral_suppression",
@@ -1967,7 +1967,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed2024",
+    "run_dir": "runs/spectral_suppression_seed2024",
     "run_name": "spectral_suppression_seed2024",
     "seed": 2024,
     "operational_label": "spectral_suppression",
@@ -2035,7 +2035,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed2025",
+    "run_dir": "runs/spectral_suppression_seed2025",
     "run_name": "spectral_suppression_seed2025",
     "seed": 2025,
     "operational_label": "spectral_suppression",
@@ -2103,7 +2103,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed2026",
+    "run_dir": "runs/spectral_suppression_seed2026",
     "run_name": "spectral_suppression_seed2026",
     "seed": 2026,
     "operational_label": "spectral_suppression",
@@ -2171,7 +2171,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed42",
+    "run_dir": "runs/spectral_suppression_seed42",
     "run_name": "spectral_suppression_seed42",
     "seed": 42,
     "operational_label": "spectral_suppression",
@@ -2239,7 +2239,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed555",
+    "run_dir": "runs/spectral_suppression_seed555",
     "run_name": "spectral_suppression_seed555",
     "seed": 555,
     "operational_label": "spectral_suppression",
@@ -2307,7 +2307,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed7",
+    "run_dir": "runs/spectral_suppression_seed7",
     "run_name": "spectral_suppression_seed7",
     "seed": 7,
     "operational_label": "spectral_suppression",
@@ -2375,7 +2375,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed777",
+    "run_dir": "runs/spectral_suppression_seed777",
     "run_name": "spectral_suppression_seed777",
     "seed": 777,
     "operational_label": "spectral_suppression",
@@ -2443,7 +2443,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed888",
+    "run_dir": "runs/spectral_suppression_seed888",
     "run_name": "spectral_suppression_seed888",
     "seed": 888,
     "operational_label": "spectral_suppression",
@@ -2511,7 +2511,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/spectral_suppression_seed999",
+    "run_dir": "runs/spectral_suppression_seed999",
     "run_name": "spectral_suppression_seed999",
     "seed": 999,
     "operational_label": "spectral_suppression",
@@ -2579,7 +2579,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed123",
+    "run_dir": "runs/success_seed123",
     "run_name": "success_seed123",
     "seed": 123,
     "operational_label": "success",
@@ -2636,7 +2636,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed2024",
+    "run_dir": "runs/success_seed2024",
     "run_name": "success_seed2024",
     "seed": 2024,
     "operational_label": "success",
@@ -2702,7 +2702,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed2025",
+    "run_dir": "runs/success_seed2025",
     "run_name": "success_seed2025",
     "seed": 2025,
     "operational_label": "success",
@@ -2768,7 +2768,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed2026",
+    "run_dir": "runs/success_seed2026",
     "run_name": "success_seed2026",
     "seed": 2026,
     "operational_label": "unlabeled",
@@ -2834,7 +2834,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed42",
+    "run_dir": "runs/success_seed42",
     "run_name": "success_seed42",
     "seed": 42,
     "operational_label": "success",
@@ -2891,7 +2891,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed555",
+    "run_dir": "runs/success_seed555",
     "run_name": "success_seed555",
     "seed": 555,
     "operational_label": "unlabeled",
@@ -2957,7 +2957,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed7",
+    "run_dir": "runs/success_seed7",
     "run_name": "success_seed7",
     "seed": 7,
     "operational_label": "unlabeled",
@@ -3014,7 +3014,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed777",
+    "run_dir": "runs/success_seed777",
     "run_name": "success_seed777",
     "seed": 777,
     "operational_label": "collocation_starvation",
@@ -3080,7 +3080,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed888",
+    "run_dir": "runs/success_seed888",
     "run_name": "success_seed888",
     "seed": 888,
     "operational_label": "success",
@@ -3146,7 +3146,7 @@
     }
   },
   {
-    "run_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/success_seed999",
+    "run_dir": "runs/success_seed999",
     "run_name": "success_seed999",
     "seed": 999,
     "operational_label": "success",

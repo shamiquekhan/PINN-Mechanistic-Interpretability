@@ -1,9 +1,9 @@
 run:
   name: allen_cahn_1d_baseline_seed42
-  output_dir: /home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/dimensional_boundary_expanded/allen_cahn_1d
+  output_dir: runs/dimensional_boundary_expanded/allen_cahn_1d
   seed: 42
   deterministic: true
-  device: cuda
+  device: cpu
   dtype: float32
   failure_label: unlabeled
 pde:

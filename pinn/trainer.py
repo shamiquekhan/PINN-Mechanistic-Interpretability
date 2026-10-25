@@ -58,6 +58,12 @@ class PINNTrainer:
 
         # M3 fix: refuse to silently downgrade cuda->cpu (a silent 10-100x
         # slowdown is worse than a loud failure) and validate dtype clearly.
+        if not hasattr(torch, rcfg.dtype):
+            raise ValueError(
+                f"unknown dtype '{rcfg.dtype}' in config "
+                f"(expected e.g. 'float32', 'float64')")
+        self.dtype = getattr(torch, rcfg.dtype)
+
         requested = torch.device(rcfg.device)
         if requested.type == "cuda" and not torch.cuda.is_available():
             raise RuntimeError(
@@ -65,11 +71,6 @@ class PINNTrainer:
                 "on this machine — refusing to silently downgrade to CPU. "
                 "Set run.device='cpu' explicitly if CPU training is intended.")
         self.device = requested
-        if not hasattr(torch, rcfg.dtype):
-            raise ValueError(
-                f"unknown dtype '{rcfg.dtype}' in config "
-                f"(expected e.g. 'float32', 'float64')")
-        self.dtype = getattr(torch, rcfg.dtype)
 
         # Activation logger (optional)
         self.act_logger: Optional[ActivationLogger] = None

@@ -210,7 +210,8 @@ def machinery_gate(seed: int = 0) -> Dict:
             r = measure_intervention_effect(
                 host, sae, pde, DEVICE, torch.float32,
                 feature_idx=k_star, mode=mode, n_interior=256,
-                layer_index=0, alpha=ALPHA_ABLATE,
+                layer_index=0,
+                alpha=1.0 if mode == "random_direction" else ALPHA_ABLATE,
                 baseline_mode="natural", random_seed=b,
             )
             rows.append(r)
@@ -266,11 +267,11 @@ def r2_battery(model, pde, sae, acts: torch.Tensor, probe_dir,
                 layer_index=1, alpha=ALPHA_ABLATE,
                 baseline_mode="natural", random_seed=b,
             )
-            # control 2: random active atom (matched deletion)
+            # control 2: random latent direction, norm-matched to the target
             c_rd = measure_intervention_effect(
                 model, sae, pde, DEVICE, torch.float32,
                 feature_idx=k, mode="random_direction", n_interior=256,
-                layer_index=1, alpha=ALPHA_ABLATE,
+                layer_index=1, alpha=1.0,
                 baseline_mode="natural", random_seed=b,
             )
             # control 3: supervised probe direction

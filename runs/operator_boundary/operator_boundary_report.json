@@ -1,21 +1,21 @@
 {
   "status": "complete",
   "fno_training": {
-    "test_rel_l2": 0.020470919087529182
+    "test_rel_l2": 0.0227306317538023
   },
   "geometry": {
     "n_samples": 131072,
     "dim": 64,
-    "participation_ratio": 6.80157780247829,
-    "stable_rank": 1.8894769684224575,
-    "n_components_95pct": 19,
-    "n_components_99pct": 38
+    "participation_ratio": 6.390723974858014,
+    "stable_rank": 1.9157313911182494,
+    "n_components_95pct": 20,
+    "n_components_99pct": 39
   },
-  "pca_k_recon": 0.0033433500211685896,
+  "pca_k_recon": 0.004354378674179316,
   "sae": {
-    "test_recon_mse": 0.0007040553027763963,
-    "dead_feature_fraction": 0.7890625,
-    "mean_l0": 7.99749755859375
+    "test_recon_mse": 0.0008423337712883949,
+    "dead_feature_fraction": 0.77734375,
+    "mean_l0": 7.9986572265625
   },
   "comparison_table": {
     "PINN (poisson_1d, W=64)": {
@@ -27,21 +27,21 @@
       "source": "runs/effective_rank_analysis + runs/sae_models_v2 (v2.1)"
     },
     "FNO (green regression, W=64)": {
-      "participation_ratio": 6.80157780247829,
+      "participation_ratio": 6.390723974858014,
       "dim": 64,
-      "pca_k_recon": 0.0033433500211685896,
-      "sae_recon": 0.0007040553027763963,
-      "dead_features": 0.7890625,
-      "test_rel_l2": 0.020470919087529182
+      "pca_k_recon": 0.004354378674179316,
+      "sae_recon": 0.0008423337712883949,
+      "dead_features": 0.77734375,
+      "test_rel_l2": 0.0227306317538023
     }
   },
   "verdict": {
-    "fno_superposition_ratio": 0.10627465316372328,
-    "fno_pr": 6.80157780247829,
+    "fno_superposition_ratio": 0.09985506210715647,
+    "fno_pr": 6.390723974858014,
     "pinn_pr": 1.34,
-    "ratio_increase_vs_pinn": 5.075804330207679,
+    "ratio_increase_vs_pinn": 4.769196996162697,
     "sae_beats_k_matched_pca": true,
-    "regime": "HIGH-RANK / superposition-plausible \u2014 SAE methodology is appropriate here; this is the positive-control regime"
+    "regime": "STILL LOW-RANK \u2014 operator representations also concentrate; the negative result extends to this operator task"
   },
   "config": {
     "seed": 0,

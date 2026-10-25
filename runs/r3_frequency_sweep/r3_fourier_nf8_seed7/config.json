@@ -1,7 +1,7 @@
 {
   "run": {
     "name": "r3_fourier_nf8_seed7",
-    "output_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/r3_frequency_sweep",
+    "output_dir": "runs/r3_frequency_sweep",
     "seed": 7,
     "deterministic": true,
     "device": "cuda",

@@ -96,9 +96,12 @@ class TestDoseMatchedControlMode:
         assert torch.allclose(out, codes)          # untouched
 
     def test_existing_modes_unchanged(self):
-        # random_direction still hard-deletes (z_j <- 0)
-        out = _intervene("random_direction", 2.0, feature_idx=0)
+        # matched_deletion is the explicit hard-deletion control
+        out = _intervene("matched_deletion", 2.0, feature_idx=0)
         assert (out == 0).any()
+        # random_direction is now a separate norm-matched perturbation
+        out = _intervene("random_direction", 1.0, feature_idx=0)
+        assert not np.array_equal(out, _intervene("matched_deletion", 1.0, feature_idx=0))
         # amplify still scales the TARGET
         out = _intervene("amplify", 2.0, feature_idx=0)
         assert np.allclose(out[:, 0], 2.0)

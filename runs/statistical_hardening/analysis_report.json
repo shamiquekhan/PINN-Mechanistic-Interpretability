@@ -3,66 +3,66 @@
     "battery": "causal_intervention_results.json",
     "features": [
       {
-        "feature_idx": 8,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.1429,
-        "observed_power_at_observed_effect": 0.0
-      },
-      {
-        "feature_idx": 49,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.25,
-        "observed_power_at_observed_effect": 0.0001
-      },
-      {
-        "feature_idx": 101,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.125,
-        "observed_power_at_observed_effect": 0.0
-      },
-      {
-        "feature_idx": 114,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.2222,
-        "observed_power_at_observed_effect": 0.0
-      },
-      {
-        "feature_idx": 126,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.25,
-        "observed_power_at_observed_effect": 0.0001
-      },
-      {
-        "feature_idx": 194,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.1111,
-        "observed_power_at_observed_effect": 0.0
-      },
-      {
-        "feature_idx": 205,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
+        "feature_idx": 17,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
         "observed_positive_rate": 0.0,
         "observed_power_at_observed_effect": 0.0
       },
       {
-        "feature_idx": 228,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
+        "feature_idx": 24,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
+      },
+      {
+        "feature_idx": 44,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
+      },
+      {
+        "feature_idx": 49,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
+      },
+      {
+        "feature_idx": 91,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
+      },
+      {
+        "feature_idx": 149,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 1.0,
+        "observed_power_at_observed_effect": 1.0
+      },
+      {
+        "feature_idx": 205,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
+      },
+      {
+        "feature_idx": 219,
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
         "observed_positive_rate": 0.0,
         "observed_power_at_observed_effect": 0.0
       }
     ],
     "summary": {
-      "n_runs_per_feature": 11,
-      "mde_success_prob": 0.8571,
-      "interpretation": "A causal feature would need its (|target|-max|control|) differences to be positive in at least 85.7% of runs to be detected with 80% power; observed rates hover at chance."
+      "n_runs_per_feature": 1,
+      "mde_success_prob": 0.8,
+      "interpretation": "A causal feature would need its (|target|-max|control|) differences to be positive in at least 80.0% of runs to be detected with 80% power; observed rates hover at chance."
     }
   },
   "power_pca": {
@@ -70,79 +70,79 @@
     "features": [
       {
         "feature_idx": 0,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.5455,
-        "observed_power_at_observed_effect": 0.0615
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 1.0,
+        "observed_power_at_observed_effect": 1.0
       },
       {
         "feature_idx": 1,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.4545,
-        "observed_power_at_observed_effect": 0.016
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 1.0,
+        "observed_power_at_observed_effect": 1.0
       },
       {
         "feature_idx": 2,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.6364,
-        "observed_power_at_observed_effect": 0.175
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
       },
       {
         "feature_idx": 3,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.2727,
-        "observed_power_at_observed_effect": 0.0003
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 1.0,
+        "observed_power_at_observed_effect": 1.0
       },
       {
         "feature_idx": 4,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.2727,
-        "observed_power_at_observed_effect": 0.0003
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
       },
       {
         "feature_idx": 5,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.2727,
-        "observed_power_at_observed_effect": 0.0003
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 1.0,
+        "observed_power_at_observed_effect": 1.0
       },
       {
         "feature_idx": 6,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.4545,
-        "observed_power_at_observed_effect": 0.016
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
       },
       {
         "feature_idx": 7,
-        "n_runs": 11,
-        "mde_success_prob_at_80pct_power": 0.8571,
-        "observed_positive_rate": 0.3636,
-        "observed_power_at_observed_effect": 0.0028
+        "n_runs": 1,
+        "mde_success_prob_at_80pct_power": 0.8,
+        "observed_positive_rate": 0.0,
+        "observed_power_at_observed_effect": 0.0
       }
     ],
     "summary": {
-      "n_runs_per_feature": 11,
-      "mde_success_prob": 0.8571,
-      "interpretation": "A causal feature would need its (|target|-max|control|) differences to be positive in at least 85.7% of runs to be detected with 80% power; observed rates hover at chance."
+      "n_runs_per_feature": 1,
+      "mde_success_prob": 0.8,
+      "interpretation": "A causal feature would need its (|target|-max|control|) differences to be positive in at least 80.0% of runs to be detected with 80% power; observed rates hover at chance."
     }
   },
   "monitor_bayesian": {
     "method": "normal-approximation from run-level bootstrap CIs",
-    "auroc_conventional": 0.8754394335074327,
-    "auroc_sae": 0.877385496183206,
-    "posterior_mean_diff": 0.0019460626757733523,
-    "posterior_sd": 0.05216961423634323,
-    "prob_sae_better": 0.5148781370197302,
+    "auroc_conventional": 0.8441625886347749,
+    "auroc_sae": 0.8476380705083391,
+    "posterior_mean_diff": 0.003475481873564168,
+    "posterior_sd": 0.07770886865417964,
+    "prob_sae_better": 0.5178365042742402,
     "95pct_interval_diff": [
-      -0.10030638122745938,
-      0.10419850657900609
+      -0.14883390068862792,
+      0.15578486443575626
     ],
-    "interpretation": "P(SAE-augmented monitor better) = 0.51 \u2014 the posterior does not support an SAE advantage."
+    "interpretation": "P(SAE-augmented monitor better) = 0.52 \u2014 the posterior does not support an SAE advantage."
   },
   "threshold_sensitivity": {
     "thresholds": [
@@ -155,17 +155,17 @@
     ],
     "regimes": {
       "boundary_starvation": {
-        "n_seeds": 10,
+        "n_seeds": 30,
         "failure_fraction_by_threshold": {
-          "0.02": 1.0,
-          "0.05": 1.0,
-          "0.08": 1.0,
-          "0.1": 1.0,
-          "0.15": 1.0,
-          "0.2": 1.0
+          "0.02": 0.7,
+          "0.05": 0.3333333333333333,
+          "0.08": 0.3333333333333333,
+          "0.1": 0.3333333333333333,
+          "0.15": 0.3333333333333333,
+          "0.2": 0.3333333333333333
         },
         "final_rel_l2_range": [
-          2.2801871299743652,
+          0.004576451610773802,
           5.7041144371032715
         ]
       },
@@ -233,42 +233,42 @@
     "ordering_stable_across_thresholds": false,
     "orderings_by_threshold": {
       "0.02": [
-        1.0,
+        0.7,
         0.0,
         0.9,
         1.0,
         0.3
       ],
       "0.05": [
-        1.0,
+        0.3,
         0.0,
         0.9,
         1.0,
         0.3
       ],
       "0.08": [
-        1.0,
+        0.3,
         0.0,
         0.8,
         1.0,
         0.3
       ],
       "0.1": [
-        1.0,
+        0.3,
         0.0,
         0.8,
         1.0,
         0.1
       ],
       "0.15": [
-        1.0,
+        0.3,
         0.0,
         0.8,
         1.0,
         0.1
       ],
       "0.2": [
-        1.0,
+        0.3,
         0.0,
         0.7,
         1.0,

@@ -1,14 +1,14 @@
 # Project Status
 
 **Current release:** v4.3.2 (commit `be51b5a`)
-**Experimental campaign:** frozen (no new experiments)
-**R7+ intermediate replication:** complete, R7+b inconclusive
+**Experimental campaign:** publication record frozen; current CPU validation rerun complete (2026-10-25)
+**R7+ latest validation:** complete, current artifact records R7+c; the earlier R7+b result remains historical
 **Full-power R7+ target (163 checkpoints):** registered extension, not part of the core frozen claim set
-**Verification:** 196 tests · grounding PASS · 33/33 checksums
+**Verification:** 201 tests · grounding PASS · 33/33 checksums
 
 ---
 
-**Last verified:** 2026-09-12 (v4.3.2 audit pass; every item below re-verified)
+**Last verified:** 2026-10-25 (full CPU validation rerun; current artifact ledger refreshed)
 **Verification method:** commands executed end-to-end on this machine; every
 "verified" item lists the exact command and the artifact it produced. A
 machine check (`scripts/check_results_grounded.py`, wired into CI via
@@ -17,7 +17,25 @@ docs cite only artifact-grounded numbers.
 
 ---
 
-## Verified and reproducible (run end-to-end, artifacts committed)
+## Current validation rerun (2026-10-25)
+
+The publication campaign remains historically frozen, but the current working
+tree regenerated the protocol-dependent artifacts after the audit fixes. The
+full ledger is [`docs/fresh_pipeline_rerun_2026-10-25.md`](docs/fresh_pipeline_rerun_2026-10-25.md).
+
+| Area | Current receipt |
+|---|---|
+| Full pipeline | Stages 1–15 completed on CPU; pipeline log ended with `=== PIPELINE COMPLETE ===`. |
+| SAE/PCA causal batteries | Stage 5: 0/8 survivors; stage 8: 0/8 survivors; both current CIs span zero. |
+| Operator causal battery | 3/8 Bonferroni and 3/8 BH-FDR survivors; H14b remains recorded. |
+| Architecture boundary | Fourier PR 4.12–5.63, mean 4.85; SAE beats k-matched PCA in 3/3 runs. |
+| R2 Fourier follow-up | R2b; Fourier 0/45 Bonferroni and 0 crossover survivors. |
+| R6 dose response | High-rank SAE/PCA/FNO arms 0 R6a; tanh-PCA retains 2 scoped shape-only R6a findings. |
+| R7 equivalence | R7b at the current 8-pair checkpoint-matched test. |
+| R7+ replication | R7+c; 21 combined checkpoints; cluster 90% CI [−0.03235, −0.01374]. |
+| Verification | 201 tests, grounding check, checksums, and manifest metadata refreshed. |
+
+## Historical publication campaign (v4.3)
 
 Each item: what ran → where the output lives.
 
@@ -49,7 +67,7 @@ Each item: what ran → where the output lives.
 | R7+ equivalence replication (v4.3) | `python -m experiments.r7plus_equivalence` | `runs/r7plus_equivalence/r7plus_report.json` | **R7+b (inconclusive at higher power) — complete at intermediate n.** 20 new seeds through the identical batteries; combined 31 ckpts: mean −0.0049 (sign moved past zero — not stable), cluster SD 0.0419 (−19%), 90% CI [−0.0174, +0.0062] still overlapping δ=0.01; TOST p 0.251; achieved power 0.38/0.80. **Registered full-power extension (163 checkpoints) remains optional future work — does not block the paper.** |
 | R1 side-by-side reconciliation table (v4.2) | `python scripts/r1_reconciliation_table.py` | `runs/r1_physSAE/reconciliation_table.json` | The basis × criteria matrix from the committed R1 artifact: L1 alignment generic (all bases 0.77–0.99 incl. random), L4 concentration SAE-specific (2.1–3.5× vs PCA AND random), L3 survivors scatter without basis-specificity (SAE 1–5, PCA/ICA 1–2/run, random 0 floor), L0 recon SAE-best — the R1b dissociation in one table |
 | Monitors + controller + monitor-source ablation | `--stages 6,7` | `runs/monitor_report.json`, `runs/controller_demo/` | AUROC 0.875/0.877 (gradient arm real); rescue 0.421→0.0002 (config-faithful); SAE arm bit-identical to random |
-| Unit tests | `python -m pytest tests/ -q` | — | **196 passed, 1 skipped** (2026-09-12, CPU-only; 189 after the R6 framework, +7 from the v4.2.1 R7 equivalence tests) |
+| Unit tests | `python -m pytest tests/ -q` | — | Historical publication receipt: **196 passed, 1 skipped** (2026-09-12); current checkout: **201 passed** (2026-10-25) |
 | Smoke test | `bash scripts/run_smoke_test.sh` | transient `runs/ci_smoke/` (cleaned) | PASSED (tests + 60-step train + geometry) |
 | Figures | `bash scripts/generate_figures.sh` | `figures/generated/*.png` | 9/9 generated |
 | Tables | `bash scripts/generate_tables.sh` | `paper/tables/*.tex` | 7/7 generated from artifacts |
@@ -143,7 +161,7 @@ Each item: what ran → where the output lives.
 ```bash
 git clone https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability
 cd PINN-Mechanistic-Interpretability
-python -m pytest tests/ -q                              # 196 tests
+python3 -m pytest -q                                    # 201 tests in current checkout
 python scripts/check_results_grounded.py                # doc/artifact grounding
 sha256sum -c data/checksums.sha256                      # artifact integrity
 python -m experiments.run_pipeline --stages 5           # re-run any stage

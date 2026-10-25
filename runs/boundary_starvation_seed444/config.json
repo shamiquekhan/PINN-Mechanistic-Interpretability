@@ -4,7 +4,7 @@
     "output_dir": "runs",
     "seed": 444,
     "deterministic": true,
-    "device": "cuda",
+    "device": "cpu",
     "dtype": "float32",
     "failure_label": "unlabeled"
   },

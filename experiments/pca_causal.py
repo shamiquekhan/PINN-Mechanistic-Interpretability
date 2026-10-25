@@ -94,6 +94,8 @@ def run_pca_causal_experiment(
             probe_direction=probe_dir,
             target_loss="pde", layer_index=layer_index,
             alpha=0.0,
+            baseline_mode="reconstruction_only",
+            seed=0,
         )
         for r in results:
             r["run"] = run_dir.name
@@ -112,29 +114,17 @@ def run_pca_causal_experiment(
     if sae_path.exists():
         sae_report = json.loads(sae_path.read_text())
         sae_rows = sae_report.get("evaluations", [])
-        # Align by (run, slot): SAE battery used 8 features per run; PCA
-        # battery uses 8 components per run. Both are ordered run-major.
+        # Align by explicit (run, candidate_slot) keys.  Do not reconstruct
+        # slots from list order: a missing or reordered candidate must fail
+        # loudly instead of pairing unrelated experiments.
         sae_rows_aligned = [r for r in sae_rows
                             if r.get("run") in {rr["run"] for rr in all_results}]
-        # Reorder SAE rows to match PCA run order (run-major, feature-minor).
-        order = {name: i for i, name in enumerate(
-            sorted({rr["run"] for rr in all_results}))}
-        sae_rows_aligned.sort(key=lambda r: (order.get(r.get("run"), 99),
-                                             r.get("feature_idx", 0)))
-        all_results_sorted = sorted(
-            all_results,
-            key=lambda r: (order.get(r["run"], 99), r["feature_idx"]),
-        )
-        if len(sae_rows_aligned) == len(all_results_sorted):
-            # SAE feature ids are large (e.g., 9..205); PCA ids are 0..7 —
-            # pair positionally within each run's 8-slot block.
-            sae_rows_for_compare = sae_rows_aligned
-            head_to_head = compare_pca_vs_sae(
-                all_results_sorted, sae_rows_for_compare)
-        else:
+        try:
+            head_to_head = compare_pca_vs_sae(all_results, sae_rows_aligned)
+        except ValueError as exc:
             head_to_head = {
-                "error": "row count mismatch",
-                "n_pca": len(all_results_sorted),
+                "error": str(exc),
+                "n_pca": len(all_results),
                 "n_sae": len(sae_rows_aligned),
             }
 

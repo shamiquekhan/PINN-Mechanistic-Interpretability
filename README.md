@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA-orange.svg)](https://pytorch.org/)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 195/195 Passed](https://img.shields.io/badge/Tests-195%2F195%20Passed-brightgreen.svg)](tests/)
+[![Tests: 201/201 Passed](https://img.shields.io/badge/Tests-201%2F201%20Passed-brightgreen.svg)](tests/)
 [![CI](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml/badge.svg)](https://github.com/shamiquekhan/PINN-Mechanistic-Interpretability/actions/workflows/tests.yml)
 
 A GPU-accelerated research framework for analyzing, monitoring, and intervening on optimization failure modes in Physics-Informed Neural Networks (PINNs) via Sparse Autoencoders (SAEs), causal counterfactuals, causal-abstraction interchange interventions, early-warning monitors, and closed-loop adaptive control — plus a Fourier Neural Operator (FNO) positive control that locates the regime where SAE methodology does work.
@@ -16,13 +16,35 @@ A GPU-accelerated research framework for analyzing, monitoring, and intervening 
 - **Unified PDE Specification Engine (`pinn/pdes.py`)**: **Poisson 1D**, **Advection 1D**, **Reaction-Diffusion 1D**, **Poisson 2D**, **Advection-Diffusion 2D**, **Reaction-Diffusion 2D**, **viscous Burgers (t,x)**, and **Allen-Cahn (t,x)** — with manufactured solutions, stable integrating-factor reference solvers, enforced initial conditions, and boundary residual computations.
 - **Neural Operator Module (`operators/`)**: Dependency-free **FNO1d** (spectral convolutions, named block states) and a parametric **Green's-function regression** dataset — the high-rank positive control for the regime-boundary experiment.
 - **Sparse Autoencoder Feature Discovery (`sae/`)**: TopK and legacy ReLU+L1 SAEs with activation normalization, decoder unit-norm enforcement, dead-feature tracking, run-level splits, PCA/random baselines, and cross-seed feature matching.
-- **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine with targeted, unrelated, norm-matched random, and supervised probe controls; quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics; **PCA causal battery** (`pca_battery.py`) mirroring the SAE protocol component-for-component; and **partial interchange interventions** (`interchange.py`) implementing the causal-abstraction criterion of Geiger et al. 2021/2022.
+- **Leakage-Free Causal Interventions (`interventions/`)**: Forward-hook intervention engine with targeted, reconstruction-only, activity-matched, matched-deletion, random-direction, and supervised probe controls; explicit projection/intervention/total loss decomposition; quantitative Causal Strength ($E_T$) and Specificity ($S_{\text{spec}}$) metrics; **PCA causal battery** (`pca_battery.py`) mirroring the SAE protocol component-for-component; and **partial interchange interventions** (`interchange.py`) implementing the causal-abstraction criterion of Geiger et al. 2021/2022.
 - **Early-Warning Failure Monitoring (`monitoring/`)**: Past-only sliding window trajectory feature extractors with strict `leakage_audit` verification, threshold degradation alarms, and logistic early-warning classifiers.
 - **Closed-Loop Adaptive PINN Controller (`controller/`)**: Deterministic state-machine controller ($\text{IDLE} \rightarrow \text{WARNING} \rightarrow \text{CONFIRMED} \rightarrow \text{COOLDOWN} \rightarrow \text{IDLE}$; the bounded action fires on CONFIRMED entry) with 4 corrective action handlers (lambda rebalance and gradnorm rebalance act on the loss; the resample/fourier triggers are signals consumed by the training loop), rollback, and a measured monitor-source ablation.
 - **Failure Atlas & Physics-Feature Dictionary (`analysis/`)**: Automated taxonomy indexing, annotated physics latent features, effective rank / participation ratio / local tangent rank analysis, statistical hardening (power analysis, Bayesian posteriors, threshold sensitivity), and activation-manifold visualizations.
 - **SOTA Optimization Baselines (`experiments/sota_baselines.py`)**: GradNorm, NTK-adaptive weighting, and RBA residual attention for comparison against the controller.
 
-## Current Evidence (v4.3)
+## Fresh validation rerun (2026-10-25)
+
+The full stages 1–15 pipeline and the protocol-dependent R2, R6, equivalence,
+and R7+ follow-ups were regenerated on the CPU-only checkout. The current
+artifact ledger is [`docs/fresh_pipeline_rerun_2026-10-25.md`](docs/fresh_pipeline_rerun_2026-10-25.md).
+The rerun is a validation record, not a silent replacement of the frozen
+publication campaign.
+
+- Stage 5 SAE causal battery: 0/8 Bonferroni and 0/8 BH-FDR survivors; the
+  current $E_T$ CI spans zero.
+- Stage 8 PCA causal battery: 0/8 Bonferroni and 0/8 BH-FDR survivors; the
+  current $E_T$ CI spans zero.
+- Stage 14 operator battery: 3/8 Bonferroni and 3/8 BH-FDR survivors, but the
+  artifact still records H14b rather than a confirmed causal mechanism.
+- R2 Fourier follow-up: R2b with 0/45 Bonferroni survivors and 0 crossover
+  survivors; the tanh control is also R2b.
+- R7+ replication: current artifact records R7+c (non-equivalence at the
+  registered margin), replacing the earlier intermediate R7+b record for the
+  regenerated artifact set.
+- Verification: **201 tests passed**, results grounding passed, and the
+  manifest/checksum metadata was refreshed.
+
+## Published Evidence (v4.3 frozen campaign)
 
 The thesis: **when** sparse feature representations support mechanistic interpretation is a measurable function of representational geometry — and the boundary runs *inside* the PINN family, not between PINNs and operators. All numbers are read from committed artifacts (regenerate with `scripts/reproduce_main_results.sh`; machine-checked by `scripts/check_results_grounded.py` in CI):
 
@@ -73,7 +95,7 @@ secondary contributions, not part of the causal chain above.
 
 ---
 
-## Research status (v4.3.1 — frozen experimental campaign)
+## Research status (v4.3.1 — frozen publication campaign; validation rerun 2026-10-25)
 
 **Core findings:**
 
@@ -84,7 +106,7 @@ secondary contributions, not part of the causal chain above.
 5. SAE–PCA causal-strength equivalence is formally unestablished at the current sample size; the observed difference is statistically indistinguishable from zero and changes sign across replication.
 6. The principal causal null survives checkpoint-clustered resampling; the PCA negative-side exclusion does not — reworded per pre-written rule.
 
-**Verification:** 196 tests passed · 33/33 checksums · grounding check passed
+**Verification:** 201 tests passed · 33/33 checksums · grounding check passed
 
 ---
 

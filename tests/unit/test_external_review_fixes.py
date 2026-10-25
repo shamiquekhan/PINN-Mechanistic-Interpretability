@@ -130,21 +130,23 @@ def test_unrelated_control_noop_flagged_when_nothing_active():
     assert hook.last_control_was_noop is True
 
 
-def test_random_direction_is_matched_deletion_not_injection():
-    """C3b regression: the old control ADDED a random direction (injection)
-    while the target ABLATED — arms not matched in kind."""
+def test_random_direction_is_a_distinct_norm_matched_perturbation():
+    """The random-direction control is not a duplicate feature deletion."""
     from interventions.engine import SAEInterventionHook
     hook = SAEInterventionHook(None, mode="random_direction",
-                               feature_idx=3, random_seed=0)
+                               feature_idx=3, random_seed=0, alpha=1.0)
     z = _sparse_z(active_feats=(3, 7, 200))
     out = hook._intervene(z)
-    # Deletion semantics: output <= input everywhere, one feature zeroed.
-    assert (out <= z + 1e-6).all()
-    zeroed_cols = ((z > 0) & (out == 0)).any(dim=0).nonzero().flatten().tolist()
-    assert zeroed_cols, "no active non-target feature was ablated"
-    assert 3 not in zeroed_cols
-    # No addition happened: total mass decreased.
-    assert float(out.abs().sum()) < float(z.abs().sum())
+    delta = out - z
+    # The target coordinate is excluded from the random direction.
+    assert torch.allclose(delta[:, 3], torch.zeros_like(delta[:, 3]))
+    # The per-row perturbation norm is matched to the target dose.
+    assert torch.allclose(
+        delta.norm(dim=1), z[:, 3].abs(), atol=1e-6, rtol=1e-6
+    )
+    # It is a genuine direction perturbation, not a second hard deletion.
+    assert not torch.equal(out, z)
+    assert not torch.all((out == 0).any(dim=0)[[7, 200]])
 
 
 def test_operator_control_uses_active_features():

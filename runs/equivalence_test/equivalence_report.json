@@ -4,56 +4,56 @@
   "delta": 0.01,
   "alpha": 0.05,
   "delta_calibration": "planted positive control's demonstrated minimum detectable effect = +0.026; delta = 0.01 is ~2.6x smaller (conservative)",
-  "n_pairs": 88,
+  "n_pairs": 8,
   "pairing": "checkpoint-matched (the stage-8 committed head_to_head_vs_sae.pairs)",
   "primary_pca_minus_sae": {
-    "n": 88,
-    "mean": 0.004225110127167268,
-    "se": 0.010023376143763316,
+    "n": 8,
+    "mean": -0.010115616023540497,
+    "se": 0.03150915918220674,
     "ci90": [
-      -0.01243932754618145,
-      0.020889547800515985
+      -0.0698121948745247,
+      0.0495809628274437
     ],
     "ci95": [
-      -0.01569743530565902,
-      0.024147655559993556
+      -0.084622937973084,
+      0.064391705926003
     ],
-    "p_tost": 0.2830032882473448,
+    "p_tost": 0.5014126389801841,
     "equivalent": false,
     "ci90_within_margin": false,
     "underpowered_for_margin": true
   },
   "secondary_vs_zero": {
     "sae": {
-      "n": 88,
-      "mean": -0.01733323559165001,
-      "se": 0.007619096930213963,
+      "n": 8,
+      "mean": -8.07344913482666e-05,
+      "se": 0.002700437768726318,
       "ci90": [
-        -0.03000042118856631,
-        -0.004666049994733707
+        -0.005196926112354143,
+        0.005035457129657609
       ],
       "ci95": [
-        -0.032477015748373146,
-        -0.002189455434926874
+        -0.0064662551291956236,
+        0.00630478614649909
       ],
-      "p_tost": 0.8307621835341141,
-      "equivalent": false,
-      "ci90_within_margin": false,
-      "underpowered_for_margin": true
+      "p_tost": 0.003965276224265679,
+      "equivalent": true,
+      "ci90_within_margin": true,
+      "underpowered_for_margin": false
     },
     "pca": {
-      "n": 88,
-      "mean": -0.01310812546448274,
-      "se": 0.006791183196970465,
+      "n": 8,
+      "mean": -0.010196350514888763,
+      "se": 0.030023368141921126,
       "ci90": [
-        -0.024398856999547813,
-        -0.0018173939294176683
+        -0.06707798144931343,
+        0.046685280419535895
       ],
       "ci95": [
-        -0.026606337428569778,
-        0.000390086499604295
+        -0.08119033493777364,
+        0.06079763390799611
       ],
-      "p_tost": 0.6758349946379154,
+      "p_tost": 0.5025177939198995,
       "equivalent": false,
       "ci90_within_margin": false,
       "underpowered_for_margin": true

@@ -242,6 +242,7 @@ def run_stage_1_train_pinns(steps: int = 2000):
             sys.executable, "-m", "experiments.train",
             "--config", str(cfg_path),
             "--steps", str(steps),
+            "--device", str(DEVICE),
             "--log-gradients",
             "--log-activations",
             "--act-save-raw",
@@ -571,6 +572,8 @@ def run_stage_5_causal_interventions(sae_dir: Path):
             candidate_features=candidates,
             target_loss="pde", layer_index=1,
             probe_directions=probe_dirs,
+            baseline_mode="reconstruction_only",
+            sample_seed=0,
             out_dir=run_dir / "causal",
         )
         for r in results:
@@ -1144,6 +1147,11 @@ def run_stage_7_controller_demonstration(total_steps: int = 2500):
                     pending_resample["flag"] = True
 
         demo_cfg = cfg.model_copy(deep=True)
+        # The repository configs are GPU-oriented, but the master pipeline
+        # must also run reproducibly on CPU-only environments.  This is an
+        # explicit pipeline override; direct trainer/config usage still
+        # refuses an unavailable CUDA device rather than silently downgrading.
+        demo_cfg.run.device = str(device)
         demo_cfg.training.steps = total_steps
         demo_cfg.training.log_every = 1
         demo_cfg.training.checkpoint_every = max(total_steps, 10 ** 9)

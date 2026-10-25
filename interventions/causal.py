@@ -216,6 +216,9 @@ def run_inference_interventions(
     lambda_bc: float = 1.0,
     out_dir: Optional[Path] = None,
     probe_directions: Optional[Dict[int, torch.Tensor]] = None,
+    baseline_mode: str = "natural",
+    evaluation_points: Optional[torch.Tensor] = None,
+    sample_seed: Optional[int] = None,
 ) -> List[Dict]:
     """Run targeted and 3-control interventions for each candidate feature.
 
@@ -227,7 +230,7 @@ def run_inference_interventions(
     """
     results: List[Dict] = []
 
-    for feat_idx in candidate_features:
+    for candidate_slot, feat_idx in enumerate(candidate_features):
         print(f"  Evaluating feature {feat_idx}...")
 
         # 1. Targeted ablation
@@ -237,6 +240,8 @@ def run_inference_interventions(
             n_interior=n_interior, alpha=alpha,
             layer_index=layer_index,
             lambda_pde=lambda_pde, lambda_bc=lambda_bc,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points, sample_seed=sample_seed,
         )
 
         # 2. Targeted amplification
@@ -245,6 +250,8 @@ def run_inference_interventions(
             feature_idx=feat_idx, mode="amplify",
             n_interior=n_interior, alpha=alpha,
             layer_index=layer_index,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points, sample_seed=sample_seed,
         )
 
         # 3. Control 1: Unrelated feature
@@ -253,14 +260,18 @@ def run_inference_interventions(
             feature_idx=feat_idx, mode="unrelated_control",
             n_interior=n_interior,
             layer_index=layer_index,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points, sample_seed=sample_seed,
         )
 
         # 4. Control 2: Random direction
         ctrl_random = measure_intervention_effect(
             model, sae, pde, device, dtype,
             feature_idx=feat_idx, mode="random_direction",
-            n_interior=n_interior,
+            n_interior=n_interior, alpha=1.0,
             layer_index=layer_index,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points, sample_seed=sample_seed,
         )
 
         # 5. Control 3: Linear Probe direction (real supervised probe, not a proxy)
@@ -271,6 +282,8 @@ def run_inference_interventions(
             n_interior=n_interior,
             layer_index=layer_index,
             alpha=alpha,
+            baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points, sample_seed=sample_seed,
         )
 
         # Target vs non-target delta selection
@@ -296,6 +309,7 @@ def run_inference_interventions(
         )
 
         entry = {
+            "candidate_slot": candidate_slot,
             "feature_idx": feat_idx,
             "target_loss": target_loss,
             "targeted_ablate": targeted,

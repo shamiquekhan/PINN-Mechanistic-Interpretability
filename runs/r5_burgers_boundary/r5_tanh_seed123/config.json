@@ -1,7 +1,7 @@
 {
   "run": {
     "name": "r5_tanh_seed123",
-    "output_dir": "/home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/r5_burgers_boundary",
+    "output_dir": "runs/r5_burgers_boundary",
     "seed": 123,
     "deterministic": true,
     "device": "cuda",

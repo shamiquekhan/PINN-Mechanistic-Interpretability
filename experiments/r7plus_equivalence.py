@@ -192,6 +192,8 @@ def _run_battery_on_checkpoints(run_dirs: List[Path]) -> Dict:
             dtype=torch.float32, candidate_features=candidates,
             target_loss="pde", layer_index=1,
             probe_directions=probe_dirs,
+            baseline_mode="reconstruction_only",
+            sample_seed=0,
         )
         for r in rows:
             r["run"] = name
@@ -202,6 +204,7 @@ def _run_battery_on_checkpoints(run_dirs: List[Path]) -> Dict:
             dtype=torch.float32, candidate_components=list(range(8)),
             probe_direction=pca_probe, target_loss="pde",
             layer_index=1, alpha=0.0,
+            baseline_mode="reconstruction_only", seed=0,
         )
         for r in pca_res:
             r["run"] = name

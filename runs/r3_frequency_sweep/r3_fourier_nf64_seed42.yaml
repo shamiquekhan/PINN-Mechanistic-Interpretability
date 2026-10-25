@@ -1,6 +1,6 @@
 run:
   name: r3_fourier_nf64_seed42
-  output_dir: /home/shamique/projects/Pinn research/pinn_mechanistic_starter/runs/r3_frequency_sweep
+  output_dir: runs/r3_frequency_sweep
   seed: 42
   deterministic: true
   device: cuda

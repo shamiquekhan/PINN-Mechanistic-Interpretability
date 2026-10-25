@@ -6,6 +6,24 @@ preregistered before execution when work starts), **Future** (direction,
 not yet scoped). This file exists so nobody mistakes a planned experiment
 for an established result.
 
+## Current validation overlay — 2026-10-25
+
+The publication campaign below is retained as a historical claim record. The
+current working tree also contains a complete CPU validation rerun after the
+intervention-protocol fixes. Its artifact-grounded ledger is
+[`docs/fresh_pipeline_rerun_2026-10-25.md`](docs/fresh_pipeline_rerun_2026-10-25.md).
+
+- [x] Stages 1–15 completed locally; checksums, manifest metadata, and expected
+  headlines regenerated.
+- [x] Stage 14 current artifact: 3/8 Bonferroni and 3/8 BH-FDR survivors,
+  with H14b still recorded; this does not upgrade the causal claim.
+- [x] R2 current follow-up: R2b on Fourier and tanh arms; 0/45 Fourier
+  Bonferroni survivors and 0 crossover survivors.
+- [x] R6 current follow-up: high-rank arms remain 0 R6a; tanh-PCA retains
+  scoped shape-only findings.
+- [x] R7+ current follow-up: R7+c at 21 combined checkpoints; the earlier
+  R7+b intermediate result remains historical.
+
 ## Completed (v1 → v3)
 
 - [x] PINN core + 8-family PDE suite (1D Poisson/Advection/RD, 2D
