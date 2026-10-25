@@ -56,6 +56,7 @@ from interventions.causal import (
     compute_bootstrap_ci,
     per_feature_causal_pvalues,
 )
+from analysis.intervention_audit import make_intervention_audit
 from operators.fno import FNO1d
 from sae.model import SparseAutoencoder
 
@@ -101,6 +102,8 @@ class OperatorSAEHook:
         # atom; None keeps the sampled behavior.
         self.control_idx = control_idx
         self.last_control_was_noop = False
+        self.last_control_idx = None
+        self.last_audit = None
         if probe_direction is not None:
             d = probe_direction.detach().to("cpu")
             self.probe_direction = d / d.norm().clamp(min=1e-8)
@@ -114,6 +117,7 @@ class OperatorSAEHook:
         ctrl_idx = getattr(self, "control_idx", None)
         if ctrl_idx is not None and ctrl_idx != k:
             self.last_control_was_noop = False
+            self.last_control_idx = ctrl_idx
             return ctrl_idx
         rng = torch.Generator(device=z.device)
         rng.manual_seed(self.random_seed)
@@ -121,20 +125,46 @@ class OperatorSAEHook:
         choices = [i for i in range(z.shape[1]) if i != k and bool(active[i])]
         if not choices:
             self.last_control_was_noop = True
+            self.last_control_idx = None
             return -1
         self.last_control_was_noop = False
-        return choices[torch.randint(len(choices), (1,), generator=rng,
-                                      device=z.device).item()]
+        self.last_control_idx = choices[torch.randint(
+            len(choices), (1,), generator=rng, device=z.device
+        ).item()]
+        return self.last_control_idx
 
     def _intervene(self, z: torch.Tensor) -> torch.Tensor:
         mode = self.mode
         k = self.feature_idx
+        self.last_control_was_noop = False
+        self.last_control_idx = None
+
+        def finish(
+            out: torch.Tensor,
+            operator_kind: str,
+            direction: Optional[torch.Tensor] = None,
+            direction_kind: str = "none",
+        ) -> torch.Tensor:
+            self.last_audit = make_intervention_audit(
+                mode=mode,
+                operator_kind=operator_kind,
+                random_seed=self.random_seed,
+                target_index=k,
+                selected_control_index=self.last_control_idx,
+                before=z,
+                after=out,
+                control_was_noop=self.last_control_was_noop,
+                direction=direction,
+                direction_kind=direction_kind,
+            )
+            return out
+
         if mode == "natural":
-            return z
+            return finish(z, "identity")
         if mode in ("ablate", "amplify"):
             z = z.clone()
             z[:, k] = z[:, k] * self.alpha
-            return z
+            return finish(z, "component_scale")
         if mode == "unrelated_control":
             # C3a fix (mirror of interventions/engine.py): sample only from
             # features ACTIVE in >=1 row so the control is never a silent
@@ -142,9 +172,9 @@ class OperatorSAEHook:
             z = z.clone()
             ctrl = self._pick_control(z, k)
             if ctrl < 0:
-                return z
+                return finish(z, "random_active_component_scale")
             z[:, ctrl] = z[:, ctrl] * self.alpha
-            return z
+            return finish(z, "random_active_component_scale")
         if mode == "random_direction":
             # C3b fix: matched DELETION (ablate a random active non-target
             # feature) instead of noise injection — the target ablates, so
@@ -152,14 +182,19 @@ class OperatorSAEHook:
             z = z.clone()
             ctrl = self._pick_control(z, k)
             if ctrl < 0:
-                return z
+                return finish(z, "random_active_component_delete")
             z[:, ctrl] = z[:, ctrl] * self.alpha
-            return z
+            return finish(z, "random_active_component_delete")
         if mode == "probe_direction":
             per_row_mag = z[:, k].abs() if k is not None else z.abs().mean(dim=1)
             d = self.probe_direction.to(z.device, z.dtype)
-            return z.clone() + d.unsqueeze(0) * per_row_mag.unsqueeze(1)
-        return z
+            return finish(
+                z.clone() + d.unsqueeze(0) * per_row_mag.unsqueeze(1),
+                "norm_matched_probe_injection",
+                direction=d,
+                direction_kind="supervised_probe",
+            )
+        return finish(z, "unknown")
 
     def _hook_fn(self, _module, _inputs, output: torch.Tensor):
         if self.mode == "natural":
@@ -298,6 +333,9 @@ def measure_operator_intervention(
         "delta_spectral_stat": sp_int - sp_base,
         "baseline_target_loss": lp_base,
         "intervened_target_loss": lp_int,
+        "control_was_noop": bool(hook.last_control_was_noop),
+        "control_idx": hook.last_control_idx,
+        "protocol_audit": hook.last_audit,
     }
 
 

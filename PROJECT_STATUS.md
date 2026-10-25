@@ -4,7 +4,7 @@
 **Experimental campaign:** publication record frozen; current CPU validation rerun complete (2026-10-25)
 **R7+ latest validation:** complete, current artifact records R7+c; the earlier R7+b result remains historical
 **Full-power R7+ target (163 checkpoints):** registered extension, not part of the core frozen claim set
-**Verification:** 201 tests · grounding PASS · 33/33 checksums
+**Verification:** 208 tests · grounding PASS · 33/33 checksums
 
 ---
 
@@ -33,7 +33,8 @@ full ledger is [`docs/fresh_pipeline_rerun_2026-10-25.md`](docs/fresh_pipeline_r
 | R6 dose response | High-rank SAE/PCA/FNO arms 0 R6a; tanh-PCA retains 2 scoped shape-only R6a findings. |
 | R7 equivalence | R7b at the current 8-pair checkpoint-matched test. |
 | R7+ replication | R7+c; 21 combined checkpoints; cluster 90% CI [−0.03235, −0.01374]. |
-| Verification | 201 tests, grounding check, checksums, and manifest metadata refreshed. |
+| Verification | Rerun receipt: 201 tests; current checkout: 208 tests; grounding check and 33/33 frozen checksums pass. |
+| Prospective statistical/control audit | Separate synthetic calibration report; frozen campaign artifacts unchanged. Max-control sign test: 0.0% rejection under the exchangeable target-vs-three-controls null; sign-flip randomization: 5.4% under the sign-exchangeable null. |
 
 ## Historical publication campaign (v4.3)
 

@@ -99,3 +99,23 @@ def test_control_modes_are_not_identical():
         random_seed=0, alpha=1.0,
     )._intervene(z)
     assert not torch.equal(unrelated, random_direction)
+
+
+def test_intervention_records_protocol_audit():
+    hook = SAEInterventionHook(
+        None, mode="matched_deletion", feature_idx=3, random_seed=11
+    )
+    z = torch.zeros(4, 16)
+    z[:, 3] = 1.0
+    z[:, 7] = 0.5
+    out = hook._intervene(z)
+    audit = hook.last_audit
+    assert out is not z
+    assert audit["schema_version"] == 1
+    assert audit["requested_mode"] == "matched_deletion"
+    assert audit["operator_kind"] == "random_active_component_delete"
+    assert audit["random_seed"] == 11
+    assert audit["target_index"] == 3
+    assert audit["selected_control_index"] == 7
+    assert audit["control_was_noop"] is False
+    assert audit["perturbation"]["n_nonzero_rows"] == 4

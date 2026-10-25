@@ -1,7 +1,8 @@
 """Stage 8: PCA causal battery — the 'what works instead' head-to-head.
 
-Runs the SAME intervention protocol (3 controls, bootstrap CIs,
-multiple-comparison corrections) on the leading PCA components of the
+ Runs the frozen Stage 8 intervention protocol (unrelated-component deletion,
+ norm-matched random-direction injection, and supervised probe injection;
+ bootstrap CIs and multiple-comparison corrections) on the leading PCA components of the
 activation manifold, on the SAME held-out boundary-starvation checkpoints
 used by the SAE battery, then compares methods.
 
@@ -132,9 +133,11 @@ def run_pca_causal_experiment(
     out = {
         "status": "complete",
         "method": "PCA components (n={})".format(n_components),
-        "protocol": ("3 controls (unrelated component, random coefficient "
-                     "direction, supervised probe), bootstrap CIs, "
-                     "Bonferroni + BH-FDR across components"),
+         "protocol": ("3 distinct control families: activity-matched "
+                      "component deletion, norm-matched random-direction "
+                      "injection, and supervised probe-direction injection; "
+                      "bootstrap CIs, "
+                      "Bonferroni + BH-FDR across components"),
         "n_evaluations": pca_summary["n_evaluations"],
         "n_beats_all_controls": pca_summary["n_beats_all_controls"],
         "verification_rate": pca_summary["verification_rate"],

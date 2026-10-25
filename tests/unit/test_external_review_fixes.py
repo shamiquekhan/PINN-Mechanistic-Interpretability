@@ -167,6 +167,26 @@ def test_operator_control_uses_active_features():
         assert float(z[:, c].abs().max()) > 0
 
 
+def test_operator_random_direction_records_actual_deletion_operator():
+    from interventions.operator_battery import OperatorSAEHook
+    hook = OperatorSAEHook.__new__(OperatorSAEHook)
+    hook.mode = "random_direction"
+    hook.feature_idx = 3
+    hook.alpha = 0.0
+    hook.random_seed = 0
+    hook.control_idx = None
+    hook.last_control_was_noop = False
+    hook.last_control_idx = None
+    hook.last_audit = None
+    z = _sparse_z(active_feats=(3, 7, 200))
+    out = hook._intervene(z)
+    assert hook.last_audit["requested_mode"] == "random_direction"
+    assert hook.last_audit["operator_kind"] == "random_active_component_delete"
+    assert hook.last_audit["selected_control_index"] in {7, 200}
+    assert hook.last_audit["control_was_noop"] is False
+    assert not torch.equal(out, z)
+
+
 # ---------------------------------------------------------------------------
 # H2 — the leakage audit must be able to fail
 # ---------------------------------------------------------------------------

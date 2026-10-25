@@ -131,8 +131,10 @@ render_feature_dictionary_markdown(dictionary, Path("runs/feature_dictionary/phy
 ## 5. Causal Interventions & Counterfactual Evaluation
 
 Run inference-time causal interventions (`ablate`, `amplify`, deterministic
-activity-matched `unrelated_control`, explicit `matched_deletion`, random
-latent-direction, and supervised `probe_direction` controls). Measurements
+activity-matched `unrelated_control`, explicit `matched_deletion`, norm-matched
+random latent-direction injection, and supervised `probe_direction` injection).
+These are distinct control families: component deletion/scaling is not treated
+as interchangeable with direction injection. Measurements
 can use `baseline_mode="reconstruction_only"` to separate representation
 reconstruction from the incremental intervention effect, and can receive a
 shared `evaluation_points` tensor for paired SAE/PCA comparisons:
@@ -243,4 +245,11 @@ python -m compileall -q analysis controller experiments interventions monitoring
 python -m pytest -q
 ```
 
-The current baseline is 98 passing tests. On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.
+The current baseline is 208 passing tests. The prospective statistical/control
+audit can be regenerated separately with:
+
+```bash
+python scripts/calibrate_causal_statistic.py
+```
+
+On CUDA, set `CUBLAS_WORKSPACE_CONFIG=:4096:8` before deterministic runs when exact cuBLAS reproducibility is required.

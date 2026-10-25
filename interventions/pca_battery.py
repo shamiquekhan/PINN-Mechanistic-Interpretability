@@ -1,16 +1,20 @@
 """PCA causal battery — head-to-head causal comparison of PCA components vs SAE features.
 
-Protocol (mirrors the SAE battery of `interventions.causal` exactly):
+The frozen Stage 8 runner uses three distinct control families:
 
   For each candidate PCA component k and each held-out boundary-starvation
   checkpoint:
     1. Targeted ablation     — set PCA coefficient c_k <- alpha * c_k
-    2. Unrelated control     — activity-matched ablation on a different
-                               component
-    3. Random-direction ctrl — matched-norm perturbation of a random
-                               direction in the PCA coefficient space
-    4. Probe control         — supervised logistic-probe direction
-                               trained on PCA coefficients (failure labels)
+     2. Activity-matched control — delete/scale a closest-activity non-target
+                                   component
+     3. Random-direction control — matched-norm perturbation of a random
+                                   direction in the PCA coefficient space
+     4. Probe control            — supervised logistic-probe direction
+                                   trained on PCA coefficients (failure labels)
+
+The prospective ``run_pca_control_semantics_audit`` additionally records a
+random active-component deletion as a separate control family.  It must not
+be pooled with random-direction injection.
 
   Scoring is the SAME compute_causal_score / per_feature_causal_pvalues
   machinery used for the SAE battery, so the comparison is apples-to-apples.
@@ -38,6 +42,7 @@ from interventions.causal import (
     compute_bootstrap_ci,
     per_feature_causal_pvalues,
 )
+from analysis.intervention_audit import make_intervention_audit
 from pinn.model import MLP
 from pinn.pdes import BasePDE
 
@@ -93,6 +98,7 @@ class PCAInterventionHook:
         self.control_idx = control_idx
         self.last_control_was_noop = False
         self.last_control_idx = None
+        self.last_audit = None
         d = probe_direction.detach().cpu() if probe_direction is not None else None
         self.probe_direction = d / d.norm().clamp(min=1e-8) if d is not None else None
         self._hook = None
@@ -131,31 +137,41 @@ class PCAInterventionHook:
     def _intervene(self, coeffs: torch.Tensor) -> torch.Tensor:
         mode = self.mode
         k = self.component_idx
+        self.last_control_was_noop = False
+        self.last_control_idx = None
+        selected_control_idx = None
+        direction = None
+        direction_kind = "none"
         if mode in ("natural", "reconstruction_only"):
-            return coeffs
+            out = coeffs
+            operator_kind = "identity"
 
-        if mode in ("ablate_component", "amplify_component"):
-            coeffs = coeffs.clone()
-            coeffs[:, k] = coeffs[:, k] * self.alpha
-            return coeffs
+        elif mode in ("ablate_component", "amplify_component"):
+            out = coeffs.clone()
+            out[:, k] = out[:, k] * self.alpha
+            operator_kind = "component_scale"
 
-        if mode == "unrelated_component":
-            coeffs = coeffs.clone()
+        elif mode == "unrelated_component":
+            out = coeffs.clone()
             ctrl = self._pick_closest_control(coeffs, k)
+            selected_control_idx = ctrl if ctrl >= 0 else None
             if ctrl < 0:
-                return coeffs
-            coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
-            return coeffs
+                out = coeffs
+            else:
+                out[:, ctrl] = out[:, ctrl] * self.alpha
+            operator_kind = "activity_matched_component_scale"
 
-        if mode == "matched_deletion":
+        elif mode == "matched_deletion":
             ctrl = self._pick_control(coeffs, k)
-            coeffs = coeffs.clone()
+            selected_control_idx = ctrl if ctrl >= 0 else None
+            out = coeffs.clone()
             if ctrl < 0:
-                return coeffs
-            coeffs[:, ctrl] = coeffs[:, ctrl] * self.alpha
-            return coeffs
+                out = coeffs
+            else:
+                out[:, ctrl] = out[:, ctrl] * self.alpha
+            operator_kind = "random_component_scale"
 
-        if mode == "random_direction":
+        elif mode == "random_direction":
             generator = torch.Generator(device=coeffs.device)
             generator.manual_seed(self.random_seed)
             direction = torch.randn(
@@ -167,22 +183,44 @@ class PCAInterventionHook:
             norm = direction.norm()
             if float(norm) <= 1e-8:
                 self.last_control_was_noop = True
-                return coeffs
-            direction = direction / norm
-            per_row_mag = coeffs[:, k].abs() if k is not None else \
-                coeffs.abs().mean(dim=1)
-            self.last_control_was_noop = bool(float(per_row_mag.max()) <= 1e-8)
-            return coeffs + self.alpha * direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
+                out = coeffs
+            else:
+                direction = direction / norm
+                per_row_mag = coeffs[:, k].abs() if k is not None else \
+                    coeffs.abs().mean(dim=1)
+                self.last_control_was_noop = bool(float(per_row_mag.max()) <= 1e-8)
+                out = coeffs + self.alpha * direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            direction_kind = "random_gaussian_orthogonal_to_target"
+            operator_kind = "norm_matched_random_injection"
 
-        if mode == "probe_direction":
+        elif mode == "probe_direction":
             # Supervised probe direction, per-row magnitude matched to |c_k|
             # (same scaling as the random control).
             per_row_mag = coeffs[:, k].abs() if k is not None else \
                 coeffs.abs().mean(dim=1)
             d = self.probe_direction.to(coeffs.device, coeffs.dtype)
-            return coeffs.clone() + d.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            direction = d
+            out = coeffs.clone() + d.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            direction_kind = "supervised_probe"
+            operator_kind = "norm_matched_probe_injection"
 
-        return coeffs
+        else:  # pragma: no cover - mode validation prevents this branch
+            out = coeffs
+            operator_kind = "unknown"
+
+        self.last_audit = make_intervention_audit(
+            mode=mode,
+            operator_kind=operator_kind,
+            random_seed=self.random_seed,
+            target_index=k,
+            selected_control_index=selected_control_idx,
+            before=coeffs,
+            after=out,
+            control_was_noop=self.last_control_was_noop,
+            direction=direction,
+            direction_kind=direction_kind,
+        )
+        return out
 
     def _hook_fn(self, _module, _inputs, output: torch.Tensor):
         if self.mode == "natural":
@@ -317,6 +355,7 @@ def measure_pca_intervention_effect(
         "intervened_bc": lb_int,
         "control_was_noop": control_was_noop,
         "control_idx": control_idx_used,
+        "protocol_audit": hook.last_audit,
     }
 
 
@@ -478,6 +517,82 @@ def run_pca_causal_battery(
             "causal_score": score,
         })
     return results
+
+
+def run_pca_control_semantics_audit(
+    model: MLP,
+    basis: PCABasis,
+    pde: BasePDE,
+    device: torch.device,
+    dtype: torch.dtype,
+    candidate_components: List[int],
+    probe_direction: torch.Tensor,
+    target_loss: str = "pde",
+    layer_index: int = 1,
+    n_interior: int = 256,
+    seed: int = 0,
+    baseline_mode: str = "reconstruction_only",
+    evaluation_points: Optional[torch.Tensor] = None,
+) -> List[Dict]:
+    """Prospective audit battery with control families kept separate.
+
+    This function is intentionally separate from ``run_pca_causal_battery``:
+    the frozen Stage 8 artifact used unrelated-component deletion,
+    random-direction injection, and probe injection.  The audit additionally
+    measures random active-component deletion and never pools it with the
+    direction-injection family.
+    """
+    control_specs = {
+        "activity_matched_component_deletion": {
+            "mode": "unrelated_component", "alpha": 0.0,
+        },
+        "random_active_component_deletion": {
+            "mode": "matched_deletion", "alpha": 0.0,
+        },
+        "norm_matched_random_injection": {
+            "mode": "random_direction", "alpha": 1.0,
+        },
+        "norm_matched_probe_injection": {
+            "mode": "probe_direction", "alpha": 1.0,
+        },
+    }
+    audited: List[Dict] = []
+    for candidate_slot, component_idx in enumerate(candidate_components):
+        target = measure_pca_intervention_effect(
+            model, basis, pde, device, dtype,
+            component_idx=component_idx, mode="ablate_component",
+            n_interior=n_interior, alpha=0.0, layer_index=layer_index,
+            seed=seed, baseline_mode=baseline_mode,
+            evaluation_points=evaluation_points,
+        )
+        controls: Dict[str, Dict] = {}
+        for family, spec in control_specs.items():
+            controls[family] = measure_pca_intervention_effect(
+                model, basis, pde, device, dtype,
+                component_idx=component_idx, mode=spec["mode"],
+                n_interior=n_interior, alpha=spec["alpha"],
+                layer_index=layer_index, seed=seed,
+                baseline_mode=baseline_mode,
+                evaluation_points=evaluation_points,
+                probe_direction=probe_direction,
+            )
+        target_effect = target["delta_pde"] if target_loss == "pde" else target["delta_bc"]
+        audited.append({
+            "candidate_slot": candidate_slot,
+            "component_idx": component_idx,
+            "target_loss": target_loss,
+            "target": target,
+            "target_effect": target_effect,
+            "control_families": {
+                family: {
+                    "mode": row["mode"],
+                    "effect": row["delta_pde"] if target_loss == "pde" else row["delta_bc"],
+                    "protocol_audit": row["protocol_audit"],
+                }
+                for family, row in controls.items()
+            },
+        })
+    return audited
 
 
 def summarize_battery(all_results: List[Dict]) -> Dict:

@@ -8,6 +8,7 @@ from interventions.pca_battery import (
     PCAInterventionHook, measure_pca_intervention_effect,
     measure_pca_probe_effect, run_pca_causal_battery, summarize_battery,
     train_pca_probe_direction, compare_pca_vs_sae, pca_basis_to_device,
+    run_pca_control_semantics_audit,
 )
 from pinn.model import MLP
 from pinn.pdes import Poisson1D
@@ -191,3 +192,26 @@ def test_pca_basis_to_device():
     moved = pca_basis_to_device(basis, torch.device("cpu"))
     assert moved.n_components == basis.n_components
     assert torch.allclose(moved.components, basis.components)
+
+
+def test_pca_audit_keeps_deletion_and_injection_families_separate():
+    pde, model, basis = _setup()
+    probe = torch.zeros(basis.n_components)
+    probe[0] = 1.0
+    rows = run_pca_control_semantics_audit(
+        model, basis, pde, DEVICE, DTYPE,
+        candidate_components=[0], probe_direction=probe, n_interior=16,
+    )
+    families = rows[0]["control_families"]
+    assert set(families) == {
+        "activity_matched_component_deletion",
+        "random_active_component_deletion",
+        "norm_matched_random_injection",
+        "norm_matched_probe_injection",
+    }
+    assert families["random_active_component_deletion"]["protocol_audit"][
+        "operator_kind"
+    ] == "random_component_scale"
+    assert families["norm_matched_random_injection"]["protocol_audit"][
+        "operator_kind"
+    ] == "norm_matched_random_injection"

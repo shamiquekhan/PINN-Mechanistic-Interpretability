@@ -41,8 +41,16 @@ publication campaign.
 - R7+ replication: current artifact records R7+c (non-equivalence at the
   registered margin), replacing the earlier intermediate R7+b record for the
   regenerated artifact set.
-- Verification: **201 tests passed**, results grounding passed, and the
-  manifest/checksum metadata was refreshed.
+- Prospective statistical/control audit: the frozen campaign is unchanged;
+  synthetic calibration records the max-control sign test as conservative
+  under an exchangeable target-vs-three-controls null (0.0% rejection in
+  2,000 trials), while sign-flip randomization is used only for a
+  sign-exchangeable null (5.4% rejection). See
+  [`docs/preregistration_statistical_audit_2026-10-25.md`](docs/preregistration_statistical_audit_2026-10-25.md)
+  and the separate report under `runs/statistical_calibration/`.
+- Verification: the rerun receipt records **201 tests passed**; the current
+  checkout has **208 tests passing**, with results grounding still passing and
+  the frozen manifest/checksum metadata unchanged.
 
 ## Published Evidence (v4.3 frozen campaign)
 

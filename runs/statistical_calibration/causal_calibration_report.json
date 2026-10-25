@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "statistic": "abs(target) - max(abs(controls))",
+  "sign_test_null": "independent paired differences with P(d > 0) = 0.5 after excluding exact zero ties",
+  "randomization_test_null": "sign-exchangeable paired differences",
+  "cases": [
+    {
+      "case": "symmetric_difference_null",
+      "n_runs": 11,
+      "n_trials": 2000,
+      "alpha": 0.05,
+      "sign_test_rejection_rate": 0.029,
+      "mean_positive_rate": 0.4975454545454545,
+      "ties_expected": false,
+      "randomization_test_applicable": true,
+      "sign_flip_rejection_rate": 0.054
+    },
+    {
+      "case": "exchangeable_max_control_null",
+      "n_runs": 11,
+      "n_trials": 2000,
+      "alpha": 0.05,
+      "sign_test_rejection_rate": 0.0,
+      "mean_positive_rate": 0.2501818181818181,
+      "ties_expected": false,
+      "randomization_test_applicable": false,
+      "sign_flip_note": "Not applied: the case is not sign-exchangeable under the specified data-generating process."
+    },
+    {
+      "case": "asymmetric_median_null",
+      "n_runs": 11,
+      "n_trials": 2000,
+      "alpha": 0.05,
+      "sign_test_rejection_rate": 0.0285,
+      "mean_positive_rate": 0.49181818181818177,
+      "ties_expected": false,
+      "randomization_test_applicable": false,
+      "sign_flip_note": "Not applied: the case is not sign-exchangeable under the specified data-generating process."
+    },
+    {
+      "case": "zero_effect_ties",
+      "n_runs": 11,
+      "n_trials": 2000,
+      "alpha": 0.05,
+      "sign_test_rejection_rate": 0.0,
+      "mean_positive_rate": 0.0,
+      "ties_expected": true,
+      "randomization_test_applicable": false,
+      "sign_flip_note": "Not applied: the case is not sign-exchangeable under the specified data-generating process."
+    },
+    {
+      "case": "planted_alternative",
+      "n_runs": 11,
+      "n_trials": 2000,
+      "alpha": 0.05,
+      "sign_test_rejection_rate": 0.5735,
+      "mean_positive_rate": 0.785590909090909,
+      "ties_expected": false,
+      "randomization_test_applicable": false,
+      "sign_flip_note": "Not applied: the case is not sign-exchangeable under the specified data-generating process."
+    }
+  ]
+}

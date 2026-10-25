@@ -22,6 +22,7 @@ import torch.nn.functional as F
 
 from pinn.model import MLP
 from sae.model import SparseAutoencoder
+from analysis.intervention_audit import make_intervention_audit
 
 
 # ---------------------------------------------------------------------------
@@ -55,6 +56,7 @@ class SAEInterventionHook:
         self.random_seed = random_seed
         self.last_control_was_noop = False
         self.last_control_idx = None
+        self.last_audit = None
         # R6 control-matching correction: explicitly designated control
         # target (the closest-mean-activity non-target atom, chosen by
         # the caller); when set, the control modes apply the operator to
@@ -132,54 +134,46 @@ class SAEInterventionHook:
         return self.last_control_idx
 
     def _intervene(self, z: torch.Tensor) -> torch.Tensor:
-        """Modify latent code z according to the current mode."""
+        """Modify latent code z and record the exact operator that ran."""
         mode = self.mode
         k = self.feature_idx
+        self.last_control_was_noop = False
+        self.last_control_idx = None
+        selected_control_idx = None
+        direction = None
+        direction_kind = "none"
 
         if mode in ("natural", "reconstruction_only"):
-            return z
-
-        if mode == "ablate":
-            z = z.clone()
-            z[:, k] = 0.0
-            return z
-
-        if mode == "amplify":
-            z = z.clone()
-            z[:, k] = z[:, k] * self.alpha
-            return z
-
-        if mode == "replace":
-            z = z.clone()
+            out = z
+            operator_kind = "identity"
+        elif mode == "ablate":
+            out = z.clone()
+            out[:, k] = 0.0
+            operator_kind = "component_delete"
+        elif mode == "amplify":
+            out = z.clone()
+            out[:, k] = out[:, k] * self.alpha
+            operator_kind = "component_scale"
+        elif mode == "replace":
+            out = z.clone()
             val = self.reference_value if self.reference_value is not None else 0.0
-            z[:, k] = val
-            return z
-
-        if mode == "unrelated_control":
-            # Activity-matched non-target ablation.  This is deliberately
-            # deterministic; the random deletion control below is a separate
-            # procedure with a different null hypothesis.
-            z = z.clone()
-            ctrl_feat = self._closest_active_non_target(z, k)
-            if ctrl_feat < 0:
-                return z
-            z[:, ctrl_feat] = 0.0
-            return z
-
-        if mode == "matched_deletion":
-            # Ablate a random active non-target feature.
-            z = z.clone()
-            ctrl_feat = self._sample_active_non_target(z, k)
-            if ctrl_feat < 0:
-                return z
-            z[:, ctrl_feat] = 0.0
-            return z
-
-        if mode == "random_direction":
-            # Draw one random latent-space direction per intervention and
-            # match its per-row L2 dose to the target feature's activity.
-            # This is intentionally an injection/rotation control, not a
-            # second feature ablation.
+            out[:, k] = val
+            operator_kind = "component_overwrite"
+        elif mode == "unrelated_control":
+            out = z.clone()
+            ctrl_feat = self._closest_active_non_target(out, k)
+            selected_control_idx = ctrl_feat if ctrl_feat >= 0 else None
+            if ctrl_feat >= 0:
+                out[:, ctrl_feat] = 0.0
+            operator_kind = "activity_matched_component_delete"
+        elif mode == "matched_deletion":
+            out = z.clone()
+            ctrl_feat = self._sample_active_non_target(out, k)
+            selected_control_idx = ctrl_feat if ctrl_feat >= 0 else None
+            if ctrl_feat >= 0:
+                out[:, ctrl_feat] = 0.0
+            operator_kind = "random_active_component_delete"
+        elif mode == "random_direction":
             generator = torch.Generator(device=z.device)
             generator.manual_seed(self.random_seed)
             direction = torch.randn(
@@ -190,35 +184,44 @@ class SAEInterventionHook:
             norm = direction.norm()
             if float(norm) <= 1e-8:
                 self.last_control_was_noop = True
-                return z
-            direction = direction / norm
+                out = z
+            else:
+                direction = direction / norm
+                per_row_mag = z[:, k].abs() if k is not None else z.abs().mean(dim=1)
+                self.last_control_was_noop = bool(float(per_row_mag.max()) <= 1e-8)
+                out = z + self.alpha * direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            direction_kind = "random_gaussian_orthogonal_to_target"
+            operator_kind = "norm_matched_random_injection"
+        elif mode == "dose_matched_control":
+            out = z.clone()
+            ctrl_feat = self._sample_active_non_target(out, k)
+            selected_control_idx = ctrl_feat if ctrl_feat >= 0 else None
+            if ctrl_feat >= 0:
+                out[:, ctrl_feat] = out[:, ctrl_feat] * self.alpha
+            operator_kind = "dose_matched_component_scale"
+        elif mode == "probe_direction":
             per_row_mag = z[:, k].abs() if k is not None else z.abs().mean(dim=1)
-            self.last_control_was_noop = bool(float(per_row_mag.max()) <= 1e-8)
-            return z + self.alpha * direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            direction = self.probe_direction.to(z.device, z.dtype)
+            out = z.clone() + direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
+            direction_kind = "supervised_probe"
+            operator_kind = "norm_matched_probe_injection"
+        else:  # pragma: no cover - mode validation prevents this branch
+            out = z
+            operator_kind = "unknown"
 
-        if mode == "dose_matched_control":
-            # R6 dose-response control: the same operator as the target's
-            # amplify-family intervention (z_j <- alpha * z_j) applied to a
-            # matched-activity ACTIVE non-target atom, at the SAME dose
-            # alpha — dose- and kind-matched (the registered R6 protocol,
-            # docs/preregistration.md §R6).  Mirrors the alpha-scaled
-            # control modes of the operator battery.
-            z = z.clone()
-            ctrl_feat = self._sample_active_non_target(z, k)
-            if ctrl_feat < 0:
-                return z
-            z[:, ctrl_feat] = z[:, ctrl_feat] * self.alpha
-            return z
-
-        if mode == "probe_direction":
-            # Supervised linear-probe direction, per-row magnitude matched to
-            # the target feature's activity (same scaling as random control).
-            per_row_mag = z[:, k].abs() if k is not None else \
-                z.abs().mean(dim=1)
-            out = z.clone() + self.probe_direction.unsqueeze(0) * per_row_mag.unsqueeze(1)
-            return out
-
-        return z
+        self.last_audit = make_intervention_audit(
+            mode=mode,
+            operator_kind=operator_kind,
+            random_seed=self.random_seed,
+            target_index=k,
+            selected_control_index=selected_control_idx,
+            before=z,
+            after=out,
+            control_was_noop=self.last_control_was_noop,
+            direction=direction,
+            direction_kind=direction_kind,
+        )
+        return out
 
     def _hook_fn(self, module: nn.Module, input: tuple, output: torch.Tensor):
         if self.mode == "natural":
@@ -375,6 +378,7 @@ def measure_intervention_effect(
         "intervened_bc": lb_int,
         "control_was_noop": control_was_noop,
         "control_idx": intervention_hook.last_control_idx,
+        "protocol_audit": intervention_hook.last_audit,
     }
 
 
